@@ -286,6 +286,11 @@ blockquote strong {
     color: #1bbca3 !important;
 }
 
+.contact-link {
+	display: flex;
+	justify-content: center;
+}
+
 /* misc */
 hr {
   margin-top: 10px;
