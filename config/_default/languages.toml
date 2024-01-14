@@ -1,0 +1,11 @@
+[en]
+languageName = "English"
+languagedirection = "ltr"
+title = "Henry Techie"
+weight = 1
+
+[vi]
+languageName = "Tiếng Việt"
+languagedirection = "ltr"
+title = "Henry Techie"
+weight = 2

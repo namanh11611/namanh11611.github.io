@@ -8,17 +8,55 @@
 #newtab = true
 
 [[social]]
+identifier = "linkedin"
+name = "LinkedIn"
+url = "https://linkedin.com/in/namanh11611"
+weight = 1
+
+[social.params]
+icon = "brand-linkedin"
+
+[[social]]
 identifier = "github"
 name = "GitHub"
-url = "https://github.com/CaiJimmy/hugo-theme-stack"
+url = "https://github.com/namanh11611"
+weight = 2
 
 [social.params]
 icon = "brand-github"
 
 [[social]]
+identifier = "leetcode"
+name = "Leetcode"
+url = "https://leetcode.com/namanh11611"
+weight = 3
+
+[social.params]
+icon = "brand-leetcode"
+
+[[social]]
+identifier = "viblo"
+name = "Viblo"
+url = "https://viblo.asia/u/namanh11611"
+weight = 4
+
+[social.params]
+icon = "brand-viblo"
+
+[[social]]
 identifier = "twitter"
 name = "Twitter"
-url = "https://twitter.com"
+url = "https://twitter.com/namanh11611"
+weight = 5
 
 [social.params]
 icon = "brand-twitter"
+
+[[social]]
+identifier = "facebook"
+name = "Facebook"
+url = "https://facebook.com/namanh11611"
+weight = 6
+
+[social.params]
+icon = "brand-facebook"
