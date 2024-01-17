@@ -7,7 +7,7 @@ categories: Technical
 tags: [Design Pattern]
 ---
 
-## Khái niệm
+# Khái niệm
 Trước đây mình cũng chưa biết về Delegation Pattern, cho đến khi học Kotlin thì thấy người ta hay dùng keyword `by` trong lúc khai báo một biến. Vậy là thử tìm hiểu thì cả một chân trời mở ra về pattern mới này.
 
 ~~ *Hơi đao to búa lớn quá rồi* 😅😅 ~~
@@ -27,7 +27,7 @@ Khi có một request cần handle, **receiving object** sẽ không trực ti�
 Ơ thế nó khác gì **Kế thừa** nhỉ? Trong **Kế thừa** chúng ta cũng có thể gọi đến method của parent class mà?
 
 Đúng là Kế thừa rất hữu ích nhưng chúng ta chỉ dùng khi child class thực sự có liên quan về mặt ý nghĩa chính xác với parent class. Ví dụ như class `Cat` có thể kế thừa class `Animal` nhưng không nên kế thừa class `Transportation` vậy. Chưa kể child class phải override tất cả các abstract method của parent class, đôi khi điều đó là không cần thiết.  Vậy nên Delegation giúp chúng ta linh hoạt hơn.
-## Ví dụ minh hoạ
+# Ví dụ minh hoạ
 Quay trở lại với ví dụ ban nãy, giả sử bạn có một ông anh là kỹ sư và một bà chị là bác sỹ. Họ đều là những người rất tài năng.
 
 ```kotlin
@@ -68,8 +68,8 @@ fun main() {
 }
 ```
 
-## Delegation Pattern trong Kotlin
-### Keyword `by` trong Kotlin
+# Delegation Pattern trong Kotlin
+## Keyword `by` trong Kotlin
 Trong Kotlin đã support **Delegation Pattern** thông qua keyword `by`, giúp chúng ta giảm boilerplate code.
 
 ```kotlin
@@ -89,12 +89,12 @@ fun main() {
 ```
 
 Giờ đây, class `LazyStudentHelper` phải implement interface `TalentPerson`, qua đó nó có thể delegate method `doHomework` qua instance `kindPerson`.
-### Delegated properties
+## Delegated properties
 Chúng ta có một số cách để ứng dụng Delegation khi khai báo biến trong Kotlin:
 * **Lazy** properties: giá trị sẽ được tính toán trong lần đầu tiên access.
 * **Observable** properties: listeners sẽ được thông báo về những thay đổi của property này.
 
-#### Lazy properties
+### Lazy properties
 `lazy` là một function có param là lambda và trả về kết quả là một instance của class `Lazy<T>`.
 
 ```kotlin
@@ -116,7 +116,7 @@ computed!
 Hello
 Hello
 ```
-#### Observable properties
+### Observable properties
 ```kotlin
 import kotlin.properties.Delegates
 
@@ -142,7 +142,7 @@ Kết quả như sau:
 <no name> -> first
 first -> second
 ```
-## Reference
+# Reference
 * https://en.wikipedia.org/wiki/Delegation_pattern
 * https://kotlinlang.org/docs/delegation.html
 * https://kotlinlang.org/docs/delegated-properties.html

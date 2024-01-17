@@ -8,11 +8,11 @@ categories: Technical
 tags: [Stack, Heap, Memory, Java]
 ---
 
-## Bộ nhớ Stack với Heap là cái chi chi?
+# Bộ nhớ Stack với Heap là cái chi chi?
 Quản lý bộ nhớ là một yếu tố quan trọng trong lập trình, biết cách tối ưu bộ nhớ sẽ giúp ứng dụng của chúng ta hoạt động mượt mà, không bị lag hoặc crash. JVM (Java Virtual Machine) chia bộ nhớ ra thành 2 phần: **Stack** và **Heap** (các bạn đừng nhầm với cấu trúc dữ liệu Stack và Heap nhé). Trong bài viết này, chúng ta sẽ tìm hiểu về vai trò, chức năng và cách hoạt động của từng loại bộ nhớ.
 
-## Bộ nhớ Stack
-### Cách hoạt động
+# Bộ nhớ Stack
+## Cách hoạt động
 **Stack** lưu trữ các biến có kiểu dữ liệu **primitive** (int, float, char, boolean...), **biến cục bộ** và **thông tin về các method được gọi**. Nó hoạt động theo cơ chế **LIFO** (**L**ast **I**n **F**irst **O**ut). Nghĩa là những method nào được gọi sau sẽ được Stack cấp phát cho một frame, chứa thông tin về tham số, biến cục bộ, và Stack sẽ giải phóng frame đó khi method được return.
 
 Ví dụ với một đoạn code như sau:
@@ -42,7 +42,7 @@ java -Xss1024k // 1.024 KB
 java -Xss1m // 1 MB
 ```
 
-### StackOverflow
+## StackOverflow
 Một lỗi kinh điển liên quan đến Stack là **StackOverflow**. Nó xảy ra khi lượng data được lưu vào Stack vượt quá giới hạn của nó.
 
 Ví dụ khi chúng ta gọi đệ quy nhưng không có điều kiện dừng:
@@ -60,8 +60,8 @@ Một số cách để tránh StackOverflow error:
 * Tránh sử dụng biến local có kích thước quá lớn
 * Tránh dependencies vòng tròn
 
-## Bộ nhớ Heap
-### Cách hoạt động
+# Bộ nhớ Heap
+## Cách hoạt động
 **Heap** lưu trữ các biến có kiểu dữ liệu **Object** hoặc **array**. Nó sử dụng cơ chế **cấp phát và giải phóng bộ nhớ động**. Heap khá linh hoạt, có thể mở rộng hoặc thu hẹp theo nhu cầu trong quá trình thực thi chương trình.
 
 Ví dụ, khi chúng ta sử dụng từ khoá `new` để tạo một object `Student`:
@@ -85,17 +85,18 @@ Heap được tạo ra khi JVM khởi chạy và nó được sử dụng miễn
 
 Mặc định, kích thước khi khởi tạo của Heap là **256MB** và kích thước lớn nhất là **4068MB**. Chúng ta cũng có thể thay đổi thông số này bằng flag `-Xms` (kích thước khởi tạo) và `-Xmx` (kích thước lớn nhất).
 ```
-java -Xms512m -Xmx1024m // Initial heap size = 512MB, Maximum heap size = 1024MB
+// Initial heap size = 512MB, Maximum heap size = 1024MB
+java -Xms512m -Xmx1024m
 ```
 
-### Garbage Collection
+## Garbage Collection
 Trong Java, **Garbage Collection** có trách nhiệm thu hồi bộ nhớ từ các biến trong bộ nhớ Heap mà **không còn được tham chiếu** đến nữa. Quá trình này được thực hiện một cách tự động. Trong ví dụ trên, khi chúng ta không còn dùng đến object `student` nữa, Garbage Collection sẽ tự động thu hồi vùng nhớ đã cấp phát trước đó cho nó.
 
 Chính nhờ cơ chế này, Heap cho phép cấp phát và giải phóng vùng nhớ với các biến có kích thước lớn và cấu trúc phức tạp ở runtime. Nếu chúng ta tạo ra quá nhiều biến trong Heap nhưng code lởm nên làm cho Garbage Collection không thể thu hồi vùng nhớ hiệu quả sẽ gây ra **memory leak**.
 
 > **Garbage Collection** hoạt động như một bạn quản lý trong nhà hàng. Khi có khách đến, các bạn nhân viên sẽ mang bát đũa, menu ra cho khách (cấp phát bộ nhớ). Bạn quản lý sẽ thường xuyên đi vòng vòng kiểm tra, nếu thấy bàn nào khách đã ăn xong đi về thì sẽ gọi nhân viên ra lau dọn sạch sẽ để sẵn sàng đón khách mới (giải phóng bộ nhớ).
 
-### OutOfMemory
+## OutOfMemory
 Khi Heap bị đầy và chúng ta không thể cấp phát bộ nhớ cho object mới, nó sẽ ném ra lỗi `java.lang.OutOfMemoryError`.
 
 Giải pháp của chúng ta là phân tích code, dùng các công cụ profiling để phát hiện xem memory leak xảy ra ở đâu, xoá tham chiếu tới object khi không cần dùng đến nó nữa và để cho Garbage Collection làm việc của nó. Một số cách tối ưu bộ nhớ:
@@ -104,7 +105,7 @@ Giải pháp của chúng ta là phân tích code, dùng các công cụ profili
 * Chọn cấu trúc dữ liệu phù hợp
 * Ưu tiên sử dụng biến cục bộ thay vì biến toàn cục
 
-## So sánh
+# So sánh
 
 | | Bộ nhớ Stack | Bộ nhớ Heap |
 | -------- | -------- | -------- |
@@ -115,5 +116,5 @@ Giải pháp của chúng ta là phân tích code, dùng các công cụ profili
 | Thứ tự cấp phát | LIFO | Ngẫu nhiên |
 | Thời gian tồn tại của biến | Từ lúc call method đến lúc return | Từ lúc tạo đến lúc bị Garbage Collection giải phóng |
 
-## Kết luận
+# Kết luận
 Trong bài viết này, còn nhiều khái niệm liên quan đến bộ nhớ nhưng mình chưa thể truyền tải hết. Hy vọng bạn đã hiểu một cách căn bản về cách bộ nhớ Stack và Heap hoạt động, từ đó có thêm kinh nghiệm tối ưu hiệu năng của ứng dụng.

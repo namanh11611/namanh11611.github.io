@@ -7,7 +7,7 @@ categories: Technical
 tags: [Kotlin, Android]
 ---
 
-## Concept
+# Concept
 Trước hết, chúng ta cần hiểu **DataStore** sinh ra với mục đích là gì.
 
 Hiện tại, trong ứng dụng Android, chúng ta có 5 cách để lưu trữ dữ liệu, trong đó **SharedPreferences** là cách dùng để lưu những dữ liệu đơn giản nhất. Nó chỉ gồm **key** và **value**, trong đó value có thể là integer, string...
@@ -30,8 +30,8 @@ DataStore gồm 2 loại **Preferences DataStore** và **Proto DataStore**, chú
 | Không yêu cầu định nghĩa trước loại data  | Phải định nghĩa trước loại data bằng protocol buffers |
 | Không có type safety | Có type safety |
 
-## Preferences DataStore
-### Create
+# Preferences DataStore
+## Create
 Để sử dụng Preferences DataStore, chúng ta cần tạo một instance `DataStore<Preferences>` bằng [property delegate](https://viblo.asia/p/design-pattern-delegation-trong-kotlin-cach-de-nho-nguoi-khac-lam-bai-tap-ve-nha-vyDZO3exZwj#_delegated-properties-4) với keyword `preferencesDataStore`.
 ```kotlin
 // At the top level of your kotlin file
@@ -39,7 +39,7 @@ val Context.dataStore: DataStore<Preferences>
         by preferencesDataStore(name = "settings")
 ```
 
-### Read
+## Read
 Trước hết, chúng ta có 7 function tương ứng với 7 loại data:
 * `intPreferencesKey()`
 * `longPreferencesKey()`
@@ -59,7 +59,7 @@ val openAppCounterFlow: Flow<Int> = context.dataStore.data
     }
 ```
 Điểm khác biệt với SharedPreferences chính là ở đây, data được trả về dưới dạng Flow. Giờ đây, các layer phía trên như Repository có thể observe data một cách thống nhất, không cần quan tâm nó đến từ DataStore, Room database hay Server, bởi vì tất cả đều được return dưới dạng Flow.
-### Write
+## Write
 Để ghi dữ liệu, chúng ta dùng function `edit`, cũng khá giống với SharedPreferences.
 ```kotlin
 context.dataStore.edit { settings ->
@@ -68,9 +68,9 @@ context.dataStore.edit { settings ->
 }
 ```
 
-## Proto DataStore
+# Proto DataStore
 Trước khi tìm hiểu về Proto DataStore, chúng ta cần dạo qua một vòng về protocol buffers.
-### Protocol buffers
+## Protocol buffers
 Đây là một một kiểu định dạng dữ liệu mà không phụ thuộc vào ngôn ngữ lập trình hay platform. Nó giống như JSON nhưng nhỏ và nhanh hơn nhiều lần. Protocol buffers cũng được giới thiệu là định dạng dữ liệu được sử dụng phổ biến nhất tại Google.
 * Nó dùng để lưu các dữ liệu nhỏ gọn
 * Phân tích cú pháp nhanh
@@ -90,7 +90,7 @@ message UserProfile {
 ![](https://images.viblo.asia/b71d22aa-c9c7-42e1-be9f-d23879a9c0e4.png)
 
 Chúng ta có thể thấy Protocol buffer **nhanh hơn từ 5 đến 6 lần** so với JSON.
-### Create
+## Create
 Để sử dụng Proto DataStore, chúng ta phải định nghĩa loại data bằng một file proto `settings.pb` trong folder `app/src/main/proto/` như sau:
 ```protobuf
 syntax = "proto3";
@@ -126,7 +126,7 @@ val Context.settingsDataStore: DataStore<Settings> by dataStore(
   serializer = SettingsSerializer
 )
 ```
-### Read
+## Read
 Tương tự như Preferences DataStore, chúng ta cũng dùng `DataStore.data` để trả về một Flow.
 ```kotlin
 val openAppCounterFlow: Flow<Int> = context.settingDataStore.data
@@ -135,7 +135,7 @@ val openAppCounterFlow: Flow<Int> = context.settingDataStore.data
     settings.openAppCounter
   }
 ```
-### Write
+## Write
 Để ghi data vào Proto DataStore, chúng ta có function `updateData()`.
 ```kotlin
 context.settingsDataStore.updateData { currentSettings ->
@@ -144,9 +144,9 @@ context.settingsDataStore.updateData { currentSettings ->
     .build()
 }
 ```
-## So sánh với SharedPreferences
+# So sánh với SharedPreferences
 ![](https://images.viblo.asia/4d39fcd9-db5f-424d-bf88-be99f58cc8eb.png)
-### Migrate from SharedPreferences to Preferences DataStore
+## Migrate from SharedPreferences to Preferences DataStore
 Để migrate, chúng ta truyền `SharedPreferencesMigration` vào param `produceMigrations`. DataStore sẽ tự động migrate cho chúng ta.
 ```kotlin
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
@@ -159,7 +159,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
   }
 )
 ```
-### Migrate from SharedPreferences to Proto DataStore
+## Migrate from SharedPreferences to Proto DataStore
 Trước tiên, chúng ta cần khai báo `UserProfile` và `UserProfileSerializer` tương tự như các bước ở trên. Sau đó viết một mapping function để migrate từ cặp key-value trong SharedPreferences sang loại dữ liệu trong Proto DataStore.
 ```kotlin
 val Context.dataStore: DataStore<UserProfile> by dataStore(
@@ -181,7 +181,7 @@ val Context.dataStore: DataStore<UserProfile> by dataStore(
   }
 )
 ```
-## References
+# References
 * https://developer.android.com/topic/libraries/architecture/datastore
 * https://protobuf.dev/programming-guides/proto3
 * https://android-developers.googleblog.com/2020/09/prefer-storing-data-with-jetpack.html

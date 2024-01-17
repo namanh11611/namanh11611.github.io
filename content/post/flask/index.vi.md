@@ -7,10 +7,10 @@ categories: Technical
 tags: [Python, Flask]
 ---
 
-## Lời mở đầu
+# Lời mở đầu
 Team mình đợt này đang triển khai chương trình mỗi tuần một bài học, nghĩa là mỗi tuần một người trong team sẽ lên seminar cho mọi người về 1 kỹ thuật hoặc công nghệ gì đấy. Anh em vừa trải qua mấy tuần mới đi hết Kotlin. Tuần vừa rồi anh teamlead seminar về Flask. Oh, sao mình thấy thằng này build API nhanh gọn, đơn giản thế, đúng tinh thần của Python. Lâu nay mình chỉ code Front-end với Mobile, chưa đụng Back-end bao giờ (Thực ra là hồi Sinh viên làm PHP nhưng quên hết rồi :joy::joy:). Thế là mình cũng về thử bắt tay làm ngay một chú xem thế nào.
-## Setup
-### Basic
+# Setup
+## Basic
 Về IDE, tối ưu nhất có lẽ là PyCharm. Nhưng cài nó cũng khá nặng nên mình tận dụng máy đang có sẵn Visual Studio Code, chỉ cần cài thêm extension Python là đủ để chiến.
 
 Trước tiên là cài Python rồi.
@@ -23,7 +23,7 @@ $ sudo apt-get update
 $ sudo apt-get install python3.9
 ```
 
-### Option
+## Option
 Bạn có thể setup **Virtual environments** hoặc không, bạn có thể bỏ qua bước này. Virtual environments có tác dụng quản lý các dependencies của project. Ví dụ bạn có thể cài 1 lib với 2 version khác nhau cho 2 project khác nhau, thậm chí là Python version khác nhau. Mỗi project sẽ có 1 bộ Python libraries riêng biệt, không thằng nào ảnh hưởng đến thằng nào.
 
 Python3 sử dụng module venv để tạo Virtual environments. Bạn có thể thực hiện lệnh sau để tạo folder cho project và venv folder luôn:
@@ -43,15 +43,15 @@ Run environment của bạn:
 $ . venv/bin/activate
 ```
 
-### Flask
+## Flask
 
 Sau đó là cài Flask:
 ```
 $ pip install Flask
 ```
 
-## Code thôi
-### Hello World
+# Code thôi
+## Hello World
 Bắt tay vào để code 1 ứng dụng Flask đơn giản nhất nào. Tạo 1 file `hello.py` (tên gì cũng được, miễn là tránh `flask.py` để tránh conflict) và code những dòng đầu tiên:
 ```python
 from flask import Flask
@@ -86,7 +86,7 @@ Bạn cũng có thể xem kết quả của mình trên thiết bị khác (ở 
 $ flask run --host=192.168.xxx.xxx
 ```
 
-### JSON
+## JSON
 JSON là dạng dữ liệu mà mình hay dùng cho các API. Thử demo một chút JSON xem nào. Đầu tiên là cần import thêm `jsonify`:
 ```python
 from flask import Flask, jsonify
@@ -118,7 +118,7 @@ Nhưng mình thấy các field bị đảo lộn hết cả lên, vậy thì ph�
 app.config['JSON_SORT_KEYS'] = False
 ```
 Ok, có vẻ ổn hơn rồi đấy!
-### Ngrok - demo app không cần deploy
+## Ngrok - demo app không cần deploy
 Mình là dev Android nên muốn thử xem Flask có dùng làm API cho Retrofit trong Android được không. Thế mà config như trên, máy nhận được API rồi nhưng khi apply vào Retrofit thì vẫn không được. Không hiểu có phải do http không? Nhờ các cao nhân giải đáp giúp đoạn này.
 
 Vậy nên mình sẽ giới thiện với các bạn [**Ngrok**](https://ngrok.com/), một công cụ giúp bạn nhanh chóng demo app Flask mà không cần deploy lên server.
@@ -136,7 +136,7 @@ url = ngrok.connect(5000).public_url
 print('Henzy Tunnel URL:', url)
 ```
 Tiếp tục run `$ flask run` để xem kết quả. Check url được print ra và truy cập trên máy Android. Thử thay vào Url của Retrofit (nhớ dùng https) thì mình thấy nó chạy khá ổn. 
-## Lời kết
+# Lời kết
 Trên đây mới là hướng dẫn Quickstart. Nếu các bạn có hứng thú, mình sẽ viết tiếp các bài tiếp theo.
 
 Cảm ơn các bạn đã đọc!

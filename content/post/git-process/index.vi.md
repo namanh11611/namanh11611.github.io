@@ -7,11 +7,11 @@ categories: Technical
 tags: [Git]
 ---
 
-## Lời mở đầu
+# Lời mở đầu
 Trải qua một thời gian đi làm, lang bạt qua vài công ty, mình nhận thấy ở mỗi nơi lại có quy trình làm việc với Git khác nhau. Bài viết này giới thiệu quy trình làm việc với Git mà mình nghĩ là chuẩn chỉ và cũng đang áp dụng ở công ty hiện tại. Vậy nên, mình sẽ không giới thiệu hết các lệnh Git, mà chỉ lướt qua những lệnh mình nghĩ đủ dùng cho quá trình làm việc của các bạn ở công ty.
 
-## Quy trình
-### Ngày đầu tiên đi làm
+# Quy trình
+## Ngày đầu tiên đi làm
 Đơn giản quá nhỉ, ngày đầu tiên đi làm thì còn lệnh gì ngoài `git clone` nữa cơ chứ. Khi bạn muốn lấy source của team về, thì chỉ cần mở terminal, gõ:
 ```shell
 git clone <url>
@@ -22,8 +22,8 @@ Thêm 1 típ nhỏ, là nếu bạn muốn tên folder sau khi clone về khác 
 git clone <url> folder_name
 ```
 
-### Những ngày bình thường
-#### Một mình một ngựa
+## Những ngày bình thường
+### Một mình một ngựa
 Sếp giao một feature mới, bắt tay vào làm thôi nào. Khoan đã, nếu bạn đang ở 1 branch khác, đừng quên checkout về branch chính của team (thường branch chính sẽ đặt tên là master):
 ```shell
 git checkout master
@@ -62,7 +62,7 @@ git push origin feature_branch
 ```
 Bây giờ thì lên repository, tạo merge request cho sếp review. Trong lúc đó thì tranh thủ đi làm cốc coffee để chờ bước tiếp theo.
 
-#### Feature nhiều người làm
+### Feature nhiều người làm
 Nếu branch của bạn có nhiều người làm chung, bạn chưa kịp push code thì đã có người khác push trước. Vậy thì trước khi push thì hãy pull theo cách này:
 ```shell
 git pull --rebase
@@ -75,7 +75,7 @@ git fetch
 ```
 Theo mình thì `pull = fetch + merge`.
 
-#### Merge code
+### Merge code
 Sau một hồi review thì sếp cũng đồng ý cho bạn merge code, nhưng vấn đề là trong quá trình review thì bạn có thêm một vài commit để thêm, sửa, xóa file. Bạn muốn rebase những commit đó lại thành 1, hoặc đơn giản chỉ muốn sửa tên hay xóa commit nào đó. Giả sử bạn có 3 commit cần hợp nhất:
 ```shell
 git rebase -i HEAD~3
@@ -100,8 +100,8 @@ Nếu branch một mình bạn làm thì có thể push force thoải mái. Như
 
 Sau đó, merge code ở merge request trên repo. Vậy là bạn đã hoàn thành xuất sắc task đầu tiên rồi.
 
-### Những ngày khủng hoảng
-#### Reset
+## Những ngày khủng hoảng
+### Reset
 Thực ra thì trong quá trình làm có thể bạn có nhầm lẫn gì đó mà cần revert code. Git reset sẽ có 3 option dành cho bạn.
 
 Reset commit nhưng code vẫn ở trong stage, sẵn sàng cho bạn commit lại:
@@ -117,7 +117,7 @@ Reset commit và xóa toàn bộ code bạn đã làm:
 git reset --hard commit_id
 ```
 
-#### Stash 
+### Stash 
 Bạn có thể dùng cái này như một cứu cánh để lưu tạm code trước khi thực hiện các lệnh rebase hay checkout sang branch khác mà bị conflict. Bạn cứ tưởng tượng nó như một tờ giấy nháp lưu theo cấu trúc stack vậy.
 
 Khi muốn lưu tất cả những thay đổi hiện tại vào stash:
@@ -132,7 +132,7 @@ Hiện tại mình đang dùng chủ yếu Android Studio, và nó có sẵn She
 
 Bạn có thể tham khảo thêm ở [đây](https://git-scm.com/docs/git-stash).
 
-## Kết
+# Kết
 Thực ra cái tiêu đề chỉ giật tít câu view thôi chứ không có gì là chuẩn chỉ cả. Vì quy trình của mỗi công ty là khác nhau, yêu cầu của dự án là khác nhau. Nếu dự án bạn ít người, cần ưu tiên tốc độ làm việc thì có thể bỏ bớt quy trình, push thẳng code lên master. Còn nếu dự án của bạn có nhiều người cùng làm, yêu cầu quy trình khắt khe thì có thể không cho push force lên remote chẳng hạn. Vậy quy trình của công ty của bạn thế nào? Cùng chia sẻ với mình nhé.
 
 Thanks for reading!

@@ -7,7 +7,7 @@ categories: Technical
 tags: [Kotlin, Android]
 ---
 
-## Dispatcher là cái gì?
+# Dispatcher là cái gì?
 Hiểu một cách đơn giản, Dispatcher sẽ quyết định xem Coroutines được thực thi trên thread nào. Có thể là main thread, background thread, hoặc nó đẩy Coroutines vào thread pool.
 
 Có 4 loại Dispatchers:
@@ -35,7 +35,7 @@ fun main() = runBlocking<Unit> {
 Ở trong ví dụ này, nó sẽ kế thừa context của `runBlocking` nên sẽ thực thi trên main thread.
 
 Bây giờ, chúng ta sẽ đi tìm hiểu chi tiết từng loại Dispatchers nhé.
-## `Dispatchers.Default`
+# `Dispatchers.Default`
 `Dispatchers.Default` được dùng mặc định bởi các builder function `launch` và `async` nếu như chúng ta không gán Dispatchers nào khác cho nó. Default Dispatchers dùng một **shared background threads pool**. Vì vậy chúng ta có thể dùng `Dispatchers.Default` cho những công việc **tốn nhiều CPU**. Ví dụ:
 * Các tác vụ nặng như tính toán ma trận
 * Sort, filter hoặc search một cái list siêu to khổng lồ trên bộ nhớ
@@ -43,11 +43,11 @@ Bây giờ, chúng ta sẽ đi tìm hiểu chi tiết từng loại Dispatchers 
 * Parse JSON trên bộ nhớ
 
 Mặc định, số lượng thread nhiều nhất được `Dispatchers.Default` dùng sẽ **bằng với số CPU core**, nhưng ít nhất là 2.
-## `Dispatchers.Main`
+# `Dispatchers.Main`
 Bạn nghe tên là đoán được rồi đúng không? Chính xác, `Dispatchers.Main` sẽ thực thi trên **main thread**, nó phù hợp với các tác vụ **tương tác với UI**.
 
 Thông thường thì `Dispatchers.Main` sẽ là **single thread**.
-## `Dispatchers.IO`
+# `Dispatchers.IO`
 Nghe nhạc hiệu đoán được chương trình tiếp này. `Dispatchers.IO` dùng một **shared pool gồm các thread được tạo theo nhu cầu**. Nó giúp giảm tải các tác vụ blocking IO. Vì vậy nó phù hợp với các tác vụ liên quan đến **disk và network**. Ví dụ:
 * Gọi API
 * Download file từ server
@@ -57,17 +57,17 @@ Nghe nhạc hiệu đoán được chương trình tiếp này. `Dispatchers.IO`
 * Loading Shared Preferences
 
 Số lượng thread được sử dụng bởi `Dispatchers.IO` được giới hạn bởi **64 hoặc số lượng core** (tuỳ xem số nào lớn hơn).
-## `Dispatchers.Unconfined`
+# `Dispatchers.Unconfined`
 Mình gọi `Dispatchers.Unconfined` là con ngựa bất kham, vì mình sẽ không biết nó được thực thi trên thread nào.
 
 Ban đầu, khi khởi chạy, Coroutines sẽ được thực thi trên chính thread gọi nó. Nhưng sau khi bị suspend, và resume, nó sẽ thực thi trên một thread khác, được quyết định bởi suspend functions được gọi. `Dispatchers.Unconfined` phù hợp với những công việc không tiêu tốn CPU và không update UI. Nhưng bản thân Kotlin document cũng nhấn mạnh là:
 > The Unconfined dispatcher should not normally be used in code.
 > > **Tạm dịch:** Bình thường không ai dùng dispatcher Unconfined trong code cả.
-## `newSingleThreadContext`
+# `newSingleThreadContext`
 Function này sẽ tạo một thread mới cho chúng ta tha hồ vùng vẫy. Nhưng thật sự thì việc tạo một thread mới tốn rất nhiều resource, và bạn phải tự gọi function `close` để giải phóng nó khi không dùng nữa. Vậy nên trong thực tế, mình khuyến nghị các bạn không nên dùng cách này.
 
 Ngoài ra còn có `newFixedThreadPoolContext` để tạo một thread pool với size cố định.
-## So sánh với RxJava, RxAndroid
+# So sánh với RxJava, RxAndroid
 Chúng ta có thể thấy Dispatchers tương tự như Schedulers trong RxJava.
 | Coroutines | RxJava/RxAndroid |
 | -------- | -------- |
@@ -75,10 +75,10 @@ Chúng ta có thể thấy Dispatchers tương tự như Schedulers trong RxJava
 | `Dispatchers.Main` | `AndroidSchedulers.mainThread()` |
 | `Dispatchers.IO` | `Schedulers.io()` |
 
-## Lời kết
+# Lời kết
 Tựu chung lại, Dispatchers là một khái niệm quan trọng trong Coroutines, vậy nên các bạn cần nắm chắc về nó để có thể chọn một Dispatchers phù hợp cho từng function của mình.
 
-## Reference
+# Reference
 * https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html
 * https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html
 * https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html
