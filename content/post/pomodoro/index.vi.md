@@ -2,6 +2,7 @@
 title: "Hành trình 6 tháng áp dụng phương pháp Pomodoro"
 description: "Liệu phương pháp này có thực sự giúp tăng năng suất như lời đồn, mời bạn đọc bài viết này để xem hành trình mình đã áp dụng nó trong công việc."
 date: 2023-12-23T00:00:00+07:00
+slug: pomodoro
 image: pomodoro.jpeg
 toc: true
 categories: Career
@@ -17,8 +18,8 @@ Thời gian gần đây, công việc có một chút thay đổi nên mỗi ng�
 1. Đề ra công việc phải làm.
 2. Đặt đồng hồ hẹn giờ trong **25 phút** (khoảng thời gian này được gọi là pomodoro).
 3. Giải quyết công việc.
-4. Kết thúc công việc và nghỉ giải lao **5 phút**.
-5. Sau **4** pomodoro thì nghỉ giải lao **15 phút**.
+4. Khi đồng hồ reo cũng là lúc kết thúc công việc và nghỉ giải lao **5 phút**.
+5. Lặp lại các bước từ 1 đến 4. Sau **4** pomodoro thì nghỉ giải lao **15 phút**.
 
 ![](https://images.viblo.asia/b8f36fd2-ae84-4f1b-8a63-5a61e9c2f86c.png)
 
@@ -27,9 +28,9 @@ Thời gian gần đây, công việc có một chút thay đổi nên mỗi ng�
 Đến nay mình đã áp dụng nó được **6 tháng**, nên muốn chia sẻ với các bạn những lợi ích mà nó mang lại, cũng như những điểm mà mình nghĩ nó chưa phù hợp.
 
 # Cải thiện sự tập trung
-Trước đây, có những hôm mình cực kỳ tập trung 4-5 giờ liền, điều đó giúp mình giải quyết được rất nhiều công việc trong hôm đó. Nhưng sau những ngày như vậy thì mình thường sẽ cảm thấy khá mệt.
+Trước đây, có những hôm mình cực kỳ tập trung 4-5 giờ liền, điều đó giúp mình giải quyết được rất nhiều công việc trong hôm đó. Nhưng sau những ngày làm với cường độ cao như vậy thì mình thường sẽ cảm thấy khá mệt.
 
-Nhưng cũng có những hôm mình dành cả tiếng đồng hồ đọc báo, lướt Facebook và chợt nhận ra cả ngày chẳng làm được việc gì.
+Nhưng cũng có những hôm mình dành cả tiếng đồng hồ đọc báo, lướt Facebook và đến cuối ngày thì chợt nhận ra cả ngày chẳng làm được việc gì.
 
 Não bộ con người chỉ thực sự hiệu quả khi tập trung trong một khoảng thời gian ngắn và có những khoảng nghỉ hợp lý. Khi áp dụng pomodoro, chính vì biết được chỉ cần tập trung trong vòng 25 phút, một khoảng thời gian không quá dài, vậy nên mình có thể toàn tâm toàn ý tập trung vào công việc mà không lo cuối ngày bị mệt. Và mình cũng biết sau 25 phút này, mình sẽ được nghỉ ngơi, nên cũng không có chuyện đang làm việc lại quay ra lướt Facebook nữa.
 
@@ -43,7 +44,7 @@ Nhưng mình thấy khoảng thời gian 5 phút này hơi ngắn quá, đôi kh
 # Bơ cả thế giới
 Theo quy tắc thì khi đang trong khoảng thời gian 25 phút tập trung, bạn phải tắt hết thông báo của các app để tránh bị phân tâm. Nhưng mình thì chưa đạt đến cảnh giới có thể bơ cả thế giới như vậy, vì mình vẫn phải nhận thông báo các app chat để còn kịp thời phản hồi khách hàng và đồng nghiệp.
 
-Tuy nhiên thì điều này thường sẽ làm gián đoạn Pomodoro của mình, vì mình còn phải tốn thêm thời gian check code hay document để có thể trả lời mọi người.
+Tuy nhiên thì điều này thỉnh thoảng sẽ làm gián đoạn Pomodoro của mình, vì mình còn phải tốn thêm thời gian check code hay document để có thể trả lời mọi người.
 
 # Kết luận
 Phương pháp này có thể phù hợp với mình nhưng chưa chắc phù hợp với bạn. Tuân thủ Pomodoro giúp mình tăng hiệu suất làm việc, nhưng đôi khi khiến mình cảm thấy đang làm việc như một cái máy. Hãy thử áp dụng và xem kết quả nó mang lại cho bạn nhé.

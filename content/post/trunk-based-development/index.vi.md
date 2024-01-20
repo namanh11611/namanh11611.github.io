@@ -2,9 +2,10 @@
 title: "Trunk Based Development - một Git workflow giúp giảm cơn đau đầu resolve conflict"
 description: "Ở công ty cũ của mình (tạm gọi là công ty A), source code của dự án siêu to khổng lồ, mới clone về đã 40GB, compile và build các kiểu thì còn lên đến gần 100GB."
 date: 2023-05-03T02:07:00+07:00
+slug: trunk-based-development
 image: tbd.jpeg
 categories: Technical
-tags: [Git]
+tags: [Git, Trunk Based Development]
 ---
 
 # Case study

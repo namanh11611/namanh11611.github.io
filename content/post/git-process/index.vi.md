@@ -2,6 +2,7 @@
 title: "Quy trình làm việc chuẩn chỉ với Git"
 description: "Trải qua một thời gian đi làm, lang bạt qua vài công ty, mình nhận thấy ở mỗi nơi lại có quy trình làm việc với Git khác nhau. Bài viết này giới thiệu quy trình làm việc với Git mà mình nghĩ là chuẩn chỉ và cũng đang áp dụng ở công ty hiện tại."
 date: 2020-11-10T17:19:00+07:00
+slug: git-process
 image: git.jpeg
 categories: Technical
 tags: [Git]

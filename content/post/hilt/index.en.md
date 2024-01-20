@@ -2,9 +2,10 @@
 title: "Khi nào nên dùng Inject, Provides, Binds trong Hilt"
 description: "Bài viết này mình sẽ đi thẳng vào giải thích cách dùng các annotation @Inject, @Provides và @Binds."
 date: 2022-10-02T01:33:00+07:00
+slug: hilt
 image: hilt.jpeg
 categories: Technical
-tags: [Android, Kotlin, Dependency Injection]
+tags: [Android, Kotlin, Dependency Injection, Hilt]
 ---
 
 Bài viết này mình sẽ đi thẳng vào giải thích cách dùng các annotation `@Inject`, `@Provides` và `@Binds`. Vậy nên bỏ qua phần giải thích về Dependency Injection hay giới thiệu về `Hilt`. Coi như mọi người đã biết cách dùng nó rồi nhé. Chiến thôi!!!

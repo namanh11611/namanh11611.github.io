@@ -2,6 +2,7 @@
 title: "Bộ nhớ Stack và Heap trong Java"
 description: "Quản lý bộ nhớ là một yếu tố quan trọng trong lập trình, biết cách tối ưu bộ nhớ sẽ giúp ứng dụng của chúng ta hoạt động mượt mà, không bị lag hoặc crash. Trong bài viết này, chúng ta sẽ tìm hiểu về vai trò, chức năng và cách hoạt động của từng loại bộ nhớ."
 date: 2024-01-04T00:00:00+07:00
+slug: stack-heap
 image: stack-heap.jpeg
 toc: true
 categories: Technical
@@ -94,7 +95,7 @@ Trong Java, **Garbage Collection** có trách nhiệm thu hồi bộ nhớ từ 
 
 Chính nhờ cơ chế này, Heap cho phép cấp phát và giải phóng vùng nhớ với các biến có kích thước lớn và cấu trúc phức tạp ở runtime. Nếu chúng ta tạo ra quá nhiều biến trong Heap nhưng code lởm nên làm cho Garbage Collection không thể thu hồi vùng nhớ hiệu quả sẽ gây ra **memory leak**.
 
-> **Garbage Collection** hoạt động như một bạn quản lý trong nhà hàng. Khi có khách đến, các bạn nhân viên sẽ mang bát đũa, menu ra cho khách (cấp phát bộ nhớ). Bạn quản lý sẽ thường xuyên đi vòng vòng kiểm tra, nếu thấy bàn nào khách đã ăn xong đi về thì sẽ gọi nhân viên ra lau dọn sạch sẽ để sẵn sàng đón khách mới (giải phóng bộ nhớ).
+> **Garbage Collection** hoạt động như một bạn quản lý trong nhà hàng. Khi có khách đến, các bạn nhân viên sẽ mời khách ngồi vào một bàn trống, mang bát đũa, menu ra cho khách (cấp phát bộ nhớ). Bạn quản lý sẽ thường xuyên đi vòng vòng kiểm tra, nếu thấy bàn nào khách đã ăn xong đi về thì sẽ gọi nhân viên ra lau dọn sạch sẽ để sẵn sàng đón khách mới (giải phóng bộ nhớ).
 
 ## OutOfMemory
 Khi Heap bị đầy và chúng ta không thể cấp phát bộ nhớ cho object mới, nó sẽ ném ra lỗi `java.lang.OutOfMemoryError`.

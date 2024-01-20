@@ -2,9 +2,10 @@
 title: "Design Pattern: Adapter - làm thế nào để sạc iPhone bằng cáp type C"
 description: "Bạn sẽ làm gì khi bạn muốn sạc iPhone nhưng trong tay chỉ có sợi dây cáp type C."
 date: 2022-10-04T22:50:00+07:00
+slug: design-pattern-adapter
 image: adapter.jpeg
 categories: Technical
-tags: [Design Pattern]
+tags: [Design Pattern, Adapter, Java]
 ---
 
 # Đặt vấn đề

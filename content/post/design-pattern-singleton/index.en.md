@@ -2,9 +2,10 @@
 title: "Design Pattern: Bill Pugh Singleton trong Java - đơn giản đến không ngờ"
 description: "Singleton pattern có lẽ là design pattern đơn giản nhất mà hầu như ai cũng biết. Nó giúp tạo một instance duy nhất của class."
 date: 2020-12-29T15:00:00+07:00
+slug: design-pattern-singleton
 image: singleton.jpeg
 categories: Technical
-tags: [Design Pattern]
+tags: [Design Pattern, Singleton, Java]
 ---
 
 # Lời mở đầu

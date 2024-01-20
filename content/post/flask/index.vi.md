@@ -2,9 +2,10 @@
 title: "Xây dựng API đơn giản với Flask, demo với Ngrok"
 description: "Tuần vừa rồi anh teamlead seminar về Flask. Oh, sao mình thấy thằng này build API nhanh gọn, đơn giản thế, đúng tinh thần của Python."
 date: 2021-01-14T01:03:00+07:00
+slug: flask
 image: flask.jpeg
 categories: Technical
-tags: [Python, Flask]
+tags: [Python, Flask, Ngrok]
 ---
 
 # Lời mở đầu

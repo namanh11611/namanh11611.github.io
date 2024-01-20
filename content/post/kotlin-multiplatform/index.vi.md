@@ -2,9 +2,10 @@
 title: "Kotlin Multiplatform - Kẻ ngáng đường Flutter, React Native?"
 description: "Phải chia sẻ thật với chư vị huynh đệ rằng ấn tượng ban đầu của tại hạ với Kotlin Multiplatform không tốt lắm."
 date: 2023-05-07T13:37:00+07:00
+slug: kotlin-multiplatform
 image: kotlin.jpeg
 categories: Technical
-tags: [Android, iOS, Kotlin]
+tags: [Android, iOS, Kotlin, Kotlin Multiplatform]
 ---
 
 # Lời mở đầu

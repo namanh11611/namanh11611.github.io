@@ -2,6 +2,7 @@
 title: "6-Month Journey Applying the Pomodoro Technique"
 description: "Is this method truly effective in increasing productivity, as rumored? Join me in this article to explore my journey of applying it at work."
 date: 2023-12-23T00:00:00+07:00
+slug: pomodoro
 image: pomodoro.jpeg
 toc: true
 categories: Career
