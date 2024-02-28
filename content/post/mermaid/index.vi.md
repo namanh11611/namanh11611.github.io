@@ -29,11 +29,11 @@ Cú pháp cũng rất đơn giản và dễ học. Nếu bạn đã quen thuộc
 
 Với mục đích vẽ các diagram đơn giản, các bạn hoàn toàn có thể sử dụng **[Mermaid Live Editor](https://mermaid.live)**, không cần cài đặt bất cứ thứ gì. Với các dự án của công ty, Mermaid cũng đã được tích hợp với **Notion** hoặc các sản phẩm của **Atlassian**. Còn nếu bạn muốn sử dụng ở local thì Mermaid có thể dùng ngay trên các IDE phổ biến như **Visual Studio Code** hoặc họ nhà **JetBrains**.
 
-## So sánh với PlantUTM
+## So sánh với PlantUML
 
-Trên thị trường hiện tại cũng đã có một số công cụ khác render diagram từ text như Mermaid, trong đó nổi bật nhất là **[PlantUTM](https://plantuml.com)**. Sau đây mình sẽ đưa ra một bảng so sánh để các bạn có cái nhìn tổng quan.
+Trên thị trường hiện tại cũng đã có một số công cụ khác render diagram từ text như Mermaid, trong đó nổi bật nhất là **[PlantUML](https://plantuml.com)**. Sau đây mình sẽ đưa ra một bảng so sánh để các bạn có cái nhìn tổng quan.
 
-| Tiêu chí | Mermaid | PlantUTM |
+| Tiêu chí | Mermaid | PlantUML |
 | -------- | -------- | -------- |
 | GitHub Star (25/2/2024) | [65.400](https://github.com/mermaid-js/mermaid) | [9.300](https://github.com/plantuml/plantuml) |
 | Loại diagram | Flow, Sequence, Class, State, Git graph...  | Sequence, Usecase, Class, Object, Activity, State... |
