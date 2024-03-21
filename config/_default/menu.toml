@@ -26,19 +26,10 @@ weight = 2
 icon = "brand-github"
 
 [[social]]
-identifier = "leetcode"
-name = "Leetcode"
-url = "https://leetcode.com/namanh11611"
-weight = 3
-
-[social.params]
-icon = "brand-leetcode"
-
-[[social]]
 identifier = "viblo"
 name = "Viblo"
 url = "https://viblo.asia/u/namanh11611"
-weight = 4
+weight = 3
 
 [social.params]
 icon = "brand-viblo"
@@ -47,7 +38,7 @@ icon = "brand-viblo"
 identifier = "twitter"
 name = "Twitter"
 url = "https://twitter.com/namanh11611"
-weight = 5
+weight = 4
 
 [social.params]
 icon = "brand-twitter"
@@ -56,7 +47,7 @@ icon = "brand-twitter"
 identifier = "facebook"
 name = "Facebook"
 url = "https://facebook.com/namanh11611"
-weight = 6
+weight = 5
 
 [social.params]
 icon = "brand-facebook"
