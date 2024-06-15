@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Henry Techie</title><link>https://namanh11611.github.io/tags/blog/</link><description>Recent content in Blog on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 24 May 2023 00:42:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Technical Blog của Engineers các công ty lớn</title><link>https://namanh11611.github.io/p/technical-blog/</link><pubDate>Wed, 24 May 2023 00:42:00 +0700</pubDate><guid>https://namanh11611.github.io/p/technical-blog/</guid><description>&lt;img src="https://namanh11611.github.io/p/technical-blog/blog.jpeg" alt="Featured image of post Technical Blog của Engineers các công ty lớn" />&lt;p>Ngoài việc học qua các tutorial, video thì &lt;strong>technical blog&lt;/strong> là một nguồn khá hay ho. Khi đọc blog của kỹ sư phần mềm ở các công ty lớn, bạn sẽ biết được cách họ &lt;strong>xử lý những bài toán&lt;/strong> mà họ đã đối mặt như thế nào. Với thời đại AI phát triển, &lt;strong>Copilot&lt;/strong> hay &lt;strong>Tabnine&lt;/strong> đã sẵn sàng generate code để support bạn tận răng, thì các kỹ sư không còn hơn kém nhau ở khả năng &lt;strong>nhớ syntax của ngôn ngữ này hay framework nọ&lt;/strong> nữa, mà là hơn nhau ở &lt;strong>cách giải quyết vấn đề&lt;/strong>. Vậy thì qua bài viết này, mình sẽ giới thiệu cho bạn blog của các công ty lớn, hy vọng bạn sẽ có thêm những góc nhìn thú vị.&lt;/p>
+&lt;p>Bạn có thể click vào title của từng mục để chuyển đến blog.&lt;/p>
+&lt;h1 id="metahttpsengineeringfbcom">&lt;a class="link" href="https://engineering.fb.com" target="_blank" rel="noopener"
+>Meta&lt;/a>
+&lt;/h1>&lt;p>&lt;strong>Meta&lt;/strong> (hay còn được biết đến với tên gọi cũ là &lt;strong>Facebook&lt;/strong>) có nhiều sản phẩm như Facebook, Instagram, Whatsapp&amp;hellip; Trong blog này, họ chia sẻ về đủ các lĩnh vực, từ Android, iOS, Web đến các chủ đề khó như VR/AR hay AI.&lt;/p>
+&lt;h1 id="googlehttpsdevelopersgooglecom">&lt;a class="link" href="https://developers.google.com" target="_blank" rel="noopener"
+>Google&lt;/a>
+&lt;/h1>&lt;p>Khi vào trang chủ này, bạn có thể chọn 1 trong 4 lĩnh vực mà bạn quan tâm: &lt;strong>Mobile&lt;/strong>, &lt;strong>Web&lt;/strong>, &lt;strong>AI&lt;/strong> hoặc &lt;strong>Cloud&lt;/strong>, từ đó Google sẽ giới thiệu cho bạn các bài viết chi tiết về lĩnh vực đó.&lt;/p>
+&lt;p>Google cũng tạo nhiều khoá học về các công nghệ của họ. Mỗi khoá học bao gồm video, các bài viết giải thích chi tiết và bài tập ví dụ để bạn có thể làm theo. Khi hoàn thành, bạn có thể nhận một badge nhỏ. Khá thú vị!&lt;/p>
+&lt;h1 id="netflixhttpsnetflixtechblogcom">&lt;a class="link" href="https://netflixtechblog.com" target="_blank" rel="noopener"
+>Netflix&lt;/a>
+&lt;/h1>&lt;p>Chắc trong những năm gần đây, không còn ai xa lạ với Netflix, một nền tảng trình chiếu các bộ phim hay TV show nổi tiếng. Vậy thì thay vì dành thời gian &lt;em>Netflix and chill&lt;/em>, bạn thử đọc blog của họ để xem cách họ đã build hệ thống phục vụ hàng triệu người dùng xem sao.&lt;/p>
+&lt;h1 id="dropboxhttpsdropboxtech">&lt;a class="link" href="https://dropbox.tech" target="_blank" rel="noopener"
+>Dropbox&lt;/a>
+&lt;/h1>&lt;p>Tương tự như Google Drive, Dropbox là một dịch vụ lưu trữ đám mây, giúp bạn lưu trữ file online và đồng bộ giữa các thiết bị.&lt;/p>
+&lt;p>Qua blog của họ, bạn sẽ học được cách tối ưu bộ nhớ, băng thông khi chia sẻ file.&lt;/p>
+&lt;h1 id="twitterhttpsblogtwittercomengineeringen_us">&lt;a class="link" href="https://blog.twitter.com/engineering/en_us" target="_blank" rel="noopener"
+>Twitter&lt;/a>
+&lt;/h1>&lt;p>&lt;strong>&amp;ldquo;Design a system like Twitter&amp;rdquo;&lt;/strong> có lẽ là một bài toán kinh điển khi bạn đi phỏng vấn đến vòng &lt;strong>System Design&lt;/strong>. Vậy thì blog của Twitter sẽ là một nguồn tham khảo hữu ích cho bạn khi chuẩn bị phỏng vấn. Bạn có thể xem cách bạn nghĩ và cách Twitter thực sự làm có giống nhau không.&lt;/p>
+&lt;p>Gần đây, sau khi được Elon Musk mua về, Twitter thậm chí còn open source luôn cả &lt;a class="link" href="https://github.com/twitter/the-algorithm" target="_blank" rel="noopener"
+>&lt;strong>Recommendation Algorithm&lt;/strong>&lt;/a> của họ.&lt;/p>
+&lt;h1 id="uberhttpswwwubercomen-inblogengineering">&lt;a class="link" href="https://www.uber.com/en-IN/blog/engineering" target="_blank" rel="noopener"
+>Uber&lt;/a>
+&lt;/h1>&lt;p>Mặc dù đã rút khỏi thị trường Việt Nam sau thương vụ bắt tay với Grab, nhưng có thể nói, Uber vẫn là &lt;strong>công ty taxi lớn nhất thế giới&lt;/strong>. Vậy nên, blog của họ sẽ rất phù hợp với những anh em đang làm trong các công ty có &lt;strong>lĩnh vực hoạt động tương tự&lt;/strong> ở Việt Nam.&lt;/p>
+&lt;h1 id="spotifyhttpsengineeringatspotifycom">&lt;a class="link" href="https://engineering.atspotify.com" target="_blank" rel="noopener"
+>Spotify&lt;/a>
+&lt;/h1>&lt;p>Mình còn nhớ khi Spotify mới ra mắt ở Việt Nam, anh em đều rất ngạc nhiên với khả năng recommend của nó.&lt;/p>
+&lt;p>&lt;strong>Recommender system&lt;/strong> của Spotify là một hệ thống phức tạp, bao gồm nhiều &lt;strong>thuật toán&lt;/strong> và &lt;strong>Machine Learning model&lt;/strong> kết hợp. Vậy thì qua blog này, hy vọng bạn sẽ khám khá ra một phần hệ thống đó.&lt;/p>
+&lt;h1 id="linehttpsengineeringlinecorpcomenblog">&lt;a class="link" href="https://engineering.linecorp.com/en/blog" target="_blank" rel="noopener"
+>LINE&lt;/a>
+&lt;/h1>&lt;p>LINE là một trong những công ty cũ của mình. Tuy không phải là công ty top tier như những công ty trên nhưng văn hoá sharing cũng phát triển rất mạnh. Vậy nên qua bài viết này, mình muốn giới thiệu đến các bạn technical blog của các kỹ sư ở LINE.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://amitshekhar.me/blog/top-tech-engineering-blogs-of-companies" target="_blank" rel="noopener"
+>https://amitshekhar.me/blog/top-tech-engineering-blogs-of-companies&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clean Code on Henry Techie</title><link>https://namanh11611.github.io/tags/clean-code/</link><description>Recent content in Clean Code on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 01 May 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/clean-code/index.xml" rel="self" type="application/rss+xml"/><item><title>3 cách mình áp dụng để code gọn gàng sạch đẹp hơn</title><link>https://namanh11611.github.io/p/clean-code/</link><pubDate>Wed, 01 May 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/clean-code/</guid><description>&lt;img src="https://namanh11611.github.io/p/clean-code/tidy.jpg" alt="Featured image of post 3 cách mình áp dụng để code gọn gàng sạch đẹp hơn" />&lt;p>Có lẽ &lt;strong>Clean Code&lt;/strong> là một vấn đề kinh điển trong ngành lập trình, mình đã có lần nhắc đến cuốn sách &lt;strong>Clean Code&lt;/strong> của &lt;strong>Uncle Bob&lt;/strong> trong bài viết &lt;a class="link" href="https://viblo.asia/p/nhung-dieu-gia-nhu-minh-biet-tu-khi-con-la-junior-bXP4Wx6oJ7G" target="_blank" rel="noopener"
+>&lt;strong>Những điều giá như mình biết từ khi còn là Junior&lt;/strong>&lt;/a>. Tuy nhiên thì lần này mình sẽ không viết lại những nội dung trong đó nữa, các bạn nên đọc trực tiếp sách để có trải nghiệm tốt nhất. Mình chỉ muốn chia sẻ một vài tip mà mình hay áp dụng để giữ code luôn được &lt;strong>gọn gàng sạch đẹp&lt;/strong>.&lt;/p>
+&lt;h1 id="dùng-return-để-tránh-ifelse-hell">Dùng return để tránh if/else hell
+&lt;/h1>&lt;p>Không biết bạn đã bao giờ gặp &lt;strong>if/else hell&lt;/strong> kiểu như này trong code chưa?&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">doSomething&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">condition1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doFirstTask&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">condition2&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">!=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">null&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doSecondTask&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">condition3&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">isNotEmpty&lt;/span>&lt;span class="p">())&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doThirdTask&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Về lý thuyết thì đoạn code trên không có vấn đề gì cả. Thế nhưng mình lại không thích nhìn kiểu code lồng nhau nhiều lớp như vậy. Vậy nên mình thường sẽ dùng &lt;code>return&lt;/code> để tránh phải viết quá nhiều dấu ngoặc &lt;code>{}&lt;/code> lồng nhau. Chúng ta có thể refactor lại đoạn code trên như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">doSomething&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="n">condition1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doFirstTask&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">condition2&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">null&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doSecondTask&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">condition3&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">isEmpty&lt;/span>&lt;span class="p">())&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doThirdTask&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Về mặt logic code thì tương đương nhau, tuy nhiên thì về mặt ý nghĩa thì hơi khác một chút. Với trường hợp ban đầu, khi đồng nghiệp đọc code, họ sẽ hiểu là &lt;em>&amp;ldquo;Nếu thoả mãn điều kiện này thì code sẽ xử lý tiếp như thế này&amp;rdquo;&lt;/em>. Còn với trường hợp thứ hai, họ sẽ hiểu thành &lt;em>&amp;ldquo;Nếu không thoả mãn điều kiện này thì code sẽ không xử lý tiếp&amp;rdquo;&lt;/em>. Tư duy theo cách thứ 2 đôi khi hơi ngược một chút, nên bạn cũng &lt;strong>áp dụng tuỳ trường hợp&lt;/strong> thôi nhé, chứ đừng áp dụng máy móc cho tất cả các trường hợp.&lt;/p>
+&lt;h1 id="dùng-map-hoặc-set-thay-cho-list">Dùng Map hoặc Set thay cho List
+&lt;/h1>&lt;p>&lt;strong>Map&lt;/strong> và &lt;strong>Set&lt;/strong> là 2 cấu trúc dữ liệu đặc biệt mà chắc chắn các bạn đã được học ở đại học. Tuy nhiên, trong dự án, mọi người thường luôn luôn sử dụng &lt;strong>List&lt;/strong> vì nó &amp;ldquo;tiện&amp;rdquo;. Với mình thì trước khi chọn loại dữ liệu cho một list, mình luôn đặt câu hỏi liệu dùng Map hay Set có giúp &lt;strong>code ngắn gọn&lt;/strong> và &lt;strong>tăng performance&lt;/strong> hơn không? Nếu có, chắc chắn mình sẽ &lt;strong>ưu tiên dùng 2 loại dữ liệu&lt;/strong> này trước.&lt;/p>
+&lt;p>Ví dụ, mình có một biến &lt;code>existingValueList&lt;/code> gồm một list các value đã tồn tại, khi user nhập một value mới, mình cần check xem nó đã tồn tại chưa, nếu có thì trả về lỗi. Nếu &lt;code>existingValueList&lt;/code> có kiểu dữ liệu là &lt;code>List&lt;/code>, mình sẽ cần viết hàm check như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">boolean&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">isExisting&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">existingValueList&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">contains&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nhưng nếu kiểu dữ liệu là Set, chúng ta sẽ viết như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">boolean&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">isExisting&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">existingValueSet&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">contains&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;em>&amp;ldquo;Ủa, rồi khác gì nhau?&amp;rdquo;&lt;/em>. Đúng là cách viết thì không khác gì nhau, nhưng sự khác nhau nằm trong chính hàm &lt;code>contains()&lt;/code>, run time của &lt;code>List&lt;/code> sẽ là &lt;code>O(n)&lt;/code>, trong khi đó của &lt;code>Set&lt;/code> chỉ là &lt;code>O(1)&lt;/code>.&lt;/p>
+&lt;p>99% là bạn đã biết điều này, nhưng đôi khi bạn sẽ sử dụng &lt;strong>List&lt;/strong> như một thói quen. Vậy nên lần sau, trước khi tạo một &lt;strong>List&lt;/strong>, bạn hãy chậm lại một nhịp để suy nghĩ xem có nên dùng &lt;strong>Map&lt;/strong> hay &lt;strong>Set&lt;/strong> không nhé.&lt;/p>
+&lt;p>Ngoài ra chúng ta còn nhiều cấu trúc dữ liệu khác như &lt;strong>Stack&lt;/strong>, &lt;strong>Queue&lt;/strong>, &lt;strong>Tree&lt;/strong>&amp;hellip; Nhưng trong dự án thực tế thì mình hiếm gặp những use-case cần áp dụng bọn này.&lt;/p>
+&lt;h1 id="đừng-comment-code-không-dùng-nữa-hay-xoá-nó">Đừng comment code không dùng nữa, hay xoá nó
+&lt;/h1>&lt;p>Mình thấy một số bạn có thói quen khi sửa một tính năng gì đấy, thường sẽ &lt;strong>comment lại code cũ&lt;/strong> thay vì xoá nó. Hoặc có những &lt;strong>function cũ không dùng nữa&lt;/strong>, nhưng cũng chẳng buồn comment hay xoá gì, cứ để nó nằm vậy trơ gan cùng tuế nguyệt. Nhưng tin mình đi, &lt;strong>vài tháng&lt;/strong> hoặc thậm chí &lt;strong>vài năm&lt;/strong> sau, chắc bạn sẽ chẳng bao giờ uncomment lại đống code đấy đâu. Mỗi lần vài dòng thôi, nhưng qua năm tháng sẽ thành một núi &lt;strong>dead code&lt;/strong> khổng lồ.&lt;/p>
+&lt;p>Nếu muốn xem lại code cũ, &lt;a class="link" href="https://viblo.asia/p/quy-trinh-lam-viec-chuan-chi-voi-git-eW65G10RZDO" target="_blank" rel="noopener"
+>&lt;strong>Git&lt;/strong>&lt;/a> đã có thể giúp bạn rất tốt rồi. Vậy nên hãy mạnh dạn xoá nó, không chỉ là &lt;strong>vài dòng code&lt;/strong>, &lt;strong>một function&lt;/strong>, mà còn cả &lt;strong>resource&lt;/strong> của app mà bạn không dùng nữa. Điều này sẽ giúp giảm dung lượng của source code đi nhiều.&lt;/p>
+&lt;p>Nếu bạn có tip nào hay ho mà đang áp dụng, hãy chia sẻ thêm với mình nhé.&lt;/p></description></item></channel></rss>

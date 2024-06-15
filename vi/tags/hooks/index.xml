@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hooks on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/hooks/</link><description>Recent content in Hooks on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Tue, 30 Apr 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/hooks/index.xml" rel="self" type="application/rss+xml"/><item><title>Flutter Hooks - viết code ngắn gọn và hiệu quả hơn</title><link>https://namanh11611.github.io/vi/p/flutter-hooks/</link><pubDate>Tue, 30 Apr 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/flutter-hooks/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-hooks/hooks.jpeg" alt="Featured image of post Flutter Hooks - viết code ngắn gọn và hiệu quả hơn" />&lt;h1 id="flutter-hooks-là-cái-chi-chi">Flutter Hooks là cái chi chi?
+&lt;/h1>&lt;p>Khi tìm kiếm từ khoá &lt;strong>Hooks&lt;/strong> trên Google, chúng ta sẽ thấy rất nhiều kết quả liên quan đến &lt;strong>React&lt;/strong>. Quả thật, như trong phần giới thiệu, thư viện &lt;a class="link" href="https://pub.dev/packages/flutter_hooks" target="_blank" rel="noopener"
+>&lt;strong>flutter_hooks&lt;/strong>&lt;/a> được tác giả &lt;a class="link" href="https://github.com/rrousselGit" target="_blank" rel="noopener"
+>&lt;strong>Remi Rousselet&lt;/strong>&lt;/a> build dựa trên niềm cảm hứng từ React.&lt;/p>
+&lt;p>&lt;strong>Hooks&lt;/strong> là một loại object giúp quản lý life-cycle của &lt;code>Widget&lt;/code>. Mục tiêu duy nhất của nó là giúp tăng khả năng chia sẻ source code giữa các &lt;code>Widget&lt;/code> bằng cách loại bỏ các phần code trùng lặp.&lt;/p>
+&lt;p>Các bạn có thể sẽ thắc mắc: &lt;em>&amp;ldquo;Ủa, &lt;code>StatefulWidget&lt;/code> trong Flutter đã có method &lt;code>initState&lt;/code> và &lt;code>dispose&lt;/code> để lo việc quản lý life-cycle rồi cơ mà? Cần gì Hook nữa?&amp;rdquo;&lt;/em>. Chính xác, thế nhưng chúng ta rất khó để tái sử dụng code trong 2 method này. Và &lt;strong>Hooks&lt;/strong> sinh ra để giải quyết vấn đề đó.&lt;/p>
+&lt;h1 id="hướng-dẫn-sử-dụng">Hướng dẫn sử dụng
+&lt;/h1>&lt;p>Một ví dụ đơn giản về Hooks như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">MyHookWidget&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">HookWidget&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">const&lt;/span> &lt;span class="n">MyHookWidget&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="k">super&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Widget&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BuildContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Scaffold&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">body:&lt;/span> &lt;span class="n">Center&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Counter: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">counter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">floatingActionButton:&lt;/span> &lt;span class="n">FloatingActionButton&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">onPressed:&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">counter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="kd">const&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bạn có thể thấy &lt;code>Widget&lt;/code> của chúng ta thay vì extend &lt;code>StatefulWidget&lt;/code> hay &lt;code>StatelessWidget&lt;/code>, thì bây giờ nó phải extend một &lt;code>HookWidget&lt;/code>. Trong method &lt;code>build&lt;/code> có một từ khoá lạ lạ là &lt;code>useState&lt;/code>, đấy chính là một trong những &lt;strong>hook&lt;/strong> của Flutter Hooks, phần sau chúng ta sẽ cùng đi tìm hiểu một số hook cơ bản của nó.&lt;/p>
+&lt;p>Giờ đây, khi bạn click vào &lt;code>FloatingActionButton&lt;/code>, giá trị của text sẽ thay đổi với biến &lt;code>counter&lt;/code> tăng dần, nó tương tự như cách mà &lt;code>StatefulWidget&lt;/code> hoạt động phải không nào?&lt;/p>
+&lt;h2 id="useeffect-hook">useEffect hook
+&lt;/h2>&lt;p>Nó gần giống với &lt;code>useEffect&lt;/code> hook của React, được sử dụng để thực hiện các side effect &lt;strong>synchronously&lt;/strong> trong quá trình render. Effect có thể return một function, function này sẽ được gọi khi &lt;strong>effect được gọi lại&lt;/strong> hoặc &lt;strong>widget bị dispose&lt;/strong>.&lt;/p>
+&lt;p>Mặc định, effect được gọi lại mỗi lần build, trừ khi chúng ta truyền &lt;strong>param key&lt;/strong>. Khi đó, effect chỉ được gọi lại khi key thay đổi.&lt;/p>
+&lt;p>Side effect có thể bao gồm stream subscription, mở một &lt;strong>WebSocket connection&lt;/strong> hoặc thực hiện một &lt;strong>HTTP request&lt;/strong>. Chúng ta có thể cancel chúng khi widget bị dispose.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">useEffect&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">performSideEffect&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cleanUp&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usestate-hook">useState hook
+&lt;/h2>&lt;p>Đây là loại hook cơ bản nhất khi bạn muốn chuyển một &lt;code>StatelessWidget&lt;/code> sang &lt;code>StatefulWidget&lt;/code>. Khi được gọi trong method &lt;code>build&lt;/code>, nó sẽ giữ state giữa những lần widget rebuild.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong ví dụ này, chúng ta truyền cho nó một giá trị khởi tạo là &lt;code>0&lt;/code>. Biến &lt;code>counter&lt;/code> chính là một instance của &lt;code>ValueNotifier&lt;/code>. State được lưu trong thuộc tính &lt;code>value&lt;/code> của &lt;code>ValueNotifier&lt;/code>. Mỗi khi giá trị của &lt;code>value&lt;/code> bị thay đổi, &lt;code>useState&lt;/code> hook sẽ rebuild widget để hiển thị giá trị mới.&lt;/p>
+&lt;h2 id="usememoized-hook">useMemoized hook
+&lt;/h2>&lt;p>Đây là một method hữu ích khi bạn cần tạo một object phức tạp và muốn trả về cùng một object đó qua nhiều lần rebuild widget con. &lt;code>useMemoized&lt;/code> sẽ giúp chúng ta cache object đó, giá trị chỉ được tính toán trong lần gọi đầu tiên, còn những lần sau, nó sẽ trả về giá trị đã được lưu trước đó.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">complexObject&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useMemoized&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">createComplexObject&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="useref-hook">useRef hook
+&lt;/h2>&lt;p>Tạo một object chứa một thuộc tính có thể thay đổi. Tuy nhiên thì việc thay đổi thuộc tính của object sẽ không có effect. Nó phù hợp cho các use-case mà chúng ta cần share state giữa những lần &lt;code>build&lt;/code> method được gọi, nhưng tránh được việc rebuild không cần thiết.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">textController&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useTextEditingController&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">/// Sử dụng useState() trong trường hợp này
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">/// sẽ làm widget rebuild mỗi lần nhập một ký tự
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// final name = useState(&amp;#39;&amp;#39;);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kd">final&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useRef&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">useEffect&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">textController&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">addListener&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">textController&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usecallback-hook">useCallback hook
+&lt;/h2>&lt;p>Cache instance của toàn bộ một function, nếu như chính function đó được gọi lại.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">cachedFun&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useCallback&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Statements&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usecontext-hook">useContext hook
+&lt;/h2>&lt;p>Giữ &lt;code>BuildContext&lt;/code> của &lt;code>HookWidget&lt;/code>, giúp chúng ta không phải truyền param &lt;code>context&lt;/code> qua các method.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Widget&lt;/span> &lt;span class="n">createSizedBox&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">SizedBox&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">height:&lt;/span> &lt;span class="n">MediaQuery&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sizeOf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">useContext&lt;/span>&lt;span class="p">()).&lt;/span>&lt;span class="n">height&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="m">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usevaluechanged-hook">useValueChanged hook
+&lt;/h2>&lt;p>Theo dõi một giá trị và trigger một callback bất cứ khi nào giá trị của nó thay đổi. Quay trở lại với ví dụ ban đầu, chúng ta sửa một chút như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">count&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">newCount&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">useValueChanged&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">count&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">oldValue&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">oldResult&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;oldValue = &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">oldValue&lt;/span>&lt;span class="s1">, oldResult = &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">oldResult&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">newCount&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="m">5&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">newCount&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Khi click &lt;code>FloatingActionButton&lt;/code>, kết quả sẽ được in ra lần lượt như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">oldValue = 0, oldResult = null
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">oldValue = 1, oldResult = 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">oldValue = 2, oldResult = 10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bạn có thể thấy, mỗi khi giá trị của &lt;code>count&lt;/code> thay đổi, &lt;code>newCount&lt;/code> cũng sẽ được thay đổi theo.&lt;/p>
+&lt;h2 id="usestream-hook">useStream hook
+&lt;/h2>&lt;p>Giúp subscribe một &lt;code>Stream&lt;/code> và return state hiện tại nó.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">snapshot&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useStream&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">backend&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="useanimationcontroller-hook">useAnimationController hook
+&lt;/h2>&lt;p>Tạo một &lt;code>AnimationController&lt;/code> và nó sẽ bị dispose một cách tự động.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">controller&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useAnimationController&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">duration:&lt;/span> &lt;span class="n">Duration&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">seconds:&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="lợi-ích-của-hooks">Lợi ích của Hooks
+&lt;/h1>&lt;ol>
+&lt;li>&lt;strong>State Management&lt;/strong>: Hooks giúp đơn giản hóa việc quản lý local state, đảm bảo widget chỉ xử lý logic liên quan đến nó.&lt;/li>
+&lt;li>&lt;strong>Giảm duplicate code&lt;/strong>: Custom hooks cho phép bạn tái sử dụng logic của widget, giảm đáng kể việc duplicate code và cải thiện chất lượng code.&lt;/li>
+&lt;li>&lt;strong>Cải thiện Hot Reload&lt;/strong>: Với hooks, hot reload mặc định ít bị lỗi hơn vì trạng thái của hook được giữ nguyên.&lt;/li>
+&lt;li>&lt;strong>Tiện lợi&lt;/strong>: Một số built-in hooks như &lt;code>useAnimationController&lt;/code>, &lt;code>useFuture&lt;/code> và &lt;code>useStream&lt;/code> là những method có thể áp dụng cho nhiều use-case phổ biến.&lt;/li>
+&lt;li>&lt;strong>Đơn giản hóa life-cycle&lt;/strong>: Việc quản lý các life-cycle phức tạp trở nên đơn giản hơn rất nhiều với Flutter Hooks. Chúng cung cấp một giải pháp để dễ dàng quản lý state, side-effects và stream subscriptions.&lt;/li>
+&lt;li>&lt;strong>Custom hooks linh hoạt&lt;/strong>: Ngoài các hook đã có sẵn, Flutter Hooks cho phép bạn tạo các hooks tùy chỉnh, giúp việc viết code linh hoạt hơn.&lt;/li>
+&lt;/ol>
+&lt;p>Có thể bạn đã biết &lt;strong>Remi Rousselet&lt;/strong> còn là tác giả của 2 thư viện &lt;strong>State Management&lt;/strong> nổi tiếng là &lt;a class="link" href="https://pub.dev/packages/provider" target="_blank" rel="noopener"
+>&lt;strong>Provider&lt;/strong>&lt;/a> và &lt;a class="link" href="https://pub.dev/packages/flutter_riverpod" target="_blank" rel="noopener"
+>&lt;strong>Riverpod&lt;/strong>&lt;/a>. Trong đó thì anh ấy đã kết hợp Riverpod và Hook trong một thư viện là &lt;a class="link" href="https://pub.dev/packages/hooks_riverpod" target="_blank" rel="noopener"
+>&lt;strong>Hooks Riverpod&lt;/strong>&lt;/a>. Bạn có thể nhân hai sức mạnh với thư viện này. Riverpod là dành cho &amp;ldquo;global&amp;rdquo; application state, còn hooks dành cho local widget state.&lt;/p>
+&lt;h1 id="lời-kết">Lời kết
+&lt;/h1>&lt;p>Mình thấy &lt;strong>Flutter Hooks&lt;/strong> khá tiềm năng, nhưng vẫn thấy chưa nhiều dự án áp dụng. Không biết các bạn đã từng áp dụng nó chưa? Nếu thấy nó có ưu hoặc nhược điểm gì, hãy chia sẻ với mình nhé.&lt;/p></description></item></channel></rss>

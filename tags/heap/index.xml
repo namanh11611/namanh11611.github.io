@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Heap on Henry Techie</title><link>https://namanh11611.github.io/tags/heap/</link><description>Recent content in Heap on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 04 Jan 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/heap/index.xml" rel="self" type="application/rss+xml"/><item><title>Bộ nhớ Stack và Heap trong Java</title><link>https://namanh11611.github.io/p/stack-heap/</link><pubDate>Thu, 04 Jan 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/stack-heap/</guid><description>&lt;img src="https://namanh11611.github.io/p/stack-heap/stack-heap.jpeg" alt="Featured image of post Bộ nhớ Stack và Heap trong Java" />&lt;h1 id="bộ-nhớ-stack-với-heap-là-cái-chi-chi">Bộ nhớ Stack với Heap là cái chi chi?
+&lt;/h1>&lt;p>Quản lý bộ nhớ là một yếu tố quan trọng trong lập trình, biết cách tối ưu bộ nhớ sẽ giúp ứng dụng của chúng ta hoạt động mượt mà, không bị lag hoặc crash. JVM (Java Virtual Machine) chia bộ nhớ ra thành 2 phần: &lt;strong>Stack&lt;/strong> và &lt;strong>Heap&lt;/strong> (các bạn đừng nhầm với cấu trúc dữ liệu Stack và Heap nhé). Trong bài viết này, chúng ta sẽ tìm hiểu về vai trò, chức năng và cách hoạt động của từng loại bộ nhớ.&lt;/p>
+&lt;h1 id="bộ-nhớ-stack">Bộ nhớ Stack
+&lt;/h1>&lt;h2 id="cách-hoạt-động">Cách hoạt động
+&lt;/h2>&lt;p>&lt;strong>Stack&lt;/strong> lưu trữ các biến có kiểu dữ liệu &lt;strong>primitive&lt;/strong> (int, float, char, boolean&amp;hellip;), &lt;strong>biến cục bộ&lt;/strong> và &lt;strong>thông tin về các method được gọi&lt;/strong>. Nó hoạt động theo cơ chế &lt;strong>LIFO&lt;/strong> (&lt;strong>L&lt;/strong>ast &lt;strong>I&lt;/strong>n &lt;strong>F&lt;/strong>irst &lt;strong>O&lt;/strong>ut). Nghĩa là những method nào được gọi sau sẽ được Stack cấp phát cho một frame, chứa thông tin về tham số, biến cục bộ, và Stack sẽ giải phóng frame đó khi method được return.&lt;/p>
+&lt;p>Ví dụ với một đoạn code như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">args&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doSomething&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">private&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">doSomething&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">long&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">123456789L&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doSomethingElse&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">private&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">doSomethingElse&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">age&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">23&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong Stack sẽ lưu các thông tin theo cấu trúc sau:&lt;/p>
+&lt;p>&lt;img src="https://images.viblo.asia/1b40f39b-74e9-4596-aaa7-e042a78b5ec7.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>Stack được dùng để thực thi một thread, chính vì vậy JVM sẽ tạo một &lt;strong>stack riêng biệt cho mỗi thread&lt;/strong>. Mặc định, nếu chúng ta không khai báo kích thước của Stack, JVM sẽ tạo với kích thước tuỳ thuộc vào &lt;strong>hệ điều hành và kiến trúc máy tính&lt;/strong> (thông thường là &lt;strong>1MB&lt;/strong>). Tuy nhiên, chúng ta có thể dùng flag &lt;code>-Xss&lt;/code> để tuỳ chỉnh kích thước của Stack (không vượt quá max size, thường là 1GB).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">java -Xss1048576 // 1.048.576 byte
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">java -Xss1024k // 1.024 KB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">java -Xss1m // 1 MB
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="stackoverflow">StackOverflow
+&lt;/h2>&lt;p>Một lỗi kinh điển liên quan đến Stack là &lt;strong>StackOverflow&lt;/strong>. Nó xảy ra khi lượng data được lưu vào Stack vượt quá giới hạn của nó.&lt;/p>
+&lt;p>Ví dụ khi chúng ta gọi đệ quy nhưng không có điều kiện dừng:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">callRecursion&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">callRecursion&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bạn có thể tưởng tượng các method liên tục được nạp vào Stack, đến một lúc nào đó nó sẽ vượt quá kích thước 1MB nhỏ bé kia. Vì vậy, đoạn code trên sẽ ném ra lỗi &lt;code>java.lang.StackOverflowError&lt;/code>.&lt;/p>
+&lt;p>Một số cách để tránh StackOverflow error:&lt;/p>
+&lt;ul>
+&lt;li>Đảm bảo các hàm đệ quy có điều kiện dừng hoặc không bị gọi quá nhiều lần&lt;/li>
+&lt;li>Quản lý các thread cẩn trọng&lt;/li>
+&lt;li>Tránh sử dụng biến local có kích thước quá lớn&lt;/li>
+&lt;li>Tránh dependencies vòng tròn&lt;/li>
+&lt;/ul>
+&lt;h1 id="bộ-nhớ-heap">Bộ nhớ Heap
+&lt;/h1>&lt;h2 id="cách-hoạt-động-1">Cách hoạt động
+&lt;/h2>&lt;p>&lt;strong>Heap&lt;/strong> lưu trữ các biến có kiểu dữ liệu &lt;strong>Object&lt;/strong> hoặc &lt;strong>array&lt;/strong>. Nó sử dụng cơ chế &lt;strong>cấp phát và giải phóng bộ nhớ động&lt;/strong>. Heap khá linh hoạt, có thể mở rộng hoặc thu hẹp theo nhu cầu trong quá trình thực thi chương trình.&lt;/p>
+&lt;p>Ví dụ, khi chúng ta sử dụng từ khoá &lt;code>new&lt;/code> để tạo một object &lt;code>Student&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">private&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">doSomething&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">long&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">123456789L&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">Student&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">student&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">new&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Student&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">doSomethingElse&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">private&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">doSomethingElse&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">age&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">23&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">str&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s">&amp;#34;Hello World&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bộ nhớ sẽ tìm một vùng nhớ trống ngẫu nhiên trong Heap để cấp phát và lưu thông tin của object &lt;code>student&lt;/code>. Ở bên Stack sẽ có một &lt;strong>biến tham chiếu&lt;/strong>, trỏ sang thông tin của object &lt;code>student&lt;/code> bên Heap. Còn đối với String, Heap có một cấu trúc dữ liệu đặc biệt là String pool để lưu trữ chúng.&lt;/p>
+&lt;p>&lt;img src="https://images.viblo.asia/e4bc1a75-0fa2-4366-a1e2-c74f66a3326a.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>Heap được tạo ra khi JVM khởi chạy và nó được sử dụng miễn là ứng dụng còn chạy. Khác với Stack, Heap được chia sẻ giữa toàn bộ các thread.&lt;/p>
+&lt;p>Mặc định, kích thước khi khởi tạo của Heap là &lt;strong>256MB&lt;/strong> và kích thước lớn nhất là &lt;strong>4068MB&lt;/strong>. Chúng ta cũng có thể thay đổi thông số này bằng flag &lt;code>-Xms&lt;/code> (kích thước khởi tạo) và &lt;code>-Xmx&lt;/code> (kích thước lớn nhất).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">// Initial heap size = 512MB, Maximum heap size = 1024MB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">java -Xms512m -Xmx1024m
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="garbage-collection">Garbage Collection
+&lt;/h2>&lt;p>Trong Java, &lt;strong>Garbage Collection&lt;/strong> có trách nhiệm thu hồi bộ nhớ từ các biến trong bộ nhớ Heap mà &lt;strong>không còn được tham chiếu&lt;/strong> đến nữa. Quá trình này được thực hiện một cách tự động. Trong ví dụ trên, khi chúng ta không còn dùng đến object &lt;code>student&lt;/code> nữa, Garbage Collection sẽ tự động thu hồi vùng nhớ đã cấp phát trước đó cho nó.&lt;/p>
+&lt;p>Chính nhờ cơ chế này, Heap cho phép cấp phát và giải phóng vùng nhớ với các biến có kích thước lớn và cấu trúc phức tạp ở runtime. Nếu chúng ta tạo ra quá nhiều biến trong Heap nhưng code lởm nên làm cho Garbage Collection không thể thu hồi vùng nhớ hiệu quả sẽ gây ra &lt;strong>memory leak&lt;/strong>.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Garbage Collection&lt;/strong> hoạt động như một bạn quản lý trong nhà hàng. Khi có khách đến, các bạn nhân viên sẽ mời khách ngồi vào một bàn trống, mang bát đũa, menu ra cho khách (cấp phát bộ nhớ). Bạn quản lý sẽ thường xuyên đi vòng vòng kiểm tra, nếu thấy bàn nào khách đã ăn xong đi về thì sẽ gọi nhân viên ra lau dọn sạch sẽ để sẵn sàng đón khách mới (giải phóng bộ nhớ).&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="outofmemory">OutOfMemory
+&lt;/h2>&lt;p>Khi Heap bị đầy và chúng ta không thể cấp phát bộ nhớ cho object mới, nó sẽ ném ra lỗi &lt;code>java.lang.OutOfMemoryError&lt;/code>.&lt;/p>
+&lt;p>Giải pháp của chúng ta là phân tích code, dùng các công cụ profiling để phát hiện xem memory leak xảy ra ở đâu, xoá tham chiếu tới object khi không cần dùng đến nó nữa và để cho Garbage Collection làm việc của nó. Một số cách tối ưu bộ nhớ:&lt;/p>
+&lt;ul>
+&lt;li>Tránh tạo các object không cần thiết&lt;/li>
+&lt;li>Tái sử dụng object nếu có thể&lt;/li>
+&lt;li>Chọn cấu trúc dữ liệu phù hợp&lt;/li>
+&lt;li>Ưu tiên sử dụng biến cục bộ thay vì biến toàn cục&lt;/li>
+&lt;/ul>
+&lt;h1 id="so-sánh">So sánh
+&lt;/h1>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>Bộ nhớ Stack&lt;/th>
+&lt;th>Bộ nhớ Heap&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Lưu trữ&lt;/td>
+&lt;td>primitive, biến cục bộ, method&lt;/td>
+&lt;td>Object, array&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tốc độ truy cập&lt;/td>
+&lt;td>Nhanh&lt;/td>
+&lt;td>Chậm&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Kích thước&lt;/td>
+&lt;td>Nhỏ, Cố định&lt;/td>
+&lt;td>Lớn, Linh động&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Phạm vi sử dụng&lt;/td>
+&lt;td>Thread tương ứng với Stack&lt;/td>
+&lt;td>Toàn bộ các thread&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Thứ tự cấp phát&lt;/td>
+&lt;td>LIFO&lt;/td>
+&lt;td>Ngẫu nhiên&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Thời gian tồn tại của biến&lt;/td>
+&lt;td>Từ lúc call method đến lúc return&lt;/td>
+&lt;td>Từ lúc tạo đến lúc bị Garbage Collection giải phóng&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h1 id="kết-luận">Kết luận
+&lt;/h1>&lt;p>Trong bài viết này, còn nhiều khái niệm liên quan đến bộ nhớ nhưng mình chưa thể truyền tải hết. Hy vọng bạn đã hiểu một cách căn bản về cách bộ nhớ Stack và Heap hoạt động, từ đó có thêm kinh nghiệm tối ưu hiệu năng của ứng dụng.&lt;/p></description></item></channel></rss>
