@@ -48,9 +48,11 @@ Giờ đây, khi bạn click vào `FloatingActionButton`, giá trị của text 
 
 ## useEffect hook
 
-Nó gần giống với `useEffect` hook của React, được sử dụng để thực hiện các side effect trong quá trình render.
+Nó gần giống với `useEffect` hook của React, được sử dụng để thực hiện các side effect **synchronously** trong quá trình render. Effect có thể return một function, function này sẽ được gọi khi **effect được gọi lại** hoặc **widget bị dispose**.
 
-Side effect có thể bao gồm stream subscription, mở một WebSocket connection hoặc thực hiện một HTTP request. Chúng được thực hiện bên trong hook, vậy nên chúng ta có thể cancel chúng khi widget bị dispose.
+Mặc định, effect được gọi lại mỗi lần build, trừ khi chúng ta truyền **param key**. Khi đó, effect chỉ được gọi lại khi key thay đổi.
+
+Side effect có thể bao gồm stream subscription, mở một **WebSocket connection** hoặc thực hiện một **HTTP request**. Chúng ta có thể cancel chúng khi widget bị dispose.
 
 ```dart
 useEffect(() {
@@ -58,7 +60,7 @@ useEffect(() {
   return () {
     cleanUp();
   };
-}, []);
+}, [key]);
 ```
 
 ## useState hook
