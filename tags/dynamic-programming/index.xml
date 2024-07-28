@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dynamic Programming on Henry Techie</title><link>https://namanh11611.github.io/tags/dynamic-programming/</link><description>Recent content in Dynamic Programming on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 05 May 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/dynamic-programming/index.xml" rel="self" type="application/rss+xml"/><item><title>LeetCode: Dễ dàng nhận biết 5 dạng bài Dynamic Programming</title><link>https://namanh11611.github.io/p/dynamic-programming/</link><pubDate>Sun, 05 May 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/dynamic-programming/</guid><description>&lt;img src="https://namanh11611.github.io/p/dynamic-programming/dynamic_programming.jpg" alt="Featured image of post LeetCode: Dễ dàng nhận biết 5 dạng bài Dynamic Programming" />&lt;p>Có thể nói, trong quá trình làm LeetCode thì &lt;strong>Dynamic Programming (DP)&lt;/strong>, hay còn gọi là &lt;strong>Quy hoạch động&lt;/strong> trong tiếng Việt, là một dạng bài mọi người thường xuyên gặp nhất, nhưng cũng là một trong những dạng khó nhằn nhất. Khi gặp một bài mới, nếu bạn nhận ra nó có thể giải bằng DP là bạn đã đi được &lt;strong>80% quãng đường&lt;/strong> rồi. Vậy nên, để giúp cho quá trình &lt;em>&amp;ldquo;nhận ra&amp;rdquo;&lt;/em> đấy trở nên dễ dàng hơn, trong bài viết này, mình sẽ chia sẻ với các bạn 5 dạng phổ biến của DP trên LeetCode.&lt;/p>
+&lt;h1 id="tìm-giá-trị-nhỏ-nhất--lớn-nhất">Tìm giá trị nhỏ nhất / lớn nhất
+&lt;/h1>&lt;p>Đề bài thường có dạng:&lt;/p>
+&lt;blockquote>
+&lt;p>Cho một mục tiêu, tìm giá trị nhỏ nhất / lớn nhất để đạt mục tiêu đó.&lt;/p>
+&lt;/blockquote>
+&lt;p>Hướng giải:&lt;/p>
+&lt;blockquote>
+&lt;p>Tìm giá trị nhỏ nhất / lớn nhất trong số tất cả các cách có thể trước đó, sau đó cộng với giá trị của trạng thái hiện tại.&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="n">routes&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">routes&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">...&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">routes&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Khi giải một bài DP, chúng ta có 2 hướng làm là &lt;strong>Top-Down&lt;/strong> và &lt;strong>Bottom-Up&lt;/strong>.&lt;/p>
+&lt;p>Theo hướng tiếp cận &lt;strong>Top-Down&lt;/strong>, chúng ta sẽ bắt đầu bằng &lt;strong>bài toán lớn nhất&lt;/strong> hay là &lt;strong>bài toán ở mức trên cùng&lt;/strong> sau đó dùng &lt;strong>phương pháp đệ quy&lt;/strong> để gọi lời giải cho các &lt;strong>bài toán con&lt;/strong> ở mức thấp hơn tiếp theo. Quá trình tiếp tục cho đến khi gặp bài toán nhỏ nhất. Đệ quy sẽ tự động tổ hợp kết quả của các bài toán con để được kết quả bài toán ban đầu. Chúng ta thường sẽ dùng một mảng &lt;code>memo&lt;/code> để lưu kết quả các bài toán con, tránh việc phải tính đi tính lại chúng gây ra lỗi &lt;code>Time Limit Exceeded&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">size&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">topDown&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="cm">/*state parameters*/&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Còn theo hướng &lt;strong>Bottom-Up&lt;/strong>, chúng ta sẽ giải các &lt;strong>bài toán con&lt;/strong> ở mức thấp nhất, sau đó dùng các kết quả này để tính &lt;strong>bài toán ở mức trên&lt;/strong>. Quá trình tiếp tục cho đến khi chúng ta tìm được kết quả bài toán mức cao nhất. Cá nhân mình thì thường làm theo hướng nay hơn.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">size&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Chúng ta cùng áp dụng vào bài &lt;a class="link" href="https://leetcode.com/problems/min-cost-climbing-stairs" target="_blank" rel="noopener"
+>Min Cost Climbing Stairs&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>Cho mảng &lt;code>cost&lt;/code>, trong đó &lt;code>cost[i]&lt;/code> là chi phí của bước thứ &lt;code>i&lt;/code> trên cầu thang. Khi bạn trả phí, bạn có thể bước 1 hoặc 2 bước. Bạn được chọn bước từ vị trí 0 hoặc 1.&lt;/p>
+&lt;p>Tìm chi phí nhỏ nhất để đi hết cầu thang.&lt;/p>
+&lt;/blockquote>
+&lt;p>Bạn có thể nhận thấy rằng, khi xét bước thứ &lt;code>i&lt;/code>, bạn chỉ có thể bước đến đây từ bước thứ &lt;code>i - 1&lt;/code> (bước 1 bước) hoặc từ bước thứ &lt;code>i - 2&lt;/code> (bước 2 bước). Vậy nên, chi phí nhỏ nhất khi bước đến bước thứ &lt;code>i&lt;/code> sẽ bằng tổng của giá trị nhỏ hơn trong 2 bước trước đó cộng với &lt;code>cost[i]&lt;/code>. Từ đó chúng ta có 2 cách giải tương ứng như sau.&lt;/p>
+&lt;p>Top-Down&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">minCost&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">minCost&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">size&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">?&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bottom-Up&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">?&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cost&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="tìm-số-cách-khác-nhau">Tìm số cách khác nhau
+&lt;/h1>&lt;p>Đề bài thường có dạng:&lt;/p>
+&lt;blockquote>
+&lt;p>Cho một mục tiêu, tìm số cách khác nhau để đạt mục tiêu đó.&lt;/p>
+&lt;/blockquote>
+&lt;p>Hướng giải:&lt;/p>
+&lt;blockquote>
+&lt;p>Tính tổng tất cả các cách có thể để đạt đến mục tiêu.&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="n">routes&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">routes&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">routes&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">...&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">routes&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Top-Down&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">size&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">topDown&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="cm">/*state parameters*/&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Bottom-Up&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">size&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ways&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Chúng ta cùng áp dụng vào bài &lt;a class="link" href="https://leetcode.com/problems/climbing-stairs" target="_blank" rel="noopener"
+>Climbing Stairs&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>Bạn đang leo lên một chiếc cầu thang. Nó cần &lt;code>n&lt;/code> bước để leo đến đỉnh. Mỗi lần bạn chỉ có thể leo 1 hoặc 2 bước.&lt;/p>
+&lt;p>Hãy tính bạn có bao nhiêu cách khác nhau để leo đến đỉnh?&lt;/p>
+&lt;/blockquote>
+&lt;p>Tương tự như bài trên, khi xét bước thứ &lt;code>i&lt;/code>, bạn chỉ có thể bước đến đây từ bước thứ &lt;code>i - 1&lt;/code> (bước 1 bước) hoặc từ bước thứ &lt;code>i - 2&lt;/code> (bước 2 bước). Vậy nên, số cách khác nhau leo đến bước thứ &lt;code>i&lt;/code> sẽ bằng tổng của số cách đến bước &lt;code>i - 1&lt;/code> và số cách đến bước &lt;code>i - 2&lt;/code>. Từ đó chúng ta có 2 cách giải tương ứng như sau.&lt;/p>
+&lt;p>Top-Down&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">climbStairs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">climbStairs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bottom-Up&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">stair&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">stair&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">stair&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">stair&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">stair&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">stair&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="hợp-nhất-các-khoảng-giá-trị">Hợp nhất các khoảng giá trị
+&lt;/h1>&lt;p>Đề bài thường có dạng:&lt;/p>
+&lt;blockquote>
+&lt;p>Cho một bộ số, tìm giải pháp tối ưu cho một bài toán mà xét số hiện tại và kết quả tốt nhất bạn có thể nhận được từ bên trái và bên phải.&lt;/p>
+&lt;/blockquote>
+&lt;p>Hướng giải:&lt;/p>
+&lt;blockquote>
+&lt;p>Tìm tất cả giải pháp tối ưu cho mỗi khoảng và trả về kết quả tốt nhất có thể.&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// From i to j&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Top-Down&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">topDown&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">nums&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">topDown&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">nums&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">));&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">memo&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="cm">/*state parameters*/&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Bottom-Up&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Chúng ta cùng áp dụng vào bài &lt;a class="link" href="https://leetcode.com/problems/minimum-cost-tree-from-leaf-values" target="_blank" rel="noopener"
+>Minimum Cost Tree From Leaf Values&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>Cho một mảng &lt;code>arr&lt;/code> các số dương. Chọn tất cả cây nhị phân thoả mãn điều kiện:&lt;/p>
+&lt;ul>
+&lt;li>Mỗi node có 0 hoặc 2 node con&lt;/li>
+&lt;li>Giá trị các phần tử của mảng &lt;code>arr&lt;/code> tương ứng với giá trị của mỗi &lt;strong>lá&lt;/strong> (node không có con) khi duyệt cây theo &lt;strong>in-order&lt;/strong>&lt;/li>
+&lt;li>Giá trị của mỗi &lt;strong>node không phải lá&lt;/strong> thì bằng tích của &lt;strong>lá lớn nhất&lt;/strong> trong &lt;strong>cây con trái&lt;/strong> và &lt;strong>phải&lt;/strong> của nó&lt;/li>
+&lt;/ul>
+&lt;p>Trong tất cả các cây được chọn, tìm cây có tổng các &lt;strong>node không phải lá&lt;/strong> nhỏ nhất.&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">INT_MAX&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">maxs&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">maxs&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="string">String
+&lt;/h1>&lt;p>Đề bài cho &lt;code>String&lt;/code> thường có rất nhiều dạng, nhưng hầu hết đều là cho 1 hoặc 2 string với độ dài không quá lớn.&lt;/p>
+&lt;blockquote>
+&lt;p>Cho 2 string &lt;code>s1&lt;/code> và &lt;code>s2&lt;/code>, trả về kết quả gì đấy.&lt;/p>
+&lt;/blockquote>
+&lt;p>Hướng giải:&lt;/p>
+&lt;blockquote>
+&lt;p>Hầu hết các bài toán dạng này có thể giải với kết quả có độ phức tạp về thời gian là &lt;code>O(n)&lt;/code>.&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// i - indexing string s1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// j - indexing string s2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">m&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">s1&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">s2&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="cm">/*code*/&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="cm">/*code*/&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nếu đề bài chỉ cho 1 string thì cách giải sẽ hơi khác một chút:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="cm">/*code*/&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="cm">/*code*/&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Chúng ta cùng áp dụng vào bài &lt;a class="link" href="https://leetcode.com/problems/longest-common-subsequence" target="_blank" rel="noopener"
+>Longest Common Subsequence&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>Cho 2 string &lt;code>text1&lt;/code> và &lt;code>text2&lt;/code>, tìm chiều dài lớn nhất của subsequence chung.&lt;/p>
+&lt;/blockquote>
+&lt;p>Xét ký tự thứ &lt;code>i&lt;/code> của &lt;code>text1&lt;/code> và ký tự thứ &lt;code>j&lt;/code> của &lt;code>text2&lt;/code>.&lt;/p>
+&lt;ul>
+&lt;li>Nếu chúng giống nhau, chúng ta tăng chiều dài subsequence chung thêm 1&lt;/li>
+&lt;li>Nếu chúng khác nhau, chúng ta sẽ lấy chiều dài lớn hơn trong 2 trường hợp &lt;code>i - 1&lt;/code> với &lt;code>j&lt;/code> hoặc &lt;code>i&lt;/code> với &lt;code>j - 1&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">m&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">text1&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">text2&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Với bài toán 1 string, chúng ta sẽ áp dụng vào bài &lt;a class="link" href="https://leetcode.com/problems/palindromic-substrings" target="_blank" rel="noopener"
+>Palindromic Substrings&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>Cho 1 string &lt;code>s&lt;/code>, tính số lượng palindromic substring của nó.&lt;/p>
+&lt;/blockquote>
+&lt;p>Chúng ta xét ký tự thứ &lt;code>i&lt;/code> và &lt;code>j&lt;/code>, nếu chúng giống nhau và substring từ &lt;code>i + 1&lt;/code> đến &lt;code>j - 1&lt;/code> đã là palindromic thì chúng ta tìm được một palindromic mới.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">2&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="ra-quyết-định">Ra quyết định
+&lt;/h1>&lt;p>Dạng bài thì nổi tiếng với loạt bài &lt;a class="link" href="https://leetcode.com/problems/house-robber" target="_blank" rel="noopener"
+>House Robber&lt;/a> và &lt;a class="link" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock" target="_blank" rel="noopener"
+>Best Time to Buy and Sell Stock&lt;/a>.&lt;/p>
+&lt;p>Đề bài thường có dạng:&lt;/p>
+&lt;blockquote>
+&lt;p>Cho một tập giá trị, tìm đáp án với tuỳ chọn là chọn hoặc bỏ qua giá trị hiện tại.&lt;/p>
+&lt;/blockquote>
+&lt;p>Hướng giải:&lt;/p>
+&lt;blockquote>
+&lt;p>Nếu bạn quyết định chọn giá trị hiện tại, hãy sử dụng kết quả trước đó, trong đó giá trị trước đó bị bỏ qua. Ngược lại, nếu bạn quyết định bỏ qua giá trị hiện tại, hãy sử dụng giá trị trước đó, trong đó giá trị trước đó được sử dụng.&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// i - indexing a set of values&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// j - options to ignore j values&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">arr&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">});&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">arr&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">arr&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">});&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Chúng ta cùng áp dụng vào bài &lt;a class="link" href="https://leetcode.com/problems/house-robber" target="_blank" rel="noopener"
+>House Robber&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>Bạn là một tên trộm chuyên nghiệp đang có kế hoạch ăn trộm cả một dãy phố. Tuy nhiên dãy phố này có hệ thống an ninh liên kết với nhau, và nó sẽ tự động báo cảnh sát nếu 2 ngôi nhà cạnh nhau cùng bị trộm.&lt;/p>
+&lt;p>Cho một mảng &lt;code>nums&lt;/code> đại diện cho số tiền trong mỗi ngôi nhà. Hãy tính số tiền tối đa bạn có thể trộm được mà không bị báo cảnh sát.&lt;/p>
+&lt;/blockquote>
+&lt;p>Chúng ta tạo 1 mảng 2 chiều với công thức:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>dp[i][1]&lt;/code> là tổng số tiền nếu quyết định trộm nhà thứ &lt;code>i&lt;/code>&lt;/li>
+&lt;li>&lt;code>dp[i][0]&lt;/code> là tổng số tiền nếu quyết định &lt;strong>không&lt;/strong> trộm nhà thứ &lt;code>i&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">nums&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">0&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dp&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">][&lt;/span>&lt;span class="n">1&lt;/span>&lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://leetcode.com/discuss/general-discussion/458695/Dynamic-Programming-Patterns" target="_blank" rel="noopener"
+>https://leetcode.com/discuss/general-discussion/458695/Dynamic-Programming-Patterns&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

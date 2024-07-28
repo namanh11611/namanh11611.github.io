@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design Pattern on Henry Techie</title><link>https://namanh11611.github.io/tags/design-pattern/</link><description>Recent content in Design Pattern on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 12 May 2023 16:50:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/design-pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Design Pattern: Delegation trong Kotlin - cách để nhờ người khác làm bài tập về nhà</title><link>https://namanh11611.github.io/p/design-pattern-delegation/</link><pubDate>Fri, 12 May 2023 16:50:00 +0700</pubDate><guid>https://namanh11611.github.io/p/design-pattern-delegation/</guid><description>&lt;img src="https://namanh11611.github.io/p/design-pattern-delegation/delegation.jpeg" alt="Featured image of post Design Pattern: Delegation trong Kotlin - cách để nhờ người khác làm bài tập về nhà" />&lt;h1 id="khái-niệm">Khái niệm
+&lt;/h1>&lt;p>Trước đây mình cũng chưa biết về Delegation Pattern, cho đến khi học Kotlin thì thấy người ta hay dùng keyword &lt;code>by&lt;/code> trong lúc khai báo một biến. Vậy là thử tìm hiểu thì cả một chân trời mở ra về pattern mới này.&lt;/p>
+&lt;p>~~ &lt;em>Hơi đao to búa lớn quá rồi&lt;/em> 😅😅 ~~&lt;/p>
+&lt;p>Để cho dễ hiểu thì &lt;strong>Delegation&lt;/strong> dịch ra tiếng Việt là &lt;strong>Sự uỷ nhiệm&lt;/strong>. Nhưng mình nghĩ là chúng ta sẽ dùng các từ &amp;ldquo;delegation&amp;rdquo; và &amp;ldquo;delegate&amp;rdquo; thay cho từ &amp;ldquo;sự uỷ nhiệm&amp;rdquo; và &amp;ldquo;uỷ nhiệm&amp;rdquo; để giữ gìn sự trong sáng của tiếng Anh. Đùa vậy thôi chứ trong công việc hay lúc đi phỏng vấn, các bạn nên dùng từ gốc tiếng Anh để cho chuyên nghiệp và đối phương cũng dễ nắm bắt ý của mình nhé.&lt;/p>
+&lt;blockquote>
+&lt;p>The &lt;strong>Delegation Pattern&lt;/strong> is an object-oriented design pattern that allows object composition to achieve the same code reuse as inheritance.&lt;/p>
+&lt;p>&lt;em>Dịch nôm na: Delegation Pattern cho phép object tái sử dụng code tương tự như kế thừa.&lt;/em>&lt;/p>
+&lt;/blockquote>
+&lt;p>Trong delegation, chúng ta có 2 thành phần:&lt;/p>
+&lt;ul>
+&lt;li>Receiving object&lt;/li>
+&lt;li>Delegate object&lt;/li>
+&lt;/ul>
+&lt;p>Khi có một request cần handle, &lt;strong>receiving object&lt;/strong> sẽ không trực tiếp handle nó mà delegate tác vụ đó cho &lt;strong>delegate object&lt;/strong>. Nó giống như việc bạn có một ông anh và bà chị rất giỏi Toán, mỗi lần cô giáo giao bài tập về nhà, bạn lại nhờ họ làm hộ vậy.&lt;/p>
+&lt;p>Ơ thế nó khác gì &lt;strong>Kế thừa&lt;/strong> nhỉ? Trong &lt;strong>Kế thừa&lt;/strong> chúng ta cũng có thể gọi đến method của parent class mà?&lt;/p>
+&lt;p>Đúng là Kế thừa rất hữu ích nhưng chúng ta chỉ dùng khi child class thực sự có liên quan về mặt ý nghĩa chính xác với parent class. Ví dụ như class &lt;code>Cat&lt;/code> có thể kế thừa class &lt;code>Animal&lt;/code> nhưng không nên kế thừa class &lt;code>Transportation&lt;/code> vậy. Chưa kể child class phải override tất cả các abstract method của parent class, đôi khi điều đó là không cần thiết.  Vậy nên Delegation giúp chúng ta linh hoạt hơn.&lt;/p>
+&lt;h1 id="ví-dụ-minh-hoạ">Ví dụ minh hoạ
+&lt;/h1>&lt;p>Quay trở lại với ví dụ ban nãy, giả sử bạn có một ông anh là kỹ sư và một bà chị là bác sỹ. Họ đều là những người rất tài năng.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">interface&lt;/span> &lt;span class="nc">TalentPerson&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Engineer&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">override&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomework&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Doctor&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">override&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomework&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Còn bạn là một học sinh hơi lười một chút nên cần đến một class helper, với param là một người tốt bụng nào đó luôn sẵn sàng giúp đỡ bạn mọi lúc khó khăn.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">kindPerson&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomeworkByMyself&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">kindPerson&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Vậy là bây giờ, mỗi lần giáo viên giao bài tập về nhà, bạn sẽ lại nhờ đến ông anh hoặc bà chị làm hộ.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">brother&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Engineer&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyBoy&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">brother&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyBoy&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomeworkByMyself&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">sister&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Doctor&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyGirl&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sister&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyGirl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomeworkByMyself&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="delegation-pattern-trong-kotlin">Delegation Pattern trong Kotlin
+&lt;/h1>&lt;h2 id="keyword-by-trong-kotlin">Keyword &lt;code>by&lt;/code> trong Kotlin
+&lt;/h2>&lt;p>Trong Kotlin đã support &lt;strong>Delegation Pattern&lt;/strong> thông qua keyword &lt;code>by&lt;/code>, giúp chúng ta giảm boilerplate code.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">kindPerson&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">):&lt;/span> &lt;span class="n">TalentPerson&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="n">kindPerson&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">brother&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Engineer&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyBoy&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">brother&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyBoy&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">sister&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Doctor&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyGirl&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sister&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyGirl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Giờ đây, class &lt;code>LazyStudentHelper&lt;/code> phải implement interface &lt;code>TalentPerson&lt;/code>, qua đó nó có thể delegate method &lt;code>doHomework&lt;/code> qua instance &lt;code>kindPerson&lt;/code>.&lt;/p>
+&lt;h2 id="delegated-properties">Delegated properties
+&lt;/h2>&lt;p>Chúng ta có một số cách để ứng dụng Delegation khi khai báo biến trong Kotlin:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Lazy&lt;/strong> properties: giá trị sẽ được tính toán trong lần đầu tiên access.&lt;/li>
+&lt;li>&lt;strong>Observable&lt;/strong> properties: listeners sẽ được thông báo về những thay đổi của property này.&lt;/li>
+&lt;/ul>
+&lt;h3 id="lazy-properties">Lazy properties
+&lt;/h3>&lt;p>&lt;code>lazy&lt;/code> là một function có param là lambda và trả về kết quả là một instance của class &lt;code>Lazy&amp;lt;T&amp;gt;&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">lazyValue&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="n">lazy&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;computed!&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Hello&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">lazyValue&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">lazyValue&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lần gọi biến &lt;code>lazyValue&lt;/code> đầu tiên sẽ tính toán kết quả và lưu lại giá trị, những lần gọi sau chỉ trả về giá trị mà không cần tính toán kết quả. Vậy nên kết quả in ra sẽ là:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">computed!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Hello
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="observable-properties">Observable properties
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">import&lt;/span> &lt;span class="nn">kotlin.properties.Delegates&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">User&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">var&lt;/span> &lt;span class="py">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="nc">Delegates&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">observable&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;no name&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">prop&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">old&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">new&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">$old&lt;/span>&lt;span class="s2"> -&amp;gt; &lt;/span>&lt;span class="si">$new&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">user&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">User&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;first&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;second&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>Delegates.observable()&lt;/code> có 2 argument:&lt;/p>
+&lt;ul>
+&lt;li>Giá trị khởi tạo&lt;/li>
+&lt;li>Function để xử lý khi biến &lt;code>name&lt;/code> thay đổi. Nó được gọi mỗi khi chúng ta assign giá trị cho biến.&lt;/li>
+&lt;/ul>
+&lt;p>Kết quả như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;lt;no name&amp;gt; -&amp;gt; first
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">first -&amp;gt; second
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Delegation_pattern" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Delegation_pattern&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/docs/delegation.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/docs/delegation.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/docs/delegated-properties.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/docs/delegated-properties.html&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Design Pattern: Adapter - làm thế nào để sạc iPhone bằng cáp type C</title><link>https://namanh11611.github.io/p/design-pattern-adapter/</link><pubDate>Tue, 04 Oct 2022 22:50:00 +0700</pubDate><guid>https://namanh11611.github.io/p/design-pattern-adapter/</guid><description>&lt;img src="https://namanh11611.github.io/p/design-pattern-adapter/adapter.jpeg" alt="Featured image of post Design Pattern: Adapter - làm thế nào để sạc iPhone bằng cáp type C" />&lt;h1 id="đặt-vấn-đề">Đặt vấn đề
+&lt;/h1>&lt;p>Khi bạn muốn sạc iPhone bằng cáp type C =&amp;gt; hãy dùng một cái Adapter mà có lỗ type C và đầu lightning.&lt;/p>
+&lt;p>Khi bạn đang dùng data dưới dạng XML, nhưng lại muốn sử dụng một function của third party library mà nó chỉ nhận param là JSON =&amp;gt; hãy dùng Adapter để convert XML sang JSON.&lt;/p>
+&lt;p>Trong Android, bạn có một list item và muốn hiển thị nó lên &lt;code>RecyclerView&lt;/code> =&amp;gt; hãy dùng Adapter để convert data lên từng &lt;code>item_view&lt;/code>.&lt;/p>
+&lt;h1 id="khái-niệm">Khái niệm
+&lt;/h1>&lt;p>Adapter pattern cho phép &lt;strong>interface&lt;/strong> của một &lt;strong>class đã có sẵn&lt;/strong> được dùng như là một &lt;strong>interface khác&lt;/strong>. Nó sẽ giúp &lt;strong>class đã tồn tại đó&lt;/strong> làm việc với những thằng khác mà &lt;strong>không thay đổi source code&lt;/strong>.&lt;/p>
+&lt;p>Nghe vẫn hơi trừu tượng đúng không nhỉ? Chúng ta sẽ từ từ đi bóc tách hết cái lớp vỏ ngoài khó hiểu này nhé.&lt;/p>
+&lt;p>Tuy nhiên thì có 2 cách dùng adapter là &lt;strong>Object Adapter&lt;/strong> và &lt;strong>Class Adapter&lt;/strong>. Chúng ta sẽ cùng đi tìm hiểu chi tiết từng cách.&lt;/p>
+&lt;h1 id="object-adapter-pattern">Object Adapter Pattern
+&lt;/h1>&lt;h2 id="sơ-đồ-lớp">Sơ đồ lớp
+&lt;/h2>&lt;p>&lt;img src="https://images.viblo.asia/d9569a80-519f-4188-9484-3dffd19db10c.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>Chúng ta sẽ implement interface bằng cách uỷ quyền tới object &lt;strong>adaptee&lt;/strong> lúc run-time.&lt;/p>
+&lt;p>Mình sẽ giải thích chi tiết thêm một chút:&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Client&lt;/strong> là class đã có sẵn mà mình nhắc đến trong phần khái niệm nhé.&lt;/li>
+&lt;li>&lt;strong>Client Interface&lt;/strong> giờ là interface cha của &lt;strong>Client&lt;/strong>. Những thằng khác muốn giao tiếp &lt;strong>Client&lt;/strong> thì phải follow thằng interface cha này nhé.&lt;/li>
+&lt;li>&lt;strong>Service&lt;/strong> là một thằng third party mà chỉ nhận param là JSON như mình đặt vấn đề.&lt;/li>
+&lt;li>&lt;strong>Adapter&lt;/strong> implement &lt;strong>Client Interface&lt;/strong> và chứa instance của class &lt;strong>Service&lt;/strong> (object adaptee). Mỗi khi gọi đến method của &lt;strong>Adapter&lt;/strong>, nó sẽ gọi đến method của &lt;strong>Service&lt;/strong> này.&lt;/li>
+&lt;li>Như vậy chúng ta đã có thể làm việc với thằng &lt;strong>Service&lt;/strong> mà không cần sửa code ở &lt;strong>Client&lt;/strong>.&lt;/li>
+&lt;/ol>
+&lt;h2 id="code-sample">Code sample
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Client Interface&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">interface&lt;/span> &lt;span class="nc">TypeCPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByTypeC&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// Interface của Service&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">interface&lt;/span> &lt;span class="nc">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByLightning&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// Service&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">IPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">implements&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@Override&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByLightning&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// Adapter&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">implements&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">TypeCPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">private&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">lightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@Override&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByTypeC&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">chargeByLightning&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">Demo&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeMyXiaomiPhone&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">TypeCPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">phone&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">phone&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">chargeByTypeC&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">args&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">IPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">iPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">new&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">IPhone&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">adapter&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">new&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">iPhone&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">chargeMyXiaomiPhone&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adapter&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="class-adapter-pattern">Class Adapter pattern
+&lt;/h1>&lt;p>&lt;img src="https://images.viblo.asia/3d70c8a9-c9cb-4eb6-a0eb-17a0d700acd6.png"
+loading="lazy"
+>
+Class Adapter thì không cần wrap object nào cả vì nó kế thừa từ cả &lt;strong>Client&lt;/strong> và &lt;strong>Service&lt;/strong>.&lt;/p>
+&lt;p>Rất tiếc là Java không support đa kế thừa nên chúng ta không có code sample bằng Java cho phần này.&lt;/p>
+&lt;h1 id="kết-luận">Kết luận
+&lt;/h1>&lt;p>&lt;strong>Adapter&lt;/strong> là một design pattern khá quen thuộc với chúng ta. Qua phần giải thích và một chút code mẫu, mong mọi người hiểu thêm về nó.&lt;/p>
+&lt;p>&lt;strong>Reference&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Adapter_pattern" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Adapter_pattern&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://refactoring.guru/design-patterns/adapter" target="_blank" rel="noopener"
+>https://refactoring.guru/design-patterns/adapter&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Design Pattern: Bill Pugh Singleton trong Java - đơn giản đến không ngờ</title><link>https://namanh11611.github.io/p/design-pattern-singleton/</link><pubDate>Tue, 29 Dec 2020 15:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/design-pattern-singleton/</guid><description>&lt;img src="https://namanh11611.github.io/p/design-pattern-singleton/singleton.jpeg" alt="Featured image of post Design Pattern: Bill Pugh Singleton trong Java - đơn giản đến không ngờ" />&lt;h1 id="lời-mở-đầu">Lời mở đầu
+&lt;/h1>&lt;p>Singleton pattern có lẽ là design pattern đơn giản nhất mà hầu như ai cũng biết. Nó giúp tạo một instance duy nhất của class, thường dùng để tạo các class cho Database, Manager&amp;hellip; Hôm nay mình đọc code của project đang làm thì phát hiện ra một cách khởi tạo Singleton hay quá, tìm hiểu thì nó gọi là Bill Pugh Singleton, lấy theo tên của tác giả nghĩ ra cách này. Vậy nên mình viết bài này chia sẻ cho mọi người một cách tiếp cận với Singleton.&lt;/p>
+&lt;h1 id="lazy-initialization">Lazy Initialization
+&lt;/h1>&lt;p>Đầu tiên, chúng ta nhìn qua cách khởi tạo Singleton mà đa số mọi người đang dùng. Singleton pattern được implement bằng cách tạo một instance trong một public method. Cách này có nhược điểm là khi chạy ở multiple threads thì có thể bị khởi tạo instance nhiều lần. Lúc đó thì Singleton không còn là Singleton nữa rồi.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">public class LazyInitializedSingleton {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private static LazyInitializedSingleton instance;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private LazyInitializedSingleton() { }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> public static LazyInitializedSingleton getInstance() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if (instance == null) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> instance = new LazyInitializedSingleton();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return instance;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="thread-safe-singleton">Thread Safe Singleton
+&lt;/h1>&lt;p>Để khắc phục nhược điểm của Lazy Initialization, chúng ta thêm &lt;code>synchronized&lt;/code> vào public method. Khi đó, chỉ có một instance được khởi tạo bởi một thread tại một thời điểm.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">public class ThreadSafeSingleton {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private static ThreadSafeSingleton instance;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private ThreadSafeSingleton() { }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> public static synchronized ThreadSafeSingleton getInstance() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if (instance == null) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> instance = new ThreadSafeSingleton();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return instance;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Tuy nhiên, cách trên vẫn có nhược điểm là làm giảm hiệu năng của app khi mỗi lần gọi vì &lt;code>getInstance()&lt;/code> là một &lt;code>synchronized method&lt;/code>. Vậy nên chúng ta có 1 cách khác bổ sung như sau.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">public class ThreadSafeSingleton {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private static ThreadSafeSingleton instance;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private ThreadSafeSingleton() { }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> public static ThreadSafeSingleton getInstance() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if (instance == null) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> synchronized (ThreadSafeSingleton.class) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if (instance == null) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> instance = new ThreadSafeSingleton();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return instance;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Như vậy, chúng ta chỉ tốn sức trong lần gọi &lt;code>getInstance()&lt;/code> đầu tiên.&lt;/p>
+&lt;h1 id="bill-pugh-singleton-implementation">Bill Pugh Singleton Implementation
+&lt;/h1>&lt;p>Trước Java 5, java memory có rất nhiều issue và các cách trên đều fail khi có quá nhiều thread gọi method &lt;code>getInstance()&lt;/code> của Singleton class đồng thời. Vì vậy, Bill Pugh đưa ra một cách triển khai Singleton mới bằng cách sử dụng inner static helper class.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">public class BillPughSingleton {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private static class SingletonHelper {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> static final BillPughSingleton INSTANCE = new BillPughSingleton();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private BillPughSingleton() { }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> public static BillPughSingleton getInstance() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return SingletonHelper.INSTANCE;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Mọi người thấy cách này thế nào? Quá nhanh, quá gọn mà vẫn an toàn. Khi Singleton class được load, SingletonHelper class sẽ vẫn chưa được load vào memory. Chỉ khi method &lt;code>getInstance()&lt;/code> được gọi, helper class mới được load và tạo singleton class instance. Cách này cũng không yêu cầu synchronization và check null nhiều lần.&lt;/p>
+&lt;h1 id="lời-kết">Lời kết
+&lt;/h1>&lt;p>Trong khuôn khổ bài viết, còn một số phương pháp nữa mà mình không liệt kê hết được, chỉ mang đến góc nhìn mới về Singleton pattern cho mọi người. Cảm ơn mọi người đã đọc!&lt;/p>
+&lt;p>Tham khảo: &lt;a class="link" href="https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples" target="_blank" rel="noopener"
+>https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples&lt;/a>&lt;/p></description></item></channel></rss>

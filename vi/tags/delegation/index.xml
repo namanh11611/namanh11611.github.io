@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Delegation on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/delegation/</link><description>Recent content in Delegation on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Fri, 12 May 2023 16:50:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/delegation/index.xml" rel="self" type="application/rss+xml"/><item><title>Design Pattern: Delegation trong Kotlin - cách để nhờ người khác làm bài tập về nhà</title><link>https://namanh11611.github.io/vi/p/design-pattern-delegation/</link><pubDate>Fri, 12 May 2023 16:50:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/design-pattern-delegation/</guid><description>&lt;img src="https://namanh11611.github.io/p/design-pattern-delegation/delegation.jpeg" alt="Featured image of post Design Pattern: Delegation trong Kotlin - cách để nhờ người khác làm bài tập về nhà" />&lt;h1 id="khái-niệm">Khái niệm
+&lt;/h1>&lt;p>Trước đây mình cũng chưa biết về Delegation Pattern, cho đến khi học Kotlin thì thấy người ta hay dùng keyword &lt;code>by&lt;/code> trong lúc khai báo một biến. Vậy là thử tìm hiểu thì cả một chân trời mở ra về pattern mới này.&lt;/p>
+&lt;p>~~ &lt;em>Hơi đao to búa lớn quá rồi&lt;/em> 😅😅 ~~&lt;/p>
+&lt;p>Để cho dễ hiểu thì &lt;strong>Delegation&lt;/strong> dịch ra tiếng Việt là &lt;strong>Sự uỷ nhiệm&lt;/strong>. Nhưng mình nghĩ là chúng ta sẽ dùng các từ &amp;ldquo;delegation&amp;rdquo; và &amp;ldquo;delegate&amp;rdquo; thay cho từ &amp;ldquo;sự uỷ nhiệm&amp;rdquo; và &amp;ldquo;uỷ nhiệm&amp;rdquo; để giữ gìn sự trong sáng của tiếng Anh. Đùa vậy thôi chứ trong công việc hay lúc đi phỏng vấn, các bạn nên dùng từ gốc tiếng Anh để cho chuyên nghiệp và đối phương cũng dễ nắm bắt ý của mình nhé.&lt;/p>
+&lt;blockquote>
+&lt;p>The &lt;strong>Delegation Pattern&lt;/strong> is an object-oriented design pattern that allows object composition to achieve the same code reuse as inheritance.&lt;/p>
+&lt;p>&lt;em>Dịch nôm na: Delegation Pattern cho phép object tái sử dụng code tương tự như kế thừa.&lt;/em>&lt;/p>
+&lt;/blockquote>
+&lt;p>Trong delegation, chúng ta có 2 thành phần:&lt;/p>
+&lt;ul>
+&lt;li>Receiving object&lt;/li>
+&lt;li>Delegate object&lt;/li>
+&lt;/ul>
+&lt;p>Khi có một request cần handle, &lt;strong>receiving object&lt;/strong> sẽ không trực tiếp handle nó mà delegate tác vụ đó cho &lt;strong>delegate object&lt;/strong>. Nó giống như việc bạn có một ông anh và bà chị rất giỏi Toán, mỗi lần cô giáo giao bài tập về nhà, bạn lại nhờ họ làm hộ vậy.&lt;/p>
+&lt;p>Ơ thế nó khác gì &lt;strong>Kế thừa&lt;/strong> nhỉ? Trong &lt;strong>Kế thừa&lt;/strong> chúng ta cũng có thể gọi đến method của parent class mà?&lt;/p>
+&lt;p>Đúng là Kế thừa rất hữu ích nhưng chúng ta chỉ dùng khi child class thực sự có liên quan về mặt ý nghĩa chính xác với parent class. Ví dụ như class &lt;code>Cat&lt;/code> có thể kế thừa class &lt;code>Animal&lt;/code> nhưng không nên kế thừa class &lt;code>Transportation&lt;/code> vậy. Chưa kể child class phải override tất cả các abstract method của parent class, đôi khi điều đó là không cần thiết.  Vậy nên Delegation giúp chúng ta linh hoạt hơn.&lt;/p>
+&lt;h1 id="ví-dụ-minh-hoạ">Ví dụ minh hoạ
+&lt;/h1>&lt;p>Quay trở lại với ví dụ ban nãy, giả sử bạn có một ông anh là kỹ sư và một bà chị là bác sỹ. Họ đều là những người rất tài năng.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">interface&lt;/span> &lt;span class="nc">TalentPerson&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Engineer&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">override&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomework&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Doctor&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">override&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomework&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Còn bạn là một học sinh hơi lười một chút nên cần đến một class helper, với param là một người tốt bụng nào đó luôn sẵn sàng giúp đỡ bạn mọi lúc khó khăn.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">kindPerson&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fun&lt;/span> &lt;span class="nf">doHomeworkByMyself&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">kindPerson&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Vậy là bây giờ, mỗi lần giáo viên giao bài tập về nhà, bạn sẽ lại nhờ đến ông anh hoặc bà chị làm hộ.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">brother&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Engineer&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyBoy&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">brother&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyBoy&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomeworkByMyself&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">sister&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Doctor&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyGirl&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sister&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyGirl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomeworkByMyself&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="delegation-pattern-trong-kotlin">Delegation Pattern trong Kotlin
+&lt;/h1>&lt;h2 id="keyword-by-trong-kotlin">Keyword &lt;code>by&lt;/code> trong Kotlin
+&lt;/h2>&lt;p>Trong Kotlin đã support &lt;strong>Delegation Pattern&lt;/strong> thông qua keyword &lt;code>by&lt;/code>, giúp chúng ta giảm boilerplate code.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">kindPerson&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">TalentPerson&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">):&lt;/span> &lt;span class="n">TalentPerson&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="n">kindPerson&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">brother&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Engineer&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyBoy&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">brother&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyBoy&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">sister&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Doctor&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">lazyGirl&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">LazyStudentHelper&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sister&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lazyGirl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">doHomework&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Giờ đây, class &lt;code>LazyStudentHelper&lt;/code> phải implement interface &lt;code>TalentPerson&lt;/code>, qua đó nó có thể delegate method &lt;code>doHomework&lt;/code> qua instance &lt;code>kindPerson&lt;/code>.&lt;/p>
+&lt;h2 id="delegated-properties">Delegated properties
+&lt;/h2>&lt;p>Chúng ta có một số cách để ứng dụng Delegation khi khai báo biến trong Kotlin:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Lazy&lt;/strong> properties: giá trị sẽ được tính toán trong lần đầu tiên access.&lt;/li>
+&lt;li>&lt;strong>Observable&lt;/strong> properties: listeners sẽ được thông báo về những thay đổi của property này.&lt;/li>
+&lt;/ul>
+&lt;h3 id="lazy-properties">Lazy properties
+&lt;/h3>&lt;p>&lt;code>lazy&lt;/code> là một function có param là lambda và trả về kết quả là một instance của class &lt;code>Lazy&amp;lt;T&amp;gt;&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">lazyValue&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="n">lazy&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;computed!&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Hello&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">lazyValue&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">lazyValue&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lần gọi biến &lt;code>lazyValue&lt;/code> đầu tiên sẽ tính toán kết quả và lưu lại giá trị, những lần gọi sau chỉ trả về giá trị mà không cần tính toán kết quả. Vậy nên kết quả in ra sẽ là:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">computed!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Hello
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="observable-properties">Observable properties
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">import&lt;/span> &lt;span class="nn">kotlin.properties.Delegates&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">User&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">var&lt;/span> &lt;span class="py">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="nc">Delegates&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">observable&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;no name&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">prop&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">old&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">new&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">$old&lt;/span>&lt;span class="s2"> -&amp;gt; &lt;/span>&lt;span class="si">$new&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">user&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">User&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;first&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;second&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>Delegates.observable()&lt;/code> có 2 argument:&lt;/p>
+&lt;ul>
+&lt;li>Giá trị khởi tạo&lt;/li>
+&lt;li>Function để xử lý khi biến &lt;code>name&lt;/code> thay đổi. Nó được gọi mỗi khi chúng ta assign giá trị cho biến.&lt;/li>
+&lt;/ul>
+&lt;p>Kết quả như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;lt;no name&amp;gt; -&amp;gt; first
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">first -&amp;gt; second
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Delegation_pattern" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Delegation_pattern&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/docs/delegation.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/docs/delegation.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/docs/delegated-properties.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/docs/delegated-properties.html&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

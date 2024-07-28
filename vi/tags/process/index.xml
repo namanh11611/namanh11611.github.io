@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Process on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/process/</link><description>Recent content in Process on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Fri, 21 Jun 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/process/index.xml" rel="self" type="application/rss+xml"/><item><title>Tất tần tật về Process trong Android</title><link>https://namanh11611.github.io/vi/p/process/</link><pubDate>Fri, 21 Jun 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/process/</guid><description>&lt;img src="https://namanh11611.github.io/p/process/process.jpg" alt="Featured image of post Tất tần tật về Process trong Android" />&lt;h1 id="khái-niệm">Khái niệm
+&lt;/h1>&lt;p>&lt;strong>Process&lt;/strong> là một khái niệm cơ bản nhưng cũng rất quan trọng trong Android. Khi chúng ta khởi chạy ứng dụng, mặc định tất cả các component như &lt;strong>Activity&lt;/strong>, &lt;strong>Service&lt;/strong>, &lt;strong>BroadcastReceiver&lt;/strong>, &lt;strong>ContentProvider&lt;/strong> sẽ cùng chạy trên một Linux Process, trừ khi chúng ta muốn khai báo một Process riêng trong file &lt;strong>AndroidManifest&lt;/strong> như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;activity&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">android:process=&lt;/span>&lt;span class="s">&amp;#34;new_process_name&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">...&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/activity&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Mặc định, process có tên trùng với &lt;strong>app ID&lt;/strong> được khai báo trong &lt;code>build.gradle&lt;/code> file. Cả application và 4 component chính đều có tag &lt;code>android:process&lt;/code>. Chính vì vậy, nếu bạn khai báo &lt;code>android:process&lt;/code> cho tag &lt;code>&amp;lt;application&amp;gt;&lt;/code>, process name đấy sẽ được áp dụng cho toàn bộ các component của application đó.&lt;/p>
+&lt;h1 id="mức-độ-ưu-tiên">Mức độ ưu tiên
+&lt;/h1>&lt;p>Chúng ta không thể tự quản lý Process lifetime. Android sẽ tự tính toán xem &lt;strong>component&lt;/strong> nào của các ứng dụng &lt;strong>đang chạy&lt;/strong>, &lt;strong>tầm quan trọng&lt;/strong> của chúng với user, và &lt;strong>bộ nhớ còn lại&lt;/strong> là bao nhiêu để quyết định Process lifetime.&lt;/p>
+&lt;p>Khi Android không đủ tài nguyên, nó sẽ shut down một Process, và tất nhiên là các component đang chạy trên Process đó cũng sẽ bị destroy theo. Vậy yếu tố nào quyết định Process nào sẽ bị shut down?&lt;/p>
+&lt;p>Android sẽ ưu tiên chúng dựa vào mức độ quan trọng đối với user. Nó chia thành 4 loại process với mức độ ưu tiên như sau:&lt;/p>
+&lt;h2 id="foreground-process">Foreground process
+&lt;/h2>&lt;p>Đây là loại Process có mức độ ưu tiên cao nhất. Nó chứa các component mà user &lt;strong>đang làm gì đó&lt;/strong>, ví dụ như:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Activity&lt;/strong> trên cùng của screen mà user đang tương tác, method &lt;code>onResume()&lt;/code> đã được gọi.&lt;/li>
+&lt;li>&lt;strong>BroadcastReceiver&lt;/strong> đang chạy, method &lt;code>onReceive()&lt;/code> đang thực thi.&lt;/li>
+&lt;li>&lt;strong>Service&lt;/strong> đang thực thi code trong một trong những callback của nó: &lt;code>onCreate()&lt;/code>, &lt;code>onStart()&lt;/code> hoặc &lt;code>onDestroy()&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;p>Chỉ có một vài Process như này trong hệ thống, và nó chỉ bị kill khi bộ nhớ thấp đến mức chính những Process này cũng không thể chạy tiếp.&lt;/p>
+&lt;h2 id="visible-process">Visible process
+&lt;/h2>&lt;p>Process này thực hiện các tác vụ mà user &lt;strong>nhận biết được&lt;/strong>. Vì vậy, nếu chúng bị kill cũng sẽ ảnh hưởng đến trải nghiệm. Ví dụ như:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Activity&lt;/strong> đang hiển thị trên screen nhưng không còn trên foreground, method &lt;code>onPause()&lt;/code> đã được gọi. Ví dụ như có một Activity khác hiển thị dưới dạng dialog che một phần của nó chẳng hạn.&lt;/li>
+&lt;li>&lt;strong>Foreground Service&lt;/strong> đang chạy, thông qua method &lt;code>startForeground()&lt;/code>. Khi đó, user cũng có thể thấy được nó.&lt;/li>
+&lt;li>Một service nào đó đang chạy tính năng nào đó mà user thấy, ví dụ như live wallpaper hoặc bàn phím.&lt;/li>
+&lt;/ul>
+&lt;h2 id="service-process">Service process
+&lt;/h2>&lt;p>Process này chứa một Service chạy bằng method &lt;code>startService()&lt;/code>. User không nhìn thấy trực tiếp, chỉ là nó đang thực hiện &lt;strong>các tác vụ mà user quan tâm&lt;/strong>, ví dụ như upload hoặc download data dưới background.&lt;/p>
+&lt;p>Service chạy trong một thời gian dài, ví dụ như hơn 30 phút, có thể sẽ bị giảm mức độ quan trọng để đưa vào cache.&lt;/p>
+&lt;h2 id="cached-process">Cached process
+&lt;/h2>&lt;p>Đây là Process &lt;strong>không còn cần thiết nữa&lt;/strong>, hệ thống có thể &lt;strong>thoải mái kill&lt;/strong> nó không do dự khi cần thêm tài nguyên như bộ nhớ.&lt;/p>
+&lt;p>Một hệ thống tốt sẽ có nhiều Cached process để phục vụ cho việc chuyển đổi giữa các app được hiệu quả, và thường xuyên kill các Cached app khi cần thiết.&lt;/p>
+&lt;p>Android sử dụng &lt;strong>LRU Cache&lt;/strong> (Least Recently Used Cache) để quản lý các Cached process, và nó sẽ kill các process ít được sử dụng nhất trong thời gian gần đây.&lt;/p>
+&lt;p>Tựu chung lại, chúng ta phải nắm được các component như &lt;strong>Activity&lt;/strong>, &lt;strong>Service&lt;/strong> và &lt;strong>BroadcastReceiver&lt;/strong> có sự ảnh hưởng khác nhau như thế nào đến mức độ ưu tiên đó, chọn đúng component để sử dụng trong use-case của mình, tránh process bị kill khi đang thực hiện một tác vụ quan trọng.&lt;/p>
+&lt;h1 id="inter-process-communication-ipc">Inter-Process Communication (IPC)
+&lt;/h1>&lt;p>&lt;strong>Inter-Process Communication&lt;/strong> hay còn gọi là Giao tiếp liên tiến trình, là cơ chế cho phép các process &lt;strong>giao tiếp&lt;/strong> và &lt;strong>đồng bộ hóa&lt;/strong> hành động của chúng trong Android.&lt;/p>
+&lt;p>Mỗi app chạy trong một process riêng biệt, nhưng nhiều app cần giao tiếp với nhau để &lt;strong>chia sẻ dữ liệu&lt;/strong> hoặc thực hiện &lt;strong>các tác vụ kết hợp&lt;/strong>, vậy nên IPC cung cấp các phương thức để các process giao tiếp với nhau một cách an toàn và hiệu quả.&lt;/p>
+&lt;h2 id="intent">Intent
+&lt;/h2>&lt;p>&lt;strong>Intent&lt;/strong> là cơ chế chính thống để giao tiếp bất đồng bộ giữa các &lt;strong>Activity&lt;/strong> và &lt;strong>BroadcastReceiver&lt;/strong>. Chúng ta có thể dùng &lt;code>sendBroadcast&lt;/code>, &lt;code>sendOrderedBroadcast&lt;/code> hoặc explicit intent tuỳ theo nhu cầu.&lt;/p>
+&lt;h2 id="android-interface-definition-language-aidl">Android Interface Definition Language (AIDL)
+&lt;/h2>&lt;p>&lt;strong>AIDL&lt;/strong> là tool được sử dụng để định nghĩa interface giữa các ứng dụng Android. AIDL cho phép các ứng dụng giao tiếp với nhau một cách an toàn và hiệu quả, bất kể chúng được viết bằng ngôn ngữ lập trình nào.&lt;/p>
+&lt;h2 id="messenger">Messenger
+&lt;/h2>&lt;p>&lt;strong>Messenger&lt;/strong> là một class trong Android SDK cho phép các ứng dụng giao tiếp với nhau bằng cách &lt;strong>gửi và nhận tin nhắn&lt;/strong>. Messenger cung cấp một interface đơn giản và dễ sử dụng để giao tiếp giữa các ứng dụng.&lt;/p>
+&lt;p>Điểm khác biệt giữa AIDL và Messenger là bạn có thể dùng AIDL cho các &lt;strong>tác vụ đồng thời&lt;/strong>, còn Messenger chỉ dùng cho các &lt;strong>tác vụ tuần tự&lt;/strong>.&lt;/p>
+&lt;h2 id="broadcast-receiver">Broadcast Receiver
+&lt;/h2>&lt;p>&lt;strong>BroadcastReceiver&lt;/strong> sẽ xử lý các yêu cầu bất đồng bộ từ Intent. Mặc định, receiver có thể được gọi bởi bất kỳ app nào khác. Nếu bạn có ý định chỉ dùng BroadcastReceiver cho một ứng dụng cụ thể, bạn có thể áp dụng bảo mật cho receiver bằng cách sử dụng tag &lt;code>&amp;lt;receiver&amp;gt;&lt;/code> trong AndroidManifest. Nó giúp ngăn các ứng dụng không có quyền gửi Intent đến BroadcastReceiver.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://developer.android.com/guide/components/processes-and-threads" target="_blank" rel="noopener"
+>https://developer.android.com/guide/components/processes-and-threads&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://developer.android.com/guide/components/activities/process-lifecycle" target="_blank" rel="noopener"
+>https://developer.android.com/guide/components/activities/process-lifecycle&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://developer.android.com/privacy-and-security/security-tips#interprocess-communication" target="_blank" rel="noopener"
+>https://developer.android.com/privacy-and-security/security-tips#interprocess-communication&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
