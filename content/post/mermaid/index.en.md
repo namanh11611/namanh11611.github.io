@@ -5,7 +5,7 @@ date: 2024-02-25T00:00:00+07:00
 slug: mermaid
 image: mermaid.png
 toc: true
-categories: Technical
+categories: Career
 tags: [Mermaid, Diagram, Chart, Markdown]
 ---
 
