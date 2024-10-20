@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dispatchers on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/dispatchers/</link><description>Recent content in Dispatchers on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Mon, 01 May 2023 00:22:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/dispatchers/index.xml" rel="self" type="application/rss+xml"/><item><title>Dispatchers trong Kotlin Coroutines</title><link>https://namanh11611.github.io/vi/p/kotlin-coroutines-dispatchers/</link><pubDate>Mon, 01 May 2023 00:22:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/kotlin-coroutines-dispatchers/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-coroutines-dispatchers/dispatchers.jpeg" alt="Featured image of post Dispatchers trong Kotlin Coroutines" />&lt;h1 id="dispatcher-là-cái-gì">Dispatcher là cái gì?
+&lt;/h1>&lt;p>Hiểu một cách đơn giản, Dispatcher sẽ quyết định xem Coroutines được thực thi trên thread nào. Có thể là main thread, background thread, hoặc nó đẩy Coroutines vào thread pool.&lt;/p>
+&lt;p>Có 4 loại Dispatchers:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Dispatchers.Default&lt;/code>&lt;/li>
+&lt;li>&lt;code>Dispatchers.Main&lt;/code>&lt;/li>
+&lt;li>&lt;code>Dispatchers.IO&lt;/code>&lt;/li>
+&lt;li>&lt;code>Dispatchers.Unconfined&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Hoặc bạn có thể tự tạo Dispatchers cho riêng mình bằng function &lt;code>newSingleThreadContext()&lt;/code> hoặc &lt;code>newFixedThreadPoolContext()&lt;/code>.&lt;/p>
+&lt;p>Các function để build Coroutines như &lt;code>launch&lt;/code> và &lt;code>async&lt;/code> đều có một param là &lt;code>CoroutinesContext&lt;/code> để chúng ta truyền &lt;code>Dispatchers&lt;/code> vào, vì mấy thằng &lt;code>Dispatchers&lt;/code> ở trên đều extends từ &lt;code>CoroutinesContext&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">launch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nc">Dispatchers&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Default&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;I&amp;#39;m working in thread &lt;/span>&lt;span class="si">${Thread.currentThread().name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Còn khi mà chúng ta gọi &lt;code>launch&lt;/code> với &lt;code>async&lt;/code> mà không truyền param &lt;code>CoroutinesContext&lt;/code>, nó sẽ kế thừa context của &lt;code>CoroutineScope&lt;/code> mà nó được khởi chạy.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">runBlocking&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Unit&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;I&amp;#39;m working in thread &lt;/span>&lt;span class="si">${Thread.currentThread().name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ở trong ví dụ này, nó sẽ kế thừa context của &lt;code>runBlocking&lt;/code> nên sẽ thực thi trên main thread.&lt;/p>
+&lt;p>Bây giờ, chúng ta sẽ đi tìm hiểu chi tiết từng loại Dispatchers nhé.&lt;/p>
+&lt;h1 id="dispatchersdefault">&lt;code>Dispatchers.Default&lt;/code>
+&lt;/h1>&lt;p>&lt;code>Dispatchers.Default&lt;/code> được dùng mặc định bởi các builder function &lt;code>launch&lt;/code> và &lt;code>async&lt;/code> nếu như chúng ta không gán Dispatchers nào khác cho nó. Default Dispatchers dùng một &lt;strong>shared background threads pool&lt;/strong>. Vì vậy chúng ta có thể dùng &lt;code>Dispatchers.Default&lt;/code> cho những công việc &lt;strong>tốn nhiều CPU&lt;/strong>. Ví dụ:&lt;/p>
+&lt;ul>
+&lt;li>Các tác vụ nặng như tính toán ma trận&lt;/li>
+&lt;li>Sort, filter hoặc search một cái list siêu to khổng lồ trên bộ nhớ&lt;/li>
+&lt;li>Các tác vụ với Bitmap trên bộ nhớ&lt;/li>
+&lt;li>Parse JSON trên bộ nhớ&lt;/li>
+&lt;/ul>
+&lt;p>Mặc định, số lượng thread nhiều nhất được &lt;code>Dispatchers.Default&lt;/code> dùng sẽ &lt;strong>bằng với số CPU core&lt;/strong>, nhưng ít nhất là 2.&lt;/p>
+&lt;h1 id="dispatchersmain">&lt;code>Dispatchers.Main&lt;/code>
+&lt;/h1>&lt;p>Bạn nghe tên là đoán được rồi đúng không? Chính xác, &lt;code>Dispatchers.Main&lt;/code> sẽ thực thi trên &lt;strong>main thread&lt;/strong>, nó phù hợp với các tác vụ &lt;strong>tương tác với UI&lt;/strong>.&lt;/p>
+&lt;p>Thông thường thì &lt;code>Dispatchers.Main&lt;/code> sẽ là &lt;strong>single thread&lt;/strong>.&lt;/p>
+&lt;h1 id="dispatchersio">&lt;code>Dispatchers.IO&lt;/code>
+&lt;/h1>&lt;p>Nghe nhạc hiệu đoán được chương trình tiếp này. &lt;code>Dispatchers.IO&lt;/code> dùng một &lt;strong>shared pool gồm các thread được tạo theo nhu cầu&lt;/strong>. Nó giúp giảm tải các tác vụ blocking IO. Vì vậy nó phù hợp với các tác vụ liên quan đến &lt;strong>disk và network&lt;/strong>. Ví dụ:&lt;/p>
+&lt;ul>
+&lt;li>Gọi API&lt;/li>
+&lt;li>Download file từ server&lt;/li>
+&lt;li>Move 1 file từ folder này đến folder khác trên disk&lt;/li>
+&lt;li>Đọc ghi file&lt;/li>
+&lt;li>Query database&lt;/li>
+&lt;li>Loading Shared Preferences&lt;/li>
+&lt;/ul>
+&lt;p>Số lượng thread được sử dụng bởi &lt;code>Dispatchers.IO&lt;/code> được giới hạn bởi &lt;strong>64 hoặc số lượng core&lt;/strong> (tuỳ xem số nào lớn hơn).&lt;/p>
+&lt;h1 id="dispatchersunconfined">&lt;code>Dispatchers.Unconfined&lt;/code>
+&lt;/h1>&lt;p>Mình gọi &lt;code>Dispatchers.Unconfined&lt;/code> là con ngựa bất kham, vì mình sẽ không biết nó được thực thi trên thread nào.&lt;/p>
+&lt;p>Ban đầu, khi khởi chạy, Coroutines sẽ được thực thi trên chính thread gọi nó. Nhưng sau khi bị suspend, và resume, nó sẽ thực thi trên một thread khác, được quyết định bởi suspend functions được gọi. &lt;code>Dispatchers.Unconfined&lt;/code> phù hợp với những công việc không tiêu tốn CPU và không update UI. Nhưng bản thân Kotlin document cũng nhấn mạnh là:&lt;/p>
+&lt;blockquote>
+&lt;p>The Unconfined dispatcher should not normally be used in code.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Tạm dịch:&lt;/strong> Bình thường không ai dùng dispatcher Unconfined trong code cả.&lt;/p>
+&lt;/blockquote>
+&lt;/blockquote>
+&lt;h1 id="newsinglethreadcontext">&lt;code>newSingleThreadContext&lt;/code>
+&lt;/h1>&lt;p>Function này sẽ tạo một thread mới cho chúng ta tha hồ vùng vẫy. Nhưng thật sự thì việc tạo một thread mới tốn rất nhiều resource, và bạn phải tự gọi function &lt;code>close&lt;/code> để giải phóng nó khi không dùng nữa. Vậy nên trong thực tế, mình khuyến nghị các bạn không nên dùng cách này.&lt;/p>
+&lt;p>Ngoài ra còn có &lt;code>newFixedThreadPoolContext&lt;/code> để tạo một thread pool với size cố định.&lt;/p>
+&lt;h1 id="so-sánh-với-rxjava-rxandroid">So sánh với RxJava, RxAndroid
+&lt;/h1>&lt;p>Chúng ta có thể thấy Dispatchers tương tự như Schedulers trong RxJava.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Coroutines&lt;/th>
+&lt;th>RxJava/RxAndroid&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>Dispatchers.Default&lt;/code>&lt;/td>
+&lt;td>&lt;code>Schedulers.computation()&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>Dispatchers.Main&lt;/code>&lt;/td>
+&lt;td>&lt;code>AndroidSchedulers.mainThread()&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>Dispatchers.IO&lt;/code>&lt;/td>
+&lt;td>&lt;code>Schedulers.io()&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h1 id="lời-kết">Lời kết
+&lt;/h1>&lt;p>Tựu chung lại, Dispatchers là một khái niệm quan trọng trong Coroutines, vậy nên các bạn cần nắm chắc về nó để có thể chọn một Dispatchers phù hợp cho từng function của mình.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://amitshekhar.me/blog/dispatchers-in-kotlin-coroutines" target="_blank" rel="noopener"
+>https://amitshekhar.me/blog/dispatchers-in-kotlin-coroutines&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
