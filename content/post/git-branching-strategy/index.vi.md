@@ -9,7 +9,7 @@ categories: Technical
 tags: [Git, Gitflow, GitHub Flow, GitLab Flow, Trunk Based Development]
 ---
 
-*Photo by [Felix Mittermeier](https://unsplash.com/fr/@felix_mittermeier?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/fr/photos/pieces-dechecs-sur-lechiquier-nAjil1z3eLk?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)*
+*Photo by [Felix Mittermeier](https://unsplash.com/@felix_mittermeier?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/pieces-dechecs-sur-lechiquier-nAjil1z3eLk?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)*
 
 **Git Branching Strategy** dịch ra tiếng Việt là **Chiến lược làm việc với branch của Git**, nhưng nó vừa dài vừa dễ hiểu nhầm nên mình giữ nguyên cụm từ gốc để giữ gìn sự trong sáng của tiếng Anh nhé. Nó ám chỉ cách chúng ta **tạo branch**, **merge branch** nào với branch nào và dùng **branch nào để release**.
 
