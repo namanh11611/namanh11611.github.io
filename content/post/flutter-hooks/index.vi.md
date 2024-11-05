@@ -6,7 +6,7 @@ slug: flutter-hooks
 image: hooks.jpeg
 toc: true
 categories: Technical
-tags: [Flutter, Hooks]
+tags: [Flutter, Hooks, Riverpod]
 ---
 
 # Flutter Hooks là cái chi chi?
