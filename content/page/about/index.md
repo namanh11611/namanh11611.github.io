@@ -1,12 +1,12 @@
 ---
 title: About Me
-date: 2023-08-05
+date: 2024-11-09
 aliases:
   - about-us
   - about-hugo
   - contact
 license: CC BY-NC-ND
-lastmod: '2023-08-05'
+lastmod: '2024-11-09'
 menu:
     main: 
         weight: 2
@@ -19,6 +19,9 @@ links:
   - title: Curved Labeled Navigation Bar
     description: A Flutter package for easy implementation of curved navigation bar.
     website: https://pub.dev/packages/curved_labeled_navigation_bar
+  - title: Speakie
+    description: Learn English speaking with AI-powered lessons and real-life sentence practice.
+    website: https://speakie.xyz
 ---
 
 Hi there 👋, I'm Henry Nguyen
