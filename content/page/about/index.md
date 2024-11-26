@@ -16,12 +16,15 @@ links:
   - title: EZMatch
     description: A dating application for Vietnamese. Match, chatting and dating.
     website: https://play.google.com/store/apps/details?id=com.mobidev.vietnamdatingappandroid
+    image: ez_match.webp
   - title: Curved Labeled Navigation Bar
     description: A Flutter package for easy implementation of curved navigation bar.
     website: https://pub.dev/packages/curved_labeled_navigation_bar
+    image: flutter.png
   - title: Speakie
     description: Learn English speaking with AI-powered lessons and real-life sentence practice.
     website: https://speakie.xyz
+    image: speakie.png
 ---
 
 Hi there 👋, I'm Henry Nguyen
