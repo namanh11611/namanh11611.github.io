@@ -1,0 +1,1399 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Coroutines on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/coroutines/</link><description>Recent content in Coroutines on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 18 Aug 2024 06:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/coroutines/index.xml" rel="self" type="application/rss+xml"/><item><title>Kotlin Flow cheat sheet phần 3: SharedFlow và StateFlow</title><link>https://namanh11611.github.io/vi/p/kotlin-flow-cheat-sheet-3/</link><pubDate>Sun, 18 Aug 2024 06:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/kotlin-flow-cheat-sheet-3/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-flow-cheat-sheet-3/cheat_sheet.jpg" alt="Featured image of post Kotlin Flow cheat sheet phần 3: SharedFlow và StateFlow" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@anacruzbaeza?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Ana Cruz&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/photographie-a-plat-de-papiers-dimprimante-blancs-S0qh0ONK-AE?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>Tiếp nối serie &lt;strong>Kotlin cheat sheet&lt;/strong>, chúng ta cùng đi đến với cheat sheet cuối cùng dành cho &lt;strong>SharedFlow&lt;/strong> và &lt;strong>StateFlow&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>SharedFlow&lt;/strong> và &lt;strong>StateFlow&lt;/strong> là hai loại flow đặc biệt trong Kotlin Flow, cung cấp các tính năng mạnh mẽ cho việc chia sẻ trạng thái và sự kiện giữa các thành phần khác nhau trong ứng dụng. Trong phần cuối của loạt bài viết này, chúng ta sẽ tìm hiểu sâu về cách sử dụng SharedFlow và StateFlow, những lợi ích của chúng, và cách tích hợp vào ứng dụng Android của bạn để xử lý luồng dữ liệu một cách hiệu quả và mượt mà hơn.&lt;/p>
+&lt;p>Bạn có thể đọc toàn bộ serie tại đây:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="../kotlin-coroutines-cheat-sheet" >Kotlin Coroutines cheat sheet nâng cao dành cho Android Engineer&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-1" >Kotlin Flow cheat sheet phần 1: Channel&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-2" >Kotlin Flow cheat sheet phần 2: Flow&lt;/a>&lt;/li>
+&lt;li>Kotlin Flow cheat sheet phần 3: SharedFlow và StateFlow&lt;/li>
+&lt;/ul>
+&lt;h1 id="sharedflow">SharedFlow
+&lt;/h1>&lt;h2 id="nguyên-tắc-chính">Nguyên tắc chính
+&lt;/h2>&lt;ul>
+&lt;li>Là một &lt;strong>hot stream&lt;/strong>.&lt;/li>
+&lt;li>Có thể có nhiều receiver và tất cả chúng sẽ nhận được cùng một giá trị.&lt;/li>
+&lt;li>Hữu ích khi bạn cần truyền các giá trị tới nhiều consumer hoặc muốn chia sẻ trạng thái/sự kiện giữa các phần khác nhau trong ứng dụng của mình.&lt;/li>
+&lt;li>Không bao giờ hoàn thành cho đến khi chúng ta close toàn bộ scope.&lt;/li>
+&lt;li>Có phiên bản có thể thay đổi &lt;code>MutableSharedFlow&lt;/code> cho phép chúng ta cập nhật state bằng cách emit các giá trị mới với suspend function &lt;code>emit&lt;/code>.&lt;/li>
+&lt;li>Chúng ta cũng có thể sử dụng phiên bản non suspend &lt;code>tryEmit&lt;/code>.&lt;/li>
+&lt;li>Hỗ trợ cấu hình replay và tràn buffer.&lt;/li>
+&lt;li>Tất cả các phương thức của shared flow đều thread-safe và có thể được gọi một cách an toàn từ các coroutine đồng thời mà không cần đồng bộ hóa bên ngoài.&lt;/li>
+&lt;/ul>
+&lt;h2 id="các-tham-số-cấu-hình">Các tham số cấu hình
+&lt;/h2>&lt;p>Kotlin đang cung cấp cho chúng ta một phương thức hữu ích để tạo &lt;code>MutableSharedFlow&lt;/code> và xác định cách chúng ta muốn buffer hoạt động:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nc">T&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">MutableSharedFlow&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// số lượng giá trị được replayed cho subscriber mới
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">replay&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Int&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="m">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// số lượng giá trị được lưu vào buffer ngoài `replay`
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">extraBufferCapacity&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Int&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="m">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// hành động khi tràn buffer
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// Các giá trị: SUSPEND, DROP_OLDEST, DROP_LATEST
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">onBufferOverflow&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">BufferOverflow&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">BufferOverflow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">SUSPEND&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">):&lt;/span> &lt;span class="n">MutableSharedFlow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="sharein">shareIn
+&lt;/h2>&lt;ul>
+&lt;li>Biến đổi &lt;code>Flow&lt;/code> thành &lt;code>SharedFlow&lt;/code>.&lt;/li>
+&lt;li>Hữu ích khi chúng ta muốn biến một flow thành nhiều flow&lt;/li>
+&lt;li>Yêu cầu coroutine scope làm tham số đầu tiên (scope) để bắt đầu coroutine và collect phần tử của flow.&lt;/li>
+&lt;li>Tham số thứ hai &lt;code>started&lt;/code> xác định thời điểm SharedFlow sẽ bắt đầu listen giá trị do flow emit. Nó lấy một object &lt;code>SharingStarted&lt;/code>.&lt;/li>
+&lt;li>Tham số thứ ba, &lt;code>replay&lt;/code>, (mặc định là 0) xác định số lượng giá trị được replay cho subscriber mới.&lt;/li>
+&lt;/ul>
+&lt;h3 id="sharingstarted-option">&lt;code>SharingStarted&lt;/code> option
+&lt;/h3>&lt;ul>
+&lt;li>&lt;code>SharingStarted.Eagerly&lt;/code>: bắt đầu listen các phần tử ngay lập tức và không bao giờ dừng lại cho đến khi scope bị cancel.&lt;/li>
+&lt;li>&lt;code>SharingStarted.Lazily&lt;/code>: bắt đầu listen khi subscriber đầu tiên xuất hiện và không bao giờ dừng cho đến khi scope bị cancel.&lt;/li>
+&lt;li>&lt;code>SharingStarted.WhileSubscribed()&lt;/code>: bắt đầu listen khi subscriber đầu tiên xuất hiện và dừng ngay khi subscriber cuối cùng biến mất. Chúng ta config delay (tính bằng mili giây) giữa thời điểm subscriber cuối cùng biến mất và thời điểm dừng coroutine bằng tham số &lt;code>stopTimeoutMillis&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;p>Lưu ý về &lt;code>WhileSubscribed&lt;/code>: nếu bạn mở một Intent mới từ màn hình của mình, chẳng hạn như ứng dụng máy ảnh, màn hình của bạn sẽ bị tạm dừng và do đó SharedFlow của bạn sẽ không còn subscriber nữa và sẽ ngừng emit. Khi quay lại màn hình ban đầu, bạn sẽ subscribe lại màn hình của mình và có thể chạy lại tác vụ bên trong flow của mình. Điều này có thể gây ra sự cố hoặc trigger lại một tác vụ không cần thiết.&lt;/p>
+&lt;p>Lưu ý về &lt;code>SharingStarted.Eagerly&lt;/code> và &lt;code>SharingStarted.Lazily&lt;/code>: nếu bạn đang sử dụng &lt;code>ViewModelScope&lt;/code> hoặc &lt;code>LifecycleScope&lt;/code> thì &lt;code>SharedFlow&lt;/code> sẽ ngừng gửi các phần tử khi màn hình bị destroy.&lt;/p>
+&lt;h2 id="biến-flow-thành-sharedflow">Biến flow thành SharedFlow
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// từ một viewModel hoặc một class có lifeCycleScope
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">shareIn&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">scope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">viewModelScope&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">started&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">SharingStarted&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Lazily&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// từ một class không có lifeCycleScope (repository hoặc use case)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">shareIn&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">scope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">started&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">SharingStarted&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Lazily&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="use-case-observe-database-thay-đổi-từ-nhiều-vị-trí">Use case: Observe database thay đổi từ nhiều vị trí
+&lt;/h2>&lt;p>Nếu bạn sử dụng &lt;strong>Room&lt;/strong> cho cơ sở dữ liệu của mình thì bạn có thể đã biết rằng nó đã hỗ trợ Flow. Vì vậy, bạn có thể observe các thay đổi trong database của mình và nhận dữ liệu mới ngay khi có. Nhưng việc đọc dữ liệu từ disk có thể khá nặng. Nếu cần nhận dữ liệu ở nhiều màn hình, bạn có thể sử dụng &lt;code>SharedFlow&lt;/code> để tránh phải fetch dữ liệu cho mọi màn hình.&lt;/p>
+&lt;p>Trong ví dụ này, mình sẽ trình bày cách để fetch một &lt;code>UserSettings&lt;/code> một lần nhưng vẫn nhận được update trên nhiều màn hình:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// DAO đơn giản để fetch dữ liệu từ Room
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nd">@Dao&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">interface&lt;/span> &lt;span class="nc">UserSettingsDao&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// fetch tất cả user settings từ database và emit một flow
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nd">@Query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;SELECT * FROM user_settings&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fun&lt;/span> &lt;span class="nf">getAll&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">Flow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">UserSettings&lt;/span>&lt;span class="p">&amp;gt;&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">UserSettingsRepository&lt;/span> &lt;span class="nd">@Inject&lt;/span> &lt;span class="k">constructor&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">dao&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">UserSettingsDao&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Chúng ta chỉ đọc từ DB một lần và tất cả receiver sẽ nhận được
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// data được tính toán ở đây.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">getAll&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">SharedFlow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">UserSettings&lt;/span>&lt;span class="p">&amp;gt;&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">dao&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">getAll&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">shareIn&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// truyền xuống scope
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">scope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// chỉ bắt đầu emit khi chúng ta có receiver
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">started&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">SharingStarted&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Lazily&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// replay phần tử mới nhất khi một receiver mới subscribe nó
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">replay&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="stateflow">StateFlow
+&lt;/h1>&lt;h2 id="nguyên-tắc-chính-1">Nguyên tắc chính
+&lt;/h2>&lt;ul>
+&lt;li>Hoạt động tương tự như a &lt;code>SharedFlow&lt;/code> với tham số &lt;code>replay&lt;/code> được đặt thành 1.&lt;/li>
+&lt;li>Luôn chỉ lưu trữ một giá trị.&lt;/li>
+&lt;li>Giá trị được lưu trữ có thể được truy cập bằng thuộc tính &lt;code>value&lt;/code>.&lt;/li>
+&lt;li>Chúng ta cần đặt giá trị ban đầu trong constructor.&lt;/li>
+&lt;li>Sự thay thế hiện đại cho &lt;code>LiveData&lt;/code>.&lt;/li>
+&lt;li>Sẽ không emit phần tử mới nếu nó bằng phần tử trước đó.&lt;/li>
+&lt;/ul>
+&lt;h2 id="thiết-lập-và-đọc-một-giá-trị">Thiết lập và đọc một giá trị
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">state&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">MutableStateFlow&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;A&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1">// giá trị ban đầu là A
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="k">value&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;B&amp;#34;&lt;/span> &lt;span class="c1">// đặt giá trị thành B
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="k">value&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;B&amp;#34;&lt;/span> &lt;span class="c1">// giá trị này sẽ không emit phần tử mới vì giá trị đã là B
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">myValue&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="k">value&lt;/span> &lt;span class="c1">// đọc giá trị từ state, ở đây là &amp;#34;B&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="statein">stateIn
+&lt;/h2>&lt;ul>
+&lt;li>Chuyển đổi một flow thành một &lt;code>StateFlow&lt;/code>.&lt;/li>
+&lt;li>Cần xác định scope.&lt;/li>
+&lt;li>Có 2 loại, một loại suspend và một loại không suspend&lt;/li>
+&lt;/ul>
+&lt;h3 id="statein-suspend">stateIn suspend
+&lt;/h3>&lt;ul>
+&lt;li>suspend cho đến khi phần tử đầu tiên của flow được emit và giá trị mới được tính toán&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">stateIn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="statein-not-suspend">stateIn not suspend
+&lt;/h3>&lt;ul>
+&lt;li>Yêu cầu một giá trị ban đầu trong tham số &lt;code>initialValue&lt;/code> của nó.&lt;/li>
+&lt;li>Tham số thứ hai của nó là &lt;code>started&lt;/code> và mong đợi một phần tử &lt;code>SharingStarted&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">stateIn&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">scope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">viewModelScope&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">started&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">SharingStarted&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Lazily&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">initValue&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;A&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="use-case-emit-data-từ-viewmodel-sang-view">Use case: Emit data từ viewModel sang view
+&lt;/h2>&lt;p>Đoạn code về cách chuyển flow thành &lt;code>StateFlow&lt;/code> để emit state từ view model sang view mà đang observe:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">MyViewModel&lt;/span> &lt;span class="nd">@Inject&lt;/span> &lt;span class="k">constructor&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">fetchDataUseCase&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">FetchDataUseCase&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">ViewModel&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">myState&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">StateFlow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">MyState&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fetchDataUseCase&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">dataState&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">map&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">when&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">it&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">is&lt;/span> &lt;span class="nc">FetchDataUseCase&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nc">FetchDataState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Loading&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="nc">MyState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Loading&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">is&lt;/span> &lt;span class="nc">FetchDataUseCase&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nc">FetchDataState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Success&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="nc">MyState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Success&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">it&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="k">data&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">is&lt;/span> &lt;span class="nc">FetchDataUseCase&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nc">FetchDataState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Error&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="nc">MyState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">it&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// chuyển flow thành state flow
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="n">stateIn&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// đặt scope thành viewModel vì vậy chúng ta sẽ stop
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// listening khi viewModel bị destroy
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">scope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">viewModelScope&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">started&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">SharingStarted&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">WhileSubscribed&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">5&lt;/span>&lt;span class="n">_000&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">initialValue&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">MyState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Loading&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">sealed&lt;/span> &lt;span class="k">interface&lt;/span> &lt;span class="nc">MyState&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">data&lt;/span> &lt;span class="k">object&lt;/span> &lt;span class="nc">Loading&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">MyState&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">data&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Success&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="p">&amp;gt;)&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">MyState&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">data&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">message&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">MyState&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@Composable&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">MyScreen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">viewModel&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">MyViewModel&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">state&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">viewModel&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">myState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">collectAsStateWithLifecycle&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">when&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">state&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">is&lt;/span> &lt;span class="nc">MyState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Loading&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="c1">// show loading view
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">is&lt;/span> &lt;span class="nc">MyState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Success&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="c1">// show success view
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">is&lt;/span> &lt;span class="nc">MyState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Error&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="c1">// show error view
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Cảm ơn bạn đã đồng hành cùng mình đến hết serie Kotlin cheat sheet này. Hy vọng những kiến thức hữu ích này sẽ giúp bạn tự tin hơn khi làm việc với Kotlin Coroutines và Flow.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://medium.com/@galou.minisini/advanced-kotlin-flow-cheat-sheet-for-android-engineer-cb8157d4f848" target="_blank" rel="noopener"
+>https://medium.com/@galou.minisini/advanced-kotlin-flow-cheat-sheet-for-android-engineer-cb8157d4f848&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Kotlin Flow cheat sheet phần 2: Flow</title><link>https://namanh11611.github.io/vi/p/kotlin-flow-cheat-sheet-2/</link><pubDate>Sun, 18 Aug 2024 05:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/kotlin-flow-cheat-sheet-2/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-flow-cheat-sheet-2/cheat_sheet.jpg" alt="Featured image of post Kotlin Flow cheat sheet phần 2: Flow" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@anacruzbaeza?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Ana Cruz&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/photographie-a-plat-de-papiers-dimprimante-blancs-S0qh0ONK-AE?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>Tiếp nối serie Kotlin cheat sheet, chúng ta cùng đi đến với cheat sheet tiếp theo dành cho &lt;strong>Flow&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Kotlin Flow&lt;/strong> là một API mạnh mẽ giúp quản lý luồng dữ liệu bất đồng bộ một cách rõ ràng và dễ dàng. Trong phần 2 này, chúng ta sẽ khám phá Flow từ cơ bản đến nâng cao, tìm hiểu cách tạo, chuyển đổi và thu thập các luồng dữ liệu, cũng như các best practice để áp dụng trong dự án Android của bạn.&lt;/p>
+&lt;p>Bạn có thể đọc toàn bộ serie tại đây:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="../kotlin-coroutines-cheat-sheet" >Kotlin Coroutines cheat sheet nâng cao dành cho Android Engineer&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-1" >Kotlin Flow cheat sheet phần 1: Channel&lt;/a>&lt;/li>
+&lt;li>Kotlin Flow cheat sheet phần 2: Flow&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-3" >Kotlin Flow cheat sheet phần 3: SharedFlow và StateFlow&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="flow">Flow
+&lt;/h1>&lt;h2 id="nguyên-tắc-chính">Nguyên tắc chính
+&lt;/h2>&lt;ul>
+&lt;li>Là một &lt;strong>cold stream&lt;/strong>.&lt;/li>
+&lt;li>Hỗ trợ sẵn structured concurrency.&lt;/li>
+&lt;li>Tác vụ cuối cùng của flow được gọi là tác vụ &lt;strong>terminal&lt;/strong> (&lt;code>collect&lt;/code>, &lt;code>first&lt;/code>… ).&lt;/li>
+&lt;li>Một flow có thể có các tác vụ trung gian để sửa đổi flow (&lt;code>map&lt;/code>, &lt;code>onEach&lt;/code>, &lt;code>flatMapLastest&lt;/code>… ).&lt;/li>
+&lt;li>Terminal operation là suspend và yêu cầu một scope.&lt;/li>
+&lt;li>Các Exception chưa được bắt sẽ ngay lập tức cancel một flow và &lt;code>collect&lt;/code> sẽ throw lại Exception đó.&lt;/li>
+&lt;li>Theo mặc định, context của flow sẽ lấy từ context mà &lt;code>collect&lt;/code> được gọi.&lt;/li>
+&lt;/ul>
+&lt;h2 id="kết-hợp-các-flow-với-nhau">Kết hợp các flow với nhau
+&lt;/h2>&lt;p>&lt;code>merge&lt;/code>, &lt;code>combine&lt;/code> và &lt;code>zip&lt;/code> là các hàm trung gian cho phép chúng ta kết hợp 2 (hoặc nhiều) flow thành 1. Vậy điểm khác biệt chính giữa 3 hàm đó là gì?&lt;/p>
+&lt;h3 id="merge">merge
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Không sửa đổi&lt;/strong> bất kỳ phần tử nào.&lt;/li>
+&lt;li>Các phần tử được &lt;strong>emit ngay khi chúng được tạo ra&lt;/strong>, chúng ta không đợi flow khác để tạo ra giá trị.&lt;/li>
+&lt;li>Sử dụng nó khi bạn có &lt;strong>nhiều nguồn event sẽ tạo ra cùng một action&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>flowA emit: 1&lt;/p>
+&lt;p>flowB emit: 2&lt;/p>
+&lt;p>flowA emit: 3&lt;/p>
+&lt;p>merge(flowA, flowB) tạo ra 1, 2, 3&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="zip">zip
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Kết hợp&lt;/strong> các phần tử từ các flow khác nhau để &lt;strong>tạo ra giá trị mới&lt;/strong>.&lt;/li>
+&lt;li>Chúng ta cần một hàm để &lt;strong>xác định&lt;/strong> cách các phần tử được &lt;strong>kết hợp&lt;/strong> với nhau.&lt;/li>
+&lt;li>Chúng ta cần &lt;strong>đợi mỗi flow emit một giá trị&lt;/strong> để có thể tạo cặp.&lt;/li>
+&lt;li>Các phần tử chỉ có thể là &lt;strong>một phần của một cặp&lt;/strong>.&lt;/li>
+&lt;li>Các phần tử còn lại &lt;strong>không có cặp sẽ bị mất&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>flowA emit: 1&lt;/p>
+&lt;p>flowB emit: 2&lt;/p>
+&lt;p>flowA emit: 4&lt;/p>
+&lt;p>flowA.zip(flowB) {fA, fB -&amp;gt; fA + fB } tạo ra 3 (1+2 = 3, còn 4 từ flowA sẽ bị loại bỏ)&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="combine">combine
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Kết hợp&lt;/strong> các phần tử từ các flow khác nhau để &lt;strong>tạo ra giá trị mới&lt;/strong>.&lt;/li>
+&lt;li>Chúng ta cần một hàm &lt;strong>xác định&lt;/strong> cách các phần tử được &lt;strong>kết hợp&lt;/strong> với nhau.&lt;/li>
+&lt;li>Chúng ta cần &lt;strong>đợi flow chậm hơn&lt;/strong> emit giá trị lần đầu tiên trước khi tạo phần tử mới.&lt;/li>
+&lt;li>Khi một flow tạo ra một phần tử mới, nó sẽ &lt;strong>thay thế phần tử trước đó&lt;/strong> và &lt;strong>một giá trị mới sẽ được emit ngay lập tức&lt;/strong> (chúng ta không đợi mỗi flow emit một phần tử mới).&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>flowA emit: 1&lt;/p>
+&lt;p>flowB emit: 2&lt;/p>
+&lt;p>flowA emit: 3&lt;/p>
+&lt;p>flowA.combines(flowB) { fA, fB -&amp;gt; fA + fB } tạo ra 3 (1+2 = 3) rồi 5 (3+2 = 5, trong đó phần tử 3 đã thay thế cho 1 trước đó)&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="sự-khác-biệt-giữa-fold-và-scan">Sự khác biệt giữa fold và scan
+&lt;/h2>&lt;p>Cả &lt;code>fold&lt;/code> và &lt;code>scan&lt;/code> &lt;strong>kết hợp tất cả các giá trị&lt;/strong> do một flow emit thành &lt;strong>một phần tử&lt;/strong> bằng cách áp dụng thao tác kết hợp các giá trị lại với nhau.&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>fold&lt;/code> là một tác vụ &lt;strong>terminal&lt;/strong>. Nó suspend cho đến khi flow hoàn thành và tạo ra giá trị cuối cùng&lt;/li>
+&lt;li>&lt;code>scan&lt;/code> là một tác vụ trung gian và tạo ra tất cả các giá trị trung gian&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">myflow&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">flowOf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="m">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="m">3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="m">4&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">fold&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">acc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">newElement&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">acc&lt;/span> &lt;span class="p">+&lt;/span> &lt;span class="n">newElement&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="c1">// tạo ra 10
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">scan&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">acc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">newElement&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">acc&lt;/span> &lt;span class="p">+&lt;/span> &lt;span class="n">newElement&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// tạo ra 1, 3 (1+2), 6 (3+3), 10 (6+4)
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="flatmapconcat-flatmapmerge-và-flatmaplatest">flatMapConcat, flatMapMerge và flatMapLatest
+&lt;/h2>&lt;ul>
+&lt;li>Chúng đều là những tác vụ trung gian&lt;/li>
+&lt;li>Chúng biến đổi các phần tử được emit bởi flow ban đầu bằng cách áp dụng một flow khác lên phần tử đó và trả về một flow khác&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">myFlowA&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">flatMapConcat&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">fA&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">myFlowB&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">fA&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="c1">// giá trị trả về do flow B tạo ra
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="flatmapconcat">flatMapConcat
+&lt;/h3>&lt;ul>
+&lt;li>Chuyển đổi từng giá trị được emit thành một flow và nối các flow kết quả &lt;strong>một cách tuần tự&lt;/strong>.&lt;/li>
+&lt;li>Emit hoàn toàn các giá trị từ inner flow đầu tiên trước khi bắt đầu flow tiếp theo.&lt;/li>
+&lt;li>Use Case: khi bạn cần xử lý các flow bên trong &lt;strong>theo thứ tự&lt;/strong>, không bị chồng chéo.&lt;/li>
+&lt;/ul>
+&lt;h3 id="flatmapmerge">flatMapMerge
+&lt;/h3>&lt;ul>
+&lt;li>Chuyển đổi từng giá trị được emit thành một flow và hợp nhất các flow kết quả &lt;strong>một cách đồng thời&lt;/strong>.&lt;/li>
+&lt;li>Emit các giá trị từ tất cả các inner flow khi chúng có sẵn, có khả năng không theo thứ tự.&lt;/li>
+&lt;li>Use Case: khi bạn muốn xử lý đồng thời các flow bên trong và &lt;strong>không quan tâm đến thứ tự&lt;/strong> của các giá trị được emit.&lt;/li>
+&lt;/ul>
+&lt;h3 id="flatmaplatest">flatMapLatest
+&lt;/h3>&lt;ul>
+&lt;li>Chuyển đổi từng giá trị được emit thành một flow, &lt;strong>hủy các flow trước đó&lt;/strong> khi một giá trị mới đã được emit, và &lt;strong>emit các giá trị từ flow mới nhất&lt;/strong>.&lt;/li>
+&lt;li>Chỉ flow mới nhất được hoạt động và các giá trị của nó được emit. Các flow trước đó bị hủy bỏ.&lt;/li>
+&lt;li>Use Case: khi bạn chỉ quan tâm đến &lt;strong>giá trị mới nhất&lt;/strong> và muốn hủy các thao tác trước đó.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">data&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">User&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">data&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">UserDetails&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">userId&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">address&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">fetchUserData&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">Flow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">flow&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Alice&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">delay&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">500&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Bob&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">delay&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">500&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Charlie&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">fetchUserDetails&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">userId&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Int&lt;/span>&lt;span class="p">):&lt;/span> &lt;span class="n">Flow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">UserDetails&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">flow&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">delay&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">1000&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1">// Giả lập network delay
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">UserDetails&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">userId&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">$userId&lt;/span>&lt;span class="s2">&amp;#39;s address&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapConcat
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">fetchUserData&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">flatMapConcat&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">user&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fetchUserDetails&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">collect&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">userDetails&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;flatMapConcat: &lt;/span>&lt;span class="si">${userDetails}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Mỗi thông tin user được trả về tuần tự.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapConcat: UserDetails(userId=1, address=1&amp;#39;s address)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapConcat: UserDetails(userId=2, address=2&amp;#39;s address)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapConcat: UserDetails(userId=3, address=3&amp;#39;s address)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapMerge
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">fetchUserData&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">flatMapMerge&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">user&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fetchUserDetails&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">collect&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">userDetails&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;flatMapMerge: &lt;/span>&lt;span class="si">${userDetails}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Thông tin user có thể bị xen kẽ do trả về đồng thời.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapMerge: UserDetails(userId=1, address=1&amp;#39;s address)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapMerge: UserDetails(userId=2, address=2&amp;#39;s address)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapMerge: UserDetails(userId=3, address=3&amp;#39;s address)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapLatest
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">fetchUserData&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">flatMapLatest&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">user&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fetchUserDetails&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">collect&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">userDetails&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;flatMapLatest: &lt;/span>&lt;span class="si">${userDetails}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Chỉ thông tin của user cuối cùng được trả về
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// do user mới sẽ cancel fetch trước đó.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// flatMapLatest: UserDetails(userId=3, address=3&amp;#39;s address)
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="chuyển-đổi-function-thành-flow">Chuyển đổi function thành Flow
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">function&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">suspend&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// đây là biểu thức lambda suspend
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// định nghĩa hàm ở đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">asFlow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Hoặc&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">Flow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// định nghĩa hàm ở đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">::&lt;/span>&lt;span class="n">myFunction&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">asFlow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="tạo-flow-tạo-ra-các-phần-tử-trước-khi-chúng-ta-subscribe">Tạo flow tạo ra các phần tử trước khi chúng ta subscribe
+&lt;/h2>&lt;p>Hàm &lt;code>channelFlow&lt;/code> tạo ra sự kết hợp giữa flow và channel. Nó tạo ra một hot stream data nhưng cũng implement Flow interface.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">myChannelFlow&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">channelFlow&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">myData&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="c1">// fetch dữ liệu tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">myData&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">fetchData&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">myData&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">first&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="sửa-đổi-context-của-flow">Sửa đổi context của Flow
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">flowOn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nc">Dispatchers&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">IO&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Hoặc
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">flowOn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">CoroutineName&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="s2">&amp;#34;NewName&amp;#34;&lt;/span> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="tránh-lồng-nhau-khi-khởi-chạy-flow">Tránh lồng nhau khi khởi chạy flow
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// thay vì
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">viewModelScope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">collect&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// làm như này
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">myFlow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launchIn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">viewModelScope&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Cảm ơn các bạn đã đọc đến đây, cùng chờ đón những phần tiếp theo nhé.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://medium.com/@galou.minisini/advanced-kotlin-flow-cheat-sheet-for-android-engineer-cb8157d4f848" target="_blank" rel="noopener"
+>https://medium.com/@galou.minisini/advanced-kotlin-flow-cheat-sheet-for-android-engineer-cb8157d4f848&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Kotlin Flow cheat sheet phần 1: Channel</title><link>https://namanh11611.github.io/vi/p/kotlin-flow-cheat-sheet-1/</link><pubDate>Sun, 18 Aug 2024 04:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/kotlin-flow-cheat-sheet-1/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-flow-cheat-sheet-1/cheat_sheet.jpg" alt="Featured image of post Kotlin Flow cheat sheet phần 1: Channel" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@anacruzbaeza?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Ana Cruz&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/photographie-a-plat-de-papiers-dimprimante-blancs-S0qh0ONK-AE?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>Sau khi làm việc với &lt;strong>Kotlin Flows&lt;/strong> một thời gian, có thể bạn đã quen với các khái niệm cơ bản. Nhưng nếu chưa bao giờ sử dụng &lt;code>Channel&lt;/code>, bạn sẽ không biết sự khác nhau giữa &lt;code>merge&lt;/code>, &lt;code>combine&lt;/code> và &lt;code>zip&lt;/code>, hoặc có thể bạn chưa hiểu rõ &lt;code>SharedFlow&lt;/code> và &lt;code>StateFlow&lt;/code> cũng như cách sử dụng chúng.&lt;/p>
+&lt;p>Cheat sheet này hệ thống lại những kiến thức quan trọng mà mình đã góp nhặt được trong quá trình làm việc với &lt;strong>Kotlin Flow&lt;/strong>. Nó được thiết kế để trở thành một tài liệu tham khảo hữu ích, giúp bạn giải quyết các tình huống phức tạp.&lt;/p>
+&lt;p>Trong phần 1, chúng ta sẽ tìm hiểu chi tiết về Channel, cách thức hoạt động, và cách ứng dụng trong các trường hợp thực tế để giao tiếp giữa các coroutine một cách an toàn và hiệu quả.&lt;/p>
+&lt;p>Bạn có thể đọc toàn bộ serie tại đây:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="../kotlin-coroutines-cheat-sheet" >Kotlin Coroutines cheat sheet nâng cao dành cho Android Engineer&lt;/a>&lt;/li>
+&lt;li>Kotlin Flow cheat sheet phần 1: Channel&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-2" >Kotlin Flow cheat sheet phần 2: Flow&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-3" >Kotlin Flow cheat sheet phần 3: SharedFlow và StateFlow&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="hot-streams-và-cold-streams">Hot streams và Cold streams
+&lt;/h1>&lt;h2 id="hot-streams">Hot streams
+&lt;/h2>&lt;ul>
+&lt;li>Ví dụ: &lt;code>channel&lt;/code>, &lt;code>Collections&lt;/code> (&lt;code>List&lt;/code>, &lt;code>Set&lt;/code>… ).&lt;/li>
+&lt;li>&lt;strong>Bắt đầu ngay lập tức:&lt;/strong> bắt đầu emit các giá trị bất kể có subscriber hay không.&lt;/li>
+&lt;li>&lt;strong>Lưu các phần tử:&lt;/strong> chúng không cần phải tính toán lại và tất cả subscriber đều nhận được cùng một chuỗi giá trị.&lt;/li>
+&lt;/ul>
+&lt;h2 id="cold-streams">Cold streams
+&lt;/h2>&lt;ul>
+&lt;li>Ví dụ: &lt;code>Sequence&lt;/code>, &lt;code>Flow&lt;/code>&lt;/li>
+&lt;li>&lt;strong>Bắt đầu theo yêu cầu:&lt;/strong> cold streams chỉ bắt đầu emit các giá trị khi subscriber chủ động đăng ký stream đó. Nguồn dữ liệu là lazy.&lt;/li>
+&lt;li>&lt;strong>Phát độc lập:&lt;/strong> mỗi subscriber nhận được chuỗi giá trị độc lập của riêng mình. Không có phần tử nào được lưu trữ.&lt;/li>
+&lt;/ul>
+&lt;h1 id="channel">Channel
+&lt;/h1>&lt;h2 id="nguyên-tắc-chính">Nguyên tắc chính
+&lt;/h2>&lt;ul>
+&lt;li>Là một &lt;strong>hot stream&lt;/strong>.&lt;/li>
+&lt;li>Đảm bảo &lt;strong>không có xung đột&lt;/strong> (không có vấn đề với trạng thái chia sẻ) và &lt;strong>công bằng&lt;/strong> nên rất hữu ích khi các &lt;strong>coroutine&lt;/strong> khác nhau cần &lt;strong>liên lạc với nhau&lt;/strong>.&lt;/li>
+&lt;li>Hỗ trợ &lt;strong>bất kỳ số lượng&lt;/strong> sender và receiver.&lt;/li>
+&lt;li>Mỗi giá trị gửi tới channel chỉ &lt;strong>được nhận một lần&lt;/strong>.&lt;/li>
+&lt;li>Nếu có nhiều receiver subscribe cùng lúc, các phần tử sẽ được &lt;strong>phân bổ công bằng&lt;/strong> giữa các receiver. (Hàng đợi &lt;strong>FIFO&lt;/strong> của receiver).&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>Channel có 3 receiver, subscribe theo thứ tự:
+Receiver1, Receiver2, Receiver3.&lt;/p>
+&lt;p>Tất cả receiver đã subscribe channel.&lt;/p>
+&lt;p>Channel emit ra 4 giá trị: &amp;ldquo;A&amp;rdquo;, &amp;ldquo;B&amp;rdquo;, &amp;ldquo;C&amp;rdquo; rồi &amp;ldquo;D&amp;rdquo;.&lt;/p>
+&lt;p>Receiver1 nhận được &amp;ldquo;A&amp;rdquo; và &amp;ldquo;D&amp;rdquo;&lt;/p>
+&lt;p>Receiver2 nhận được &amp;ldquo;B&amp;rdquo;&lt;/p>
+&lt;p>Receiver3 nhận được &amp;ldquo;C&amp;rdquo;&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>Chúng có 2 suspend function là &lt;code>send&lt;/code> và &lt;code>receive&lt;/code>.&lt;/li>
+&lt;li>&lt;code>receive&lt;/code> bị suspend nếu &lt;strong>không có phần tử nào&lt;/strong> trong channel và sẽ đợi một phần tử sẵn sàng để tiếp tục.&lt;/li>
+&lt;li>&lt;code>send&lt;/code> bị suspend nếu channel &lt;strong>đạt đến capacity&lt;/strong>.&lt;/li>
+&lt;li>Chúng ta cũng có thể sử dụng phiên bản &lt;strong>không bị suspend&lt;/strong> là &lt;code>trySend&lt;/code> và &lt;code>tryReceive&lt;/code>, chúng trả về một &lt;code>ChannelResult&lt;/code> (cho chúng ta biết thao tác có thành công hay không).&lt;/li>
+&lt;li>Chúng cần được &lt;strong>close thủ công&lt;/strong> sau khi chúng ta gửi xong dữ liệu hoặc khi xảy ra Exception: &lt;code>myChannel.close()&lt;/code>. Nếu không, receive sẽ đợi các phần tử mãi mãi.&lt;/li>
+&lt;/ul>
+&lt;h2 id="các-loại-channel-capacity">Các loại channel capacity
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">myChannel&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Channel&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Int&lt;/span>&lt;span class="p">&amp;gt;(&lt;/span>&lt;span class="n">capacity&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="m">3&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// hoặc
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">myChannel&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">produce&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">capacity&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="m">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// emit các giá trị ở đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>Channel.UNLIMITED&lt;/code>: buffer không giới hạn và &lt;code>send&lt;/code> không bao giờ bị suspend.&lt;/li>
+&lt;li>&lt;code>Channel.BUFFERED&lt;/code>: buffer capacity là 64. Giá trị mặc định này có thể được override bằng thuộc tính hệ thống &lt;code>kotlinx.coroutines.channels.defaultBuffer&lt;/code> trong JVM.&lt;/li>
+&lt;li>&lt;code>Channel.RENDEZVOUS&lt;/code>: (behavior mặc định) buffer capacity là 0. Receiver sẽ chỉ nhận được dữ liệu nếu nó đã subscribe với sender khi dữ liệu được emit.&lt;/li>
+&lt;li>&lt;code>Channel.CONFLATED&lt;/code>: buffer capacity là 1. Mỗi phần tử mới sẽ thay thế phần tử trước đó.&lt;/li>
+&lt;li>Giá trị &lt;code>int&lt;/code>bất kỳ: buffer sẽ có capacity bằng giá trị được set.&lt;/li>
+&lt;/ul>
+&lt;h2 id="xử-lý-lỗi-tràn-buffer">Xử lý lỗi tràn buffer
+&lt;/h2>&lt;p>Các channel có một tham số &lt;code>onBufferOverflow&lt;/code> kiểm soát những gì xảy ra khi buffer đầy. Có 3 lựa chọn:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>BufferOverflow.SUSPEND&lt;/code>: (behavior mặc định) tạm dừng phương thức &lt;code>send&lt;/code> khi buffer đầy.&lt;/li>
+&lt;li>&lt;code>BufferOverflow.DROP_OLDEST&lt;/code>: loại bỏ phần tử cũ nhất khi buffer đầy.&lt;/li>
+&lt;li>&lt;code>BufferOverflow.DROP_LATEST&lt;/code>: loại bỏ phần tử mới nhất khi buffer đầy.&lt;/li>
+&lt;/ul>
+&lt;h2 id="tạo-channel-tự-động-close">Tạo Channel tự động close
+&lt;/h2>&lt;p>Coroutine builder &lt;code>produce&lt;/code> sẽ close channel bất cứ khi nào builder coroutine kết thúc (finish, stop hoặc cancel).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">channel&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">produce&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// emit các giá trị ở đây và không cần gọi close() khi kết thúc
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="tự-động-dọn-dẹp-nếu-một-phần-tử-không-thể-xử-lý">Tự động dọn dẹp nếu một phần tử không thể xử lý
+&lt;/h2>&lt;p>Nếu channel đã bị close, cancel hoặc khi &lt;code>send&lt;/code>, &lt;code>receive&lt;/code>, &lt;code>hastNext&lt;/code> có lỗi&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">myChannel&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Channel&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">capacity&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">onUnderliveredElement&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="cm">/* các tác vụ dọn dẹp ở đây */&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="use-case-trigger-một-refresh">Use case: trigger một refresh
+&lt;/h2>&lt;p>Trong Android, trường hợp sử dụng phổ biến cho các channel là trigger khi một screen được refresh (pull to refresh hoặc button retry). Đoạn code bên dưới trình bày cách fetch data từ API khi chúng ta subscribe flow lần đầu tiên hoặc khi trigger một refresh.&lt;/p>
+&lt;p>Rất nhiều người sử dụng &lt;code>SharedFlow&lt;/code> để trigger refresh và nó hoạt động ổn, nhưng đó không phải là giải pháp tốt nhất vì &lt;code>SharedFlow&lt;/code> được thiết kế để có nhiều receiver.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Đây là phiên bản đơn giản hóa để minh họa cách chúng ta có thể sử dụng channel.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Trong trường hợp sử dụng thực tế, chúng ta sẽ yêu cầu một số logic bổ sung để tránh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// làm mới nếu dữ liệu đã được tải chẳng hạn.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">interface&lt;/span> &lt;span class="nc">ApiService&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">fetchData&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">FetchDataUseCase&lt;/span> &lt;span class="nd">@Inject&lt;/span> &lt;span class="k">constructor&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">apiService&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">ApiService&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// tạo một channel có buffer là 1 và sẽ loại bỏ dữ liệu mới nhất
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// vì vậy nếu chúng ta trigger refresh nhiều lần liên tiếp
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// chúng ta sẽ chỉ giữ phần tử đầu tiên.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">refreshChannel&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Channel&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Unit&lt;/span>&lt;span class="p">&amp;gt;(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">capacity&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">onBufferOverflow&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">BufferOverflow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">DROP_LATEST&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// viewModel có thể receive flow này để build UI state
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">dataState&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Flow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">FetchDataState&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">refreshChannel&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// convert channel thành flow
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="n">consumeAsFlow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// emit một phần tử khi bắt đầu fetch data ngay khi chúng ta subscribe flow
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="n">onStart&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Unit&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">map&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">fetchData&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fun&lt;/span> &lt;span class="nf">refresh&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Chúng ta sử dụng trySend ở đây để không phải tạo suspend function
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// và vì vậy chúng ta không cần scope để gọi nó.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// Phương thức này có thể được gọi từ viewModel để trigger refresh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">refreshChannel&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">trySend&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Unit&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">fetchData&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">FetchDataState&lt;/span> &lt;span class="p">=&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">data&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">apiService&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">fetchData&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nc">FetchDataState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Success&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">data&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">e&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Exception&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nc">FetchDataState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">message&lt;/span> &lt;span class="o">?:&lt;/span> &lt;span class="s2">&amp;#34;An error occurred&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">sealed&lt;/span> &lt;span class="k">interface&lt;/span> &lt;span class="nc">FetchDataState&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">data&lt;/span> &lt;span class="k">object&lt;/span> &lt;span class="nc">Loading&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">FetchDataState&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">data&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Success&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="p">&amp;gt;)&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">FetchDataState&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">data&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">message&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">FetchDataState&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Cảm ơn các bạn đã đọc đến đây, cùng chờ đón những phần tiếp theo nhé.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://medium.com/@galou.minisini/advanced-kotlin-flow-cheat-sheet-for-android-engineer-cb8157d4f848" target="_blank" rel="noopener"
+>https://medium.com/@galou.minisini/advanced-kotlin-flow-cheat-sheet-for-android-engineer-cb8157d4f848&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Kotlin Coroutines cheat sheet nâng cao dành cho Android Engineer</title><link>https://namanh11611.github.io/vi/p/kotlin-coroutines-cheat-sheet/</link><pubDate>Mon, 12 Aug 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/kotlin-coroutines-cheat-sheet/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-coroutines-cheat-sheet/cheat_sheet.jpg" alt="Featured image of post Kotlin Coroutines cheat sheet nâng cao dành cho Android Engineer" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@anacruzbaeza?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Ana Cruz&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/photographie-a-plat-de-papiers-dimprimante-blancs-S0qh0ONK-AE?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>Sau khi làm việc với &lt;strong>Kotlin Coroutines&lt;/strong> một thời gian, có thể anh em đã quen với các khái niệm cơ bản như &lt;code>suspend&lt;/code> function và các hàm &lt;code>launch&lt;/code>, &lt;code>async&lt;/code>&amp;hellip;, có thể giải quyết các use case đơn giản một cách ngon ơ. Nhưng khi dự án trở nên phức tạp hơn, anh em có thể thường xuyên cần các giải pháp nâng cao hơn và phải nhờ sự trợ giúp đến từ Google hoặc AI.&lt;/p>
+&lt;p>Cheat sheet này hệ thống lại những kiến thức quan trọng mà mình đã góp nhặt được trong quá trình làm việc với &lt;strong>Kotlin Coroutines&lt;/strong>. Nó được thiết kế để trở thành một tài liệu tham khảo hữu ích, giúp anh em giải quyết các trường hợp phức tạp của coroutine.&lt;/p>
+&lt;p>Bạn có thể đọc toàn bộ serie tại đây:&lt;/p>
+&lt;ul>
+&lt;li>Kotlin Coroutines cheat sheet nâng cao dành cho Android Engineer&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-1" >Kotlin Flow cheat sheet phần 1: Channel&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-2" >Kotlin Flow cheat sheet phần 2: Flow&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="../kotlin-flow-cheat-sheet-3" >Kotlin Flow cheat sheet phần 3: SharedFlow và StateFlow&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="các-khái-niệm-trong-coroutines">Các khái niệm trong Coroutines
+&lt;/h1>&lt;p>&lt;a class="link" href="https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html" target="_blank" rel="noopener"
+>&lt;strong>Coroutine Context&lt;/strong>&lt;/a>: tập hợp các thành phần khác nhau. Trong đó, các thành phần chính là &lt;strong>Job&lt;/strong> và &lt;strong>Dispatcher&lt;/strong> của coroutine.&lt;/p>
+&lt;p>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-job/" target="_blank" rel="noopener"
+>&lt;strong>Job&lt;/strong>&lt;/a>: thứ có thể hủy được với vòng đời đạt đến đỉnh khi nó hoàn thành. Mỗi coroutine đều tạo một &lt;strong>Job&lt;/strong> của riêng nó (đó là &lt;strong>coroutine context duy nhất&lt;/strong> không được kế thừa từ coroutine cha).&lt;/p>
+&lt;p>&lt;strong>Dispatcher&lt;/strong>: cho phép chúng ta quyết định &lt;strong>thread&lt;/strong> nào (hoặc pool của thread) mà coroutine sẽ chạy trên đó (khi start và resume). Bạn có thể đọc bài viết chi tiết của mình về &lt;a class="link" href="https://viblo.asia/p/dispatchers-trong-kotlin-coroutines-AZoJjXvZVY7" target="_blank" rel="noopener"
+>Dispatchers trong Kotlin Coroutines&lt;/a>&lt;/p>
+&lt;p>&lt;strong>Coroutine scope&lt;/strong>: xác định thời gian tồn tại và context của coroutine. Nó chịu trách nhiệm quản lý vòng đời của coroutine, bao gồm cả việc hủy và xử lý lỗi.&lt;/p>
+&lt;p>&lt;strong>Coroutine builder&lt;/strong>: các &lt;strong>extension function&lt;/strong> của &lt;code>CoroutineScope&lt;/code>, cho phép chúng ta start một coroutine bất đồng bộ (ví dụ như &lt;code>launch&lt;/code>, &lt;code>async&lt;/code>… ).&lt;/p>
+&lt;h1 id="các-quy-tắc-chính-của-coroutines">Các quy tắc chính của Coroutines
+&lt;/h1>&lt;ul>
+&lt;li>Bạn cần một &lt;code>CoroutineScope&lt;/code> để start một coroutine (với function &lt;code>launch&lt;/code> hoặc &lt;code>async&lt;/code>). &lt;strong>&lt;code>viewModelScope&lt;/code>&lt;/strong> được sử dụng phổ biến nhất trong Android, nhưng bạn cũng có thể tự xây dựng scope của riêng bạn.&lt;/li>
+&lt;li>&lt;strong>Coroutine con&lt;/strong> (một coroutine bắt đầu từ một coroutine khác) &lt;strong>kế thừa&lt;/strong> coroutine context từ &lt;strong>coroutine cha&lt;/strong> (ngoại trừ &lt;strong>Job&lt;/strong>).&lt;/li>
+&lt;li>&lt;strong>Job&lt;/strong> của &lt;strong>coroutine cha&lt;/strong> được sử dụng làm &lt;strong>cha&lt;/strong> của &lt;strong>Job&lt;/strong> của &lt;strong>coroutine con&lt;/strong>.&lt;/li>
+&lt;li>&lt;strong>Coroutine cha suspend&lt;/strong> cho đến khi tất cả các &lt;strong>coroutine con&lt;/strong> của nó &lt;strong>kết thúc&lt;/strong>.&lt;/li>
+&lt;li>Khi một &lt;strong>coroutine cha&lt;/strong> bị &lt;strong>hủy&lt;/strong> thì tất cả các &lt;strong>coroutine con&lt;/strong> của nó cũng bị &lt;strong>hủy&lt;/strong>.&lt;/li>
+&lt;li>Khi một &lt;strong>coroutine con&lt;/strong> bị lỗi vì một Exception chưa được xử lý, nó sẽ &lt;strong>cancel coroutine cha&lt;/strong> của nó (trừ khi bạn sử dụng một &lt;code>SupervisorJob&lt;/code>).&lt;/li>
+&lt;li>Bạn không nên sử dụng &lt;code>GlobalScope&lt;/code>, nó có thể gây memory leak và giữ coroutine tồn tại ngay cả sau khi &lt;strong>Activity&lt;/strong> hoặc &lt;strong>Fragment&lt;/strong> khởi chạy nó đã bị bỏ qua.&lt;/li>
+&lt;li>Bạn không nên truyền &lt;strong>coroutine scope&lt;/strong> như một tham số, thay vào đó hãy sử dụng function &lt;code>coroutineScope&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;h1 id="các-function-của-coroutine-scope">Các function của Coroutine scope
+&lt;/h1>&lt;ul>
+&lt;li>&lt;code>coroutineScope&lt;/code>: suspend function, dùng để bắt đầu một scope và trả về giá trị do tham số của function tạo ra.&lt;/li>
+&lt;li>&lt;code>supervisorScope&lt;/code>: tương tự &lt;code>coroutineScope&lt;/code> nhưng nó override &lt;strong>Job&lt;/strong> của context, vì vậy function không bị cancel khi coroutine con throw một Exception.&lt;/li>
+&lt;li>&lt;code>withContext&lt;/code>: tương tự &lt;code>coroutineScope&lt;/code> nhưng cho phép thực hiện một số thay đổi trong scope (thường được sử dụng để set &lt;strong>Dispatcher&lt;/strong>).&lt;/li>
+&lt;li>&lt;code>withTimeout&lt;/code>: tương tự &lt;code>coroutineScope&lt;/code> nhưng đặt giới hạn thời gian cho phần body và nếu quá lâu sẽ bị hủy. Throw một &lt;code>TimeoutCancellationException&lt;/code>.&lt;/li>
+&lt;li>&lt;code>withTimeoutOrNull&lt;/code>: tương tự &lt;code>withTimeout&lt;/code> nhưng sẽ trả về &lt;code>null&lt;/code> thay vì throw Exception khi hết thời gian.&lt;/li>
+&lt;/ul>
+&lt;h1 id="chạy-song-song">Chạy song song
+&lt;/h1>&lt;p>Khi bạn muốn thực hiện hai tác vụ cùng lúc và đợi kết quả của cả hai trước khi trả về kết quả:&lt;/p>
+&lt;h2 id="khi-bạn-có-quyền-truy-cập-vào-một-scope-ví-dụ-từ-viewmodel">Khi bạn có quyền truy cập vào một scope (ví dụ từ ViewModel)
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">getConfigFromAPI&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">UserConfig&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// thực hiện lệnh gọi API tại đây hoặc bất kỳ suspend fun nào
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">getSongsFromAPI&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Song&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// thực hiện lệnh gọi API tại đây hoặc bất kỳ suspend fun nào
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">getConfigAndSongs&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// scope có thể là bất kỳ scope nào bạn muốn, trường hợp điển hình sẽ là viewModelScope
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">scope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">userConfig&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">async&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">getConfigFromAPI&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">songs&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">async&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">getSongsFromAPI&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Pair&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">userConfig&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">await&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">songs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">await&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Giả sử bạn có API được phân trang và bạn muốn tải xuống tất cả các trang trước khi hiển thị chúng cho người dùng, nhưng bạn muốn tải song song tất cả các trang:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">getSongsFromAPI&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">page&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Int&lt;/span>&lt;span class="p">):&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Song&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// thực hiện lệnh gọi API
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">const&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">totalNumberOfPages&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="m">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">getAllSongs&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// scope có thể là bất kỳ scope nào bạn muốn, trường hợp điển hình là viewModelScope
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">scope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">allNews&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="n">until&lt;/span> &lt;span class="n">totalNumberOfPages&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">map&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">page&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">async&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">getSongsFromAPI&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">page&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">flatMap&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="k">it&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">await&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>Lưu ý về &lt;code>async&lt;/code>/&lt;code>await&lt;/code>: coroutine sẽ được bắt đầu ngay lập tức khi nó được gọi. &lt;code>async&lt;/code> trả về một object thuộc loại &lt;code>Deferred&amp;lt;T&amp;gt;&lt;/code> (trong ví dụ của chúng ta là &lt;code>Deferred&amp;lt;List&amp;lt;Song&amp;gt;&amp;gt;&lt;/code>). &lt;code>Deferred&lt;/code> có suspend function &lt;code>await&lt;/code> trả về giá trị khi nó sẵn sàng.&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="khi-bạn-không-có-quyền-truy-cập-vào-một-scope-ví-dụ-từ-một-repository">Khi bạn không có quyền truy cập vào một scope (ví dụ từ một repository)
+&lt;/h2>&lt;p>Từ repository hoặc use case của bạn, bạn muốn định nghĩa một coroutine sẽ bắt đầu song song 2 (hoặc nhiều) lệnh gọi. Vấn đề là bạn cần một scope để sử dụng &lt;code>async&lt;/code> nhưng bạn không ở trong &lt;code>viewModel&lt;/code> hoặc presenter nên bạn không có quyền truy cập vào scope của mình ở đây (hãy nhớ quy tắc của chúng ta là không nên truyền scope như một tham số).&lt;/p>
+&lt;p>Từ ví dụ ở trên, chúng ta sửa lại một chút như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">getConfigAndSongs&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">Pair&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">UserConfig&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Song&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">userConfig&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">async&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">getConfigFromAPI&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">songs&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">async&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">getSongsFromAPI&lt;/span>&lt;span class="p">()}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Pair&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">userConfig&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">await&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">songs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">await&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="dọn-dẹp-khi-coroutine-bị-cancel">Dọn dẹp khi Coroutine bị cancel
+&lt;/h1>&lt;p>Nếu một coroutine bị hủy thì nó sẽ có trạng thái &lt;code>cancelling&lt;/code> trước khi chuyển sang &lt;code>cancelled&lt;/code>. Khi một coroutine bị hủy, chúng ta sẽ có thời gian để thực hiện một số tác vụ dọn dẹp nếu cần thiết (chẳng hạn như dọn dẹp local database hoặc gọi API để cho server biết rằng tác vụ không thành công).&lt;/p>
+&lt;p>Chúng ta có thể sử dụng &lt;code>finally&lt;/code> để thực hiện một tác vụ:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">viewModelScope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// gọi một số suspend function tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="k">finally&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// thực hiện tác vụ dọn dẹp tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nhưng không được phép gọi suspend function trong quá trình dọn dẹp. Nếu bạn cần gọi suspend function, bạn sẽ cần phải làm như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">viewModelScope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// gọi một số suspend function tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="k">finally&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">withContext&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">NonCancellable&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// thực hiện suspend function dọn dẹp tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>Lưu ý: Việc cancel sẽ xảy ra tại điểm suspend đầu tiên. Vì vậy việc cancel sẽ không xảy ra nếu chúng không có bất kỳ suspend function nào.&lt;/p>
+&lt;/blockquote>
+&lt;h1 id="dọn-dẹp-coroutine-khi-hoàn-thành">Dọn dẹp Coroutine khi hoàn thành
+&lt;/h1>&lt;p>Tương tự như việc dọn dẹp khi một coroutine bị hủy, bạn có thể muốn thực hiện một thao tác khi coroutine đạt đến trạng thái cuối cùng (&lt;code>completed&lt;/code> hoặc &lt;code>cancelled&lt;/code>).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">job&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="cm">/* suspend function tại đây */&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">job&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">invokeOnCompletion&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">exception&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Throwable&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// do something here
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="làm-cách-nào-để-không-cancel-coroutine-khi-một-trong-các-phần-tử-con-của-nó-bị-lỗi">Làm cách nào để KHÔNG cancel Coroutine khi một trong các phần tử con của nó bị lỗi
+&lt;/h1>&lt;p>Bạn có thể sử dụng &lt;code>SupervisorJob&lt;/code> và nó sẽ bỏ qua tất cả các exception ở con của nó.&lt;/p>
+&lt;h2 id="tạo-coroutine-scope-của-bạn">Tạo coroutine scope của bạn
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">scope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">CoroutineScope&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SupervisorJob&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// nếu một coroutine mắc lỗi thì coroutine còn lại sẽ không bị hủy
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">scope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">myFirstCoroutine&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">scope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">mySecondCoroutine&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="sử-dụng-scope-function">Sử dụng scope function
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">supervisorScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// nếu một coroutine xảy ra lỗi thì coroutine kia sẽ không bị hủy
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">myFirstCoroutine&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">mySecondCoroutine&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="bắt-exception">Bắt exception
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">myFirstCoroutine&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">e&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Exception&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// xử lý lỗi tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">mySecondCoroutine&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">e&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Exception&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// xử lý lỗi tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>CancellationException&lt;/code> không truyền tới coroutine cha, chỉ coroutine hiện tại bị cancel. Có thể kế thừa &lt;code>CancellationException&lt;/code> để tạo loại exception của riêng bạn, và nó cũng sẽ không truyền tới coroutine cha.&lt;/p>
+&lt;h1 id="định-nghĩa-tác-vụ-mặc-định-trong-trường-hợp-có-exception">Định nghĩa tác vụ mặc định trong trường hợp có exception
+&lt;/h1>&lt;p>Chúng ta có thể sử dụng &lt;code>CoroutineExceptionHandler&lt;/code>. Ví dụ, dùng để tự động đăng xuất người dùng khi server trả về lỗi 401.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">handler&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">CoroutineExceptionHandler&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">exception&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// định nghĩa tác vụ mặc định như hiển thị hộp thoại hoặc thông báo lỗi
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">scope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">CoroutineScope&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SupervisorJob&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">+&lt;/span> &lt;span class="n">handler&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">scope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="cm">/* gọi suspend function tại đây */&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">scope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="cm">/* gọi suspend function tại đây */&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="chạy-một-tác-vụ-không-cần-thiết">Chạy một tác vụ không cần thiết
+&lt;/h1>&lt;p>Nếu bạn muốn chạy một suspend function mà không ảnh hưởng đến các function khác (ví dụ nếu nó gây ra lỗi thì chỉ hàm này sẽ KHÔNG cancel coroutine, nhưng các hàm khác nếu gây ra lỗi thì vẫn sẽ cancel coroutine bình thường). Ví dụ điển hình là các function analytics.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">nonEssentialOperationScope&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">CoroutineScope&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SupervisorJob&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">getConfigAndSongs&lt;/span>&lt;span class="p">():&lt;/span> &lt;span class="n">Pair&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">UserConfig&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Song&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">coroutineScope&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">userConfig&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">async&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">getConfigFromAPI&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">songs&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">async&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">getSongsFromAPI&lt;/span>&lt;span class="p">()}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">nonEssentialOperationScope&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="cm">/* tác vụ không cần thiết ở đây */&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Pair&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">userConfig&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">await&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">songs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">await&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lý tưởng nhất là bạn nên inject &lt;code>nonEssentialOperationScope&lt;/code> vào class để dễ test hơn.&lt;/p>
+&lt;h1 id="chạy-một-tác-vụ-trên-single-thread-để-tránh-các-sự-cố-đồng-bộ">Chạy một tác vụ trên single thread để tránh các sự cố đồng bộ
+&lt;/h1>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">withContext&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nc">Dispatchers&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nc">Default&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">limiteParallelism&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">1&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// suspend function tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Cũng có thể sử dụng Dispatchers.IO
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="các-cách-tiếp-cận-khác-để-tránh-sự-cố-đồng-bộ-hóa-với-multithreading">Các cách tiếp cận khác để tránh sự cố đồng bộ hóa với multithreading
+&lt;/h2>&lt;p>Bạn có thể sử dụng &lt;code>AtomicReference&lt;/code> (từ Java)&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">private&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">myList&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">AtomicReference&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">listOf&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="cm">/* thêm object vào đây */&lt;/span> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">fetchNewElement&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">myNewElement&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="c1">// fetch phần tử mới tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">myList&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">getAndSet&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="k">it&lt;/span> &lt;span class="p">+&lt;/span> &lt;span class="n">myNewElement&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Hoặc với &lt;code>Mutex&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">mutex&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">Mutex&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">private&lt;/span> &lt;span class="k">var&lt;/span> &lt;span class="py">myList&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">listOf&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="cm">/* thêm object vào đây */&lt;/span> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">fetchNewElement&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mutex&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">withLock&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">myNewElement&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="c1">// fetch phần tử mới tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">myList&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">myNewElement&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="tránh-gửi-lại-một-coroutine-đến-cùng-một-dispatcher">Tránh gửi lại một coroutine đến cùng một dispatcher
+&lt;/h1>&lt;p>Tránh chi phí không cần thiết khi chuyển đổi dispatcher nếu chúng ta đã sử dụng &lt;code>Dispatcher.Main&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// điều này sẽ chỉ dispatch nếu cần thiết
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">myFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">withContext&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nc">Dispatcher&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nc">Main&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">immediate&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// suspend fun tại đây
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Hiện tại chỉ &lt;code>Dispatchers.Main&lt;/code> hỗ trợ &lt;code>immediate&lt;/code> dispatching.&lt;/p>
+&lt;p>Cảm ơn bạn đã đọc đến đây. Nếu bạn có kiến thức hay ho hoặc tip về Kotlin Coroutines, đừng ngần ngại comment chia sẻ với mình nhé!&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://medium.com/@galou.minisini/advanced-kotlin-coroutine-cheat-sheet-for-android-engineer-15e0d180fc1f" target="_blank" rel="noopener"
+>https://medium.com/@galou.minisini/advanced-kotlin-coroutine-cheat-sheet-for-android-engineer-15e0d180fc1f&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Dispatchers trong Kotlin Coroutines</title><link>https://namanh11611.github.io/vi/p/kotlin-coroutines-dispatchers/</link><pubDate>Mon, 01 May 2023 00:22:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/kotlin-coroutines-dispatchers/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-coroutines-dispatchers/dispatchers.jpeg" alt="Featured image of post Dispatchers trong Kotlin Coroutines" />&lt;h1 id="dispatcher-là-cái-gì">Dispatcher là cái gì?
+&lt;/h1>&lt;p>Hiểu một cách đơn giản, Dispatcher sẽ quyết định xem Coroutines được thực thi trên thread nào. Có thể là main thread, background thread, hoặc nó đẩy Coroutines vào thread pool.&lt;/p>
+&lt;p>Có 4 loại Dispatchers:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Dispatchers.Default&lt;/code>&lt;/li>
+&lt;li>&lt;code>Dispatchers.Main&lt;/code>&lt;/li>
+&lt;li>&lt;code>Dispatchers.IO&lt;/code>&lt;/li>
+&lt;li>&lt;code>Dispatchers.Unconfined&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Hoặc bạn có thể tự tạo Dispatchers cho riêng mình bằng function &lt;code>newSingleThreadContext()&lt;/code> hoặc &lt;code>newFixedThreadPoolContext()&lt;/code>.&lt;/p>
+&lt;p>Các function để build Coroutines như &lt;code>launch&lt;/code> và &lt;code>async&lt;/code> đều có một param là &lt;code>CoroutinesContext&lt;/code> để chúng ta truyền &lt;code>Dispatchers&lt;/code> vào, vì mấy thằng &lt;code>Dispatchers&lt;/code> ở trên đều extends từ &lt;code>CoroutinesContext&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">launch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nc">Dispatchers&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Default&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;I&amp;#39;m working in thread &lt;/span>&lt;span class="si">${Thread.currentThread().name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Còn khi mà chúng ta gọi &lt;code>launch&lt;/code> với &lt;code>async&lt;/code> mà không truyền param &lt;code>CoroutinesContext&lt;/code>, nó sẽ kế thừa context của &lt;code>CoroutineScope&lt;/code> mà nó được khởi chạy.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">fun&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">runBlocking&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Unit&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">launch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;I&amp;#39;m working in thread &lt;/span>&lt;span class="si">${Thread.currentThread().name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ở trong ví dụ này, nó sẽ kế thừa context của &lt;code>runBlocking&lt;/code> nên sẽ thực thi trên main thread.&lt;/p>
+&lt;p>Bây giờ, chúng ta sẽ đi tìm hiểu chi tiết từng loại Dispatchers nhé.&lt;/p>
+&lt;h1 id="dispatchersdefault">&lt;code>Dispatchers.Default&lt;/code>
+&lt;/h1>&lt;p>&lt;code>Dispatchers.Default&lt;/code> được dùng mặc định bởi các builder function &lt;code>launch&lt;/code> và &lt;code>async&lt;/code> nếu như chúng ta không gán Dispatchers nào khác cho nó. Default Dispatchers dùng một &lt;strong>shared background threads pool&lt;/strong>. Vì vậy chúng ta có thể dùng &lt;code>Dispatchers.Default&lt;/code> cho những công việc &lt;strong>tốn nhiều CPU&lt;/strong>. Ví dụ:&lt;/p>
+&lt;ul>
+&lt;li>Các tác vụ nặng như tính toán ma trận&lt;/li>
+&lt;li>Sort, filter hoặc search một cái list siêu to khổng lồ trên bộ nhớ&lt;/li>
+&lt;li>Các tác vụ với Bitmap trên bộ nhớ&lt;/li>
+&lt;li>Parse JSON trên bộ nhớ&lt;/li>
+&lt;/ul>
+&lt;p>Mặc định, số lượng thread nhiều nhất được &lt;code>Dispatchers.Default&lt;/code> dùng sẽ &lt;strong>bằng với số CPU core&lt;/strong>, nhưng ít nhất là 2.&lt;/p>
+&lt;h1 id="dispatchersmain">&lt;code>Dispatchers.Main&lt;/code>
+&lt;/h1>&lt;p>Bạn nghe tên là đoán được rồi đúng không? Chính xác, &lt;code>Dispatchers.Main&lt;/code> sẽ thực thi trên &lt;strong>main thread&lt;/strong>, nó phù hợp với các tác vụ &lt;strong>tương tác với UI&lt;/strong>.&lt;/p>
+&lt;p>Thông thường thì &lt;code>Dispatchers.Main&lt;/code> sẽ là &lt;strong>single thread&lt;/strong>.&lt;/p>
+&lt;h1 id="dispatchersio">&lt;code>Dispatchers.IO&lt;/code>
+&lt;/h1>&lt;p>Nghe nhạc hiệu đoán được chương trình tiếp này. &lt;code>Dispatchers.IO&lt;/code> dùng một &lt;strong>shared pool gồm các thread được tạo theo nhu cầu&lt;/strong>. Nó giúp giảm tải các tác vụ blocking IO. Vì vậy nó phù hợp với các tác vụ liên quan đến &lt;strong>disk và network&lt;/strong>. Ví dụ:&lt;/p>
+&lt;ul>
+&lt;li>Gọi API&lt;/li>
+&lt;li>Download file từ server&lt;/li>
+&lt;li>Move 1 file từ folder này đến folder khác trên disk&lt;/li>
+&lt;li>Đọc ghi file&lt;/li>
+&lt;li>Query database&lt;/li>
+&lt;li>Loading Shared Preferences&lt;/li>
+&lt;/ul>
+&lt;p>Số lượng thread được sử dụng bởi &lt;code>Dispatchers.IO&lt;/code> được giới hạn bởi &lt;strong>64 hoặc số lượng core&lt;/strong> (tuỳ xem số nào lớn hơn).&lt;/p>
+&lt;h1 id="dispatchersunconfined">&lt;code>Dispatchers.Unconfined&lt;/code>
+&lt;/h1>&lt;p>Mình gọi &lt;code>Dispatchers.Unconfined&lt;/code> là con ngựa bất kham, vì mình sẽ không biết nó được thực thi trên thread nào.&lt;/p>
+&lt;p>Ban đầu, khi khởi chạy, Coroutines sẽ được thực thi trên chính thread gọi nó. Nhưng sau khi bị suspend, và resume, nó sẽ thực thi trên một thread khác, được quyết định bởi suspend functions được gọi. &lt;code>Dispatchers.Unconfined&lt;/code> phù hợp với những công việc không tiêu tốn CPU và không update UI. Nhưng bản thân Kotlin document cũng nhấn mạnh là:&lt;/p>
+&lt;blockquote>
+&lt;p>The Unconfined dispatcher should not normally be used in code.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Tạm dịch:&lt;/strong> Bình thường không ai dùng dispatcher Unconfined trong code cả.&lt;/p>
+&lt;/blockquote>
+&lt;/blockquote>
+&lt;h1 id="newsinglethreadcontext">&lt;code>newSingleThreadContext&lt;/code>
+&lt;/h1>&lt;p>Function này sẽ tạo một thread mới cho chúng ta tha hồ vùng vẫy. Nhưng thật sự thì việc tạo một thread mới tốn rất nhiều resource, và bạn phải tự gọi function &lt;code>close&lt;/code> để giải phóng nó khi không dùng nữa. Vậy nên trong thực tế, mình khuyến nghị các bạn không nên dùng cách này.&lt;/p>
+&lt;p>Ngoài ra còn có &lt;code>newFixedThreadPoolContext&lt;/code> để tạo một thread pool với size cố định.&lt;/p>
+&lt;h1 id="so-sánh-với-rxjava-rxandroid">So sánh với RxJava, RxAndroid
+&lt;/h1>&lt;p>Chúng ta có thể thấy Dispatchers tương tự như Schedulers trong RxJava.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Coroutines&lt;/th>
+&lt;th>RxJava/RxAndroid&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>Dispatchers.Default&lt;/code>&lt;/td>
+&lt;td>&lt;code>Schedulers.computation()&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>Dispatchers.Main&lt;/code>&lt;/td>
+&lt;td>&lt;code>AndroidSchedulers.mainThread()&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>Dispatchers.IO&lt;/code>&lt;/td>
+&lt;td>&lt;code>Schedulers.io()&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h1 id="lời-kết">Lời kết
+&lt;/h1>&lt;p>Tựu chung lại, Dispatchers là một khái niệm quan trọng trong Coroutines, vậy nên các bạn cần nắm chắc về nó để có thể chọn một Dispatchers phù hợp cho từng function của mình.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html" target="_blank" rel="noopener"
+>https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://amitshekhar.me/blog/dispatchers-in-kotlin-coroutines" target="_blank" rel="noopener"
+>https://amitshekhar.me/blog/dispatchers-in-kotlin-coroutines&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

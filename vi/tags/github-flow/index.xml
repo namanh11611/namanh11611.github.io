@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub Flow on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/github-flow/</link><description>Recent content in GitHub Flow on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 08 Sep 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/github-flow/index.xml" rel="self" type="application/rss+xml"/><item><title>Gitflow, GitHub Flow, GitLab Flow, Trunk Based Development: Đâu mới là Git Branching Strategy chân ái?</title><link>https://namanh11611.github.io/vi/p/git-branching-strategy/</link><pubDate>Sun, 08 Sep 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/git-branching-strategy/</guid><description>&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/strategy.jpg" alt="Featured image of post Gitflow, GitHub Flow, GitLab Flow, Trunk Based Development: Đâu mới là Git Branching Strategy chân ái?" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@felix_mittermeier?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Felix Mittermeier&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/pieces-dechecs-sur-lechiquier-nAjil1z3eLk?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>&lt;strong>Git Branching Strategy&lt;/strong> dịch ra tiếng Việt là &lt;strong>Chiến lược làm việc với branch của Git&lt;/strong>, nhưng nó vừa dài vừa dễ hiểu nhầm nên mình giữ nguyên cụm từ gốc để giữ gìn sự trong sáng của tiếng Anh nhé. Nó ám chỉ cách chúng ta &lt;strong>tạo branch&lt;/strong>, &lt;strong>merge branch&lt;/strong> nào với branch nào và dùng &lt;strong>branch nào để release&lt;/strong>.&lt;/p>
+&lt;p>Khi bắt đầu một dự án, ngoài những việc như setup môi trường, dựng code base thật tốt&amp;hellip; thì có lẽ việc chọn một &lt;strong>Git Branching Strategy&lt;/strong> đúng đắn cũng rất quan trọng, vì chọn sai một ly là đi một dặm. Chọn chiến lược đúng giúp cả team &lt;strong>quản lý và duy trì source code một cách hiệu quả&lt;/strong>, &lt;strong>giảm thời gian resolve conflict&lt;/strong> và giữ cho &lt;strong>code trên production luôn hoạt động ổn định&lt;/strong>.&lt;/p>
+&lt;p>Qua thời gian, nhiều chiến lược đã được phát triển. Trong bài viết này, chúng ta sẽ tìm hiểu về một số &lt;strong>Git Branching Strategy&lt;/strong> phổ biến như &lt;strong>Gitflow&lt;/strong>, &lt;strong>GitHub Flow&lt;/strong>, &lt;strong>GitLab Flow&lt;/strong> và &lt;strong>Trunk Based Development&lt;/strong>. Cuối cùng, chúng ta sẽ xem xét cách chọn chiến lược phù hợp cho dự án của bạn.&lt;/p>
+&lt;h1 id="gitflow">Gitflow
+&lt;/h1>&lt;p>&lt;a class="link" href="https://nvie.com/posts/a-successful-git-branching-model" target="_blank" rel="noopener"
+>&lt;strong>Gitflow&lt;/strong>&lt;/a> là một chiến lược phổ biến được giới thiệu bởi &lt;a class="link" href="https://nvie.com/about" target="_blank" rel="noopener"
+>&lt;strong>Vincent Driessen&lt;/strong>&lt;/a>. Chiến lược này phù hợp với các dự án có chu kỳ release rõ ràng và phức tạp. &lt;strong>Gitflow&lt;/strong> sử dụng nhiều loại branch khác nhau để quản lý các giai đoạn phát triển và release của dự án.&lt;/p>
+&lt;p>&lt;img src="https://nvie.com/img/git-model@2x.png"
+loading="lazy"
+alt="Gitflow"
+>&lt;/p>
+&lt;p>Trong flow này, chúng ta có 2 branch chính là &lt;strong>master&lt;/strong> và &lt;strong>develop&lt;/strong>. Trong đó, &lt;strong>master&lt;/strong> sẽ lưu trữ phiên bản source code ổn định và sẵn sàng release bất cứ khi nào, còn &lt;strong>develop&lt;/strong> chứa source code đang được phát triển, gồm những thay đổi mới nhất cho bản release tiếp theo, đây là branch chính nơi các feature mới được tích hợp.&lt;/p>
+&lt;p>Ngoài ra chúng ta còn có các branch &lt;strong>feature&lt;/strong> được &lt;code>checkout&lt;/code> từ &lt;strong>develop&lt;/strong> và dùng để phát triển các feature mới, sau khi hoàn thành thì &lt;code>merge&lt;/code> ngược lại &lt;strong>develop&lt;/strong>.&lt;/p>
+&lt;p>Khi đã sẵn sàng release, chúng ta sẽ checkout từ &lt;strong>develop&lt;/strong> sang branch &lt;strong>release&lt;/strong> với version tương ứng để chuẩn bị cho bản release. Chúng ta có thể thêm vài commit fix bug trên brach này. Khi hoàn thành, chúng ta lại &lt;code>merge&lt;/code> branch &lt;strong>release&lt;/strong> vào cả &lt;strong>master&lt;/strong> và &lt;strong>develop&lt;/strong> để giữ 2 branch chính được update.&lt;/p>
+&lt;p>Và cuối cùng là các branch &lt;strong>hotfix&lt;/strong>, khi code trên production gặp critical bug và cần fix ngay lập tức, chúng ta sẽ &lt;code>checkout&lt;/code> branch &lt;strong>hotfix&lt;/strong> từ &lt;strong>master&lt;/strong> để fix. Tương tự như branch &lt;strong>release&lt;/strong>, các branch &lt;strong>hotfix&lt;/strong> cũng cần &lt;code>merge&lt;/code> vào cả &lt;strong>master&lt;/strong> và &lt;strong>develop&lt;/strong>.&lt;/p>
+&lt;h2 id="ưu-điểm">Ưu Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Gitflow có cấu trúc rất rõ ràng, phù hợp cho các dự án lớn.&lt;/li>
+&lt;li>Nó giúp chúng ta quản lý các giai đoạn phát triển và release một cách hiệu quả với các branch &lt;strong>release&lt;/strong> cho từng version.&lt;/li>
+&lt;li>Các branch &lt;strong>hotfix&lt;/strong> cho phép triển khai các bản fix bug nhanh chóng mà không làm gián đoạn quá trình phát triển.&lt;/li>
+&lt;/ul>
+&lt;h2 id="nhược-điểm">Nhược Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Như các bạn có thể thấy, flow này khá phức tạp, cần nhiều branch và merge nhiều lần. Ví dụ như mỗi branch &lt;strong>release&lt;/strong> hoặc &lt;strong>hotfix&lt;/strong> cần phải merge cả vào &lt;strong>master&lt;/strong> và &lt;strong>develop&lt;/strong>.&lt;/li>
+&lt;li>Nó không phù hợp cho các dự án có yêu cầu &lt;strong>CI/CD&lt;/strong>.&lt;/li>
+&lt;li>Với mô hình cồng kềnh như này, Gitflow có thể khó khăn khi áp dụng trong các team nhỏ.&lt;/li>
+&lt;/ul>
+&lt;h1 id="github-flow">GitHub Flow
+&lt;/h1>&lt;p>&lt;a class="link" href="https://docs.github.com/en/get-started/using-github/github-flow" target="_blank" rel="noopener"
+>&lt;strong>GitHub Flow&lt;/strong>&lt;/a> là một chiến lược đơn giản và nhẹ nhàng, phù hợp cho các dự án có yêu cầu &lt;strong>CI/CD&lt;/strong>. Chiến lược này được sử dụng phổ biến trong các dự án open source và các team nhỏ.&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/github_flow.png"
+width="3532"
+height="3840"
+srcset="https://namanh11611.github.io/p/git-branching-strategy/github_flow_hu1268168611847259529.png 480w, https://namanh11611.github.io/p/git-branching-strategy/github_flow_hu9175722533628964805.png 1024w"
+loading="lazy"
+alt="GitHub Flow"
+class="gallery-image"
+data-flex-grow="91"
+data-flex-basis="220px"
+>&lt;/p>
+&lt;p>Thay vì 2 branch chính như Gitflow, nó chỉ có 1 branch chính duy nhất là &lt;strong>main&lt;/strong> để chứa source code ổn định và đã được test cẩn thận, sẵn sàng release production.&lt;/p>
+&lt;p>Các branch &lt;strong>feature&lt;/strong> được &lt;code>checkout&lt;/code> từ &lt;strong>main&lt;/strong> để phát triển các feature mới. Sau khi hoàn thành dev, test và được review, chúng được merge vào &lt;strong>main&lt;/strong> thông qua pull request.&lt;/p>
+&lt;h2 id="ưu-điểm-1">Ưu Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Qua phần giới thiệu, bạn có thể thấy GitHub Flow khá đơn giản và dễ hiểu, dễ dàng triển khai.&lt;/li>
+&lt;li>Phù hợp với &lt;strong>CI/CD&lt;/strong>. Code ở &lt;strong>main&lt;/strong> brach luôn sẵn sàng deploy lên production.&lt;/li>
+&lt;li>Giảm thiểu conflict và lỗi khi merge do có ít branch hơn.&lt;/li>
+&lt;/ul>
+&lt;h2 id="nhược-điểm-1">Nhược Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Thiếu cấu trúc và phân chia rõ ràng như Gitflow.&lt;/li>
+&lt;li>Không phù hợp cho các dự án lớn, support nhiều version hoặc dự án phức tạp với nhiều team tham gia.&lt;/li>
+&lt;li>Không có quy trình rõ ràng cho việc release và fix bug.&lt;/li>
+&lt;/ul>
+&lt;h1 id="gitlab-flow">GitLab Flow
+&lt;/h1>&lt;p>&lt;a class="link" href="https://about.gitlab.com/topics/version-control/what-is-gitlab-flow" target="_blank" rel="noopener"
+>&lt;strong>GitLab Flow&lt;/strong>&lt;/a> kết hợp các yếu tố từ cả Gitflow và GitHub Flow. Nó đơn giản hơn Gitflow và tương tự như GitHub Flow, điểm khác biệt là có thêm các environment branch, ví dụ như &lt;strong>staging&lt;/strong>, &lt;strong>production&lt;/strong>&amp;hellip; Đặc biệt, nó được thiết kế để hỗ trợ cả &lt;strong>CI/CD&lt;/strong>, với sự tích hợp chặt chẽ cùng các công cụ &lt;strong>CI/CD&lt;/strong> của GitLab.&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow.png"
+width="3840"
+height="3321"
+srcset="https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow_hu10733650273199178720.png 480w, https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow_hu15393612771178078040.png 1024w"
+loading="lazy"
+alt="GitLab Flow"
+class="gallery-image"
+data-flex-grow="115"
+data-flex-basis="277px"
+>&lt;/p>
+&lt;p>Tương tự như GitHub Flow, GitLab Flow làm việc trực tiếp với branch chính là &lt;strong>main&lt;/strong>, nó chứa source code ổn định và có thể release. Flow này cũng có các branch &lt;strong>feature&lt;/strong> để phát triển feature.&lt;/p>
+&lt;p>Khi code ở &lt;strong>main&lt;/strong> branch đã sẵn sàng test, chúng ta sẽ &lt;code>merge&lt;/code> nó vào &lt;strong>staging&lt;/strong> branch. Sau khi test và thấy sẵn sàng deploy, chúng ta sẽ &lt;code>merge&lt;/code> code từ &lt;strong>staging&lt;/strong> vào &lt;strong>production&lt;/strong> branch. GitLab Flow cũng thường sử dụng các brach &lt;strong>release&lt;/strong>, ví dụ như branch &lt;strong>release/v1&lt;/strong> và &lt;strong>release/v2&lt;/strong> giúp quản lý và triển khai các phiên bản khác nhau của ứng dụng một cách độc lập.&lt;/p>
+&lt;p>Tuy nhiên, khi có bug trên production, bạn cần merge code vào brach &lt;strong>main&lt;/strong> trước, sau đó mới &lt;code>merge&lt;/code> hoặc &lt;code>cherry-pick&lt;/code> sang các branch khác theo quy trình như trên.&lt;/p>
+&lt;h2 id="ưu-điểm-2">Ưu Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Khi so sánh với Gitflow, GitLab Flow trông sẽ đơn giản hơn. Còn khi so sánh với GitHub Flow, nó lại có cấu trúc rõ ràng hơn.&lt;/li>
+&lt;li>Phù hợp cho các dự án cần &lt;strong>CI/CD&lt;/strong> và có nhiều môi trường khác nhau, giúp dễ dàng deploy.&lt;/li>
+&lt;/ul>
+&lt;h2 id="nhược-điểm-2">Nhược Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Vì được may đo cho &lt;strong>GitLab&lt;/strong> nên flow này yêu cầu sử dụng &lt;strong>GitLab&lt;/strong> và các công cụ &lt;strong>CI/CD&lt;/strong> của nó.&lt;/li>
+&lt;li>Chúng ta cũng cần thiết lập và cấu hình cẩn thận để tận dụng hết các tính năng.&lt;/li>
+&lt;li>Nó cũng không phù hợp với các dự án không có yêu cầu &lt;strong>CI/CD&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;h1 id="trunk-based-development">Trunk Based Development
+&lt;/h1>&lt;p>Riêng về chiến lược này, mình đã viết một bài chi tiết: &lt;a class="link" href="../trunk-based-development" >Trunk Based Development - một Git workflow giúp giảm cơn đau đầu resolve conflict&lt;/a>. Dành cho bạn nào chưa biết thì &lt;strong>Trunk Based Development&lt;/strong> (TBD) là một chiến lược trong đó tất cả dev làm việc trực tiếp trên một branch chính, thường là &lt;strong>main&lt;/strong>. Các thay đổi được commit liên tục và nhanh chóng vào branch này, giảm thiểu thời gian sống của các branch phụ.&lt;/p>
+&lt;h2 id="ưu-điểm-3">Ưu Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Thúc đẩy &lt;strong>CI&lt;/strong>, giảm thiểu conflict khi merge.&lt;/li>
+&lt;li>Phù hợp với các dự án Agile và DevOps yêu cầu &lt;strong>CD&lt;/strong>.&lt;/li>
+&lt;li>Dễ dàng quản lý và theo dõi source code.&lt;/li>
+&lt;/ul>
+&lt;h2 id="nhược-điểm-3">Nhược Điểm
+&lt;/h2>&lt;ul>
+&lt;li>Rủi ro cao hơn về việc commit lỗi trực tiếp vào branch chính.&lt;/li>
+&lt;li>Cần kiểm tra source code và automation test để duy trì sự ổn định.&lt;/li>
+&lt;li>Không phù hợp cho các dự án lớn với nhiều team phân tán.&lt;/li>
+&lt;/ul>
+&lt;h1 id="chọn-chiến-lược-phù-hợp">Chọn Chiến Lược Phù Hợp
+&lt;/h1>&lt;p>Sẽ không có chiến lược nào là chính xác nhất, phù hợp với mọi hoàn cảnh. Việc chọn chiến lược branching phù hợp phụ thuộc vào nhiều yếu tố như quy mô dự án, cấu trúc team và yêu cầu về quy trình phát triển phần mềm. Dưới đây là một số gợi ý:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Dự án&lt;/th>
+&lt;th>Team size&lt;/th>
+&lt;th>Chiến lược&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Dự án nhỏ đến trung bình, cần CD và release liên tục&lt;/td>
+&lt;td>Nhỏ, Vừa&lt;/td>
+&lt;td>GitHub Flow và TBD&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Release theo lịch trình và định kỳ&lt;/td>
+&lt;td>Vừa&lt;/td>
+&lt;td>GitFlow and GitLab Flow&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>CD với product yêu cầu chất lượng cao, nhiều môi trường release&lt;/td>
+&lt;td>Vừa, Lớn&lt;/td>
+&lt;td>GitLab Flow&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Product với chu kỳ maintain lâu dài&lt;/td>
+&lt;td>Lớn&lt;/td>
+&lt;td>GitFlow&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Mỗi chiến lược Git branching đều có ưu và nhược điểm riêng. Quan trọng là lựa chọn chiến lược phù hợp với quy trình làm việc của team và yêu cầu dự án. Điều này sẽ giúp tối ưu hóa hiệu suất làm việc và giảm thiểu rủi ro trong quản lý source code.&lt;/p>
+&lt;h1 id="referrence">Referrence
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://nvie.com/posts/a-successful-git-branching-model" target="_blank" rel="noopener"
+>https://nvie.com/posts/a-successful-git-branching-model&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.github.com/en/get-started/using-github/github-flow" target="_blank" rel="noopener"
+>https://docs.github.com/en/get-started/using-github/github-flow&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://about.gitlab.com/topics/version-control/what-is-gitlab-flow" target="_blank" rel="noopener"
+>https://about.gitlab.com/topics/version-control/what-is-gitlab-flow&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gitkraken.com/learn/git/best-practices/git-branch-strategy" target="_blank" rel="noopener"
+>https://www.gitkraken.com/learn/git/best-practices/git-branch-strategy&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/branching-strategies-in-git" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/branching-strategies-in-git&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.abtasty.com/blog/git-branching-strategies" target="_blank" rel="noopener"
+>https://www.abtasty.com/blog/git-branching-strategies&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Provider on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/provider/</link><description>Recent content in Provider on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Fri, 11 Oct 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/provider/index.xml" rel="self" type="application/rss+xml"/><item><title>Dùng code generation provider trong Flutter Riverpod cho đời đơn giản hơn</title><link>https://namanh11611.github.io/vi/p/riverpod/</link><pubDate>Fri, 11 Oct 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod.jpg" alt="Featured image of post Dùng code generation provider trong Flutter Riverpod cho đời đơn giản hơn" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@dillonjshook?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Dillon Shook&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/person-sitting-on-sofa-resting-its-feet-on-top-of-coffee-table-while-using-laptop-3iPKIXVXv_U?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>Không biết có bạn nào luôn băn khoăn mỗi lần phải chọn 1 trong 7 loại &lt;strong>provider&lt;/strong> của &lt;strong>Riverpod&lt;/strong> cho từng use case trong dự án của mình chưa? Ví dụ như 2 loại &lt;strong>NotifierProvider&lt;/strong> và &lt;strong>StateNotifierProvider&lt;/strong> trong &lt;a class="link" href="https://riverpod.dev/docs/concepts/providers#different-types-of-providers" target="_blank" rel="noopener"
+>document&lt;/a> đều được lấy ví dụ là dùng trong trường hợp:&lt;/p>
+&lt;blockquote>
+&lt;p>Một state object phức tạp không thể thay đổi trừ khi thông qua một interface.&lt;/p>
+&lt;/blockquote>
+&lt;p>Hoặc chính &lt;strong>ChangeNotifierProvider&lt;/strong> lại được khuyên là không nên dùng cho các app có khả năng cần scale sau này.&lt;/p>
+&lt;p>Gì vậy trời??? Tác giả thật biết cách khiến cho anh em dev thấy hoang mang mà&amp;hellip;&lt;/p>
+&lt;p>Nhưng giờ đây, tác giả &lt;strong>Remi Rousselet&lt;/strong> đã giới thiệu cách dùng &lt;strong>Riverpod&lt;/strong> mới với &lt;strong>code generation&lt;/strong>, giúp cho cuộc đời của developer chúng ta dễ thở hơn đôi chút.&lt;/p>
+&lt;h1 id="syntax">Syntax
+&lt;/h1>&lt;p>Giải thích một cách đơn giản, &lt;strong>code generation trong Riverpod&lt;/strong> là cách chúng ta khai báo các provider với annotation &lt;code>@riverpod&lt;/code>, và phần lớn code còn lại sẽ được tạo ra tự động với tool &lt;code>build_runner&lt;/code> có sẵn của Dart.&lt;/p>
+&lt;p>Thay vì định nghĩa provider như trước đây:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">fetchUserProvider&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">FutureProvider&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">autoDispose&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">family&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">ref&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">userId&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">json&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="kd">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;api/user/&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">userId&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">User&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">fromJson&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bây giờ chúng ta chỉ cần viết:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">riverpod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Future&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">fetchUser&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">FetchUserRef&lt;/span> &lt;span class="n">ref&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="kd">required&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">userId&lt;/span>&lt;span class="p">})&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">json&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="kd">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;api/user/&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">userId&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">User&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">fromJson&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Thay vì phải ngồi suy nghĩ để chọn lựa 1 trong 7 provider như trước đây, bây giờ bạn có thể xem bảng sau và chọn ra provider phù hợp với use case của mình một cách nhanh chóng:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>Functional &lt;br> (Không thể cập nhật &lt;br> bằng public methods)&lt;/th>
+&lt;th>Class-Based &lt;br> (Có thể cập nhật &lt;br> bằng public methods)&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Sync&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/riverpod_function_sync.png"
+loading="lazy"
+alt="Functional Sync"
+>&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/riverpod_class_sync.png"
+loading="lazy"
+alt="Class-Based Sync"
+>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Async - Future&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/riverpod_function_future.png"
+loading="lazy"
+alt="Functional Async - Future"
+>&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/riverpod_class_future.png"
+loading="lazy"
+alt="Class-Based Async - Future"
+>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Async - Stream&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/riverpod_function_stream.png"
+loading="lazy"
+alt="Functional Async - Stream"
+>&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/riverpod_class_stream.png"
+loading="lazy"
+alt="Class-Based Async - Stream"
+>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="keepalive">keepAlive
+&lt;/h2>&lt;p>Theo cách viết mới này, mặc định tất cả provider sẽ là &lt;strong>auto dispose&lt;/strong>, nghĩa là state sẽ bị destroy khi provider không còn listener nào observe nó nữa. Nó hơi ngược với cách viết cũ (bạn phải thêm &lt;code>autoDispose&lt;/code>, còn mặc định sẽ không bị dispose).&lt;/p>
+&lt;p>Vậy nên, để disable tính năng auto dispose này đi, giữ cho provider của bạn luôn sống, thay vì khai báo &lt;code>@riverpod&lt;/code> bạn phải viết thành:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">Riverpod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">keepAlive:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="param">Param
+&lt;/h2>&lt;p>Như bạn có thể thấy ở ví dụ ban đầu, việc thêm &lt;strong>param&lt;/strong> cho provider bây giờ không khác gì thêm param cho một function thông thường cả. Chúng ta không cần dùng đến &lt;code>family&lt;/code> như cách code cũ.&lt;/p>
+&lt;p>Với Functional provider, chúng ta thêm trực tiếp vào function như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">riverpod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">String&lt;/span> &lt;span class="n">example&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ExampleRef&lt;/span> &lt;span class="n">ref&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">param1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">String&lt;/span> &lt;span class="n">param2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;foo&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">})&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;Hello &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">param1&lt;/span>&lt;span class="s1"> &amp;amp; param2&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Còn đối với Class-Based provider, chúng ta sẽ thêm vào method &lt;code>build&lt;/code> như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">riverpod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">Example&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">_$Example&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">String&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">param1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">String&lt;/span> &lt;span class="n">param2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;foo&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">})&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;Hello &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">param1&lt;/span>&lt;span class="s1"> &amp;amp; param2&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Add methods to mutate the state
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="ưu-điểm">Ưu điểm
+&lt;/h1>&lt;p>Hiện tại, việc sử dụng code generation hay cách code cũ vẫn là optional. Nếu bạn vẫn đang cân nhắc lý do để chuyển đổi thì đây là những lý do tác giả đưa ra cho bạn:&lt;/p>
+&lt;ul>
+&lt;li>Syntax tốt hơn, dễ đọc, dễ học và linh hoạt hơn.
+&lt;ul>
+&lt;li>Chúng ta không cần phải lo lắng về việc chọn provider nào nữa. Chỉ cần viết logic code và Riverpod sẽ chọn loại &lt;strong>phù hợp nhất&lt;/strong> cho bạn.&lt;/li>
+&lt;li>Syntax không còn giống như một &lt;strong>biến global&lt;/strong> nữa, mà chỉ như một &lt;strong>custom function&lt;/strong> hay &lt;strong>custom class&lt;/strong>.&lt;/li>
+&lt;li>Việc truyền param tới provider &lt;strong>không còn bị giới hạn&lt;/strong>. Chúng ta có thể truyền &lt;strong>named param&lt;/strong>, &lt;strong>optional param&lt;/strong> hoặc &lt;strong>default value&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Stateful hot-reload code&lt;/strong> được viết trong Riverpod.&lt;/li>
+&lt;li>Debug tốt hơn.&lt;/li>
+&lt;li>Một vài feature chỉ có thể dùng với code generation.&lt;/li>
+&lt;/ul>
+&lt;h1 id="nhược-điểm">Nhược điểm
+&lt;/h1>&lt;p>Tuy nhiên, trong quá trình áp dụng vào dự án thực tế, nó vẫn có một số nhược điểm mà bạn nên lưu tâm.&lt;/p>
+&lt;p>Hiện tại, do code generation mới ra mắt không lâu nên có &lt;strong>khá ít dự án áp dụng&lt;/strong>. Vì vậy, bạn cũng sẽ &lt;strong>khó tìm thấy source code&lt;/strong> để tham khảo. Gần như trong quá trình làm việc, nguồn tham khảo duy nhất của mình chỉ là &lt;strong>document của Riverpod&lt;/strong>.&lt;/p>
+&lt;p>Trong thời đại AI này, anh em cũng thường xuyên áp dụng các tool để &lt;strong>generate code&lt;/strong>. Đầu vào đã ít thì lấy đâu ra đầu ra, vậy nên khi bạn dùng tool, hầu hết nó sẽ generate code Riverpod theo kiểu cũ. Nhưng đừng lo vì trên Android Studio cũng đã có plugin &lt;a class="link" href="https://plugins.jetbrains.com/plugin/14641-flutter-riverpod-snippets" target="_blank" rel="noopener"
+>Flutter Riverpod Snippets&lt;/a>, giúp bạn gõ code nhanh hơn chút. Chỉ cần gõ riverpod là nó sẽ gợi ý cho bạn 4 loại provider trên.&lt;/p>
+&lt;p>Những nhược điểm này chỉ mang tính tạm thời, khi code generation trở nên phổ biến hơn, chắc chắn chúng sẽ được khắc phục. Vậy nên bạn không cần phải quá lo lắng.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://riverpod.dev/docs/concepts/about_code_generation" target="_blank" rel="noopener"
+>https://riverpod.dev/docs/concepts/about_code_generation&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
