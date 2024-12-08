@@ -13,7 +13,7 @@ tags: [Looper, MessageQueue, Handler, Thread, Android, Java]
 
 Trong Android, nếu thực hiện các tác vụ nặng như **request network** hoặc **đọc ghi database** trên **main thread** có thể sẽ gây ra đơ, crash ứng dụng. Chính vì vậy, để ứng dụng hoạt động mượt mà hơn, chúng ta cần chuyển các tác vụ đó xuống **background thread**, tránh block **main thread**. Ví dụ như khi user click Submit button trên main thread, tác vụ request netword sẽ được thực thi trên background thread, khi có kết quả trả về thì gửi kết quả trở lại main thread. Android đã cung cấp một số công cụ như **Looper**, **MessageQueue** và **Handler** để xử lý việc chạy đồng thời các tác vụ và truyền message giữa các thread.
 
-Ủa... khoan đã! Việc này đã có **Kotlin Coroutines** rồi mà nhỉ? Đúng vậy, bây giờ hầu hết người ta dùng Kotlin Coroutines để xử lý các use case tương tự như trên. Nhưng trong một số dự án đặc thù, làm việc với các tầng Service ở bên dưới, người ta vẫn chủ yếu phải dùng bộ 3 này để giải quyết vấn đề.
+Ủa... khoan đã! Việc này đã có **Kotlin Coroutines** rồi mà nhỉ? Đúng vậy, bây giờ hầu hết người ta dùng Kotlin Coroutines để xử lý các use case tương tự như trên. Nhưng trong một số dự án đặc thù, ví dụ như Android Automotive, người ta vẫn chủ yếu phải dùng bộ 3 này để giải quyết vấn đề.
 
 Trong bài viết này, mình sẽ đi giải thích vai trò, nhiệm vụ của từng thành phần và cách mà chúng tương tác với nhau. Vì các thành phần này liên quan chéo đến nhau, nên khi mình giải thích một khái niệm, sẽ phải nhắc đến thành phần khác. Vậy nên chỗ nào chưa hiểu, bạn cứ tạm bỏ qua, rồi khi đọc hết bài có thể quay lại đọc sau để hiểu kỹ hơn nhé.
 

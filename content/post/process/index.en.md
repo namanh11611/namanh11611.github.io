@@ -1,6 +1,6 @@
 ---
-title: "Tất tần tật về Process trong Android"
-description: "Process là một khái niệm cơ bản nhưng cũng rất quan trọng trong Android. Khi chúng ta khởi chạy ứng dụng, mặc định tất cả các component như Activity, Service, BroadcastReceiver, ContentProvider sẽ cùng chạy trên một Linux Process."
+title: "Everything About Process in Android"
+description: "Processes are a fundamental but essential concept in Android. When we launch an application, by default, all components like Activity, Service, BroadcastReceiver, and ContentProvider run within a single Linux Process."
 date: 2024-06-21T00:00:00+07:00
 slug: process
 image: process.jpg
@@ -9,9 +9,9 @@ categories: Technical
 tags: [Android, Process]
 ---
 
-# Khái niệm
+# Introduction
 
-**Process** là một khái niệm cơ bản nhưng cũng rất quan trọng trong Android. Khi chúng ta khởi chạy ứng dụng, mặc định tất cả các component như **Activity**, **Service**, **BroadcastReceiver**, **ContentProvider** sẽ cùng chạy trên một Linux Process, trừ khi chúng ta muốn khai báo một Process riêng trong file **AndroidManifest** như sau:
+**Process** is a fundamental but essential concept in Android. When we launch an application, by default, all components like **Activity**, **Service**, **BroadcastReceiver**, and **ContentProvider** run within a single Linux Process unless we specify a separate process in the **AndroidManifest** file, as shown below:
 
 ```xml
 <activity
@@ -20,73 +20,73 @@ tags: [Android, Process]
 </activity>
 ```
 
-Mặc định, process có tên trùng với **app ID** được khai báo trong `build.gradle` file. Cả application và 4 component chính đều có tag `android:process`. Chính vì vậy, nếu bạn khai báo `android:process` cho tag `<application>`, process name đấy sẽ được áp dụng cho toàn bộ các component của application đó.
+By default, the process name matches the **app ID** declared in the `build.gradle` file. Both the application and the four main components have an `android:process` tag. Therefore, if you declare `android:process` for the `<application>` tag, that process name will apply to all components of that application.
 
-# Mức độ ưu tiên
+# Priority Levels
 
-Chúng ta không thể tự quản lý Process lifetime. Android sẽ tự tính toán xem **component** nào của các ứng dụng **đang chạy**, **tầm quan trọng** của chúng với user, và **bộ nhớ còn lại** là bao nhiêu để quyết định Process lifetime.
+We cannot manage Process lifetime directly. Android automatically calculates which **components** of running applications are active, their **importance** to the user, and the **remaining memory** to decide the Process lifetime.
 
-Khi Android không đủ tài nguyên, nó sẽ shut down một Process, và tất nhiên là các component đang chạy trên Process đó cũng sẽ bị destroy theo. Vậy yếu tố nào quyết định Process nào sẽ bị shut down?
+When Android runs out of resources, it shuts down a Process, and naturally, the components running on that Process are destroyed as well. What determines which Process gets shut down?
 
-Android sẽ ưu tiên chúng dựa vào mức độ quan trọng đối với user. Nó chia thành 4 loại process với mức độ ưu tiên như sau:
+Android prioritizes Processes based on their importance to the user. It classifies Processes into four priority levels:
 
-## Foreground process
+## Foreground Process
 
-Đây là loại Process có mức độ ưu tiên cao nhất. Nó chứa các component mà user **đang làm gì đó**, ví dụ như:
+This is the highest priority Process. It contains components the user is **actively interacting with**, such as:
 
-* **Activity** trên cùng của screen mà user đang tương tác, method `onResume()` đã được gọi.
-* **BroadcastReceiver** đang chạy, method `onReceive()` đang thực thi.
-* **Service** đang thực thi code trong một trong những callback của nó: `onCreate()`, `onStart()` hoặc `onDestroy()`.
+* **Activity** at the top of the screen that the user is engaging with, where the `onResume()` method has been called.
+* **BroadcastReceiver** running, with its `onReceive()` method currently executing.
+* **Service** executing code in one of its callbacks: `onCreate()`, `onStart()`, or `onDestroy()`.
 
-Chỉ có một vài Process như này trong hệ thống, và nó chỉ bị kill khi bộ nhớ thấp đến mức chính những Process này cũng không thể chạy tiếp.
+Only a few Processes like this exist in the system, and they are only killed when memory is so low that even these cannot continue running.
 
-## Visible process
+## Visible Process
 
-Process này thực hiện các tác vụ mà user **nhận biết được**. Vì vậy, nếu chúng bị kill cũng sẽ ảnh hưởng đến trải nghiệm. Ví dụ như:
+This Process performs tasks that the user is **aware of**. If killed, it would impact the user experience. Examples include:
 
-* **Activity** đang hiển thị trên screen nhưng không còn trên foreground, method `onPause()` đã được gọi. Ví dụ như có một Activity khác hiển thị dưới dạng dialog che một phần của nó chẳng hạn.
-* **Foreground Service** đang chạy, thông qua method `startForeground()`. Khi đó, user cũng có thể thấy được nó.
-* Một service nào đó đang chạy tính năng nào đó mà user thấy, ví dụ như live wallpaper hoặc bàn phím.
+* **Activity** displayed on the screen but not in the foreground, where the `onPause()` method has been called. For example, an Activity partially covered by a dialog.
+* **Foreground Service** running via the `startForeground()` method, making it visible to the user.
+* A service running a feature visible to the user, such as a live wallpaper or keyboard.
 
-## Service process
+## Service Process
 
-Process này chứa một Service chạy bằng method `startService()`. User không nhìn thấy trực tiếp, chỉ là nó đang thực hiện **các tác vụ mà user quan tâm**, ví dụ như upload hoặc download data dưới background.
+This Process contains a Service running via the `startService()` method. The user does not see it directly but is aware of the **tasks it performs**, such as uploading or downloading data in the background.
 
-Service chạy trong một thời gian dài, ví dụ như hơn 30 phút, có thể sẽ bị giảm mức độ quan trọng để đưa vào cache.
+A long-running Service (e.g., more than 30 minutes) may have its importance reduced to a cached state.
 
-## Cached process
+## Cached Process
 
-Đây là Process **không còn cần thiết nữa**, hệ thống có thể **thoải mái kill** nó không do dự khi cần thêm tài nguyên như bộ nhớ.
+These Processes are **no longer necessary**, and the system can **safely kill** them without hesitation when more resources are required.
 
-Một hệ thống tốt sẽ có nhiều Cached process để phục vụ cho việc chuyển đổi giữa các app được hiệu quả, và thường xuyên kill các Cached app khi cần thiết.
+An efficient system will have many Cached Processes to facilitate smooth app transitions and frequently kill Cached apps when needed.
 
-Android sử dụng **LRU Cache** (Least Recently Used Cache) để quản lý các Cached process, và nó sẽ kill các process ít được sử dụng nhất trong thời gian gần đây.
+Android uses **LRU Cache** (Least Recently Used Cache) to manage Cached Processes, prioritizing the removal of Processes least recently used.
 
-Tựu chung lại, chúng ta phải nắm được các component như **Activity**, **Service** và **BroadcastReceiver** có sự ảnh hưởng khác nhau như thế nào đến mức độ ưu tiên đó, chọn đúng component để sử dụng trong use-case của mình, tránh process bị kill khi đang thực hiện một tác vụ quan trọng.
+In summary, understanding how components like **Activity**, **Service**, and **BroadcastReceiver** impact priority levels is crucial. Select the appropriate component for your use case to avoid a Process being killed during important tasks.
 
 # Inter-Process Communication (IPC)
 
-**Inter-Process Communication** hay còn gọi là Giao tiếp liên tiến trình, là cơ chế cho phép các process **giao tiếp** và **đồng bộ hóa** hành động của chúng trong Android.
+**Inter-Process Communication**, or IPC, is a mechanism that allows Processes to **communicate** and **synchronize their actions** in Android.
 
-Mỗi app chạy trong một process riêng biệt, nhưng nhiều app cần giao tiếp với nhau để **chia sẻ dữ liệu** hoặc thực hiện **các tác vụ kết hợp**, vậy nên IPC cung cấp các phương thức để các process giao tiếp với nhau một cách an toàn và hiệu quả.
+Each app runs in a separate Process, but many apps need to communicate with each other to **share data** or perform **collaborative tasks**, making IPC essential for safe and efficient inter-Process communication.
 
 ## Intent
 
-**Intent** là cơ chế chính thống để giao tiếp bất đồng bộ giữa các **Activity** và **BroadcastReceiver**. Chúng ta có thể dùng  `sendBroadcast`, `sendOrderedBroadcast` hoặc explicit intent tuỳ theo nhu cầu.
+**Intent** is the standard mechanism for asynchronous communication between **Activities** and **BroadcastReceivers**. Depending on the need, you can use `sendBroadcast`, `sendOrderedBroadcast`, or explicit intents.
 
 ## Android Interface Definition Language (AIDL)
 
-**AIDL** là tool được sử dụng để định nghĩa interface giữa các ứng dụng Android. AIDL cho phép các ứng dụng giao tiếp với nhau một cách an toàn và hiệu quả, bất kể chúng được viết bằng ngôn ngữ lập trình nào.
+**AIDL** is a tool for defining interfaces between Android applications. It enables apps to communicate safely and efficiently, regardless of the programming languages they are written in.
 
 ## Messenger
 
-**Messenger** là một class trong Android SDK cho phép các ứng dụng giao tiếp với nhau bằng cách **gửi và nhận tin nhắn**. Messenger cung cấp một interface đơn giản và dễ sử dụng để giao tiếp giữa các ứng dụng.
+**Messenger** is a class in the Android SDK that allows applications to **send and receive messages**. It provides a simple interface for inter-application communication.
 
-Điểm khác biệt giữa AIDL và Messenger là bạn có thể dùng AIDL cho các **tác vụ đồng thời**, còn Messenger chỉ dùng cho các **tác vụ tuần tự**.
+The main difference between AIDL and Messenger is that AIDL supports **concurrent tasks**, while Messenger is limited to **sequential tasks**.
 
 ## Broadcast Receiver
 
-**BroadcastReceiver** sẽ xử lý các yêu cầu bất đồng bộ từ Intent. Mặc định, receiver có thể được gọi bởi bất kỳ app nào khác. Nếu bạn có ý định chỉ dùng BroadcastReceiver cho một ứng dụng cụ thể, bạn có thể áp dụng bảo mật cho receiver bằng cách sử dụng tag `<receiver>` trong AndroidManifest. Nó giúp ngăn các ứng dụng không có quyền gửi Intent đến BroadcastReceiver.
+**BroadcastReceiver** handles asynchronous requests from Intents. By default, any app can call the receiver. If you intend to use BroadcastReceiver for a specific application, you can secure it by using the `<receiver>` tag in the AndroidManifest. This prevents unauthorized apps from sending Intents to the BroadcastReceiver.
 
 # Reference
 
