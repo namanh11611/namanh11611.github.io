@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Adapter on Henry Techie</title><link>https://namanh11611.github.io/tags/adapter/</link><description>Recent content in Adapter on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 04 Oct 2022 22:50:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/adapter/index.xml" rel="self" type="application/rss+xml"/><item><title>Design Pattern: Adapter - làm thế nào để sạc iPhone bằng cáp type C</title><link>https://namanh11611.github.io/p/design-pattern-adapter/</link><pubDate>Tue, 04 Oct 2022 22:50:00 +0700</pubDate><guid>https://namanh11611.github.io/p/design-pattern-adapter/</guid><description>&lt;img src="https://namanh11611.github.io/p/design-pattern-adapter/adapter.jpeg" alt="Featured image of post Design Pattern: Adapter - làm thế nào để sạc iPhone bằng cáp type C" />&lt;h1 id="đặt-vấn-đề">Đặt vấn đề
+&lt;/h1>&lt;p>Khi bạn muốn sạc iPhone bằng cáp type C =&amp;gt; hãy dùng một cái Adapter mà có lỗ type C và đầu lightning.&lt;/p>
+&lt;p>Khi bạn đang dùng data dưới dạng XML, nhưng lại muốn sử dụng một function của third party library mà nó chỉ nhận param là JSON =&amp;gt; hãy dùng Adapter để convert XML sang JSON.&lt;/p>
+&lt;p>Trong Android, bạn có một list item và muốn hiển thị nó lên &lt;code>RecyclerView&lt;/code> =&amp;gt; hãy dùng Adapter để convert data lên từng &lt;code>item_view&lt;/code>.&lt;/p>
+&lt;h1 id="khái-niệm">Khái niệm
+&lt;/h1>&lt;p>Adapter pattern cho phép &lt;strong>interface&lt;/strong> của một &lt;strong>class đã có sẵn&lt;/strong> được dùng như là một &lt;strong>interface khác&lt;/strong>. Nó sẽ giúp &lt;strong>class đã tồn tại đó&lt;/strong> làm việc với những thằng khác mà &lt;strong>không thay đổi source code&lt;/strong>.&lt;/p>
+&lt;p>Nghe vẫn hơi trừu tượng đúng không nhỉ? Chúng ta sẽ từ từ đi bóc tách hết cái lớp vỏ ngoài khó hiểu này nhé.&lt;/p>
+&lt;p>Tuy nhiên thì có 2 cách dùng adapter là &lt;strong>Object Adapter&lt;/strong> và &lt;strong>Class Adapter&lt;/strong>. Chúng ta sẽ cùng đi tìm hiểu chi tiết từng cách.&lt;/p>
+&lt;h1 id="object-adapter-pattern">Object Adapter Pattern
+&lt;/h1>&lt;h2 id="sơ-đồ-lớp">Sơ đồ lớp
+&lt;/h2>&lt;p>&lt;img src="https://images.viblo.asia/d9569a80-519f-4188-9484-3dffd19db10c.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>Chúng ta sẽ implement interface bằng cách uỷ quyền tới object &lt;strong>adaptee&lt;/strong> lúc run-time.&lt;/p>
+&lt;p>Mình sẽ giải thích chi tiết thêm một chút:&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Client&lt;/strong> là class đã có sẵn mà mình nhắc đến trong phần khái niệm nhé.&lt;/li>
+&lt;li>&lt;strong>Client Interface&lt;/strong> giờ là interface cha của &lt;strong>Client&lt;/strong>. Những thằng khác muốn giao tiếp &lt;strong>Client&lt;/strong> thì phải follow thằng interface cha này nhé.&lt;/li>
+&lt;li>&lt;strong>Service&lt;/strong> là một thằng third party mà chỉ nhận param là JSON như mình đặt vấn đề.&lt;/li>
+&lt;li>&lt;strong>Adapter&lt;/strong> implement &lt;strong>Client Interface&lt;/strong> và chứa instance của class &lt;strong>Service&lt;/strong> (object adaptee). Mỗi khi gọi đến method của &lt;strong>Adapter&lt;/strong>, nó sẽ gọi đến method của &lt;strong>Service&lt;/strong> này.&lt;/li>
+&lt;li>Như vậy chúng ta đã có thể làm việc với thằng &lt;strong>Service&lt;/strong> mà không cần sửa code ở &lt;strong>Client&lt;/strong>.&lt;/li>
+&lt;/ol>
+&lt;h2 id="code-sample">Code sample
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Client Interface&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">interface&lt;/span> &lt;span class="nc">TypeCPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByTypeC&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// Interface của Service&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">interface&lt;/span> &lt;span class="nc">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByLightning&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// Service&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">IPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">implements&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@Override&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByLightning&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// Adapter&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">implements&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">TypeCPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">private&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">LightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">lightningPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@Override&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeByTypeC&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">lightningPhone&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">chargeByLightning&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">Demo&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">chargeMyXiaomiPhone&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">TypeCPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">phone&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">phone&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">chargeByTypeC&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="kd">public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kd">static&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">args&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">IPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">iPhone&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">new&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">IPhone&lt;/span>&lt;span class="p">();&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">adapter&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">new&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">TypeCToLightningPhoneAdapter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">iPhone&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">chargeMyXiaomiPhone&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adapter&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="class-adapter-pattern">Class Adapter pattern
+&lt;/h1>&lt;p>&lt;img src="https://images.viblo.asia/3d70c8a9-c9cb-4eb6-a0eb-17a0d700acd6.png"
+loading="lazy"
+>
+Class Adapter thì không cần wrap object nào cả vì nó kế thừa từ cả &lt;strong>Client&lt;/strong> và &lt;strong>Service&lt;/strong>.&lt;/p>
+&lt;p>Rất tiếc là Java không support đa kế thừa nên chúng ta không có code sample bằng Java cho phần này.&lt;/p>
+&lt;h1 id="kết-luận">Kết luận
+&lt;/h1>&lt;p>&lt;strong>Adapter&lt;/strong> là một design pattern khá quen thuộc với chúng ta. Qua phần giải thích và một chút code mẫu, mong mọi người hiểu thêm về nó.&lt;/p>
+&lt;p>&lt;strong>Reference&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Adapter_pattern" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Adapter_pattern&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://refactoring.guru/design-patterns/adapter" target="_blank" rel="noopener"
+>https://refactoring.guru/design-patterns/adapter&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
