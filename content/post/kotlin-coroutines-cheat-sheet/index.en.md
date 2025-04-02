@@ -28,7 +28,7 @@ Bạn có thể đọc toàn bộ serie tại đây:
 
 [**Job**](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-job/): thứ có thể hủy được với vòng đời đạt đến đỉnh khi nó hoàn thành. Mỗi coroutine đều tạo một **Job** của riêng nó (đó là **coroutine context duy nhất** không được kế thừa từ coroutine cha).
 
-**Dispatcher**: cho phép chúng ta quyết định **thread** nào (hoặc pool của thread) mà coroutine sẽ chạy trên đó (khi start và resume). Bạn có thể đọc bài viết chi tiết của mình về [Dispatchers trong Kotlin Coroutines](https://viblo.asia/p/dispatchers-trong-kotlin-coroutines-AZoJjXvZVY7)
+**Dispatcher**: cho phép chúng ta quyết định **thread** nào (hoặc pool của thread) mà coroutine sẽ chạy trên đó (khi start và resume). Bạn có thể đọc bài viết chi tiết của mình về [Dispatchers trong Kotlin Coroutines](../kotlin-coroutines-dispatchers)
 
 **Coroutine scope**: xác định thời gian tồn tại và context của coroutine. Nó chịu trách nhiệm quản lý vòng đời của coroutine, bao gồm cả việc hủy và xử lý lỗi.
 

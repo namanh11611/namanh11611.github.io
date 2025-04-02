@@ -33,7 +33,7 @@ DataStore gồm 2 loại **Preferences DataStore** và **Proto DataStore**, chú
 
 # Preferences DataStore
 ## Create
-Để sử dụng Preferences DataStore, chúng ta cần tạo một instance `DataStore<Preferences>` bằng [property delegate](https://viblo.asia/p/design-pattern-delegation-trong-kotlin-cach-de-nho-nguoi-khac-lam-bai-tap-ve-nha-vyDZO3exZwj#_delegated-properties-4) với keyword `preferencesDataStore`.
+Để sử dụng Preferences DataStore, chúng ta cần tạo một instance `DataStore<Preferences>` bằng [property delegate](../design-pattern-delegation) với keyword `preferencesDataStore`.
 ```kotlin
 // At the top level of your kotlin file
 val Context.dataStore: DataStore<Preferences>
@@ -120,7 +120,7 @@ object SettingsSerializer : Serializer<Settings> {
   ) = t.writeTo(output)
 }
 ```
-Và cuối cùng là sử dụng [property delegate](https://viblo.asia/p/design-pattern-delegation-trong-kotlin-cach-de-nho-nguoi-khac-lam-bai-tap-ve-nha-vyDZO3exZwj#_delegated-properties-4) với keyword `dataStore` để tạo một instance của `DataStore<T>`.
+Và cuối cùng là sử dụng [property delegate](../design-pattern-delegation) với keyword `dataStore` để tạo một instance của `DataStore<T>`.
 ```kotlin
 val Context.settingsDataStore: DataStore<Settings> by dataStore(
   fileName = "settings.pb",

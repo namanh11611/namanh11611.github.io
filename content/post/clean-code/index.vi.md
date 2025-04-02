@@ -9,7 +9,7 @@ categories: Technical
 tags: [Clean Code]
 ---
 
-Có lẽ **Clean Code** là một vấn đề kinh điển trong ngành lập trình, mình đã có lần nhắc đến cuốn sách **Clean Code** của **Uncle Bob** trong bài viết [**Những điều giá như mình biết từ khi còn là Junior**](https://viblo.asia/p/nhung-dieu-gia-nhu-minh-biet-tu-khi-con-la-junior-bXP4Wx6oJ7G). Tuy nhiên thì lần này mình sẽ không viết lại những nội dung trong đó nữa, các bạn nên đọc trực tiếp sách để có trải nghiệm tốt nhất. Mình chỉ muốn chia sẻ một vài tip mà mình hay áp dụng để giữ code luôn được **gọn gàng sạch đẹp**.
+Có lẽ **Clean Code** là một vấn đề kinh điển trong ngành lập trình, mình đã có lần nhắc đến cuốn sách **Clean Code** của **Uncle Bob** trong bài viết [**Những điều giá như mình biết từ khi còn là Junior**](../junior). Tuy nhiên thì lần này mình sẽ không viết lại những nội dung trong đó nữa, các bạn nên đọc trực tiếp sách để có trải nghiệm tốt nhất. Mình chỉ muốn chia sẻ một vài tip mà mình hay áp dụng để giữ code luôn được **gọn gàng sạch đẹp**.
 
 # Dùng return để tránh if/else hell
 
@@ -70,6 +70,6 @@ Ngoài ra chúng ta còn nhiều cấu trúc dữ liệu khác như **Stack**, *
 
 Mình thấy một số bạn có thói quen khi sửa một tính năng gì đấy, thường sẽ **comment lại code cũ** thay vì xoá nó. Hoặc có những **function cũ không dùng nữa**, nhưng cũng chẳng buồn comment hay xoá gì, cứ để nó nằm vậy trơ gan cùng tuế nguyệt. Nhưng tin mình đi, **vài tháng** hoặc thậm chí **vài năm** sau, chắc bạn sẽ chẳng bao giờ uncomment lại đống code đấy đâu. Mỗi lần vài dòng thôi, nhưng qua năm tháng sẽ thành một núi **dead code** khổng lồ.
 
-Nếu muốn xem lại code cũ, [**Git**](https://viblo.asia/p/quy-trinh-lam-viec-chuan-chi-voi-git-eW65G10RZDO) đã có thể giúp bạn rất tốt rồi. Vậy nên hãy mạnh dạn xoá nó, không chỉ là **vài dòng code**, **một function**, mà còn cả **resource** của app mà bạn không dùng nữa. Điều này sẽ giúp giảm dung lượng của source code đi nhiều.
+Nếu muốn xem lại code cũ, [**Git**](../git-process) đã có thể giúp bạn rất tốt rồi. Vậy nên hãy mạnh dạn xoá nó, không chỉ là **vài dòng code**, **một function**, mà còn cả **resource** của app mà bạn không dùng nữa. Điều này sẽ giúp giảm dung lượng của source code đi nhiều.
 
 Nếu bạn có tip nào hay ho mà đang áp dụng, hãy chia sẻ thêm với mình nhé.
