@@ -3,8 +3,8 @@ title: "Tình hình lương thưởng của anh em IT"
 description: "Hôm vừa rồi một người em bên Nhật chia sẻ với mình rằng muốn mở công ty ở Việt Nam, nhưng chưa hiểu về thị trường hiện tại ở Việt Nam lắm."
 date: 2023-05-10T01:40:00+07:00
 slug: salary
-image: salary.jpeg
-categories: Career
+image: salary.webp
+categories: [Career]
 tags: [Salary]
 ---
 

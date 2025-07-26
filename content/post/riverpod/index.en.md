@@ -3,9 +3,9 @@ title: "Using Code Generation Providers in Flutter Riverpod to Simplify Life"
 description: "Have you ever struggled to choose among the 7 types of providers in Riverpod for different use cases in your project? Well, now, Remi Rousselet introduces a new way to use Riverpod with code generation, making developers' lives a bit easier."
 date: 2024-10-11T00:00:00+07:00
 slug: riverpod
-image: riverpod.jpg
+image: riverpod.webp
 toc: true
-categories: Technical
+categories: [Technical, Flutter]
 tags: [Flutter, Riverpod, Provider, State Management, Code Generation]
 ---
 

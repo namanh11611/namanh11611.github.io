@@ -3,9 +3,9 @@ title: "Hành trình giải 555 bài LeetCode"
 description: "Có lẽ nhiều bạn không còn xa lạ gì với nền tảng LeetCode, một nơi để anh em giải những bài thuật toán, chuẩn bị cho vòng coding interview vào các công ty, thường là các công ty nước ngoài và một số ít công ty ở Việt Nam."
 date: 2024-07-28T00:00:00+07:00
 slug: leetcode
-image: leetcode.jpg
+image: leetcode.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [LeetCode, Algorithm]
 ---
 
@@ -17,7 +17,7 @@ Có lẽ nhiều bạn không còn xa lạ gì với nền tảng **LeetCode**, 
 
 Mình cũng đã bắt đầu hành trình của mình như vậy, đơn giản chỉ để chuẩn bị cho buổi phỏng vấn. Mình nhận thấy rằng việc làm quen với các bài lập trình trên LeetCode không chỉ giúp mình cải thiện kỹ năng coding mà còn giúp mình tự tin hơn khi đối mặt với các câu hỏi phỏng vấn liên quan đến thuật toán và cấu trúc dữ liệu.
 
-![LeetCode Profile](leetcode_profile.png)
+![LeetCode Profile](leetcode_profile.webp)
 
 Mình bắt đầu giải các bài tập **theo từng chủ đề**. Điều này giúp mình hệ thống hóa kiến thức và nắm vững từng dạng bài hơn. Bằng cách tập trung vào một chủ đề nhất định, mình có thể hiểu sâu hơn và giải quyết các bài toán một cách hiệu quả hơn. Mình vốn không phải dân chuyên Tin, hồi sinh viên cũng không tham gia các kỳ thi về thuật toán, nên dù các dạng bài về **BFS**, **DFS**, **Hash Table**, **Stack**, **Queue**... có thể giải ổn, nhưng gặp mấy bài kiểu **Dynamic Programming**, **Union Find** thì giai đoạn ban đầu cũng loay hoay ra phết. Nhưng rồi *"trăm hay không bằng tay quen"*, cứ giải khoảng chục bài là bạn sẽ quen tay ngay. Sau giai đoạn đầu này, mình giải được khoảng hơn **100 bài**, mình thấy tầm ấy cũng đủ để đi phỏng vấn một vài công ty mà họ hỏi ở mức độ easy-medium.
 
@@ -33,7 +33,7 @@ Các cụ có câu *"Muốn đi nhanh thì đi một mình, muốn đi xa thì �
 
 Sau khi duy trì trong khoảng **1 năm rưỡi** thì đến ngày 26/7/2024 vừa rồi, mình cũng đạt được mục tiêu 6000 points và đổi được áo.
 
-![LeetCode T-Shirt](leetcode_t_shirt.png)
+![LeetCode T-Shirt](leetcode_t_shirt.webp)
 
 Tuy nhiên, đợt này công việc cũng bận rộn hơn nên mình quyết định dừng lại một thời gian để nghỉ ngơi và tập trung vào công việc hiện tại. Điều đặc biệt là số bài giải được cũng vừa tròn **555** bài. Chắc là tín hiệu từ vũ trụ rồi.
 

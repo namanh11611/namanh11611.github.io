@@ -3,8 +3,8 @@ title: "DataStore - mảnh ghép hoàn hảo cho bức tranh Kotlin Coroutines"
 description: "DataStore được tạo ra chính là để thay thế SharedPreferencs lưu trữ những dữ liệu đơn giản."
 date: 2023-05-14T15:41:00+07:00
 slug: data-store
-image: datastore.jpeg
-categories: Technical
+image: datastore.webp
+categories: [Technical, Android]
 tags: [Kotlin, Android, Data Store]
 ---
 

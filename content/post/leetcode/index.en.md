@@ -3,9 +3,9 @@ title: "Journey of Solving 555 LeetCode Problems"
 description: "LeetCode is likely familiar to many of you—a platform for solving algorithm problems and preparing for coding interviews, typically for foreign companies and a few in Vietnam."
 date: 2024-07-28T00:00:00+07:00
 slug: leetcode
-image: leetcode.jpg
+image: leetcode.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [LeetCode, Algorithm]
 ---
 
@@ -17,7 +17,7 @@ LeetCode is likely familiar to many of you—a platform for solving **algorithm*
 
 I started my journey the same way, simply to prepare for interviews. I realized that practicing problems on LeetCode not only improved my coding skills but also gave me more confidence when facing algorithm and data structure-related interview questions.
 
-![LeetCode Profile](leetcode_profile.png)
+![LeetCode Profile](leetcode_profile.webp)
 
 I began solving problems **by topic**. This approach helped me systematically organize my knowledge and master specific types of problems. By focusing on one topic at a time, I could deepen my understanding and solve problems more efficiently. Since I didn’t specialize in Computer Science and didn’t participate in algorithm competitions during university, I could manage problems involving **BFS**, **DFS**, **Hash Table**, **Stack**, or **Queue**, but initially struggled with topics like **Dynamic Programming** and **Union Find**. However, as the saying goes, *"Practice makes perfect"*, after solving about ten problems, it became much easier.
 
@@ -35,7 +35,7 @@ As the saying goes, *"If you want to go fast, go alone. If you want to go far, g
 
 After about **1.5 years** of consistent effort, on July 26, 2024, I finally achieved my goal of 6000 points and claimed the T-shirt.
 
-![LeetCode T-Shirt](leetcode_t_shirt.png)
+![LeetCode T-Shirt](leetcode_t_shirt.webp)
 
 However, with work becoming busier, I decided to take a break and focus on current responsibilities. Interestingly, the number of problems I solved happened to be **555**—a perfect milestone. Maybe it’s a signal from the universe.
 

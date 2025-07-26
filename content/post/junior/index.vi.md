@@ -3,9 +3,9 @@ title: "Những điều giá như mình biết từ khi còn là Junior"
 description: "Mình là Nam Anh, Android developer với 5 năm kinh nghiệm. Trong 5 năm sự nghiệp ấy, mình đã kịp lang thang qua cũng kha khá công ty công nghệ ở Hà Nội này."
 date: 2023-05-18T18:44:00+07:00
 slug: junior
-image: junior.jpeg
+image: junior.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [Junior, Senior]
 ---
 

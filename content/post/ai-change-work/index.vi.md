@@ -3,9 +3,9 @@ title: "AI đang thay đổi cách Software Engineer làm việc"
 description: "Nhiều anh em lo lắng hỏi mình về việc AI sắp thay thế dev chưa? Câu trả lời của mình thì đến thời điểm hiện tại là chưa. Vẫn cần có người verify các dòng code mà AI viết ra."
 date: 2025-01-01T00:00:00+07:00
 slug: ai-change-work
-image: ai_change_work.jpg
+image: ai_change_work.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [AI]
 ---
 

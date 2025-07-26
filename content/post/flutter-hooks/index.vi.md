@@ -3,9 +3,9 @@ title: "Flutter Hooks - viết code ngắn gọn và hiệu quả hơn"
 description: "Khi tìm kiếm từ khoá Hooks trên Google, chúng ta sẽ thấy rất nhiều kết quả liên quan đến React. Quả thật, như trong phần giới thiệu, thư viện flutter_hooks được tác giả Remi Rousselet build dựa trên niềm cảm hứng từ React."
 date: 2024-04-30T00:00:00+07:00
 slug: flutter-hooks
-image: hooks.jpeg
+image: hooks.webp
 toc: true
-categories: Technical
+categories: [Technical, Flutter]
 tags: [Flutter, Hooks, Riverpod]
 ---
 

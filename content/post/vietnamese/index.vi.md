@@ -3,9 +3,9 @@ title: "Từ câu chuyện kải kách chữ Quốc ngữ đến những nguyên
 description: "Hồi đi học, có bao giờ bạn thắc mắc tại sao chữ c, g, ng lại không thể đứng trước e, ê, i, mà chúng ta phải dùng k, gh, ngh? Liệu chữ Quốc ngữ có phải là một ngôn ngữ lập trình chứa nhiều bug?"
 date: 2024-03-20T00:00:00+07:00
 slug: vietnamese
-image: vietnamese.jpeg
+image: vietnamese.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [Vietnamese, Programming language]
 ---
 
@@ -19,7 +19,7 @@ Mình không có vấn đề gì với **tiếng Việt**, nhưng **chữ Quốc
 - Tại sao chữ `c`, `g`, `ng` lại không thể đứng trước `e`, `ê`, `i`, mà chúng ta phải dùng `k`, `gh`, `ngh`?
 - Tại sao Bác Hồ lại viết là `Đường Kách mệnh` chứ không phải là `Đường Cách mạng` như ngày nay chúng ta hay viết?
 
-![DuongKachMenh](duongkachmenh.jpg)
+![DuongKachMenh](duongkachmenh.webp)
 
 Chữ Quốc ngữ vay mượn chủ yếu từ tiếng **Bồ Đào Nha** và tiếng **Ý**, ví dụ như trong tiếng Bồ Đào Nha, nếu để chữ `c` đứng trước `a`,`o`,`u` sẽ biểu thị phụ âm `/k/`, nhưng khi đứng trước `e`,`i` sẽ biểu thị phụ âm `/s/`. Vì vậy để tránh cho những người biết tiếng biết Bồ Đào Nha khỏi đọc sai, các tu sĩ mới đặt ra quy tắc phải dùng `k` thay cho `c` khi đứng trước `e`,`ê`,`i`,`y`.
 
@@ -63,7 +63,7 @@ Việc đề xuất cải cách của PGS Bùi Hiền bị dư luận phản ứ
 
 Nó giống như câu chuyện kinh điển trong ngày lập trình mà anh em thường nói vui với nhau *"Code đang chạy ổn thì đừng đụng vào"*. Hồi mới ra trường, mình từng nhiệt tình xung phong refactor một feature có flow khá phức tạp. Thế rồi hậu quả là mình mất một mớ thời gian để đi fix bug cho những corner case của feature đó mà khi bắt đầu làm mình chưa lường trước hết được.
 
-![Refactor](refactor.jpeg)
+![Refactor](refactor.webp)
 
 ## Phát hiện lỗi càng muộn, chi phí sửa đổi càng lớn
 

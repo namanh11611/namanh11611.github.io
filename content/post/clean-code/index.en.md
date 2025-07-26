@@ -3,9 +3,9 @@ title: "3 cách mình áp dụng để code gọn gàng sạch đẹp hơn"
 description: "Có lẽ Clean Code là một vấn đề kinh điển trong ngành lập trình, trong bài viết này mình muốn chia sẻ một vài tip mà mình hay áp dụng để giữ code luôn được gọn gàng sạch đẹp."
 date: 2024-05-01T00:00:00+07:00
 slug: clean-code
-image: tidy.jpg
+image: tidy.webp
 toc: true
-categories: Technical
+categories: [Technical]
 tags: [Clean Code]
 ---
 
@@ -18,11 +18,11 @@ Không biết bạn đã bao giờ gặp **if/else hell** kiểu như này trong
 ```java
 void doSomething() {
     if (condition1) {
-        doFirstTask()
+        doFirstTask();
         if (condition2 != null) {
-            doSecondTask()
+            doSecondTask();
             if (condition3.isNotEmpty()) {
-                doThirdTask()
+                doThirdTask();
             }
         }
     }

@@ -3,9 +3,9 @@ title: "All About Looper, MessageQueue, and Handler in Android"
 description: "In Android, performing heavy tasks like network requests or database operations on the main thread can cause the app to freeze or crash. To ensure smooth performance, such tasks need to be offloaded to a background thread to avoid blocking the main thread."
 date: 2024-10-10T00:00:00+07:00
 slug: looper-message-queue-handler
-image: looper_message_queue_handler.jpg
+image: looper_message_queue_handler.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Looper, MessageQueue, Handler, Thread, Android, Java]
 ---
 

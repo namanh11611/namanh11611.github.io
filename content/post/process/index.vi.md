@@ -3,9 +3,9 @@ title: "Tất tần tật về Process trong Android"
 description: "Process là một khái niệm cơ bản nhưng cũng rất quan trọng trong Android. Khi chúng ta khởi chạy ứng dụng, mặc định tất cả các component như Activity, Service, BroadcastReceiver, ContentProvider sẽ cùng chạy trên một Linux Process."
 date: 2024-06-21T00:00:00+07:00
 slug: process
-image: process.jpg
+image: process.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Android, Process]
 ---
 

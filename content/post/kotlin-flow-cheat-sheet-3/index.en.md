@@ -3,9 +3,9 @@ title: "Kotlin Flow cheat sheet phần 3: SharedFlow và StateFlow"
 description: "SharedFlow và StateFlow là hai loại flow đặc biệt trong Kotlin Flow, cung cấp các tính năng mạnh mẽ cho việc chia sẻ trạng thái và sự kiện giữa các thành phần khác nhau trong ứng dụng. Trong phần cuối của loạt bài viết này, chúng ta sẽ tìm hiểu sâu về cách sử dụng SharedFlow và StateFlow, những lợi ích của chúng, và cách tích hợp vào ứng dụng Android của bạn để xử lý luồng dữ liệu một cách hiệu quả và mượt mà hơn."
 date: 2024-08-18T06:00:00+07:00
 slug: kotlin-flow-cheat-sheet-3
-image: cheat_sheet.jpg
+image: cheat_sheet.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Kotlin, Android, Coroutines, Flow]
 ---
 

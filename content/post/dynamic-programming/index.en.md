@@ -3,9 +3,9 @@ title: "LeetCode: Dễ dàng nhận biết 5 dạng bài Dynamic Programming"
 description: "Có thể nói, trong quá trình làm LeetCode thì Dynamic Programming là một dạng bài mọi người thường xuyên gặp nhất, nhưng cũng là một trong những dạng khó nhằn nhất."
 date: 2024-05-05T00:00:00+07:00
 slug: dynamic-programming
-image: dynamic_programming.jpg
+image: dynamic_programming.webp
 toc: true
-categories: Technical
+categories: [Technical]
 tags: [Dynamic Programming, Algorithm, LeetCode, Java]
 ---
 

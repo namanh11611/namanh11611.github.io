@@ -3,9 +3,9 @@ title: "Tất tần tật về Looper, MessageQueue và Handler trong Android"
 description: "Trong Android, nếu thực hiện các tác vụ nặng như request network hoặc đọc ghi database trên main thread có thể sẽ gây ra đơ, crash ứng dụng. Chính vì vậy, để ứng dụng hoạt động mượt mà hơn, chúng ta cần chuyển các tác vụ đó xuống background thread, tránh block main thread."
 date: 2024-10-10T00:00:00+07:00
 slug: looper-message-queue-handler
-image: looper_message_queue_handler.jpg
+image: looper_message_queue_handler.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Looper, MessageQueue, Handler, Thread, Android, Java]
 ---
 

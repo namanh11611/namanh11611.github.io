@@ -3,9 +3,9 @@ title: "Gitflow, GitHub Flow, GitLab Flow, Trunk-Based Development: Which Git Br
 description: "When starting a project, apart from tasks like setting up the environment and building a robust codebase, choosing the right Git Branching Strategy is equally critical. Picking the wrong strategy can lead to significant setbacks."
 date: 2024-09-08T00:00:00+07:00
 slug: git-branching-strategy
-image: strategy.jpg
+image: strategy.webp
 toc: true
-categories: Technical
+categories: [Technical]
 tags: [Git, Gitflow, GitHub Flow, GitLab Flow, Trunk-Based Development]
 ---
 
@@ -47,7 +47,7 @@ Finally, there are **hotfix** branches. When production code encounters a critic
 
 [**GitHub Flow**](https://docs.github.com/en/get-started/using-github/github-flow) is a lightweight, simple strategy ideal for **CI/CD** and commonly used in open-source projects or small teams.
 
-![GitHub Flow](github_flow.png)
+![GitHub Flow](github_flow.webp)
 
 Unlike Gitflow, it has a single main branch, **main**, which contains thoroughly tested and stable code ready for production.
 
@@ -69,7 +69,7 @@ Features are developed in **feature** branches, tested, reviewed, and merged int
 
 [**GitLab Flow**](https://about.gitlab.com/topics/version-control/what-is-gitlab-flow) combines elements of Gitflow and GitHub Flow. It introduces **environment branches** like **staging** and **production**, making it suitable for **CI/CD** and tightly integrated with GitLab’s **CI/CD** tools.
 
-![GitLab Flow](gitlab_flow.png)
+![GitLab Flow](gitlab_flow.webp)
 
 Similar to GitHub Flow, GitLab Flow works directly with the primary branch, **main**, which contains stable source code ready for release. This flow also includes feature branches for developing new features.
 

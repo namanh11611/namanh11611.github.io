@@ -3,8 +3,8 @@ title: "Cái bẫy chuột trong hàm Date.setMonth() của Javascript"
 description: "Vào một ngày đẹp trời 29/3/2019, đang OT một cách vui vẻ và đầy hào hứng, tôi bỗng phát hiện ra một bug liên quan đến hiển thị ngày tháng trên Front-end."
 date: 2019-03-30T01:33:00+07:00
 slug: date-set-month
-image: month.jpeg
-categories: Technical
+image: month.webp
+categories: [Technical]
 tags: [JavaScript, Date]
 ---
 

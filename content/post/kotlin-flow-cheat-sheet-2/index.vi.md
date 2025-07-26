@@ -3,9 +3,9 @@ title: "Kotlin Flow cheat sheet phần 2: Flow"
 description: "Kotlin Flow là một API mạnh mẽ giúp quản lý luồng dữ liệu bất đồng bộ một cách rõ ràng và dễ dàng. Trong phần 2 này, chúng ta sẽ khám phá Flow từ cơ bản đến nâng cao, tìm hiểu cách tạo, chuyển đổi và thu thập các luồng dữ liệu, cũng như các best practice để áp dụng trong dự án Android của bạn."
 date: 2024-08-18T05:00:00+07:00
 slug: kotlin-flow-cheat-sheet-2
-image: cheat_sheet.jpg
+image: cheat_sheet.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Kotlin, Android, Coroutines, Flow]
 ---
 

@@ -1,12 +1,12 @@
 ---
 title: About Me
-date: 2024-11-09
+date: 2025-07-26
 aliases:
   - about-us
   - about-hugo
   - contact
 license: CC BY-NC-ND
-lastmod: '2024-11-09'
+lastmod: '2025-07-26'
 menu:
     main: 
         weight: 2
@@ -20,11 +20,19 @@ links:
   - title: Curved Labeled Navigation Bar
     description: A Flutter package for easy implementation of curved navigation bar.
     website: https://pub.dev/packages/curved_labeled_navigation_bar
-    image: flutter.png
+    image: flutter.webp
   - title: Speakie
     description: Learn English speaking with AI-powered lessons and real-life sentence practice.
     website: https://speakie.xyz
-    image: speakie.png
+    image: speakie.webp
+  - title: Flutter MVVM Riverpod
+    description: A base Flutter project with MVVM architecture and Riverpod state management.
+    website: https://github.com/namanh11611/flutter_mvvm_riverpod
+    image: flutter.webp
+  - title: Habit Tree
+    description: A habit tracker app with the idea "Each habit is a tree — nurture it daily to watch your forest of success grow!"
+    website: https://habittree.xyz
+    image: habittree.webp
 ---
 
 Hi there 👋, I'm Henry Nguyen

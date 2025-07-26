@@ -3,9 +3,9 @@ title: "Hành trình 6 tháng áp dụng phương pháp Pomodoro"
 description: "Liệu phương pháp này có thực sự giúp tăng năng suất như lời đồn, mời bạn đọc bài viết này để xem hành trình mình đã áp dụng nó trong công việc."
 date: 2023-12-23T00:00:00+07:00
 slug: pomodoro
-image: pomodoro.jpeg
+image: pomodoro.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [Pomodoro, Time Management]
 ---
 

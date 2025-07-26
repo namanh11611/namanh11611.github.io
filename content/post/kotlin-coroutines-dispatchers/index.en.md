@@ -3,8 +3,8 @@ title: "Dispatchers trong Kotlin Coroutines"
 description: "Hiểu một cách đơn giản, Dispatcher sẽ quyết định xem Coroutines được thực thi trên thread nào. Có thể là main thread, background thread, hoặc nó đẩy Coroutines vào thread pool."
 date: 2023-05-01T00:22:00+07:00
 slug: kotlin-coroutines-dispatchers
-image: dispatchers.jpeg
-categories: Technical
+image: dispatchers.webp
+categories: [Technical, Android]
 tags: [Kotlin, Android, Coroutines, Dispatchers]
 ---
 

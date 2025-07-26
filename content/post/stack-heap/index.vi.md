@@ -3,10 +3,10 @@ title: "Bộ nhớ Stack và Heap trong Java"
 description: "Quản lý bộ nhớ là một yếu tố quan trọng trong lập trình, biết cách tối ưu bộ nhớ sẽ giúp ứng dụng của chúng ta hoạt động mượt mà, không bị lag hoặc crash. Trong bài viết này, chúng ta sẽ tìm hiểu về vai trò, chức năng và cách hoạt động của từng loại bộ nhớ."
 date: 2024-01-04T00:00:00+07:00
 slug: stack-heap
-image: stack-heap.jpeg
+image: stack-heap.webp
 toc: true
-categories: Technical
-tags: [Stack, Heap, Memory, Java]
+categories: [Technical, Android]
+tags: [Stack, Heap, Memory, Java, Android]
 ---
 
 # Bộ nhớ Stack với Heap là cái chi chi?

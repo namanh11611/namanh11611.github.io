@@ -3,8 +3,8 @@ title: Custom Curved Bottom Navigation Bar trong Flutter
 description: Ở dự án gần đây, mình được toàn quyền quyết định UI/UX của app. Vậy nên, mình muốn cải thiện thêm Bottom Navigation Bar, muốn nó trônng màu mè hơn một chút, thay vì dùng Bottom Navigation Bar mặc định của Flutter.
 date: 2022-10-17T22:36:00+07:00
 slug: curved-bottom-navigation-bar
-image: navigation.jpeg
-categories: Technical
+image: navigation.webp
+categories: [Technical, Flutter]
 tags: [Flutter, Bottom Navigation Bar]
 ---
 

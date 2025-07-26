@@ -3,9 +3,9 @@ title: "Kotlin Flow cheat sheet phần 1: Channel"
 description: "Trong phần 1, chúng ta sẽ tìm hiểu chi tiết về Channel, cách thức hoạt động, và cách ứng dụng trong các trường hợp thực tế để giao tiếp giữa các coroutine một cách an toàn và hiệu quả."
 date: 2024-08-18T04:00:00+07:00
 slug: kotlin-flow-cheat-sheet-1
-image: cheat_sheet.jpg
+image: cheat_sheet.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Kotlin, Android, Coroutines, Flow]
 ---
 

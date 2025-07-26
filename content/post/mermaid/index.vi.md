@@ -3,9 +3,9 @@ title: "Mermaid - Vẽ diagram và chart dễ như ăn kẹo bằng Markdown"
 description: "Một bức ảnh đáng giá hơn ngàn lời nói, đôi khi một cái diagram rõ ràng sẽ giúp tiết kiệm được vài giờ đồng hồ giải thích, trao đổi qua lại. Đơn giản hoá được quá trình vẽ diagram thì còn đáng giá hơn nữa."
 date: 2024-02-25T00:00:00+07:00
 slug: mermaid
-image: mermaid.png
+image: mermaid.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [Mermaid, Diagram, Chart, Markdown]
 ---
 
@@ -19,7 +19,7 @@ Trước đây, khi vẽ diagram cho dự án, mình thường dùng **[draw.io]
 
 Theo định nghĩa trên trang chủ thì **[Mermaid](https://mermaid.js.org)** là một công cụ được xây dựng dựa trên **JavaScript**, giúp tạo **diagram** và **chart** một cách linh hoạt từ **text** có cú pháp tương tự **Markdown**.
 
-![Mermaid](mermaid.png)
+![Mermaid](mermaid.webp)
 
 ## Ưu điểm
 
@@ -48,11 +48,11 @@ Hiện tại ở dự án của mình thì team đang tạo riêng một project
 
 Bạn chỉ cần cài thêm 2 extension [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) và [Mermaid Markdown Syntax Highlighting](https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting) trên Visual Studio Code là đủ dùng rồi.
 
-![Mermaid Extensions](mermaid_extension.png)
+![Mermaid Extensions](mermaid_extension.webp)
 
 Mỗi khi cần vẽ 1 diagram, bạn tạo 1 file với đuôi `.md` và viết cú pháp của Mermaid, bạn có thể click button **Open Preview** ở góc trên bên phải để vừa code vừa xem diagram được update trực tiếp ở bên cạnh. Và kết quả như sau:
 
-![Mermaid Preview](mermaid_preview.png)
+![Mermaid Preview](mermaid_preview.webp)
 
 Bạn cứ xem trước ví dụ đi đã, mình sẽ đi vào giới thiệu chi tiết cú pháp của từng loại diagram trong phần tiếp theo.
 
@@ -83,7 +83,7 @@ flowchart TD
 
 Kết quả:
 
-![Flowchart](flowchart.png)
+![Flowchart](flowchart.webp)
 
 ## [Sequence diagram](https://mermaid.js.org/syntax/sequenceDiagram.html)
 
@@ -113,7 +113,7 @@ sequenceDiagram
 
 Kết quả:
 
-![Sequence diagram](sequence_diagram.png)
+![Sequence diagram](sequence_diagram.webp)
 
 ## [Class diagram](https://mermaid.js.org/syntax/classDiagram.html)
 
@@ -145,7 +145,7 @@ classDiagram
 
 Kết quả:
 
-![Class diagram](class_diagram.png)
+![Class diagram](class_diagram.webp)
 
 ## [State diagram](https://mermaid.js.org/syntax/stateDiagram.html)
 
@@ -171,7 +171,7 @@ stateDiagram
 
 Kết quả:
 
-![State diagram](state_diagram.png)
+![State diagram](state_diagram.webp)
 
 ## [Git graph](https://mermaid.js.org/syntax/gitgraph.html)
 
@@ -200,7 +200,7 @@ gitGraph
 
 Kết quả:
 
-![Git graph](git_graph.png)
+![Git graph](git_graph.webp)
 
 # Kết luận
 

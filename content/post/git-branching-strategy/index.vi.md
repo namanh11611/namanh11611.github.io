@@ -3,9 +3,9 @@ title: "Gitflow, GitHub Flow, GitLab Flow, Trunk Based Development: Đâu mới 
 description: "Khi bắt đầu một dự án, ngoài những việc như setup môi trường, dựng code base thật tốt... thì có lẽ việc chọn một Git Branching Strategy đúng đắn cũng rất quan trọng, vì chọn sai một ly là đi một dặm."
 date: 2024-09-08T00:00:00+07:00
 slug: git-branching-strategy
-image: strategy.jpg
+image: strategy.webp
 toc: true
-categories: Technical
+categories: [Technical]
 tags: [Git, Gitflow, GitHub Flow, GitLab Flow, Trunk Based Development]
 ---
 
@@ -47,7 +47,7 @@ Và cuối cùng là các branch **hotfix**, khi code trên production gặp cri
 
 [**GitHub Flow**](https://docs.github.com/en/get-started/using-github/github-flow) là một chiến lược đơn giản và nhẹ nhàng, phù hợp cho các dự án có yêu cầu **CI/CD**. Chiến lược này được sử dụng phổ biến trong các dự án open source và các team nhỏ.
 
-![GitHub Flow](github_flow.png)
+![GitHub Flow](github_flow.webp)
 
 Thay vì 2 branch chính như Gitflow, nó chỉ có 1 branch chính duy nhất là **main** để chứa source code ổn định và đã được test cẩn thận, sẵn sàng release production.
 
@@ -69,7 +69,7 @@ Các branch **feature** được `checkout` từ **main** để phát triển c�
 
 [**GitLab Flow**](https://about.gitlab.com/topics/version-control/what-is-gitlab-flow) kết hợp các yếu tố từ cả Gitflow và GitHub Flow. Nó đơn giản hơn Gitflow và tương tự như GitHub Flow, điểm khác biệt là có thêm các environment branch, ví dụ như **staging**, **production**... Đặc biệt, nó được thiết kế để hỗ trợ cả **CI/CD**, với sự tích hợp chặt chẽ cùng các công cụ **CI/CD** của GitLab.
 
-![GitLab Flow](gitlab_flow.png)
+![GitLab Flow](gitlab_flow.webp)
 
 Tương tự như GitHub Flow, GitLab Flow làm việc trực tiếp với branch chính là **main**, nó chứa source code ổn định và có thể release. Flow này cũng có các branch **feature** để phát triển feature.
 

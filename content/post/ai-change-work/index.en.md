@@ -3,9 +3,9 @@ title: "AI is Changing How Software Engineers Work"
 description: "Many people have asked me whether AI is about to replace developers. My answer, as of now, is no. There still needs to be someone to verify the code that AI produces."
 date: 2025-01-01T00:00:00+07:00
 slug: ai-change-work
-image: ai_change_work.jpg
+image: ai_change_work.webp
 toc: true
-categories: Career
+categories: [Career]
 tags: [AI]
 ---
 

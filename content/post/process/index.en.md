@@ -3,9 +3,9 @@ title: "Everything About Process in Android"
 description: "Processes are a fundamental but essential concept in Android. When we launch an application, by default, all components like Activity, Service, BroadcastReceiver, and ContentProvider run within a single Linux Process."
 date: 2024-06-21T00:00:00+07:00
 slug: process
-image: process.jpg
+image: process.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Android, Process]
 ---
 

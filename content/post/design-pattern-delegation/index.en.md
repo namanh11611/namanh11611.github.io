@@ -3,8 +3,8 @@ title: "Design Pattern: Delegation trong Kotlin - cách để nhờ người kh�
 description: "Trước đây mình cũng chưa biết về Delegation Pattern, cho đến khi học Kotlin thì thấy người ta hay dùng keyword by trong lúc khai báo một biến. Vậy là thử tìm hiểu thì cả một chân trời mở ra về pattern mới này."
 date: 2023-05-12T16:50:00+07:00
 slug: design-pattern-delegation
-image: delegation.jpeg
-categories: Technical
+image: delegation.webp
+categories: [Technical]
 tags: [Design Pattern, Delegation, Kotlin]
 ---
 

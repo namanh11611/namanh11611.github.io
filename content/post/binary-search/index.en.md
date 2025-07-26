@@ -3,10 +3,10 @@ title: "LeetCode: Binary Search template chinh phục mọi problem"
 description: "Gần đây mình có tham gia luyện LeetCode để tìm niềm vui sau những giờ làm việc căng thẳng. Thỉnh thoảng mình gặp khúc mắc khi đụng một vài bài cần phải áp dụng Binary Search để giải. Cho đến một ngày, mình tìm được một công thức thần thánh..."
 date: 2024-02-17T00:00:00+07:00
 slug: binary-search
-image: binary_search.jpeg
+image: binary_search.webp
 toc: true
 math: true
-categories: Technical
+categories: [Technical]
 tags: [Binary Search, Algorithm, LeetCode, Java]
 ---
 

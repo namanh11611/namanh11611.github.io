@@ -3,9 +3,9 @@ title: "Dùng code generation provider trong Flutter Riverpod cho đời đơn g
 description: "Không biết có bạn nào luôn băn khoăn mỗi lần phải chọn 1 trong 7 loại provider của Riverpod cho từng use case trong dự án của mình chưa? Nhưng giờ đây, tác giả Remi Rousselet đã giới thiệu cách dùng Riverpod mới với code generation, giúp cho cuộc đời của developer chúng ta dễ thở hơn đôi chút."
 date: 2024-10-11T00:00:00+07:00
 slug: riverpod
-image: riverpod.jpg
+image: riverpod.webp
 toc: true
-categories: Technical
+categories: [Technical, Flutter]
 tags: [Flutter, Riverpod, Provider, State Management, Code Generation]
 ---
 

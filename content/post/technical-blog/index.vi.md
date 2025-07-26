@@ -3,8 +3,8 @@ title: "Technical Blog của Engineers các công ty lớn"
 description: "Ngoài việc học qua các tutorial, video thì technical blog là một nguồn khá hay ho. Khi đọc blog của kỹ sư phần mềm ở các công ty lớn, bạn sẽ biết được cách họ xử lý những bài toán mà họ đã đối mặt như thế nào."
 date: 2023-05-24T00:42:00+07:00
 slug: technical-blog
-image: blog.jpeg
-categories: Career
+image: blog.webp
+categories: [Career]
 tags: [Blog]
 ---
 

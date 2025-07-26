@@ -3,9 +3,9 @@ title: "Kotlin Coroutines cheat sheet nâng cao dành cho Android Engineer"
 description: "Cheat sheet này hệ thống lại những kiến thức quan trọng mà mình đã góp nhặt được trong quá trình làm việc với Kotlin Coroutines. Nó được thiết kế để trở thành một tài liệu tham khảo hữu ích, giúp anh em giải quyết các trường hợp phức tạp của coroutine."
 date: 2024-08-12T00:00:00+07:00
 slug: kotlin-coroutines-cheat-sheet
-image: cheat_sheet.jpg
+image: cheat_sheet.webp
 toc: true
-categories: Technical
+categories: [Technical, Android]
 tags: [Kotlin, Android, Coroutines]
 ---
 
