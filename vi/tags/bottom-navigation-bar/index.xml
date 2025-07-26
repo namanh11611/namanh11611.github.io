@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bottom Navigation Bar on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/bottom-navigation-bar/</link><description>Recent content in Bottom Navigation Bar on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Mon, 17 Oct 2022 22:36:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/bottom-navigation-bar/index.xml" rel="self" type="application/rss+xml"/><item><title>Custom Curved Bottom Navigation Bar trong Flutter</title><link>https://namanh11611.github.io/vi/p/curved-bottom-navigation-bar/</link><pubDate>Mon, 17 Oct 2022 22:36:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/curved-bottom-navigation-bar/</guid><description>&lt;img src="https://namanh11611.github.io/p/curved-bottom-navigation-bar/navigation.webp" alt="Featured image of post Custom Curved Bottom Navigation Bar trong Flutter" />&lt;h1 id="đi-tìm-một-bottom-navigation-bar-ưng-ý">Đi tìm một Bottom Navigation Bar ưng ý
+&lt;/h1>&lt;p>Gần đây, trong quá trình làm dự án ở công ty, mình được tìm hiểu thêm về &lt;strong>Flutter&lt;/strong>. Đó đúng là một framework giúp build mobile app cross platform rất nhanh. Theo một số bài đo đạc đánh giá thì &lt;strong>Flutter&lt;/strong> còn có hiệu năng gần bằng native (&lt;strong>Kotlin&lt;/strong> và &lt;strong>Swift&lt;/strong>), đương nhiên là vượt xa &lt;strong>React Native&lt;/strong>.&lt;/p>
+&lt;p>Ở dự án này, mình được toàn quyền quyết định UI/UX của app. Vậy nên, mình muốn cải thiện thêm Bottom Navigation Bar, muốn nó trônng màu mè hơn một chút, thay vì dùng Bottom Navigation Bar mặc định của Flutter. Thế là sau một hồi lang thang trên Google, mình tìm thấy package &lt;a class="link" href="https://pub.dev/packages/curved_navigation_bar" target="_blank" rel="noopener"
+>curved_navigation_bar&lt;/a>, tuy nhiên thì package này lại chỉ cho hiển thị icon ở Bottom Navigation Bar item như thế này.&lt;/p>
+&lt;p>&lt;img src="https://images.viblo.asia/2f2337ec-a728-4e44-abda-2a02a5ef8ffa.jpg"
+loading="lazy"
+alt="origin"
+>&lt;/p>
+&lt;br>
+&lt;p>Phần code example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Widget&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">compare_arrows&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">call_split&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;br>
+&lt;p>Mình muốn thêm label cho từng item thì chỉ có thể thêm bằng cách thay đổi mỗi item thành một &lt;code>Column&lt;/code> widget:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Widget&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Add&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;List&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">compare_arrows&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Compare&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">call_split&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Split&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Person&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div> &lt;br>
+&lt;p>Và kết quả sẽ trở thành như thế này:
+&lt;img src="https://images.viblo.asia/1ba2a125-2f8e-4b3d-ba6c-df47591713fa.jpg"
+loading="lazy"
+alt="origin label"
+>&lt;/p>
+&lt;p>Trông nó không được đẹp lắm nhỉ 🤔&lt;/p>
+&lt;p>Mình thì muốn label của selected item hiển thị ở dưới vùng có background màu trắng, và khi mình chọn một Bottom Navigation Bar item khác, label vẫn sẽ nằm yên ở đó. Vậy thì không còn cách nào khác là phải custom lại package này rồi. Đó là lúc chúng ta đến với bước 2 của bài viết này.&lt;/p>
+&lt;h1 id="custom-curved-navigation-bar">Custom Curved Navigation Bar
+&lt;/h1>&lt;p>Mình quyết định tạo một package mới linh động hơn, có thể phù hợp với cả hai dạng là item có label và item không có label.&lt;/p>
+&lt;p>Tadaa&amp;hellip; Và đây là package của mình: &lt;a class="link" href="https://pub.dev/packages/curved_labeled_navigation_bar" target="_blank" rel="noopener"
+>curved_labeled_navigation_bar&lt;/a>&lt;/p>
+&lt;p>Sau đây, mình sẽ hướng dẫn bạn cách implement của cả hai dạng.&lt;/p>
+&lt;h2 id="navigation-bar-có-label">Navigation Bar có label
+&lt;/h2>&lt;p>Mình có tạo ra một Widget mới là &lt;code>CurvedNavigationBarItem&lt;/code> để wrap cả Icon và label.&lt;/p>
+&lt;p>Code example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">home_outlined&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Home&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">search&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Search&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">chat_bubble_outline&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Chat&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">newspaper&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Feed&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Personal&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;br>
+&lt;p>UI demo:&lt;/p>
+&lt;br>
+&lt;p>&lt;img src="https://images.viblo.asia/78add20a-e7af-4927-bb7f-b900f972ad0e.jpg"
+loading="lazy"
+alt="label"
+>&lt;/p>
+&lt;h2 id="navigation-bar-không-có-label">Navigation Bar không có label
+&lt;/h2>&lt;p>Code example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">home_outlined&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">search&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">chat_bubble_outline&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">newspaper&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;br>
+&lt;p>UI demo:&lt;/p>
+&lt;br>
+&lt;p>&lt;img src="https://images.viblo.asia/c8e6ef01-4c97-4789-88f8-d46c4513ca94.jpg"
+loading="lazy"
+alt="no label"
+>&lt;/p>
+&lt;h1 id="lời-kết">Lời kết
+&lt;/h1>&lt;p>Hy vọng package nhỏ này của mình giúp ích được cho những bạn đang muốn có một Bottom Navigation Bar khác lạ. Bạn có thể ủng hộ tinh thần mình bằng cách tặng mình một like, share nhé. Nếu bạn có ý tưởng gì để mình có thể cải thiện hơn nữa thì cũng đừng ngần ngại chia sẻ với mình.&lt;/p>
+&lt;ul>
+&lt;li>Link package: &lt;a class="link" href="https://pub.dev/packages/curved_labeled_navigation_bar" target="_blank" rel="noopener"
+>https://pub.dev/packages/curved_labeled_navigation_bar&lt;/a>&lt;/li>
+&lt;li>Github: &lt;a class="link" href="https://github.com/namanh11611/curved_labeled_navigation_bar" target="_blank" rel="noopener"
+>https://github.com/namanh11611/curved_labeled_navigation_bar&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Mình chân thành cảm ơn!&lt;/p></description></item></channel></rss>
