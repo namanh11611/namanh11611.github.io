@@ -5,7 +5,7 @@ date: 2024-04-30T00:00:00+07:00
 slug: flutter-hooks
 image: hooks.webp
 toc: true
-categories: [Technica, Flutter]
+categories: [Technical, Flutter]
 tags: [Flutter, Hooks, Riverpod]
 ---
 
