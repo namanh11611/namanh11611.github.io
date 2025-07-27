@@ -51,7 +51,7 @@ Khi nghĩ giải pháp, mình nhớ ngay đến bài [Longest Common Subsequence
 
 Bài này cần áp dụng **Quy hoạch động** (Dynamic Programming) để giải. Ví dụ với `text1` = "**XMJYAUZ**", `text2` = "**MZJAWXU**", chúng ta cần tạo 1 bảng 2 chiều để lưu độ dài subsequence chung dài nhất của 2 string khi duyệt từ đầu đến cuối như sau.
 
-![Solution 2D Array](https://images.viblo.asia/aca21a7a-f510-4cd5-b3f6-22b33c64b7b8.png)
+![Solution 2D Array](2d.webp)
 
 Bạn có thể hiểu rằng:
 
@@ -91,7 +91,7 @@ Cách trên là dễ hiểu nhất và bám sát với phần phân tích của 
 
 Khi duyệt row `i`, chúng ta chỉ cần các giá trị từ row `i - 1` cùng với giá trị của ô `length[i][j - 1]`. Vì vậy, thay vì dùng bảng 2 chiều, chúng ta chỉ cần 1 array với thêm 2 biến `prevRowCol`, `prevRow` như sau:
 
-![Solution 1D Array](https://images.viblo.asia/2faf9d89-c5c2-4b52-a25c-4a7d02a4a93b.png)
+![Solution 1D Array](1d.webp)
 
 ```java
 public int longestCommonSubsequence(String text1, String text2) {
@@ -172,8 +172,7 @@ match |= 1 << i;
 match  = 0001
 1 << i = 1000
 match | (1 << i) = 1001 // => match = 9
-// Như vậy chúng ta đã set bit thứ 3 từ phải sang trái (0th index)
-// thành giá trị 1 (TRUE)
+// Như vậy chúng ta đã set bit thứ 3 từ phải sang trái (0th index) thành giá trị 1 (TRUE)
 ```
 
 Để get value của bit thứ `i`, chúng ta dùng phép toán `SHIFT RIGHT` và `AND` như sau:

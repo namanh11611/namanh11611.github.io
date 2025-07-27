@@ -34,11 +34,11 @@ Về lý thuyết thì đoạn code trên không có vấn đề gì cả. Thế
 ```java
 void doSomething() {
     if (!condition1) return
-    doFirstTask()
+    doFirstTask();
     if (condition2 == null) return
-    doSecondTask()
+    doSecondTask();
     if (condition3.isEmpty()) return
-    doThirdTask()
+    doThirdTask();
 }
 ```
 
@@ -51,13 +51,13 @@ Về mặt logic code thì tương đương nhau, tuy nhiên thì về mặt ý 
 Ví dụ, mình có một biến `existingValueList` gồm một list các value đã tồn tại, khi user nhập một value mới, mình cần check xem nó đã tồn tại chưa, nếu có thì trả về lỗi. Nếu `existingValueList` có kiểu dữ liệu là `List`, mình sẽ cần viết hàm check như sau:
 
 ```java
-boolean isExisting = existingValueList.contains(value)
+boolean isExisting = existingValueList.contains(value);
 ```
 
 Nhưng nếu kiểu dữ liệu là Set, chúng ta sẽ viết như sau:
 
 ```java
-boolean isExisting = existingValueSet.contains(value)
+boolean isExisting = existingValueSet.contains(value);
 ```
 
 *"Ủa, rồi khác gì nhau?"*. Đúng là cách viết thì không khác gì nhau, nhưng sự khác nhau nằm trong chính hàm `contains()`, run time của `List` sẽ là `O(n)`, trong khi đó của `Set` chỉ là `O(1)`.

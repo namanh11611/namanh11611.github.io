@@ -33,14 +33,14 @@ Với mục đích vẽ các diagram đơn giản, các bạn hoàn toàn có th
 
 Trên thị trường hiện tại cũng đã có một số công cụ khác render diagram từ text như Mermaid, trong đó nổi bật nhất là **[PlantUML](https://plantuml.com)**. Sau đây mình sẽ đưa ra một bảng so sánh để các bạn có cái nhìn tổng quan.
 
-| Tiêu chí | Mermaid | PlantUML |
-| -------- | -------- | -------- |
-| GitHub Star (25/2/2024) | [65.400](https://github.com/mermaid-js/mermaid) | [9.300](https://github.com/plantuml/plantuml) |
-| Loại diagram | Flow, Sequence, Class, State, Git graph...  | Sequence, Usecase, Class, Object, Activity, State... |
-| Hỗ trợ online | Có | Có |
-| Hỗ trợ offline | Có | Có |
-| Tính phí | Miễn phí | Miễn phí |
-| Khác | Dễ học, dễ sử dụng cho người mới | Có nhiều thư viện mở rộng |
+| Tiêu chí                | Mermaid                                         | PlantUML                                             |
+|-------------------------|-------------------------------------------------|------------------------------------------------------|
+| GitHub Star (25/2/2024) | [65.400](https://github.com/mermaid-js/mermaid) | [9.300](https://github.com/plantuml/plantuml)        |
+| Loại diagram            | Flow, Sequence, Class, State, Git graph...      | Sequence, Usecase, Class, Object, Activity, State... |
+| Hỗ trợ online           | Có                                              | Có                                                   |
+| Hỗ trợ offline          | Có                                              | Có                                                   |
+| Tính phí                | Miễn phí                                        | Miễn phí                                             |
+| Khác                    | Dễ học, dễ sử dụng cho người mới                | Có nhiều thư viện mở rộng                            |
 
 # Cài đặt trên Visual Studio Code
 

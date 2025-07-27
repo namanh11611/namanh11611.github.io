@@ -1,6 +1,6 @@
 ---
-title: "3 cách mình áp dụng để code gọn gàng sạch đẹp hơn"
-description: "Có lẽ Clean Code là một vấn đề kinh điển trong ngành lập trình, trong bài viết này mình muốn chia sẻ một vài tip mà mình hay áp dụng để giữ code luôn được gọn gàng sạch đẹp."
+title: "3 Ways I Apply to Write Cleaner and Tidier Code"
+description: "Clean Code is probably a classic topic in programming. In this article, I want to share a few tips that I often use to keep my code tidy and clean."
 date: 2024-05-01T00:00:00+07:00
 slug: clean-code
 image: tidy.webp
@@ -9,11 +9,11 @@ categories: [Technical]
 tags: [Clean Code]
 ---
 
-Có lẽ **Clean Code** là một vấn đề kinh điển trong ngành lập trình, mình đã có lần nhắc đến cuốn sách **Clean Code** của **Uncle Bob** trong bài viết [**Những điều giá như mình biết từ khi còn là Junior**](../junior). Tuy nhiên thì lần này mình sẽ không viết lại những nội dung trong đó nữa, các bạn nên đọc trực tiếp sách để có trải nghiệm tốt nhất. Mình chỉ muốn chia sẻ một vài tip mà mình hay áp dụng để giữ code luôn được **gọn gàng sạch đẹp**.
+**Clean Code** is probably a classic topic in programming. I once mentioned the book **Clean Code** by **Uncle Bob** in the article [**Things I Wish I Knew When I Was a Junior**](../junior). However, this time I won't rewrite the contents of that book—you should read it directly for the best experience. I just want to share a few tips that I often use to keep my code **tidy and clean**.
 
-# Dùng return để tránh if/else hell
+# Use return to avoid if/else hell
 
-Không biết bạn đã bao giờ gặp **if/else hell** kiểu như này trong code chưa?
+Have you ever encountered **if/else hell** like this in your code?
 
 ```java
 void doSomething() {
@@ -29,47 +29,47 @@ void doSomething() {
 }
 ```
 
-Về lý thuyết thì đoạn code trên không có vấn đề gì cả. Thế nhưng mình lại không thích nhìn kiểu code lồng nhau nhiều lớp như vậy. Vậy nên mình thường sẽ dùng `return` để tránh phải viết quá nhiều dấu ngoặc `{}` lồng nhau. Chúng ta có thể refactor lại đoạn code trên như sau:
+In theory, the above code is fine. But I don't like looking at code with so many nested layers. So I often use `return` to avoid writing too many nested braces `{}`. We can refactor the code above as follows:
 
 ```java
 void doSomething() {
     if (!condition1) return
-    doFirstTask()
+    doFirstTask();
     if (condition2 == null) return
-    doSecondTask()
+    doSecondTask();
     if (condition3.isEmpty()) return
-    doThirdTask()
+    doThirdTask();
 }
 ```
 
-Về mặt logic code thì tương đương nhau, tuy nhiên thì về mặt ý nghĩa thì hơi khác một chút. Với trường hợp ban đầu, khi đồng nghiệp đọc code, họ sẽ hiểu là *"Nếu thoả mãn điều kiện này thì code sẽ xử lý tiếp như thế này"*. Còn với trường hợp thứ hai, họ sẽ hiểu thành *"Nếu không thoả mãn điều kiện này thì code sẽ không xử lý tiếp"*. Tư duy theo cách thứ 2 đôi khi hơi ngược một chút, nên bạn cũng **áp dụng tuỳ trường hợp** thôi nhé, chứ đừng áp dụng máy móc cho tất cả các trường hợp.
+The logic is equivalent, but the meaning is slightly different. In the first case, when your colleague reads the code, they'll understand: *"If this condition is met, the code will continue to process like this."* In the second case, they'll understand: *"If this condition is not met, the code will not continue."* Thinking in the second way can sometimes feel a bit reversed, so **apply this tip as appropriate**, don't use it mechanically in all cases.
 
-# Dùng Map hoặc Set thay cho List
+# Use Map or Set instead of List
 
-**Map** và **Set** là 2 cấu trúc dữ liệu đặc biệt mà chắc chắn các bạn đã được học ở đại học. Tuy nhiên, trong dự án, mọi người thường luôn luôn sử dụng **List** vì nó "tiện". Với mình thì trước khi chọn loại dữ liệu cho một list, mình luôn đặt câu hỏi liệu dùng Map hay Set có giúp **code ngắn gọn** và **tăng performance** hơn không? Nếu có, chắc chắn mình sẽ **ưu tiên dùng 2 loại dữ liệu** này trước.
+**Map** and **Set** are two special data structures that you probably learned in university. However, in projects, people often always use **List** because it's "convenient." For me, before choosing a data type for a list, I always ask whether using Map or Set would make the **code shorter** and **improve performance**. If yes, I definitely **prioritize these two types**.
 
-Ví dụ, mình có một biến `existingValueList` gồm một list các value đã tồn tại, khi user nhập một value mới, mình cần check xem nó đã tồn tại chưa, nếu có thì trả về lỗi. Nếu `existingValueList` có kiểu dữ liệu là `List`, mình sẽ cần viết hàm check như sau:
-
-```java
-boolean isExisting = existingValueList.contains(value)
-```
-
-Nhưng nếu kiểu dữ liệu là Set, chúng ta sẽ viết như sau:
+For example, I have a variable `existingValueList` which is a list of existing values. When a user enters a new value, I need to check if it already exists, and if so, return an error. If `existingValueList` is a `List`, I'd write the check like this:
 
 ```java
-boolean isExisting = existingValueSet.contains(value)
+boolean isExisting = existingValueList.contains(value);
 ```
 
-*"Ủa, rồi khác gì nhau?"*. Đúng là cách viết thì không khác gì nhau, nhưng sự khác nhau nằm trong chính hàm `contains()`, run time của `List` sẽ là `O(n)`, trong khi đó của `Set` chỉ là `O(1)`.
+But if it's a Set, we'd write:
 
-99% là bạn đã biết điều này, nhưng đôi khi bạn sẽ sử dụng **List** như một thói quen. Vậy nên lần sau, trước khi tạo một **List**, bạn hãy chậm lại một nhịp để suy nghĩ xem có nên dùng **Map** hay **Set** không nhé.
+```java
+boolean isExisting = existingValueSet.contains(value);
+```
 
-Ngoài ra chúng ta còn nhiều cấu trúc dữ liệu khác như **Stack**, **Queue**, **Tree**... Nhưng trong dự án thực tế thì mình hiếm gặp những use-case cần áp dụng bọn này.
+*"So, what's the difference?"* The way you write it is the same, but the difference lies in the `contains()` method: the runtime for `List` is `O(n)`, while for `Set` it's only `O(1)`.
 
-# Đừng comment code không dùng nữa, hay xoá nó
+99% of you probably know this, but sometimes you use **List** out of habit. So next time, before creating a **List**, pause for a moment to consider whether you should use **Map** or **Set**.
 
-Mình thấy một số bạn có thói quen khi sửa một tính năng gì đấy, thường sẽ **comment lại code cũ** thay vì xoá nó. Hoặc có những **function cũ không dùng nữa**, nhưng cũng chẳng buồn comment hay xoá gì, cứ để nó nằm vậy trơ gan cùng tuế nguyệt. Nhưng tin mình đi, **vài tháng** hoặc thậm chí **vài năm** sau, chắc bạn sẽ chẳng bao giờ uncomment lại đống code đấy đâu. Mỗi lần vài dòng thôi, nhưng qua năm tháng sẽ thành một núi **dead code** khổng lồ.
+There are also other data structures like **Stack**, **Queue**, **Tree**... But in real projects, I rarely encounter use-cases for these.
 
-Nếu muốn xem lại code cũ, [**Git**](../git-process) đã có thể giúp bạn rất tốt rồi. Vậy nên hãy mạnh dạn xoá nó, không chỉ là **vài dòng code**, **một function**, mà còn cả **resource** của app mà bạn không dùng nữa. Điều này sẽ giúp giảm dung lượng của source code đi nhiều.
+# Don't comment out unused code—just delete it
 
-Nếu bạn có tip nào hay ho mà đang áp dụng, hãy chia sẻ thêm với mình nhé.
+I've noticed some people have the habit of **commenting out old code** when modifying a feature instead of deleting it. Or there are **old functions that are no longer used**, but they don't bother to comment or delete them, just leaving them there forever. But trust me, **a few months** or even **a few years** later, you'll probably never uncomment that code again. A few lines each time, but over the years it becomes a mountain of **dead code**.
+
+If you want to review old code, [**Git**](../git-process) can help you very well. So be bold and delete it—not just **a few lines of code**, **a function**, but also any **resources** of the app that you no longer use. This will help reduce your source code size significantly.
+
+If you have any cool tips that you use, please share them with me!

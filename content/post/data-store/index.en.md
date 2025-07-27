@@ -1,6 +1,6 @@
 ---
-title: "DataStore - mảnh ghép hoàn hảo cho bức tranh Kotlin Coroutines"
-description: "DataStore được tạo ra chính là để thay thế SharedPreferencs lưu trữ những dữ liệu đơn giản."
+title: "DataStore - The Perfect Piece for the Kotlin Coroutines Puzzle"
+description: "DataStore was created to replace SharedPreferences for storing simple data."
 date: 2023-05-14T15:41:00+07:00
 slug: data-store
 image: datastore.webp
@@ -9,31 +9,35 @@ tags: [Kotlin, Android, Data Store]
 ---
 
 # Concept
-Trước hết, chúng ta cần hiểu **DataStore** sinh ra với mục đích là gì.
 
-Hiện tại, trong ứng dụng Android, chúng ta có 5 cách để lưu trữ dữ liệu, trong đó **SharedPreferences** là cách dùng để lưu những dữ liệu đơn giản nhất. Nó chỉ gồm **key** và **value**, trong đó value có thể là integer, string...
+First, we need to understand the purpose of **DataStore**.
 
-![](https://images.viblo.asia/2cdc1cea-a8d5-444e-9003-5f88178503b0.png)
+Currently, in Android apps, there are 5 ways to store data, with **SharedPreferences** being the simplest for storing data. It only consists of **key** and **value**, where the value can be an integer, string, etc.
 
-Khi lần đầu mở app, nó sẽ đọc toàn bộ giá trị trong file xml của SharedPrefrences và lưu vào RAM. Quá trình đọc file này lại diễn ra trên **UI Thread**, nếu chúng ta có rất rất nhiều giá trị khiến cho thời gian thực hiện tác vụ vượt quá 5 giây, nó sẽ gây ra lỗi **ANR** (Application Not Responding).
+![Storage](storage.webp)
 
-Và **DataStore** được tạo ra chính là để thay thế **SharedPreferencs**.
+When the app is opened for the first time, it reads all values from the SharedPreferences XML file and loads them into RAM. This file reading process happens on the **UI Thread**. If there are too many values and the task takes more than 5 seconds, it will cause an **ANR** (Application Not Responding) error.
 
-> DataStore là giải pháp lưu trữ dữ liệu theo dạng **cặp key-value** hoặc **typed objects với protocol buffers**.
+And **DataStore** was created to replace **SharedPreferences**.
 
-Tất nhiên, DataStore vẫn chỉ dành để lưu những dữ liệu có cấu trúc đơn giản. Nó sử dụng Coroutines và Flow để lưu data một cách bất đồng bộ và nhất quán.
+> DataStore is a solution for storing data as **key-value pairs** or **typed objects with protocol buffers**.
 
-DataStore gồm 2 loại **Preferences DataStore** và **Proto DataStore**, chúng ta cùng nhìn qua bảng so sánh sau:
+Of course, DataStore is still only for storing simple structured data. It uses Coroutines and Flow to store data asynchronously and consistently.
 
-| Preferences DataStore | Proto DataStore |
-| -------- | -------- |
-| Lưu và truy cập data bằng key | Lưu instance của một loại custom data |
-| Không yêu cầu định nghĩa trước loại data  | Phải định nghĩa trước loại data bằng protocol buffers |
-| Không có type safety | Có type safety |
+DataStore has 2 types: **Preferences DataStore** and **Proto DataStore**. Let's look at the comparison table:
+
+| Preferences DataStore                  | Proto DataStore                                        |
+|----------------------------------------|--------------------------------------------------------|
+| Store and access data by key           | Store instances of a custom data type                  |
+| No need to define data type in advance | Must define data type in advance with protocol buffers |
+| No type safety                         | Has type safety                                        |
 
 # Preferences DataStore
+
 ## Create
-Để sử dụng Preferences DataStore, chúng ta cần tạo một instance `DataStore<Preferences>` bằng [property delegate](../design-pattern-delegation) với keyword `preferencesDataStore`.
+
+To use Preferences DataStore, we need to create an instance of `DataStore<Preferences>` using a [property delegate](../design-pattern-delegation) with the `preferencesDataStore` keyword.
+
 ```kotlin
 // At the top level of your kotlin file
 val Context.dataStore: DataStore<Preferences>
@@ -41,7 +45,9 @@ val Context.dataStore: DataStore<Preferences>
 ```
 
 ## Read
-Trước hết, chúng ta có 7 function tương ứng với 7 loại data:
+
+First, there are 7 functions corresponding to 7 data types:
+
 * `intPreferencesKey()`
 * `longPreferencesKey()`
 * `doublePreferencesKey()`
@@ -50,18 +56,23 @@ Trước hết, chúng ta có 7 function tương ứng với 7 loại data:
 * `stringPreferencesKey()`
 * `stringSetPreferencesKey()`
 
-Khi đọc data, chúng ta cần dùng function tương ứng với giá trị mà chúng ta cần lưu. Ví dụ để lưu một biến `counter` dạng số nguyên để đếm số lần user mở app, chúng ta có thể dùng cách sau:
+When reading data, use the function corresponding to the value you want to store. For example, to store a `counter` variable as an integer to count how many times the user opens the app:
+
 ```kotlin
 val OPEN_APP_COUNTER = intPreferencesKey("open_app_counter")
 val openAppCounterFlow: Flow<Int> = context.dataStore.data
-  	.map { preferences ->
+   	.map { preferences ->
     	// No type safety.
     	preferences[OPEN_APP_COUNTER] ?: 0
     }
 ```
-Điểm khác biệt với SharedPreferences chính là ở đây, data được trả về dưới dạng Flow. Giờ đây, các layer phía trên như Repository có thể observe data một cách thống nhất, không cần quan tâm nó đến từ DataStore, Room database hay Server, bởi vì tất cả đều được return dưới dạng Flow.
+
+The difference from SharedPreferences is that here, data is returned as a Flow. Now, upper layers like Repository can observe data consistently, regardless of whether it comes from DataStore, Room database, or Server, because everything is returned as a Flow.
+
 ## Write
-Để ghi dữ liệu, chúng ta dùng function `edit`, cũng khá giống với SharedPreferences.
+
+To write data, use the `edit` function, which is quite similar to SharedPreferences.
+
 ```kotlin
 context.dataStore.edit { settings ->
     val openAppCounterValue = settings[OPEN_APP_COUNTER] ?: 0
@@ -70,15 +81,20 @@ context.dataStore.edit { settings ->
 ```
 
 # Proto DataStore
-Trước khi tìm hiểu về Proto DataStore, chúng ta cần dạo qua một vòng về protocol buffers.
-## Protocol buffers
-Đây là một một kiểu định dạng dữ liệu mà không phụ thuộc vào ngôn ngữ lập trình hay platform. Nó giống như JSON nhưng nhỏ và nhanh hơn nhiều lần. Protocol buffers cũng được giới thiệu là định dạng dữ liệu được sử dụng phổ biến nhất tại Google.
-* Nó dùng để lưu các dữ liệu nhỏ gọn
-* Phân tích cú pháp nhanh
-* Hỗ trợ nhiều ngôn ngữ lập trình như C++, C#, Dart, Go, Java, Kotlin, Python
-* Tối ưu hoá chức năng thông qua các class được generate tự động
 
-Ví dụ một `message` về thông tin user gồm tên, id và email:
+Before learning about Proto DataStore, let's take a look at protocol buffers.
+
+## Protocol buffers
+
+This is a data format that is independent of programming language or platform. It's like JSON but much smaller and faster. Protocol buffers are also said to be the most widely used data format at Google.
+
+* Used to store compact data
+* Fast parsing
+* Supports many programming languages like C++, C#, Dart, Go, Java, Kotlin, Python
+* Optimizes functionality through auto-generated classes
+
+For example, a `message` about user info with name, id, and email:
+
 ```protobuf
 message UserProfile {
   optional string name = 1;
@@ -87,12 +103,16 @@ message UserProfile {
 }
 ```
 
-Để so sánh về hiệu năng so của Protocol buffers so với JSON, chúng ta thử gọi 500 `GET` requests từ một app Spring Boot này tới app Spring Boot khác với 2 môi trường có nén và không nén data. Và đây là kết quả:
-![](https://images.viblo.asia/b71d22aa-c9c7-42e1-be9f-d23879a9c0e4.png)
+To compare the performance of Protocol buffers and JSON, let's make 500 `GET` requests from one Spring Boot app to another, with and without data compression. Here are the results:
 
-Chúng ta có thể thấy Protocol buffer **nhanh hơn từ 5 đến 6 lần** so với JSON.
+![Protobuf](protobuf.webp)
+
+We can see Protocol buffer is **5 to 6 times faster** than JSON.
+
 ## Create
-Để sử dụng Proto DataStore, chúng ta phải định nghĩa loại data bằng một file proto `settings.pb` trong folder `app/src/main/proto/` như sau:
+
+To use Proto DataStore, you must define the data type with a proto file `settings.pb` in the folder `app/src/main/proto/` like this:
+
 ```protobuf
 syntax = "proto3";
 option java_package = "com.example.application";
@@ -101,7 +121,9 @@ message Settings {
   	int32 open_app_counter = 1;
 }
 ```
-Sau đó, tiếp tục khai báo một object implement class `Serializer<T>` với `T` là kiểu dữ liệu đã được định nghĩa trong proto file.
+
+Next, declare an object implementing the `Serializer<T>` class, where `T` is the data type defined in the proto file.
+
 ```kotlin
 object SettingsSerializer : Serializer<Settings> {
   override val defaultValue: Settings = Settings.getDefaultInstance()
@@ -120,15 +142,20 @@ object SettingsSerializer : Serializer<Settings> {
   ) = t.writeTo(output)
 }
 ```
-Và cuối cùng là sử dụng [property delegate](../design-pattern-delegation) với keyword `dataStore` để tạo một instance của `DataStore<T>`.
+
+Finally, use the [property delegate](../design-pattern-delegation) with the `dataStore` keyword to create an instance of `DataStore<T>`.
+
 ```kotlin
 val Context.settingsDataStore: DataStore<Settings> by dataStore(
   fileName = "settings.pb",
   serializer = SettingsSerializer
 )
 ```
+
 ## Read
-Tương tự như Preferences DataStore, chúng ta cũng dùng `DataStore.data` để trả về một Flow.
+
+Similar to Preferences DataStore, use `DataStore.data` to return a Flow.
+
 ```kotlin
 val openAppCounterFlow: Flow<Int> = context.settingDataStore.data
   .map { settings ->
@@ -136,8 +163,11 @@ val openAppCounterFlow: Flow<Int> = context.settingDataStore.data
     settings.openAppCounter
   }
 ```
+
 ## Write
-Để ghi data vào Proto DataStore, chúng ta có function `updateData()`.
+
+To write data to Proto DataStore, use the `updateData()` function.
+
 ```kotlin
 context.settingsDataStore.updateData { currentSettings ->
   currentSettings.toBuilder()
@@ -145,10 +175,15 @@ context.settingsDataStore.updateData { currentSettings ->
     .build()
 }
 ```
-# So sánh với SharedPreferences
-![](https://images.viblo.asia/4d39fcd9-db5f-424d-bf88-be99f58cc8eb.png)
+
+# Comparison with SharedPreferences
+
+![Comparison](comparison.webp)
+
 ## Migrate from SharedPreferences to Preferences DataStore
-Để migrate, chúng ta truyền `SharedPreferencesMigration` vào param `produceMigrations`. DataStore sẽ tự động migrate cho chúng ta.
+
+To migrate, pass `SharedPreferencesMigration` to the `produceMigrations` parameter. DataStore will automatically migrate for you.
+
 ```kotlin
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
   name = DATA_STORE_NAME
@@ -160,8 +195,11 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
   }
 )
 ```
+
 ## Migrate from SharedPreferences to Proto DataStore
-Trước tiên, chúng ta cần khai báo `UserProfile` và `UserProfileSerializer` tương tự như các bước ở trên. Sau đó viết một mapping function để migrate từ cặp key-value trong SharedPreferences sang loại dữ liệu trong Proto DataStore.
+
+First, declare `UserProfile` and `UserProfileSerializer` as above. Then write a mapping function to migrate from key-value pairs in SharedPreferences to the data type in Proto DataStore.
+
 ```kotlin
 val Context.dataStore: DataStore<UserProfile> by dataStore(
   fileName = "settings.pb",
@@ -182,7 +220,9 @@ val Context.dataStore: DataStore<UserProfile> by dataStore(
   }
 )
 ```
+
 # References
+
 * https://developer.android.com/topic/libraries/architecture/datastore
 * https://protobuf.dev/programming-guides/proto3
 * https://android-developers.googleblog.com/2020/09/prefer-storing-data-with-jetpack.html

@@ -1,6 +1,6 @@
 ---
-title: "Mermaid - Vẽ diagram và chart dễ như ăn kẹo bằng Markdown"
-description: "Một bức ảnh đáng giá hơn ngàn lời nói, đôi khi một cái diagram rõ ràng sẽ giúp tiết kiệm được vài giờ đồng hồ giải thích, trao đổi qua lại. Đơn giản hoá được quá trình vẽ diagram thì còn đáng giá hơn nữa."
+title: "Mermaid - Draw diagrams and charts as easily as candy with Markdown"
+description: "A picture is worth a thousand words; sometimes a clear diagram can save hours of explanation and back-and-forth discussion. Simplifying the process of drawing diagrams is even more valuable."
 date: 2024-02-25T00:00:00+07:00
 slug: mermaid
 image: mermaid.webp
@@ -9,60 +9,60 @@ categories: [Career]
 tags: [Mermaid, Diagram, Chart, Markdown]
 ---
 
-# Những ngày xưa cũ
+# The Old Days
 
-Anh em cũng biết rằng, diagram nói riêng và document nói chung có vai trò quan trọng trong các dự án, nó như một chiếc la bàn giúp anh em dev hiểu được ý tưởng của PM, tech lead hay BA, định hướng được flow cần làm, đồng thời là bằng chứng để anh em đối chiếu khi có tranh cãi về yêu cầu của dự án. Một bức ảnh đáng giá hơn ngàn lời nói, đôi khi một cái diagram rõ ràng sẽ giúp tiết kiệm được vài giờ đồng hồ giải thích, trao đổi qua lại.
+As you know, diagrams and documentation play an important role in projects. They act as a compass to help developers understand the ideas of PMs, tech leads, or BAs, guide the required flow, and serve as evidence for reference when there are disputes about project requirements. A picture is worth a thousand words; sometimes a clear diagram can save hours of explanation and back-and-forth discussion.
 
-Trước đây, khi vẽ diagram cho dự án, mình thường dùng **[draw.io](https://app.diagrams.net)**. Cho bạn nào chưa biết thì nó là một tool online vẽ diagram bằng cách **kéo thả**. Nhưng mỗi khi cần update lại diagram, mình phải kéo thả lại từng ô hay từng cái mũi tên khá mất thời gian. Cho đến một ngày mình được một người anh giới thiệu về **Mermaid**, mọi chuyện đã bước sang một trang mới...
+Previously, when drawing diagrams for projects, I often used **[draw.io](https://app.diagrams.net)**. For those who don't know, it's an online tool for drawing diagrams by **drag and drop**. But every time I needed to update a diagram, I had to drag and drop each box or arrow again, which was quite time-consuming. Until one day, a colleague introduced me to **Mermaid**, and everything changed...
 
-# Được khai sáng về Mermaid
+# Enlightened by Mermaid
 
-Theo định nghĩa trên trang chủ thì **[Mermaid](https://mermaid.js.org)** là một công cụ được xây dựng dựa trên **JavaScript**, giúp tạo **diagram** và **chart** một cách linh hoạt từ **text** có cú pháp tương tự **Markdown**.
+According to the definition on the official website, **[Mermaid](https://mermaid.js.org)** is a tool built on **JavaScript** that helps create **diagrams** and **charts** flexibly from **text** with syntax similar to **Markdown**.
 
 ![Mermaid](mermaid.webp)
 
-## Ưu điểm
+## Advantages
 
-Đây là một công cụ mã nguồn mở và hoàn toàn miễn phí. Nó hỗ trợ nhiều loại diagram và chart phổ biến như **Flowchart**, **Sequence diagram**, **Class diagram**, **State diagram**, **Git graph**...
+This is an open-source and completely free tool. It supports many popular types of diagrams and charts such as **Flowchart**, **Sequence diagram**, **Class diagram**, **State diagram**, **Git graph**...
 
-Cú pháp cũng rất đơn giản và dễ học. Nếu bạn đã quen thuộc với Markdown thì chỉ cần dành chút thời gian là sẽ thông thạo. Giờ đây, mỗi khi yêu cầu của dự án thay đổi, bạn chỉ cần sửa vài dòng text thôi thì diagram sẽ được update theo một cách nhanh chóng.
+The syntax is very simple and easy to learn. If you're already familiar with Markdown, you just need to spend a little time to master it. Now, whenever project requirements change, you only need to edit a few lines of text and the diagram will be updated quickly.
 
-Với mục đích vẽ các diagram đơn giản, các bạn hoàn toàn có thể sử dụng **[Mermaid Live Editor](https://mermaid.live)**, không cần cài đặt bất cứ thứ gì. Với các dự án của công ty, Mermaid cũng đã được tích hợp với **Notion** hoặc các sản phẩm của **Atlassian**. Còn nếu bạn muốn sử dụng ở local thì Mermaid có thể dùng ngay trên các IDE phổ biến như **Visual Studio Code** hoặc họ nhà **JetBrains**.
+For simple diagrams, you can use **[Mermaid Live Editor](https://mermaid.live)** without installing anything. For company projects, Mermaid is already integrated with **Notion** or **Atlassian** products. If you want to use it locally, Mermaid works right in popular IDEs like **Visual Studio Code** or JetBrains family.
 
-## So sánh với PlantUML
+## Comparison with PlantUML
 
-Trên thị trường hiện tại cũng đã có một số công cụ khác render diagram từ text như Mermaid, trong đó nổi bật nhất là **[PlantUML](https://plantuml.com)**. Sau đây mình sẽ đưa ra một bảng so sánh để các bạn có cái nhìn tổng quan.
+There are other tools on the market that render diagrams from text like Mermaid, the most notable being **[PlantUML](https://plantuml.com)**. Below is a comparison table for an overview.
 
-| Tiêu chí | Mermaid | PlantUML |
-| -------- | -------- | -------- |
-| GitHub Star (25/2/2024) | [65.400](https://github.com/mermaid-js/mermaid) | [9.300](https://github.com/plantuml/plantuml) |
-| Loại diagram | Flow, Sequence, Class, State, Git graph...  | Sequence, Usecase, Class, Object, Activity, State... |
-| Hỗ trợ online | Có | Có |
-| Hỗ trợ offline | Có | Có |
-| Tính phí | Miễn phí | Miễn phí |
-| Khác | Dễ học, dễ sử dụng cho người mới | Có nhiều thư viện mở rộng |
+| Criteria                | Mermaid                                         | PlantUML                                             |
+|-------------------------|-------------------------------------------------|------------------------------------------------------|
+| GitHub Star (25/2/2024) | [65,400](https://github.com/mermaid-js/mermaid) | [9,300](https://github.com/plantuml/plantuml)        |
+| Diagram types           | Flow, Sequence, Class, State, Git graph...      | Sequence, Usecase, Class, Object, Activity, State... |
+| Online support          | Yes                                             | Yes                                                  |
+| Offline support         | Yes                                             | Yes                                                  |
+| Pricing                 | Free                                            | Free                                                 |
+| Others                  | Easy to learn, user-friendly for beginners      | Many extension libraries                             |
 
-# Cài đặt trên Visual Studio Code
+# Installation on Visual Studio Code
 
-Hiện tại ở dự án của mình thì team đang tạo riêng một project cho các diagram, dùng **Git** để quản lý version và dùng **Visual Studio Code** để vẽ.
+Currently, in my project, the team is creating a separate project for diagrams, using **Git** for version control and **Visual Studio Code** for drawing.
 
-Bạn chỉ cần cài thêm 2 extension [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) và [Mermaid Markdown Syntax Highlighting](https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting) trên Visual Studio Code là đủ dùng rồi.
+You only need to install 2 extensions: [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) and [Mermaid Markdown Syntax Highlighting](https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting) on Visual Studio Code to get started.
 
 ![Mermaid Extensions](mermaid_extension.webp)
 
-Mỗi khi cần vẽ 1 diagram, bạn tạo 1 file với đuôi `.md` và viết cú pháp của Mermaid, bạn có thể click button **Open Preview** ở góc trên bên phải để vừa code vừa xem diagram được update trực tiếp ở bên cạnh. Và kết quả như sau:
+Whenever you need to draw a diagram, create a file with the `.md` extension and write the Mermaid syntax. You can click the **Open Preview** button in the top right corner to code and see the diagram updated live beside it. The result is as follows:
 
 ![Mermaid Preview](mermaid_preview.webp)
 
-Bạn cứ xem trước ví dụ đi đã, mình sẽ đi vào giới thiệu chi tiết cú pháp của từng loại diagram trong phần tiếp theo.
+Just check out the example first, and I'll go into detail about the syntax for each type of diagram in the next section.
 
-# Cú pháp các diagram phổ biến
+# Syntax for Common Diagrams
 
 ## [Flowchart](https://mermaid.js.org/syntax/flowchart.html)
 
-Flowchart bao gồm các **node** và các **cạnh** (có thể là **đường vô hướng** hoặc **mũi tên có hướng**). Code Mermaid sẽ xác định cách tạo các node và cạnh, các loại cạnh tuỳ chỉnh theo mục đích của người vẽ.
+A flowchart consists of **nodes** and **edges** (which can be **undirected edges** or **directed arrows**). The Mermaid code will determine how to create the nodes and edges, with customizable edge types according to the drawer's intention.
 
-Cú pháp mẫu:
+Sample syntax:
 
 ```
 flowchart TD
@@ -72,24 +72,24 @@ flowchart TD
     C-->D;
 ```
 
-- `flowchart`: keyword của loại chart này (bạn có thể dùng `graph` cũng tương đương).
-- `TD`: hướng của chart (top to down). Ngoài ra còn có:
-    - `TB`: top to bottom (giống top to down)
+- `flowchart`: the keyword for this type of chart (you can also use `graph` interchangeably).
+- `TD`: the direction of the chart (top to down). Other options include:
+    - `TB`: top to bottom (same as top to down)
     - `BT`: bottom to top
     - `RL`: right to left
     - `LR`: left to right
-- `A`, `B`, `C`, `D`: tên của các node. Ngoài hình chữ nhật mặc định, bạn cũng có thể dùng nhiều loại hình khác như hình chữ nhật bo tròn, hình thang, hình tròn...
-- `-->`: loại cạnh có hướng. Ngoài ra còn các loại vô hướng, đa hướng, có gắn text...
+- `A`, `B`, `C`, `D`: the names of the nodes. Besides the default rectangle, you can also use other shapes like rounded rectangles, trapezoids, circles, etc.
+- `-->`: directed edge type. There are also undirected, bidirectional types, and types with attached text...
 
-Kết quả:
+Result:
 
 ![Flowchart](flowchart.webp)
 
 ## [Sequence diagram](https://mermaid.js.org/syntax/sequenceDiagram.html)
 
-Sequence diagram là **sơ đồ tương tác** cho thấy các **quy trình hoạt động** với nhau **như thế nào** và theo **thứ tự nào**.
+A sequence diagram is an **interaction diagram** that shows how different **processes** operate with each other **and in what order**.
 
-Cú pháp mẫu:
+Sample syntax:
 
 ```
 sequenceDiagram
@@ -106,20 +106,20 @@ sequenceDiagram
     Bob-->>John: Jolly good!
 ```
 
-- `sequenceDiagram`: keyword của diagram.
-- `participant`: định nghĩa các thành phần tham gia diagram theo thứ tự lần lượt. Như trong ví dụ này, chúng ta có 3 thành phần là `Alice`, `Bob` và `John`.
-- Mỗi dòng lần lượt định nghĩa tin nhắn giữa các thành phần.
-- `->>`, `-->>`: các loại tin nhắn có hướng nét liền và nét đứt.
+- `sequenceDiagram`: the keyword for the diagram.
+- `participant`: defines the participants in the diagram in sequential order. In this example, we have 3 participants: `Alice`, `Bob`, and `John`.
+- Each line defines the message between the participants.
+- `->>`, `-->>`: directed message types with solid and dashed lines.
 
-Kết quả:
+Result:
 
 ![Sequence diagram](sequence_diagram.webp)
 
 ## [Class diagram](https://mermaid.js.org/syntax/classDiagram.html)
 
-Class diagram trong **UML** (Unified Modeling Language) là một loại **sơ đồ cấu trúc tĩnh** mô tả **cấu trúc của hệ thống** bằng cách hiển thị các **lớp** của hệ thống, **thuộc tính**, **hoạt động** (hoặc phương thức) của chúng và **mối quan hệ giữa các đối tượng**.
+A class diagram in **UML** (Unified Modeling Language) is a type of **static structure diagram** that describes the **structure of a system** by showing the **classes** of the system, their **attributes**, **operations** (or methods), and the **relationships between objects**.
 
-Cú pháp mẫu:
+Sample syntax:
 
 ```
 classDiagram
@@ -138,20 +138,20 @@ classDiagram
     Class08 <--> C2: Cool label
 ```
 
-- `classDiagram`: keyword của diagram.
-- `chimp`, `gorilla`, `elementData`: thuộc tính của các lớp.
-- `size()`, `equals()`: phương thức của các lớp.
-- `*--`, `o--`: mối quan hệ của các lớp.
+- `classDiagram`: the keyword for the diagram.
+- `chimp`, `gorilla`, `elementData`: attributes of the classes.
+- `size()`, `equals()`: methods of the classes.
+- `*--`, `o--`: relationships between classes.
 
-Kết quả:
+Result:
 
 ![Class diagram](class_diagram.webp)
 
 ## [State diagram](https://mermaid.js.org/syntax/stateDiagram.html)
 
-State diagram là một loại sơ đồ để mô tả **hành vi của hệ thống**, nó thể hiện một số các trạng thái của hệ thống.
+A state diagram is a type of diagram that describes the **behavior of a system**, showing some of the system's states.
 
-Cú pháp mẫu:
+Sample syntax:
 
 ```
 stateDiagram
@@ -164,20 +164,20 @@ stateDiagram
     Crash --> [*]
 ```
 
-- `stateDiagram`: keyword của diagram.
-- `[*]`: điểm bắt đầu hoặc kết thúc.
-- `Still`, `Moving`, `Crash`: các trạng thái của hệ thống.
-- `-->`: các bước chuyển đổi trạng thái.
+- `stateDiagram`: the keyword for the diagram.
+- `[*]`: start or end point.
+- `Still`, `Moving`, `Crash`: the states of the system.
+- `-->`: state transition steps.
 
-Kết quả:
+Result:
 
 ![State diagram](state_diagram.webp)
 
 ## [Git graph](https://mermaid.js.org/syntax/gitgraph.html)
 
-Git graph là minh hoạ của **git commits** và **git actions** (commands) trên các **branch** khác nhau.
+A git graph illustrates **git commits** and **git actions** (commands) on different **branches**.
 
-Cú pháp mẫu:
+Sample syntax:
 
 ```
 gitGraph
@@ -192,16 +192,16 @@ gitGraph
    commit
 ```
 
-- `gitGraph`: keyword của graph.
-- `commit`: tạo một commit mới trên branch hiện tại.
-- `branch`: tạo và chuyển sang một branch mới, set nó thành current branch.
-- `checkout`: checkout về một branch đã tồn tại và set nó thành current branch.
-- `merge`: merge một branch vào current branch.
+- `gitGraph`: the keyword for the graph.
+- `commit`: creates a new commit on the current branch.
+- `branch`: creates and switches to a new branch, setting it as the current branch.
+- `checkout`: checks out an existing branch and sets it as the current branch.
+- `merge`: merges a branch into the current branch.
 
-Kết quả:
+Result:
 
 ![Git graph](git_graph.webp)
 
-# Kết luận
+# Conclusion
 
-Mermaid thực sự rất **mạnh mẽ** và **linh hoạt**, nó cung cấp cho chúng ta nhiều **option** để vẽ các loại diagram. Tuy nhiên trong bài viết ngắn này, mình chưa thể giới thiệu hết với anh em các option đó. Nếu mọi người cần chi tiết hơn, có thể tham khảo document của Mermaid mình đính kèm ở từng phần title. Hy vọng các bạn đã có cái nhìn tổng quan về Mermaid và có thể áp dụng nó vào trong các dự án của mình hoặc của team, giúp anh em tiết kiệm thời gian và công sức.
+Mermaid is truly **powerful** and **flexible**; it provides us with many **options** to draw various types of diagrams. However, in this short article, I couldn't introduce all those options to you. If you need more details, you can refer to the Mermaid documentation linked in each title section. I hope you now have an overview of Mermaid and can apply it in your projects or your team's projects, helping save time and effort.

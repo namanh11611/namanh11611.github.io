@@ -1,6 +1,6 @@
 ---
-title: "Bộ nhớ Stack và Heap trong Java"
-description: "Quản lý bộ nhớ là một yếu tố quan trọng trong lập trình, biết cách tối ưu bộ nhớ sẽ giúp ứng dụng của chúng ta hoạt động mượt mà, không bị lag hoặc crash. Trong bài viết này, chúng ta sẽ tìm hiểu về vai trò, chức năng và cách hoạt động của từng loại bộ nhớ."
+title: "Stack and Heap Memory in Java"
+description: "Memory management is an important factor in programming. Knowing how to optimize memory will help our applications run smoothly, without lag or crashes. In this article, we will learn about the roles, functions, and how each type of memory works."
 date: 2024-01-04T00:00:00+07:00
 slug: stack-heap
 image: stack-heap.webp
@@ -9,14 +9,18 @@ categories: [Technical, Android]
 tags: [Stack, Heap, Memory, Java, Android]
 ---
 
-# Bộ nhớ Stack với Heap là cái chi chi?
-Quản lý bộ nhớ là một yếu tố quan trọng trong lập trình, biết cách tối ưu bộ nhớ sẽ giúp ứng dụng của chúng ta hoạt động mượt mà, không bị lag hoặc crash. JVM (Java Virtual Machine) chia bộ nhớ ra thành 2 phần: **Stack** và **Heap** (các bạn đừng nhầm với cấu trúc dữ liệu Stack và Heap nhé). Trong bài viết này, chúng ta sẽ tìm hiểu về vai trò, chức năng và cách hoạt động của từng loại bộ nhớ.
+# What are Stack and Heap Memory?
 
-# Bộ nhớ Stack
-## Cách hoạt động
-**Stack** lưu trữ các biến có kiểu dữ liệu **primitive** (int, float, char, boolean...), **biến cục bộ** và **thông tin về các method được gọi**. Nó hoạt động theo cơ chế **LIFO** (**L**ast **I**n **F**irst **O**ut). Nghĩa là những method nào được gọi sau sẽ được Stack cấp phát cho một frame, chứa thông tin về tham số, biến cục bộ, và Stack sẽ giải phóng frame đó khi method được return.
+Memory management is an important factor in programming. Knowing how to optimize memory will help our applications run smoothly, without lag or crashes. The JVM (Java Virtual Machine) divides memory into two parts: **Stack** and **Heap** (do not confuse these with the Stack and Heap data structures). In this article, we will learn about the roles, functions, and how each type of memory works.
 
-Ví dụ với một đoạn code như sau:
+# Stack Memory
+
+## How it works
+
+**Stack** stores variables of **primitive types** (int, float, char, boolean...), **local variables**, and **information about called methods**. It operates on a **LIFO** (**L**ast **I**n **F**irst **O**ut) mechanism. This means that methods called last are allocated a frame in the Stack, containing information about parameters, local variables, and the Stack will release that frame when the method returns.
+
+For example, with the following code:
+
 ```java
 public static void main(String[] args) {
     doSomething();
@@ -32,40 +36,47 @@ private static void doSomethingElse() {
 }
 ```
 
-Trong Stack sẽ lưu các thông tin theo cấu trúc sau:
+The Stack will store information in the following structure:
 
-![](https://images.viblo.asia/1b40f39b-74e9-4596-aaa7-e042a78b5ec7.png)
+![Stack](stack.webp)
 
-Stack được dùng để thực thi một thread, chính vì vậy JVM sẽ tạo một **stack riêng biệt cho mỗi thread**. Mặc định, nếu chúng ta không khai báo kích thước của Stack, JVM sẽ tạo với kích thước tuỳ thuộc vào **hệ điều hành và kiến trúc máy tính** (thông thường là **1MB**). Tuy nhiên, chúng ta có thể dùng flag `-Xss` để tuỳ chỉnh kích thước của Stack (không vượt quá max size, thường là 1GB).
+The Stack is used to execute a thread, so the JVM will create a **separate stack for each thread**. By default, if we do not specify the Stack size, the JVM will create it with a size depending on the **operating system and computer architecture** (usually **1MB**). However, we can use the `-Xss` flag to customize the Stack size (not exceeding the max size, usually 1GB).
+
 ```
-java -Xss1048576 // 1.048.576 byte
-java -Xss1024k // 1.024 KB
+java -Xss1048576 // 1,048,576 bytes
+java -Xss1024k // 1,024 KB
 java -Xss1m // 1 MB
 ```
 
 ## StackOverflow
-Một lỗi kinh điển liên quan đến Stack là **StackOverflow**. Nó xảy ra khi lượng data được lưu vào Stack vượt quá giới hạn của nó.
 
-Ví dụ khi chúng ta gọi đệ quy nhưng không có điều kiện dừng:
+A classic error related to the Stack is **StackOverflow**. It occurs when the amount of data stored in the Stack exceeds its limit.
+
+For example, when we call recursion without a stopping condition:
 
 ```java
 void callRecursion() {
     callRecursion();
 }
 ```
-Bạn có thể tưởng tượng các method liên tục được nạp vào Stack, đến một lúc nào đó nó sẽ vượt quá kích thước 1MB nhỏ bé kia. Vì vậy, đoạn code trên sẽ ném ra lỗi `java.lang.StackOverflowError`.
 
-Một số cách để tránh StackOverflow error:
-* Đảm bảo các hàm đệ quy có điều kiện dừng hoặc không bị gọi quá nhiều lần
-* Quản lý các thread cẩn trọng
-* Tránh sử dụng biến local có kích thước quá lớn
-* Tránh dependencies vòng tròn
+You can imagine methods continuously being loaded into the Stack, and at some point, it will exceed the small 1MB size. Therefore, the above code will throw a `java.lang.StackOverflowError`.
 
-# Bộ nhớ Heap
-## Cách hoạt động
-**Heap** lưu trữ các biến có kiểu dữ liệu **Object** hoặc **array**. Nó sử dụng cơ chế **cấp phát và giải phóng bộ nhớ động**. Heap khá linh hoạt, có thể mở rộng hoặc thu hẹp theo nhu cầu trong quá trình thực thi chương trình.
+Some ways to avoid StackOverflow error:
 
-Ví dụ, khi chúng ta sử dụng từ khoá `new` để tạo một object `Student`:
+* Ensure recursive functions have a stopping condition or are not called too many times
+* Manage threads carefully
+* Avoid using large local variables
+* Avoid circular dependencies
+
+# Heap Memory
+
+## How it works
+
+**Heap** stores variables of **Object** or **array** data types. It uses a mechanism of **dynamic memory allocation and deallocation**. Heap is quite flexible, able to expand or shrink as needed during program execution.
+
+For example, when we use the `new` keyword to create a `Student` object:
+
 ```java
 private static void doSomething() {
     long id = 123456789L;
@@ -78,44 +89,50 @@ private static void doSomethingElse() {
     String str = "Hello World";
 }
 ```
-Bộ nhớ sẽ tìm một vùng nhớ trống ngẫu nhiên trong Heap để cấp phát và lưu thông tin của object `student`. Ở bên Stack sẽ có một **biến tham chiếu**, trỏ sang thông tin của object `student` bên Heap. Còn đối với String, Heap có một cấu trúc dữ liệu đặc biệt là String pool để lưu trữ chúng.
 
-![](https://images.viblo.asia/e4bc1a75-0fa2-4366-a1e2-c74f66a3326a.png)
+Memory will find a random empty region in the Heap to allocate and store the information of the `student` object. On the Stack side, there will be a **reference variable** pointing to the information of the `student` object in the Heap. For Strings, Heap has a special data structure called the String pool to store them.
 
-Heap được tạo ra khi JVM khởi chạy và nó được sử dụng miễn là ứng dụng còn chạy. Khác với Stack, Heap được chia sẻ giữa toàn bộ các thread.
+![Heap](heap.webp)
 
-Mặc định, kích thước khi khởi tạo của Heap là **256MB** và kích thước lớn nhất là **4068MB**. Chúng ta cũng có thể thay đổi thông số này bằng flag `-Xms` (kích thước khởi tạo) và `-Xmx` (kích thước lớn nhất).
+Heap is created when the JVM starts and is used as long as the application is running. Unlike Stack, Heap is shared among all threads.
+
+By default, the initial size of the Heap is **256MB** and the maximum size is **4068MB**. We can also change these parameters using the `-Xms` (initial size) and `-Xmx` (maximum size) flags.
+
 ```
 // Initial heap size = 512MB, Maximum heap size = 1024MB
 java -Xms512m -Xmx1024m
 ```
 
 ## Garbage Collection
-Trong Java, **Garbage Collection** có trách nhiệm thu hồi bộ nhớ từ các biến trong bộ nhớ Heap mà **không còn được tham chiếu** đến nữa. Quá trình này được thực hiện một cách tự động. Trong ví dụ trên, khi chúng ta không còn dùng đến object `student` nữa, Garbage Collection sẽ tự động thu hồi vùng nhớ đã cấp phát trước đó cho nó.
 
-Chính nhờ cơ chế này, Heap cho phép cấp phát và giải phóng vùng nhớ với các biến có kích thước lớn và cấu trúc phức tạp ở runtime. Nếu chúng ta tạo ra quá nhiều biến trong Heap nhưng code lởm nên làm cho Garbage Collection không thể thu hồi vùng nhớ hiệu quả sẽ gây ra **memory leak**.
+In Java, **Garbage Collection** is responsible for reclaiming memory from variables in the Heap that are **no longer referenced**. This process is performed automatically. In the example above, when we no longer use the `student` object, Garbage Collection will automatically reclaim the memory previously allocated for it.
 
-> **Garbage Collection** hoạt động như một bạn quản lý trong nhà hàng. Khi có khách đến, các bạn nhân viên sẽ mời khách ngồi vào một bàn trống, mang bát đũa, menu ra cho khách (cấp phát bộ nhớ). Bạn quản lý sẽ thường xuyên đi vòng vòng kiểm tra, nếu thấy bàn nào khách đã ăn xong đi về thì sẽ gọi nhân viên ra lau dọn sạch sẽ để sẵn sàng đón khách mới (giải phóng bộ nhớ).
+Thanks to this mechanism, Heap allows allocation and deallocation of memory for variables with large sizes and complex structures at runtime. If we create too many variables in the Heap but poor code prevents Garbage Collection from reclaiming memory efficiently, it will cause a **memory leak**.
+
+> **Garbage Collection** works like a manager in a restaurant. When customers arrive, staff will invite them to an empty table, bring out bowls, chopsticks, and menus (allocate memory). The manager will regularly walk around to check, and if they see a table where customers have finished and left, they will call staff to clean up and prepare for new customers (free memory).
 
 ## OutOfMemory
-Khi Heap bị đầy và chúng ta không thể cấp phát bộ nhớ cho object mới, nó sẽ ném ra lỗi `java.lang.OutOfMemoryError`.
 
-Giải pháp của chúng ta là phân tích code, dùng các công cụ profiling để phát hiện xem memory leak xảy ra ở đâu, xoá tham chiếu tới object khi không cần dùng đến nó nữa và để cho Garbage Collection làm việc của nó. Một số cách tối ưu bộ nhớ:
-* Tránh tạo các object không cần thiết
-* Tái sử dụng object nếu có thể
-* Chọn cấu trúc dữ liệu phù hợp
-* Ưu tiên sử dụng biến cục bộ thay vì biến toàn cục
+When the Heap is full and we cannot allocate memory for a new object, it will throw a `java.lang.OutOfMemoryError`.
 
-# So sánh
+Our solution is to analyze the code, use profiling tools to detect where memory leaks occur, remove references to objects when they are no longer needed, and let Garbage Collection do its job. Some ways to optimize memory:
 
-| | Bộ nhớ Stack | Bộ nhớ Heap |
-| -------- | -------- | -------- |
-| Lưu trữ | primitive, biến cục bộ, method | Object, array |
-| Tốc độ truy cập | Nhanh | Chậm |
-| Kích thước | Nhỏ, Cố định | Lớn, Linh động |
-| Phạm vi sử dụng | Thread tương ứng với Stack | Toàn bộ các thread |
-| Thứ tự cấp phát | LIFO | Ngẫu nhiên |
-| Thời gian tồn tại của biến | Từ lúc call method đến lúc return | Từ lúc tạo đến lúc bị Garbage Collection giải phóng |
+* Avoid creating unnecessary objects
+* Reuse objects if possible
+* Choose appropriate data structures
+* Prefer using local variables over global variables
 
-# Kết luận
-Trong bài viết này, còn nhiều khái niệm liên quan đến bộ nhớ nhưng mình chưa thể truyền tải hết. Hy vọng bạn đã hiểu một cách căn bản về cách bộ nhớ Stack và Heap hoạt động, từ đó có thêm kinh nghiệm tối ưu hiệu năng của ứng dụng.
+# Comparison
+
+|                   | Stack Memory                       | Heap Memory                         |
+|-------------------|------------------------------------|-------------------------------------|
+| Storage           | primitive, local variables, method | Object, array                       |
+| Access speed      | Fast                               | Slow                                |
+| Size              | Small, Fixed                       | Large, Dynamic                      |
+| Usage scope       | Thread corresponding to Stack      | All threads                         |
+| Allocation order  | LIFO                               | Random                              |
+| Variable lifetime | From method call to return         | From creation to Garbage Collection |
+
+# Conclusion
+
+In this article, there are still many concepts related to memory that I have not been able to convey. I hope you have a basic understanding of how Stack and Heap memory work, so you can gain more experience in optimizing your application's performance.

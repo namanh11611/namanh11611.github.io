@@ -1,6 +1,6 @@
 ---
-title: "Technical Blog của Engineers các công ty lớn"
-description: "Ngoài việc học qua các tutorial, video thì technical blog là một nguồn khá hay ho. Khi đọc blog của kỹ sư phần mềm ở các công ty lớn, bạn sẽ biết được cách họ xử lý những bài toán mà họ đã đối mặt như thế nào."
+title: "Technical Blogs of Engineers at Major Companies"
+description: "Besides learning through tutorials and videos, technical blogs are a great resource. By reading blogs from software engineers at big companies, you can see how they solve the problems they've faced."
 date: 2023-05-24T00:42:00+07:00
 slug: technical-blog
 image: blog.webp
@@ -8,40 +8,46 @@ categories: [Career]
 tags: [Blog]
 ---
 
-Ngoài việc học qua các tutorial, video thì **technical blog** là một nguồn khá hay ho. Khi đọc blog của kỹ sư phần mềm ở các công ty lớn, bạn sẽ biết được cách họ **xử lý những bài toán** mà họ đã đối mặt như thế nào. Với thời đại AI phát triển, **Copilot** hay **Tabnine** đã sẵn sàng generate code để support bạn tận răng, thì các kỹ sư không còn hơn kém nhau ở khả năng **nhớ syntax của ngôn ngữ này hay framework nọ** nữa, mà là hơn nhau ở **cách giải quyết vấn đề**. Vậy thì qua bài viết này, mình sẽ giới thiệu cho bạn blog của các công ty lớn, hy vọng bạn sẽ có thêm những góc nhìn thú vị.
+Besides learning through tutorials and videos, **technical blogs** are a great resource. By reading blogs from software engineers at major companies, you can see how they **solve the problems** they've encountered. In the age of AI, with tools like **Copilot** or **Tabnine** ready to generate code to support you, engineers are no longer distinguished by their ability to **remember the syntax of a language or framework**, but by their **problem-solving skills**. So, in this article, I will introduce you to the blogs of major companies, hoping you will gain some interesting perspectives.
 
-Bạn có thể click vào title của từng mục để chuyển đến blog.
+You can click on the title of each section to go to the blog.
+
 # [Meta](https://engineering.fb.com)
-**Meta** (hay còn được biết đến với tên gọi cũ là **Facebook**) có nhiều sản phẩm như Facebook, Instagram, Whatsapp... Trong blog này, họ chia sẻ về đủ các lĩnh vực, từ Android, iOS, Web đến các chủ đề khó như VR/AR hay AI.
+
+**Meta** (formerly known as **Facebook**) has many products like Facebook, Instagram, Whatsapp... On this blog, they share about everything from Android, iOS, Web to more challenging topics like VR/AR or AI.
 
 # [Google](https://developers.google.com)
-Khi vào trang chủ này, bạn có thể chọn 1 trong 4 lĩnh vực mà bạn quan tâm: **Mobile**, **Web**, **AI** hoặc **Cloud**, từ đó Google sẽ giới thiệu cho bạn các bài viết chi tiết về lĩnh vực đó.
 
-Google cũng tạo nhiều khoá học về các công nghệ của họ. Mỗi khoá học bao gồm video, các bài viết giải thích chi tiết và bài tập ví dụ để bạn có thể làm theo. Khi hoàn thành, bạn có thể nhận một badge nhỏ. Khá thú vị!
+On this homepage, you can choose one of four areas you are interested in: **Mobile**, **Web**, **AI**, or **Cloud**. Google will then introduce you to detailed articles in that field.
+
+Google also creates many courses about their technologies. Each course includes videos, detailed explanatory articles, and example exercises for you to follow. When you finish, you can earn a small badge. Quite fun!
 
 # [Netflix](https://netflixtechblog.com)
-Chắc trong những năm gần đây, không còn ai xa lạ với Netflix, một nền tảng trình chiếu các bộ phim hay TV show nổi tiếng. Vậy thì thay vì dành thời gian *Netflix and chill*, bạn thử đọc blog của họ để xem cách họ đã build hệ thống phục vụ hàng triệu người dùng xem sao.
+
+In recent years, Netflix has become a household name as a platform for movies and TV shows. Instead of just *Netflix and chill*, try reading their blog to see how they build a system that serves millions of users.
 
 # [Dropbox](https://dropbox.tech)
-Tương tự như Google Drive, Dropbox là một dịch vụ lưu trữ đám mây, giúp bạn lưu trữ file online và đồng bộ giữa các thiết bị.
 
-Qua blog của họ, bạn sẽ học được cách tối ưu bộ nhớ, băng thông khi chia sẻ file.
+Similar to Google Drive, Dropbox is a cloud storage service that helps you store files online and sync them across devices.
+
+Through their blog, you can learn how to optimize memory and bandwidth when sharing files.
 
 # [Twitter](https://blog.twitter.com/engineering/en_us)
-**"Design a system like Twitter"** có lẽ là một bài toán kinh điển khi bạn đi phỏng vấn đến vòng **System Design**. Vậy thì blog của Twitter sẽ là một nguồn tham khảo hữu ích cho bạn khi chuẩn bị phỏng vấn. Bạn có thể xem cách bạn nghĩ và cách Twitter thực sự làm có giống nhau không.
 
-Gần đây, sau khi được Elon Musk mua về, Twitter thậm chí còn open source luôn cả [**Recommendation Algorithm**](https://github.com/twitter/the-algorithm) của họ.
+**"Design a system like Twitter"** is a classic question in **System Design** interviews. So, Twitter's blog is a useful reference when preparing for interviews. You can see if your ideas match how Twitter actually does things.
+
+Recently, after being acquired by Elon Musk, Twitter even open-sourced their [**Recommendation Algorithm**](https://github.com/twitter/the-algorithm).
 
 # [Uber](https://www.uber.com/en-IN/blog/engineering)
-Mặc dù đã rút khỏi thị trường Việt Nam sau thương vụ bắt tay với Grab, nhưng có thể nói, Uber vẫn là **công ty taxi lớn nhất thế giới**. Vậy nên, blog của họ sẽ rất phù hợp với những anh em đang làm trong các công ty có **lĩnh vực hoạt động tương tự** ở Việt Nam.
+
+Although Uber has left the Vietnamese market after merging with Grab, it is still **the largest taxi company in the world**. Therefore, their blog is very suitable for those working in companies with **similar business areas** in Vietnam.
 
 # [Spotify](https://engineering.atspotify.com)
-Mình còn nhớ khi Spotify mới ra mắt ở Việt Nam, anh em đều rất ngạc nhiên với khả năng recommend của nó.
 
-**Recommender system** của Spotify là một hệ thống phức tạp, bao gồm nhiều **thuật toán** và **Machine Learning model** kết hợp. Vậy thì qua blog này, hy vọng bạn sẽ khám khá ra một phần hệ thống đó.
+I remember when Spotify first launched in Vietnam, everyone was amazed by its recommendation capabilities.
+
+Spotify's **recommender system** is a complex system, combining many **algorithms** and **Machine Learning models**. Through this blog, hopefully you will discover part of that system.
 
 # [LINE](https://engineering.linecorp.com/en/blog)
-LINE là một trong những công ty cũ của mình. Tuy không phải là công ty top tier như những công ty trên nhưng văn hoá sharing cũng phát triển rất mạnh. Vậy nên qua bài viết này, mình muốn giới thiệu đến các bạn technical blog của các kỹ sư ở LINE.
 
-# Reference
-* https://amitshekhar.me/blog/top-tech-engineering-blogs-of-companies
+LINE is one of my former companies. Although it may not be as top-tier as the others above, the sharing culture is very strong. So, through this article, I want to introduce you to the technical blog of engineers at LINE.

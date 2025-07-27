@@ -1,6 +1,6 @@
 ---
-title: "Khi nào nên dùng Inject, Provides, Binds trong Hilt"
-description: "Bài viết này mình sẽ đi thẳng vào giải thích cách dùng các annotation @Inject, @Provides và @Binds."
+title: "When to use Inject, Provides, Binds in Hilt"
+description: "In this article, I'll go straight to explaining how to use the @Inject, @Provides, and @Binds annotations."
 date: 2022-10-02T01:33:00+07:00
 slug: hilt
 image: hilt.webp
@@ -8,17 +8,22 @@ categories: [Technical, Android]
 tags: [Android, Kotlin, Dependency Injection, Hilt]
 ---
 
-Bài viết này mình sẽ đi thẳng vào giải thích cách dùng các annotation `@Inject`, `@Provides` và `@Binds`. Vậy nên bỏ qua phần giải thích về Dependency Injection hay giới thiệu về `Hilt`. Coi như mọi người đã biết cách dùng nó rồi nhé. Chiến thôi!!!
-# Tổng quan
-Chúng ta có 3 annotation thường dùng để inject các object trong Hilt:
-- `@Inject`: annotation dùng ở constructor của class
-- `@Provides`: annotation dùng ở Module
-- `@Binds`: một annotation khác cũng dùng ở Module
+This article will go straight to explaining how to use the `@Inject`, `@Provides`, and `@Binds` annotations. So I'll skip the explanation of Dependency Injection or an introduction to `Hilt`. Let's assume you already know how to use it. Let's go!
 
-Câu hỏi đặt ra là vậy khi nào thì dùng những thằng này nhỉ?
+# Overview
+
+There are 3 commonly used annotations to inject objects in Hilt:
+
+- `@Inject`: annotation used on the class constructor
+- `@Provides`: annotation used in a Module
+- `@Binds`: another annotation also used in a Module
+
+So, when should you use each of these?
 
 # Inject
-Chúng ta dùng `@Inject` annotation ở tất cả các constructor mà mình cần inject object, từ `ViewModel`, `Repository` đến `DataSource`. Ví dụ:
+
+We use the `@Inject` annotation on any constructor where we want to inject an object, from `ViewModel`, `Repository` to `DataSource`. For example:
+
 ```kotlin
 class ProfileRepository @Inject constructor(
     private val profileDataSource: ProfileDataSource
@@ -26,9 +31,13 @@ class ProfileRepository @Inject constructor(
     fun doSomething() {}
 }
 ```
-Việc này giúp chúng ta dễ dàng inject tiếp `ProfileRepository` vào các class khác, ví dụ như `ViewModel` hoặc `UseCase`. Tuy nhiên thì chúng ta lại chỉ có thể sử dụng annotation này để annotate constructor của những class mà mình tự define.
+
+This makes it easy to inject `ProfileRepository` into other classes, such as a `ViewModel` or `UseCase`. However, you can only use this annotation on constructors of classes you define yourself.
+
 # Provides
-Vậy thì để khắc phục điểm yếu trên, inject object của những class mà mình không define (Ví dụ như `Retrofit`, `OkHttpClient` hoặc `Room` database), chúng ta cùng đến với `@Provides`. Trước tiên, chúng ta cần tạo một `@Module` để chứa các dependency với annotation `@Provides`. Ví dụ:
+
+To overcome the above limitation—injecting objects of classes you don't define (such as `Retrofit`, `OkHttpClient`, or a `Room` database)—we use `@Provides`. First, you need to create a `@Module` to hold dependencies with the `@Provides` annotation. For example:
+
 ```kotlin
 @Module
 class NetworkModule {
@@ -41,11 +50,15 @@ class NetworkModule {
             .create(ApiService::class.java)
 }
 ```
-Vì `Retrofit` khởi tạo object không phải code của chúng ta define, thêm nữa lại còn khởi tạo theo kiểu Builder pattern, nên chúng ta không thể dùng `@Inject` annotation mà bắt buộc phải dùng `@Provides`. Bây giờ, chúng ta đã có thể inject object của interface `ApiService` ở bất cứ đâu.
-# Binds
-Đối với interface, chúng ta không thể dùng annotation `@Inject`, vì nó không có constructor function. Tuy nhiên, nếu bạn có một interface mà chỉ có duy nhất một implementation (một class implement interface đó), thì bạn có thể dùng `@Binds` để inject interface đó. Việc inject interface thay vì class là một good practice, giúp dễ dàng test hơn.
 
-Quay trở lại với `ProfileRepository` ở phần `@Inject`, chúng ta sẽ biến nó thành một interface, và tạo một class implement interface đó. Ví dụ:
+Since `Retrofit` objects are not defined by your code and are created using the Builder pattern, you can't use the `@Inject` annotation and must use `@Provides`. Now, you can inject the `ApiService` interface object anywhere.
+
+# Binds
+
+For interfaces, you can't use the `@Inject` annotation because they don't have constructors. However, if you have an interface with only one implementation (a class that implements that interface), you can use `@Binds` to inject that interface. Injecting interfaces instead of classes is a good practice and makes testing easier.
+
+Back to the `ProfileRepository` in the `@Inject` section, let's turn it into an interface and create a class that implements it. For example:
+
 ```kotlin
 interface ProfileRepository {
 }
@@ -67,14 +80,19 @@ class RegisterUseCase @Inject constructor(
     private val profileRepository: ProfileRepository
 )
 ```
-Ưu điểm của việc dùng `@Binds` thay cho `@Provides` là nó giúp giảm lượng code được generate, như là Module Factory class. Ở đây bạn có thể thấy mình vẫn dùng `@Inject`, bởi vì constructor function của `ProfileRepositoryImpl` vẫn cần một số parameter.
-# Tổng kết
-Vậy tóm gọn lại là
-- Dùng `@Inject` cho code của bạn
-- Dùng `@Provides` cho code của bên thứ 3
-- Dùng `@Binds` cho inject interface, giúp giảm lượng code không cần thiết
+
+The advantage of using `@Binds` instead of `@Provides` is that it reduces the amount of generated code, such as Module Factory classes. Here, you can see I still use `@Inject` because the constructor of `ProfileRepositoryImpl` still needs some parameters.
+
+# Summary
+
+So, to summarize:
+
+- Use `@Inject` for your own code
+- Use `@Provides` for third-party code
+- Use `@Binds` to inject interfaces, reducing unnecessary code
 
 **Reference**
+
 - https://developer.android.com/training/dependency-injection/hilt-android
 - https://dagger.dev/hilt
 - https://www.valueof.io/blog/inject-provides-binds-dependencies-dagger-hilt

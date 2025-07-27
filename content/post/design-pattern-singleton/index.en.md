@@ -1,6 +1,6 @@
 ---
-title: "Design Pattern: Bill Pugh Singleton trong Java - đơn giản đến không ngờ"
-description: "Singleton pattern có lẽ là design pattern đơn giản nhất mà hầu như ai cũng biết. Nó giúp tạo một instance duy nhất của class."
+title: "Design Pattern: Bill Pugh Singleton in Java – surprisingly simple"
+description: "The Singleton pattern is probably the simplest design pattern that almost everyone knows. It helps create a single instance of a class."
 date: 2020-12-29T15:00:00+07:00
 slug: design-pattern-singleton
 image: singleton.webp
@@ -8,13 +8,15 @@ categories: [Technical]
 tags: [Design Pattern, Singleton, Java]
 ---
 
-# Lời mở đầu
-Singleton pattern có lẽ là design pattern đơn giản nhất mà hầu như ai cũng biết. Nó giúp tạo một instance duy nhất của class, thường dùng để tạo các class cho Database, Manager... Hôm nay mình đọc code của project đang làm thì phát hiện ra một cách khởi tạo Singleton hay quá, tìm hiểu thì nó gọi là Bill Pugh Singleton, lấy theo tên của tác giả nghĩ ra cách này. Vậy nên mình viết bài này chia sẻ cho mọi người một cách tiếp cận với Singleton.
+# Introduction
+
+The Singleton pattern is probably the simplest design pattern that almost everyone knows. It helps create a single instance of a class, often used for classes like Database, Manager, etc. Today, while reading code in my current project, I discovered a really neat way to implement Singleton, called the Bill Pugh Singleton, named after its creator. So I wrote this article to share this approach to Singleton.
 
 # Lazy Initialization
-Đầu tiên, chúng ta nhìn qua cách khởi tạo Singleton mà đa số mọi người đang dùng. Singleton pattern được implement bằng cách tạo một instance trong một public method. Cách này có nhược điểm là khi chạy ở multiple threads thì có thể bị khởi tạo instance nhiều lần. Lúc đó thì Singleton không còn là Singleton nữa rồi.
 
-```
+First, let's look at the Singleton initialization method most people use. The Singleton pattern is implemented by creating an instance in a public method. The downside is that when running in multiple threads, multiple instances can be created. In that case, Singleton is no longer a Singleton.
+
+```java
 public class LazyInitializedSingleton {
 
     private static LazyInitializedSingleton instance;
@@ -31,9 +33,10 @@ public class LazyInitializedSingleton {
 ```
 
 # Thread Safe Singleton
-Để khắc phục nhược điểm của Lazy Initialization, chúng ta thêm `synchronized` vào public method. Khi đó, chỉ có một instance được khởi tạo bởi một thread tại một thời điểm.
 
-```
+To fix the drawback of Lazy Initialization, we add `synchronized` to the public method. This way, only one instance is created by one thread at a time.
+
+```java
 public class ThreadSafeSingleton {
 
     private static ThreadSafeSingleton instance;
@@ -50,9 +53,9 @@ public class ThreadSafeSingleton {
 }
 ```
 
-Tuy nhiên, cách trên vẫn có nhược điểm là làm giảm hiệu năng của app khi mỗi lần gọi vì `getInstance()` là một `synchronized method`. Vậy nên chúng ta có 1 cách khác bổ sung như sau.
+However, this approach still has the drawback of reducing app performance because `getInstance()` is a `synchronized method`. So, we have another improved approach:
 
-```
+```java
 public class ThreadSafeSingleton {
 
     private static ThreadSafeSingleton instance;
@@ -73,12 +76,13 @@ public class ThreadSafeSingleton {
 }
 ```
 
-Như vậy, chúng ta chỉ tốn sức trong lần gọi `getInstance()` đầu tiên.
+This way, we only pay the cost on the first call to `getInstance()`.
 
 # Bill Pugh Singleton Implementation
-Trước Java 5, java memory có rất nhiều issue và các cách trên đều fail khi có quá nhiều thread gọi method `getInstance()` của Singleton class đồng thời. Vì vậy, Bill Pugh đưa ra một cách triển khai Singleton mới bằng cách sử dụng inner static helper class.
 
-```
+Before Java 5, Java memory had many issues and the above methods could fail when too many threads called the Singleton class's `getInstance()` method simultaneously. So, Bill Pugh introduced a new way to implement Singleton using an inner static helper class.
+
+```java
 public class BillPughSingleton {
 
     private static class SingletonHelper {
@@ -94,9 +98,12 @@ public class BillPughSingleton {
 }
 ```
 
-Mọi người thấy cách này thế nào? Quá nhanh, quá gọn mà vẫn an toàn. Khi Singleton class được load, SingletonHelper class sẽ vẫn chưa được load vào memory. Chỉ khi method `getInstance()` được gọi, helper class mới được load và tạo singleton class instance. Cách này cũng không yêu cầu synchronization và check null nhiều lần.
+What do you think of this method? It's fast, concise, and still safe. When the Singleton class is loaded, the SingletonHelper class is not loaded into memory yet. Only when the `getInstance()` method is called is the helper class loaded and the singleton instance created. This method also doesn't require synchronization or multiple null checks.
 
-# Lời kết
-Trong khuôn khổ bài viết, còn một số phương pháp nữa mà mình không liệt kê hết được, chỉ mang đến góc nhìn mới về Singleton pattern cho mọi người. Cảm ơn mọi người đã đọc!
+# Conclusion
 
-Tham khảo: https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
+Within the scope of this article, there are a few more methods I haven't listed, but I hope this gives you a new perspective on the Singleton pattern. Thank you for reading!
+
+**Reference**
+
+https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples

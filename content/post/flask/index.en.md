@@ -1,6 +1,6 @@
 ---
-title: "Xây dựng API đơn giản với Flask, demo với Ngrok"
-description: "Tuần vừa rồi anh teamlead seminar về Flask. Oh, sao mình thấy thằng này build API nhanh gọn, đơn giản thế, đúng tinh thần của Python."
+title: "Building a Simple API with Flask, Demo with Ngrok"
+description: "Last week, my team lead gave a seminar about Flask. Oh, I found this framework builds APIs quickly and simply, true to the spirit of Python."
 date: 2021-01-14T01:03:00+07:00
 slug: flask
 image: flask.webp
@@ -8,52 +8,65 @@ categories: [Technical]
 tags: [Python, Flask, Ngrok]
 ---
 
-# Lời mở đầu
-Team mình đợt này đang triển khai chương trình mỗi tuần một bài học, nghĩa là mỗi tuần một người trong team sẽ lên seminar cho mọi người về 1 kỹ thuật hoặc công nghệ gì đấy. Anh em vừa trải qua mấy tuần mới đi hết Kotlin. Tuần vừa rồi anh teamlead seminar về Flask. Oh, sao mình thấy thằng này build API nhanh gọn, đơn giản thế, đúng tinh thần của Python. Lâu nay mình chỉ code Front-end với Mobile, chưa đụng Back-end bao giờ (Thực ra là hồi Sinh viên làm PHP nhưng quên hết rồi :joy::joy:). Thế là mình cũng về thử bắt tay làm ngay một chú xem thế nào.
+# Introduction
+
+Recently, my team has been running a program called "one lesson per week," where each week, a team member gives a seminar on a particular technique or technology. We just finished several weeks on Kotlin. Last week, my team lead gave a seminar about Flask. Oh, I found this framework builds APIs quickly and simply, true to the spirit of Python. I’ve always worked on Front-end and Mobile, never really touched Back-end (well, I did some PHP in college, but I’ve forgotten it all :joy::joy:). So I decided to give it a try and see how it goes.
+
 # Setup
+
 ## Basic
-Về IDE, tối ưu nhất có lẽ là PyCharm. Nhưng cài nó cũng khá nặng nên mình tận dụng máy đang có sẵn Visual Studio Code, chỉ cần cài thêm extension Python là đủ để chiến.
 
-Trước tiên là cài Python rồi.
+For IDE, PyCharm is probably the best, but it’s a bit heavy, so I just used Visual Studio Code with the Python extension, which is more than enough.
 
-* Nếu bạn dùng Windows thì link tải ở đây: [Download Python](https://www.python.org/downloads/).
+First, install Python.
 
-* Còn mình dùng Ubuntu nên chỉ cần gõ:
+* If you’re on Windows, download it here: [Download Python](https://www.python.org/downloads/).
+
+* On Ubuntu, just run:
+
 ```
 $ sudo apt-get update
 $ sudo apt-get install python3.9
 ```
 
 ## Option
-Bạn có thể setup **Virtual environments** hoặc không, bạn có thể bỏ qua bước này. Virtual environments có tác dụng quản lý các dependencies của project. Ví dụ bạn có thể cài 1 lib với 2 version khác nhau cho 2 project khác nhau, thậm chí là Python version khác nhau. Mỗi project sẽ có 1 bộ Python libraries riêng biệt, không thằng nào ảnh hưởng đến thằng nào.
 
-Python3 sử dụng module venv để tạo Virtual environments. Bạn có thể thực hiện lệnh sau để tạo folder cho project và venv folder luôn:
+You can set up **Virtual environments** or skip this step. Virtual environments help manage your project’s dependencies. For example, you can install different versions of a library for different projects, or even use different Python versions. Each project will have its own set of Python libraries, isolated from others.
+
+Python 3 uses the `venv` module to create virtual environments. You can run the following commands to create a project folder and a venv folder:
+
 ```
 $ mkdir myproject
 $ cd myproject
 $ python3 -m venv venv
 ```
 
-Trên Windows:
+On Windows:
+
 ```
 $ py -3 -m venv venv
 ```
 
-Run environment của bạn:
+Activate your environment:
+
 ```
 $ . venv/bin/activate
 ```
 
 ## Flask
 
-Sau đó là cài Flask:
+Next, install Flask:
+
 ```
 $ pip install Flask
 ```
 
-# Code thôi
+# Let’s Code
+
 ## Hello World
-Bắt tay vào để code 1 ứng dụng Flask đơn giản nhất nào. Tạo 1 file `hello.py` (tên gì cũng được, miễn là tránh `flask.py` để tránh conflict) và code những dòng đầu tiên:
+
+Let’s start by coding a simple Flask app. Create a file called `hello.py` (any name is fine, just avoid `flask.py` to prevent conflicts) and write the following:
+
 ```python
 from flask import Flask
 app = Flask(__name__)
@@ -62,37 +75,46 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 ```
-Giải thích một chút:
-* `Flask(__name__)` có tác dụng tạo 1 instance của class Flask.
-* `route()` thì sẽ chỉ cho chúng ta URL của API.
 
-Run app luôn và ngay:
+A quick explanation:
+
+* `Flask(__name__)` creates an instance of the Flask class.
+* `route()` defines the URL for the API.
+
+Run the app right away:
+
 ```
 $ export FLASK_APP=hello.py
 $ flask run
 ```
 
-Check http://127.0.0.1:5000/ để xem app của bạn đã chạy rồi này.
+Check http://127.0.0.1:5000/ to see if your app is running.
 
-Nhưng giờ mỗi lần bạn sửa code, refresh browser vẫn chưa thấy code được apply. Thế là thế nào nhỉ??? Đó là vì bạn cần bật Debug mode lên nữa.
+But now, every time you change the code and refresh the browser, you don’t see the changes applied. Why? That’s because you need to enable Debug mode.
+
 ```
 $ export FLASK_ENV=development
 $ flask run
 ```
 
-Bây giờ thì thử sửa code và xem thành quả của bạn nào.
+Now try editing the code and see your results.
 
-Bạn cũng có thể xem kết quả của mình trên thiết bị khác (ở đây mình muốn xem trên máy Android) bằng cách thay đổi host (địa chỉ host là IP của laptop/PC bạn đang dùng) và kết nối 2 máy tới cùng 1 mạng wifi:
+You can also view your results on another device (I wanted to check on my Android phone) by changing the host (set the host address to your laptop/PC’s IP) and connecting both devices to the same Wi-Fi network:
+
 ```
 $ flask run --host=192.168.xxx.xxx
 ```
 
 ## JSON
-JSON là dạng dữ liệu mà mình hay dùng cho các API. Thử demo một chút JSON xem nào. Đầu tiên là cần import thêm `jsonify`:
+
+JSON is the data format I often use for APIs. Let’s do a quick JSON demo. First, import `jsonify`:
+
 ```python
 from flask import Flask, jsonify
 ```
-Thay vì return `Hello, World!`, chúng ta sẽ return kết quả trả về dưới dạng JSON:
+
+Instead of returning `Hello, World!`, let’s return a JSON response:
+
 ```python
 @app.route('/')
 def hello_world():
@@ -114,35 +136,46 @@ def hello_world():
         }
     ])
 ```
-Nhưng mình thấy các field bị đảo lộn hết cả lên, vậy thì phải thêm một chút config:
+
+But I noticed the fields are all jumbled up, so let’s add a bit of config:
+
 ```python
 app.config['JSON_SORT_KEYS'] = False
 ```
-Ok, có vẻ ổn hơn rồi đấy!
-## Ngrok - demo app không cần deploy
-Mình là dev Android nên muốn thử xem Flask có dùng làm API cho Retrofit trong Android được không. Thế mà config như trên, máy nhận được API rồi nhưng khi apply vào Retrofit thì vẫn không được. Không hiểu có phải do http không? Nhờ các cao nhân giải đáp giúp đoạn này.
 
-Vậy nên mình sẽ giới thiện với các bạn [**Ngrok**](https://ngrok.com/), một công cụ giúp bạn nhanh chóng demo app Flask mà không cần deploy lên server.
+Okay, that looks better!
 
-Cài đặt ngrok:
+## Ngrok - Demo Your App Without Deploying
+
+I’m an Android developer, so I wanted to see if Flask could be used as an API for Retrofit in Android. With the above config, my device could receive the API, but when I tried it with Retrofit, it still didn’t work. Not sure if it’s because of HTTP? If anyone knows, please help clarify this part.
+
+So, let me introduce you to [**Ngrok**](https://ngrok.com/), a tool that helps you quickly demo your Flask app without deploying it to a server.
+
+Install ngrok:
+
 ```
 $ pip install pyngrok
 ```
-Run lệnh `$ ngrok --help` để chắc chắn rằng chúng ta đã cài đặt thành công.
-Sửa code một chút để tạo Ngrok Tunnel nào:
+
+Run `$ ngrok --help` to make sure it’s installed successfully.
+Modify your code a bit to create a Ngrok Tunnel:
+
 ```python
 from pyngrok import ngrok
 ...
 url = ngrok.connect(5000).public_url
 print('Henzy Tunnel URL:', url)
 ```
-Tiếp tục run `$ flask run` để xem kết quả. Check url được print ra và truy cập trên máy Android. Thử thay vào Url của Retrofit (nhớ dùng https) thì mình thấy nó chạy khá ổn. 
-# Lời kết
-Trên đây mới là hướng dẫn Quickstart. Nếu các bạn có hứng thú, mình sẽ viết tiếp các bài tiếp theo.
 
-Cảm ơn các bạn đã đọc!
+Continue by running `$ flask run` to see the result. Check the printed URL and access it on your Android device. Try using it as the Retrofit URL (remember to use https), and it works pretty well.
 
+# Conclusion
 
-Tham khảo:
+This is just a Quickstart guide. If you’re interested, I’ll write more articles in the future.
+
+Thank you for reading!
+
+References:
+
 * https://flask.palletsprojects.com/en/1.1.x/quickstart/#quickstart
 * https://blog.miguelgrinberg.com/post/access-localhost-from-your-phone-or-from-anywhere-in-the-world

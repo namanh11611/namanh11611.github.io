@@ -1,6 +1,6 @@
 ---
-title: "Design Pattern: Adapter - làm thế nào để sạc iPhone bằng cáp type C"
-description: "Bạn sẽ làm gì khi bạn muốn sạc iPhone nhưng trong tay chỉ có sợi dây cáp type C."
+title: "Design Pattern: Adapter – how to charge an iPhone with a type C cable"
+description: "What would you do if you wanted to charge your iPhone but only had a type C cable?"
 date: 2022-10-04T22:50:00+07:00
 slug: design-pattern-adapter
 image: adapter.webp
@@ -8,39 +8,47 @@ categories: [Technical]
 tags: [Design Pattern, Adapter, Java]
 ---
 
-# Đặt vấn đề
-Khi bạn muốn sạc iPhone bằng cáp type C => hãy dùng một cái Adapter mà có lỗ type C và đầu lightning.
+# The Problem
 
-Khi bạn đang dùng data dưới dạng XML, nhưng lại muốn sử dụng một function của third party library mà nó chỉ nhận param là JSON => hãy dùng Adapter để convert XML sang JSON.
+When you want to charge your iPhone with a type C cable => use an Adapter with a type C port and a lightning connector.
 
-Trong Android, bạn có một list item và muốn hiển thị nó lên `RecyclerView` => hãy dùng Adapter để convert data lên từng `item_view`.
-# Khái niệm
-Adapter pattern cho phép **interface** của một **class đã có sẵn** được dùng như là một **interface khác**. Nó sẽ giúp **class đã tồn tại đó** làm việc với những thằng khác mà **không thay đổi source code**.
+When you have data in XML format but want to use a third-party library function that only accepts JSON => use an Adapter to convert XML to JSON.
 
-Nghe vẫn hơi trừu tượng đúng không nhỉ? Chúng ta sẽ từ từ đi bóc tách hết cái lớp vỏ ngoài khó hiểu này nhé.
+In Android, if you have a list of items and want to display them in a `RecyclerView` => use an Adapter to convert data into each `item_view`.
 
-Tuy nhiên thì có 2 cách dùng adapter là **Object Adapter** và **Class Adapter**. Chúng ta sẽ cùng đi tìm hiểu chi tiết từng cách.
+# Concept
+
+The Adapter pattern allows the **interface** of an **existing class** to be used as another **interface**. It helps the **existing class** work with others **without changing its source code**.
+
+Still sounds a bit abstract, right? Let's break it down step by step.
+
+There are two ways to use adapters: **Object Adapter** and **Class Adapter**. Let's look at each in detail.
+
 # Object Adapter Pattern
-## Sơ đồ lớp
-![](https://images.viblo.asia/d9569a80-519f-4188-9484-3dffd19db10c.png)
 
-Chúng ta sẽ implement interface bằng cách uỷ quyền tới object **adaptee** lúc run-time.
+## Class Diagram
 
-Mình sẽ giải thích chi tiết thêm một chút:
+![Object](object.webp)
 
-1. **Client** là class đã có sẵn mà mình nhắc đến trong phần khái niệm nhé.
-2. **Client Interface** giờ là interface cha của **Client**. Những thằng khác muốn giao tiếp **Client** thì phải follow thằng interface cha này nhé.
-3. **Service** là một thằng third party mà chỉ nhận param là JSON như mình đặt vấn đề.
-4. **Adapter** implement **Client Interface** và chứa instance của class **Service** (object adaptee). Mỗi khi gọi đến method của **Adapter**, nó sẽ gọi đến method của **Service** này.
-5. Như vậy chúng ta đã có thể làm việc với thằng **Service** mà không cần sửa code ở **Client**.
+We implement the interface by delegating to the **adaptee** object at run-time.
+
+Let me explain a bit more:
+
+1. **Client** is the existing class mentioned in the concept.
+2. **Client Interface** is now the parent interface of **Client**. Others wanting to interact with **Client** must follow this parent interface.
+3. **Service** is a third-party class that only accepts JSON, as in the problem statement.
+4. **Adapter** implements the **Client Interface** and contains an instance of the **Service** class (object adaptee). Whenever a method of **Adapter** is called, it calls the corresponding method of **Service**.
+5. This way, we can work with **Service** without modifying **Client**'s code.
+
 ## Code sample
+
 ```java
 // Client Interface
 interface TypeCPhone {
     void chargeByTypeC();
 }
 
-// Interface của Service
+// Service Interface
 interface LightningPhone {
     void chargeByLightning();
 }
@@ -77,15 +85,20 @@ public class Demo {
     }
 }
 ```
+
 # Class Adapter pattern
-![](https://images.viblo.asia/3d70c8a9-c9cb-4eb6-a0eb-17a0d700acd6.png)
-Class Adapter thì không cần wrap object nào cả vì nó kế thừa từ cả **Client** và **Service**. 
 
-Rất tiếc là Java không support đa kế thừa nên chúng ta không có code sample bằng Java cho phần này.
+![Class](class.webp)
 
-# Kết luận
-**Adapter** là một design pattern khá quen thuộc với chúng ta. Qua phần giải thích và một chút code mẫu, mong mọi người hiểu thêm về nó.
+The Class Adapter doesn't need to wrap any object because it inherits from both **Client** and **Service**.
+
+Unfortunately, Java doesn't support multiple inheritance, so we don't have a Java code sample for this part.
+
+# Conclusion
+
+**Adapter** is a fairly familiar design pattern. Through the explanation and a bit of sample code, I hope everyone understands it better.
 
 **Reference**
+
 - https://en.wikipedia.org/wiki/Adapter_pattern
 - https://refactoring.guru/design-patterns/adapter
