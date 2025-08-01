@@ -1,0 +1,1483 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Flutter on Henry Techie</title><link>https://namanh11611.github.io/vi/categories/flutter/</link><description>Recent content in Flutter on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 25 May 2025 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/categories/flutter/index.xml" rel="self" type="application/rss+xml"/><item><title>Isolate trong Flutter: Kẻ cứu cánh cho những tác vụ nặng</title><link>https://namanh11611.github.io/vi/p/isolate/</link><pubDate>Sun, 25 May 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/isolate/</guid><description>&lt;img src="https://namanh11611.github.io/p/isolate/isolate.webp" alt="Featured image of post Isolate trong Flutter: Kẻ cứu cánh cho những tác vụ nặng" />&lt;p>Như anh em đã biết, tất cả &lt;strong>Dart&lt;/strong> code chạy trong các &lt;strong>isolate&lt;/strong>, bắt đầu từ &lt;strong>main isolate&lt;/strong> mặc định. Khi phát triển các ứng dụng Flutter, việc xử lý các tác vụ nặng như xử lý ảnh, tính toán phức tạp&amp;hellip; trên &lt;strong>main isolate&lt;/strong> này sẽ gây ra hiện tượng &lt;strong>giật lag&lt;/strong>. Mặc dù Flutter đã cung cấp cho chúng ta &lt;strong>Future&lt;/strong> hay &lt;strong>Stream&lt;/strong>, nhưng về bản chất chúng vẫn được xử lý trên &lt;strong>main isolate&lt;/strong>. Và &lt;strong>Isolate API&lt;/strong> sinh ra chính là để giải quyết vấn đề này, nó sẽ giúp chúng ta đưa những tác vụ nặng đó xuống &lt;strong>background worker&lt;/strong>, giúp ứng dụng trở lại với sự mượt mà vốn có. Trong bài viết này, mình sẽ giải thích cách sử dụng &lt;strong>Isolate&lt;/strong> và lần lượt cung cấp các best practice trong quá trình sử dụng.&lt;/p>
+&lt;h1 id="isolate-là-gì">Isolate là gì?
+&lt;/h1>&lt;p>&lt;strong>Dart&lt;/strong> là ngôn ngữ &lt;strong>single-thread&lt;/strong>, khi bạn sử dụng &lt;strong>async&lt;/strong>, &lt;strong>await&lt;/strong>, thực chất là nó đang chạy &lt;strong>concurrency&lt;/strong> (đồng thời). Khi một tác vụ tốn thời gian chạy trên main thread, nó sẽ &lt;strong>block toàn bộ UI&lt;/strong>. Và &lt;strong>Isolate&lt;/strong> là nhân tố giúp chúng ta giải quyết bài toán &lt;strong>parallelism&lt;/strong> (song song).&lt;/p>
+&lt;p>&lt;strong>Isolate&lt;/strong> là một &lt;strong>luồng thực thi độc lập&lt;/strong> trong Dart. Mỗi isolate có bộ nhớ &lt;strong>Heap&lt;/strong> riêng, đảm bảo rằng không isolate nào có thể truy cập vào bộ nhớ của isolate khác, giúp cho ứng dụng chạy mượt mà mà không có trạng thái chia sẻ.&lt;/p>
+&lt;p>Bắt tay ngay vào code cho dễ hình dung, chúng ta sẽ đến với ví dụ đầu tiên là tạo ra một Isolate đơn giản:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="k">import&lt;/span> &lt;span class="s1">&amp;#39;dart:isolate&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">spawn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">isolateMethod&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Hello World from Main Isolate&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Main isolate&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">isolateMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">String&lt;/span> &lt;span class="n">message&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;New isolate: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong ví dụ trên, hàm &lt;code>main()&lt;/code> sẽ chạy trên &lt;strong>main isolate&lt;/strong>, thường được gọi là &lt;strong>UI isolate&lt;/strong>. Chúng ta tạo một &lt;strong>isolate mới&lt;/strong> bằng cách gọi phương thức &lt;code>Isolate.spawn()&lt;/code>, nó sẽ thực thi hàm &lt;code>isolateMethod()&lt;/code>. Các isolate phụ như này sẽ không truy cập được UI.&lt;/p>
+&lt;h1 id="giao-tiếp-giữa-các-isolate">Giao tiếp giữa các Isolate
+&lt;/h1>&lt;p>Khi cần trao đổi dữ liệu giữa các isolate, Dart đã cung cấp cho chúng ta 2 class là &lt;code>SendPort&lt;/code> và &lt;code>ReceivePort&lt;/code> để giúp các Isolate giao tiếp với nhau thông qua message. Các bạn hãy đọc qua đoạn code sau, mình sẽ giải thích chi tiết bên dưới.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">mainReceivePort&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ReceivePort&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">isolate&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">Isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">spawn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">twoWayIsolate&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mainReceivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Nhận SendPort từ isolate phụ
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">mainReceivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">listen&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">message&lt;/span> &lt;span class="k">is&lt;/span> &lt;span class="n">SendPort&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Main: SendPort&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">message&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Hello&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Main received: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// Output: Hello to Henry
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">kill&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">twoWayIsolate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SendPort&lt;/span> &lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">receivePort&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ReceivePort&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Gửi SendPort của isolate phụ về main
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">receivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">receivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">listen&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">message&lt;/span> &lt;span class="k">is&lt;/span> &lt;span class="kt">String&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Worker received: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// Output: Hello
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="n">newMessage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1"> to Henry&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">newMessage&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong ví dụ này, chúng ta sẽ thiết lập giao tiếp 2 chiều giữa main isolate và isolate phụ thông qua đoạn code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Gửi SendPort của isolate phụ về main
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">receivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ngay sau khi nhận được message là &lt;code>SendPort&lt;/code>, main isolate đã gửi lời chào đến isolate phụ:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">message&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Hello&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Isolate phụ cũng đã đáp lễ bằng cách gửi lời chào ngược lại đến main isolate:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">newMessage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1"> to Henry&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">newMessage&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Các bạn có thể thấy, &lt;code>SendPort.send()&lt;/code> sẽ là thằng chịu trách nhiệm gửi message, còn việc lắng nghe message sẽ được thực hiện qua &lt;code>ReceivePort.listen()&lt;/code>.&lt;/p>
+&lt;h1 id="sử-dụng-compute-cho-tác-vụ-đơn-giản">Sử dụng &lt;code>compute&lt;/code> cho tác vụ đơn giản
+&lt;/h1>&lt;p>Flutter cung cấp hàm &lt;code>compute&lt;/code> để chạy hàm trong isolate mới với chỉ với 1 dòng code đơn giản như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Future&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">fetchData&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">compute&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">_heavyProcessing&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="m">1000000&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Kết quả: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Hàm này sẽ chạy trong isolate riêng
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">_heavyProcessing&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">iterations&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">sum&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">iterations&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sum&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">sum&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ưu điểm của &lt;code>compute&lt;/code> là &lt;strong>tự động quản lý&lt;/strong> isolate, nó sẽ được &lt;strong>hủy&lt;/strong> ngay sau khi hoàn thành.&lt;/p>
+&lt;p>Tuy nhiên, có ưu thì cũng phải có nhược, giới hạn của &lt;code>compute&lt;/code> là chỉ truyền được &lt;strong>1 tham số&lt;/strong>, nếu muốn nhiều tham số hơn thì bạn phải đóng gói nó vào Map hoặc List. Ngoài ra, &lt;code>compute&lt;/code> cũng không thể giao tiếp 2 chiều như &lt;code>Isolate.spawn&lt;/code> trong ví dụ trên.&lt;/p>
+&lt;h1 id="best-practices">Best Practices
+&lt;/h1>&lt;h2 id="chỉ-dùng-isolate-cho-các-tác-vụ-tốn-nhiều-cpu">Chỉ dùng isolate cho các tác vụ tốn nhiều CPU
+&lt;/h2>&lt;p>Với các network request, chúng ta có thể dùng http client bình thường. Chỉ nên dùng nó trong các trường hợp tốn nhiều CPU như xử lý ảnh.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">compute&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">imageProcessing&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">imageData&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Không nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">compute&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">networkRequest&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="tránh-tạo-isolate-liên-tục">Tránh tạo isolate liên tục
+&lt;/h2>&lt;p>Việc tạo isolate mới liên tục gây tiêu tốn CPU và bộ nhớ, đồng thời việc khởi tạo isolate cũng khá chậm, mất khoảng 30ms mỗi lần. Vậy nên, việc sử dụng &lt;strong>Worker Pool&lt;/strong> sẽ giúp tái sử dụng các isolate đã tạo.&lt;/p>
+&lt;h2 id="sử-dụng-kiểu-dữ-liệu-đơn-giản-khi-truyền-qua-port">Sử dụng kiểu dữ liệu đơn giản khi truyền qua port
+&lt;/h2>&lt;p>Do các isolate không chia sẻ bộ nhớ nên dữ liệu truyền giữa các isolate phải được &lt;strong>serialized&lt;/strong>/&lt;strong>deserialized&lt;/strong>. Nếu sử dụng kiểu dữ liệu phức tạp sẽ làm tăng thời gian chuyển đổi và tốn bộ nhớ khi copy dữ liệu.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s1">&amp;#39;id&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;value&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="m">42&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Không nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MyComplexClass&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="dừng-isolate-khi-không-cần">Dừng isolate khi không cần
+&lt;/h2>&lt;p>Khi sử dụng &lt;code>Isolate.spawn&lt;/code>, nó sẽ không tự động giải phóng khi không dùng nữa. Việc để isolate chạy ngầm sẽ gây tốn CPU/bộ nhớ và có thể là cả memory leak. Vậy nên chúng ta có thể sử dụng hàm &lt;code>Isolate.kill&lt;/code> để dừng khi hoàn thành.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">kill&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">priority:&lt;/span> &lt;span class="n">Isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">immediate&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="kết-luận">Kết Luận
+&lt;/h1>&lt;p>Isolate là công cụ mạnh mẽ để xử lý các tác vụ nặng trong Flutter mà không ảnh hưởng đến UI. Tuy có độ phức tạp nhất định, nhưng khi sử dụng đúng cách bằng việc kết hợp với &lt;code>compute&lt;/code> và các thư viện hỗ trợ, bạn có thể tạo ra ứng dụng mượt mà ngay cả khi xử lý nghiệp vụ phức tạp.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://dart.dev/language/concurrency" target="_blank" rel="noopener"
+>Concurrency in Dart&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://dart.dev/language/isolates" target="_blank" rel="noopener"
+>Isolates&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Chuyên án điều tra: Giải mã bí ẩn Key trong Flutter</title><link>https://namanh11611.github.io/vi/p/key/</link><pubDate>Mon, 12 May 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/key/</guid><description>&lt;img src="https://namanh11611.github.io/p/key/key.webp" alt="Featured image of post Chuyên án điều tra: Giải mã bí ẩn Key trong Flutter" />&lt;blockquote>
+&lt;p>Đã quá nhàm chán với những bài viết học thuật? Vậy thì hôm nay mình sẽ mang đến một bài viết với giọng văn hình sự, mời anh em giải trí.&lt;/p>&lt;/blockquote>
+&lt;h1 id="mở-đầu-chuyên-án">Mở đầu chuyên án
+&lt;/h1>&lt;p>&lt;strong>Key&lt;/strong> xuất hiện tràn ngập trong Flutter, từ &lt;strong>StatefulWidget&lt;/strong> tới &lt;strong>StatelessWidget&lt;/strong>. Vậy nhưng tưởng như rất gần mà ngờ đâu đã quá xa, nghĩ rằng đã trở nên thân thuộc mà lại vô cùng bí ẩn. Tuy anh em Flutter developer thường xuyên làm việc với &lt;strong>Widget&lt;/strong>, nhưng &lt;strong>Key&lt;/strong> - thứ luôn âm thầm đứng phía sau các vụ &lt;em>chuyển giao quyền lực&lt;/em> - lại hiếm khi được chú ý.&lt;/p>
+&lt;p>Hôm nay, đội cảnh sát hình sự Flutter Việt Nam sẽ đưa anh em đi sâu vào ngõ ngách của băng đảng &lt;strong>Flutter&lt;/strong>, giải mã vai trò của &lt;strong>Key&lt;/strong> trong việc &lt;strong>tối ưu hóa hiệu năng&lt;/strong> ứng dụng Flutter, đồng thời khám phá các &lt;strong>best practice&lt;/strong> để sử dụng chúng.&lt;/p>
+&lt;h1 id="đi-tìm-ông-trùm-đứng-sau">Đi tìm ông trùm đứng sau
+&lt;/h1>&lt;p>Định nghĩa của Key trong &lt;a class="link" href="https://api.flutter.dev/flutter/foundation/Key-class.html" target="_blank" rel="noopener"
+>document&lt;/a> nói rằng:&lt;/p>
+&lt;blockquote>
+&lt;p>A Key is an identifier for Widgets, Elements and SemanticsNodes.&lt;/p>
+&lt;p>A new widget will only be used to update an existing element if its key is the same as the key of the current widget associated with the element.&lt;/p>
+&lt;p>&lt;em>Tạm dịch:&lt;/em>&lt;/p>
+&lt;p>&lt;em>Key là mã định danh cho Widget, Element và SemanticsNodes.&lt;/em>&lt;/p>
+&lt;p>&lt;em>Một widget mới chỉ được sử dụng để cập nhật một element đã tồn tại nếu key của nó giống với key của widget hiện tại được liên kết với element đó.&lt;/em>&lt;/p>&lt;/blockquote>
+&lt;p>Như anh em đã biết thì trong Flutter, mọi thứ đều là &lt;strong>Widget&lt;/strong>. Băng đảng Widget này gồm nhiều thành phần đã quen mặt với anh em như &lt;strong>Row&lt;/strong>, &lt;strong>Column&lt;/strong>, &lt;strong>Container&lt;/strong>&amp;hellip; Thế nhưng lũ Widget này chỉ là tay chân lâu la, theo các thông tin tình báo chúng tôi có được, băng đảng này được điều hành bởi một ông trùm khét tiếng: &lt;strong>Element&lt;/strong>.&lt;/p>
+&lt;p>Hắn là kẻ thao túng tất cả Widget, từ việc gọi hàm &lt;code>initState&lt;/code>, &lt;code>build&lt;/code>, &lt;code>dispose&lt;/code> của Widget đến vai trò quản lý Widget Tree. &lt;strong>Element&lt;/strong> đồng thời là một mắt xích quan trọng kết nối giữa &lt;strong>Widget&lt;/strong> và &lt;strong>RenderObject&lt;/strong> - kẻ giúp vẽ UI lên màn hình – để điều chế ma&amp;hellip; à nhầm, để tạo nên những tác phẩm nghệ thuật tinh xảo.&lt;/p>
+&lt;p>Tuy nhiên, hôm nay chúng ta không bắt ôm trùm hay triệt phá toàn bộ băng đảng này, chỉ cần đơn giản nhớ rằng &lt;strong>Element&lt;/strong> là kẻ đứng sau điều phối tất cả. Cá nuôi chưa lớn thì chưa nên cất vó. Mục tiêu của chuyên án là điều tra &lt;strong>Key&lt;/strong> và 4 gã &lt;strong>tứ đại cao thủ&lt;/strong>.&lt;/p>
+&lt;h1 id="key">Key
+&lt;/h1>&lt;p>Khi bạn rebuild ứng dụng Flutter, bạn có biết chuyện gì xảy ra trong bóng tối không? &lt;strong>Element&lt;/strong> quyết định những &lt;strong>Widget&lt;/strong> nào sẽ được giữ lại, thay thế, hay hủy bỏ. Và đây là nơi mà &lt;strong>Key&lt;/strong> bắt đầu thể hiện quyền lực.&lt;/p>
+&lt;p>Trong giới Widget, mỗi khi thay đổi diễn ra, Widget không chỉ đơn giản là &lt;strong>update&lt;/strong> mà là bị &lt;strong>huỷ bỏ&lt;/strong> rồi &lt;strong>tái sinh&lt;/strong>. Key chính là &lt;em>căn cước công dân&lt;/em> để các Widget giữ nguyên danh tính của mình khi tái sinh. Sau khi Widget tree bị rebuild, Element sẽ dựa vào &lt;strong>Widget type&lt;/strong> và &lt;strong>Key&lt;/strong> để quyết định xem Element có bị rebuild hay không. Trước mắt, nếu Widget type khác nhau, chắc chắn Element sẽ bị huỷ bỏ đi tạo lại. Mà bạn biết đấy, việc rebuild cả ông trùm thì sẽ rất tốn kém so với việc rebuild đám lâu la Widget. Việc này gây ra những vấn đề không mong muốn về performance và đôi khi làm ứng dụng của bạn lag.&lt;/p>
+&lt;p>Còn nếu Widget type giống nhau, chúng sẽ tiếp tục so sánh đến Key, nếu Key giống nhau thì Element chỉ update widget. Ngược lại, Element sẽ bị deactivate, nghĩa là tạm gỡ ra khỏi Element tree và có khả năng được gắn lại vào tree sau.&lt;/p>
+&lt;p>Key gồm 2 loại chính là &lt;strong>LocalKey&lt;/strong> và &lt;strong>GlobalKey&lt;/strong>, trong đó LocalKey lại được chia ra thành &lt;strong>UniqueKey&lt;/strong>, &lt;strong>ValueKey&lt;/strong> và &lt;strong>ObjectKey&lt;/strong>. Sau đây, chúng ta sẽ đi bóc trần từng gã.&lt;/p>
+&lt;h1 id="uniquekey---sát-thủ-không-thể-truy-dấu">UniqueKey - Sát thủ không thể truy dấu
+&lt;/h1>&lt;p>Một kẻ bí ẩn, thoắt ẩn thoắt hiện, không bao giờ xuất hiện hai lần với cùng một giá trị. Hắn tạo ra &lt;strong>các giá trị duy nhất&lt;/strong> để giúp Flutter &lt;strong>phân biệt hai Widget&lt;/strong> dù chúng có cùng type. Chúng ta cần tới hắn khi &lt;strong>không muốn tái sử dụng&lt;/strong> bất kỳ Widget nào, đảm bảo rằng Widget được rebuild hoàn toàn.&lt;/p>
+&lt;p>Đầu tiên, chúng ta tạo một Item widget chỉ đơn giản là hiển thị một Text, nhưng mình sẽ dùng &lt;code>StatefulWidget&lt;/code> để các bạn thấy rõ được quá trình nó được init và rebuild.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">Item&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">StatefulWidget&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="kt">String&lt;/span> &lt;span class="n">text&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">const&lt;/span> &lt;span class="n">Item&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="k">super&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">required&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">State&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Item&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">createState&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">_ItemState&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">_ItemState&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">State&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Item&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="n">initState&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">super&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">initState&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">debugPrint&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;[_ItemState.initState] key = &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">widget&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">, text = &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">widget&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Widget&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BuildContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">debugPrint&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;[_ItemState.build] key = &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">widget&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">, text = &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">widget&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">widget&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Tiếp theo, mình tạo một &lt;code>ListView&lt;/code> chứa các Item widget đó, bạn có thể thấy mình chưa truyền Key gì cho các item.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">names&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;Henry&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Techie&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Nam&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Anh&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Nguyen&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">HomePage&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">StatefulWidget&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">const&lt;/span> &lt;span class="n">HomePage&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="k">super&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">State&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">HomePage&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">createState&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">_HomePageState&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">_HomePageState&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">State&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">HomePage&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">_counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">void&lt;/span> &lt;span class="n">_incrementCounter&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">setState&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">_counter&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Widget&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BuildContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Scaffold&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">appBar:&lt;/span> &lt;span class="n">AppBar&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">title:&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Demo Key&amp;#39;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">body:&lt;/span> &lt;span class="n">ListView&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">builder&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">itemCount:&lt;/span> &lt;span class="n">_counter&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">itemBuilder:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">index&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">Item&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">text:&lt;/span> &lt;span class="n">names&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">index&lt;/span>&lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">floatingActionButton:&lt;/span> &lt;span class="n">FloatingActionButton&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">onPressed:&lt;/span> &lt;span class="n">_incrementCounter&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Chúng ta có thể xem log và thấy khi bạn click &lt;code>FloatingActionButton&lt;/code> để tạo lần lượt từng item, chỉ widget mới nhất được tạo là gọi đến &lt;code>initState&lt;/code>, còn những widget khác chỉ &lt;code>rebuild&lt;/code>. Đây là log khi mình tạo item thứ 5:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = null, text = Henry
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = null, text = Techie
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = null, text = Nam
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = null, text = Anh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.initState] key = null, text = Nguyen
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = null, text = Nguyen
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bây giờ, đã đến lúc giao việc cho gã sát thủ UniqueKey. Mình sẽ thêm UniqueKey vào Item như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">body:&lt;/span> &lt;span class="n">ListView&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">builder&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">itemCount:&lt;/span> &lt;span class="n">_counter&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">itemBuilder:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">index&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">Item&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">key:&lt;/span> &lt;span class="n">UniqueKey&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">text:&lt;/span> &lt;span class="n">names&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">index&lt;/span>&lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Mọi chuyện đã trở nên hoàn toàn khác, khi click &lt;code>FloatingActionButton&lt;/code> để tạo lần lượt từng item, tất cả các widget đều bị tạo lại. Thậm chí giá trị của Key còn thay đổi sau mỗi lần. Đây là log khi mình tạo item thứ 5, bạn có thể thấy không chỉ riêng item thứ 5 mà tất cả item từ 1 đến 4 cũng đều bị init lại:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[_ItemState.initState] key = [#c24b5], text = Henry
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [#c24b5], text = Henry
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.initState] key = [#02979], text = Techie
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [#02979], text = Techie
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.initState] key = [#0a0db], text = Nam
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [#0a0db], text = Nam
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.initState] key = [#23d4d], text = Anh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [#23d4d], text = Anh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.initState] key = [#614a4], text = Nguyen
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [#614a4], text = Nguyen
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="valuekey---gã-đồ-tể-đáng-tin-cậy">ValueKey - Gã đồ tể đáng tin cậy
+&lt;/h1>&lt;p>Hắn là một kẻ đầu óc đơn giản nhưng làm việc rất hiệu quả, &lt;strong>ValueKey&lt;/strong> là lựa chọn hoàn hảo khi bạn có một giá trị định danh rõ ràng cụ thể, chẳng hạn như &lt;code>String&lt;/code> hoặc &lt;code>int&lt;/code>. Gã đồ tể này giúp Element biết đâu là Widget cần giữ lại chỉ dựa vào giá trị định danh đó, vậy nên chúng ta có thể &lt;strong>tái sử dụng&lt;/strong> Widget khi giá trị Key không thay đổi.&lt;/p>
+&lt;p>Đầu tiên, chúng ta hãy thử update &lt;code>ListView&lt;/code> trong ví dụ trên thành &lt;code>ReorderableListView&lt;/code>. Vì &lt;code>ReorderableListView&lt;/code> bắt buộc mỗi item của nó đều phải có Key, nên chúng ta sẽ bắt đầu ngay với ví dụ Item đã có &lt;code>ValueKey&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">body:&lt;/span> &lt;span class="n">ReorderableListView&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">onReorder:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">oldIndex&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">newIndex&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">setState&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">newIndex&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">oldIndex&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">newIndex&lt;/span> &lt;span class="o">-=&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">item&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">names&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">removeAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">oldIndex&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">names&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">newIndex&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">item&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="n">names&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">map&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">item&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">Item&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">key:&lt;/span> &lt;span class="n">ValueKey&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">item&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">text:&lt;/span> &lt;span class="n">item&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">toList&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bây giờ mỗi khi kéo thả để thay đổi thứ tự các item, chúng ta sẽ thấy các item được rebuild:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [&amp;lt;&amp;#39;Henry&amp;#39;&amp;gt;], text = Henry
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [&amp;lt;&amp;#39;Techie&amp;#39;&amp;gt;], text = Techie
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [&amp;lt;&amp;#39;Nam&amp;#39;&amp;gt;], text = Nam
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [&amp;lt;&amp;#39;Anh&amp;#39;&amp;gt;], text = Anh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [&amp;lt;&amp;#39;Nguyen&amp;#39;&amp;gt;], text = Nguyen
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Vậy, nếu chúng ta thử thay đổi giá trị của một item sau khi kéo thả bằng cách update function &lt;code>onReorder&lt;/code> như sau thì sao? Ví dụ, khi kéo thả item &amp;lsquo;Henry&amp;rsquo;, mình sẽ thay đổi giá trị của nó thành &amp;lsquo;Henry Changed&amp;rsquo;.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">onReorder:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">oldIndex&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">newIndex&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">setState&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">newIndex&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">oldIndex&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">newIndex&lt;/span> &lt;span class="o">-=&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">item&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">names&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">removeAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">oldIndex&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1"> Changed&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">names&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">newIndex&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">item&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Khi đó, giá trị thay đổi dẫn tới ValueKey cũng bị thay đổi, item sẽ bị tạo lại như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[_ItemState.initState] key = [&amp;lt;&amp;#39;Henry Changed&amp;#39;&amp;gt;], text = Henry Changed
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[_ItemState.build] key = [&amp;lt;&amp;#39;Henry Changed&amp;#39;&amp;gt;], text = Henry Changed
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="objectkey---quân-sư-đa-mưu-túc-trí">ObjectKey - Quân sư đa mưu túc trí
+&lt;/h1>&lt;p>Ngược lại với Value Key, gã này là một bậc thầy chiến lược, giữ trong tay cả một object phức tạp. &lt;strong>ObjectKey&lt;/strong> dựa trên &lt;strong>tham chiếu&lt;/strong> đến object. 2 Key chỉ được coi là &lt;strong>giống nhau&lt;/strong> nếu chúng tham chiếu đến cùng một object.&lt;/p>
+&lt;p>Tương tự ví dụ trên về ValueKey, chúng ta sẽ update lại một chút để sử dụng ObjectKey thay cho ValueKey.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">_HomePageState&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">State&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">HomePage&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Person&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">people&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Person&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">name:&lt;/span> &lt;span class="s2">&amp;#34;Henry&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Person&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">name:&lt;/span> &lt;span class="s2">&amp;#34;Techie&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Person&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">name:&lt;/span> &lt;span class="s2">&amp;#34;Nam&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Person&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">name:&lt;/span> &lt;span class="s2">&amp;#34;Anh&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Person&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">name:&lt;/span> &lt;span class="s2">&amp;#34;Nguyen&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Widget&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BuildContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Scaffold&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">appBar:&lt;/span> &lt;span class="n">AppBar&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">title:&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Demo Key&amp;#39;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">body:&lt;/span> &lt;span class="n">ReorderableListView&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">onReorder:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">oldIndex&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">newIndex&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">setState&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">newIndex&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">oldIndex&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">newIndex&lt;/span> &lt;span class="o">-=&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">item&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">people&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">removeAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">oldIndex&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">people&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">newIndex&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">item&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="n">people&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">map&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">item&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">Item&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">key:&lt;/span> &lt;span class="n">ObjectKey&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">item&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">text:&lt;/span> &lt;span class="n">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">toList&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">Person&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="kt">String&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Person&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="kd">required&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="globalkey---người-quản-gia-quyền-năng">GlobalKey - Người quản gia quyền năng
+&lt;/h1>&lt;p>Trong băng đảng, GlobalKey là kẻ mạnh nhất. Hắn biết tất cả mọi thứ trong Widget Tree. Không chỉ lưu danh tính, hắn còn quản lý toàn bộ trạng thái và cho phép truy cập trực tiếp đến &lt;code>State&lt;/code>. Điều này mang lại sự linh hoạt nhưng cũng dễ bị lạm dụng.&lt;/p>
+&lt;p>Ví dụ thường thấy nhất là dùng GlobalKey để kiểm soát và xác nhận trạng thái của &lt;code>Form&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">GlobalKeyExample&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">StatelessWidget&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">GlobalKey&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">FormState&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">formKey&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">GlobalKey&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">FormState&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Widget&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BuildContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Form&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">key:&lt;/span> &lt;span class="n">formKey&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">TextFormField&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">validator:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">isEmpty&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="s1">&amp;#39;Required&amp;#39;&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ElevatedButton&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">onPressed:&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">formKey&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">currentState&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">validate&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Form is valid!&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Submit&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="best-practices-khi-dùng-key">Best Practices khi dùng Key
+&lt;/h1>&lt;p>&lt;strong>Key&lt;/strong> không chỉ là một công cụ, mà là &lt;em>bảo bối&lt;/em> để kiểm soát ứng dụng. Việc hiểu và sử dụng đúng Key không chỉ giúp bạn tối ưu hóa performance mà còn đảm bảo logic của ứng dụng luôn ổn định và chính xác. Lạm dụng nó có thể làm code trở nên phức tạp không cần thiết, vậy nên hãy chỉ sử dụng khi cần. Hãy nhớ rằng trong thế giới Flutter đầy biến động này, Key chính là chiếc chìa khóa cho sự mượt mà của ứng dụng mà anh em đang phát triển!&lt;/p></description></item><item><title>Flutter MVVM Riverpod Starter: Tạo App Siêu Tốc cho Vibe Coder</title><link>https://namanh11611.github.io/vi/p/flutter-mvvm-riverpod/</link><pubDate>Sun, 11 May 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/flutter-mvvm-riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-mvvm-riverpod/fmr.webp" alt="Featured image of post Flutter MVVM Riverpod Starter: Tạo App Siêu Tốc cho Vibe Coder" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@4000km?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>7&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/a-silver-and-red-train-traveling-down-train-tracks-u6QssbF_9JM?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>Dạo gần đây mình dành thời gian build một số app như &lt;a class="link" href="https://habittree.xyz" target="_blank" rel="noopener"
+>&lt;strong>Habit Tree&lt;/strong>&lt;/a> và &lt;a class="link" href="https://speakie.xyz" target="_blank" rel="noopener"
+>&lt;strong>Speakie&lt;/strong>&lt;/a> (bạn có thể xem đầy đủ tại &lt;a class="link" href="https://areser.net" target="_blank" rel="noopener"
+>&lt;strong>Areser&lt;/strong>&lt;/a>), hoặc thỉnh thoảng làm một số dự án outsource cho khách hàng. Mỗi lần bắt đầu một dự án mới là mình phải mất cả ngày để set up architecture, routing, auth, state management&amp;hellip; cho app. Vậy nên, xuất phát nhu cầu thực tế, mình đã nghĩ đến việc build một &lt;strong>base project Flutter&lt;/strong> gọn nhẹ để có thể bắt đầu nhanh nhất có thể. Và đó chính là lý do mà &lt;strong>Flutter MVVM Riverpod Starter&lt;/strong> ra đời.&lt;/p>
+&lt;blockquote>
+&lt;p>Bạn có thể xem ngay tại link: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+>https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;h1 id="-tại-sao-lại-chọn-starter-này">🚀 Tại sao lại chọn starter này?
+&lt;/h1>&lt;p>Mục tiêu của mình là tạo ra một template nhẹ, nhưng đủ sức mạnh cho &lt;strong>indie hacker&lt;/strong> và &lt;strong>solo developer&lt;/strong>. Chính vì vậy mà mình đã không chọn &lt;strong>Clean Architecture&lt;/strong>, nó quá cồng kềnh với đối tượng mà mình nhắm tới. Hãy thử nghĩ xem, với dự án mình làm một mình hoặc team nhỏ chỉ 2-3 người, &lt;strong>99.99%&lt;/strong> là team sẽ không cần đến &lt;strong>Abtract Repository&lt;/strong> để cho multiple implementation. &lt;strong>Andrea&lt;/strong> - một Flutter developer nổi tiếng - cũng đã nhắc đến vấn đề này trong bài viết &lt;a class="link" href="https://codewithandrea.com/articles/flutter-repository-pattern/#repositories-may-not-need-an-abstract-class" target="_blank" rel="noopener"
+>Flutter App Architecture: The Repository Pattern&lt;/a>.&lt;/p>
+&lt;p>Sau khi cân đo đong đếm, mình chọn kiến trúc &lt;strong>MVVM&lt;/strong> (Model - View - ViewModel), chỉ đơn giản là dùng ViewModel để tách biệt logic ra khỏi UI.&lt;/p>
+&lt;p>Mình cũng chọn &lt;strong>Riverpod&lt;/strong>, một state management giúp quản lý state linh hoạt. Mình biết tỷ lệ các bạn dùng &lt;strong>BloC&lt;/strong> sẽ đông hơn, mình không đánh giá cái nào tốt hơn cái nào, chỉ đơn giản là mình thấy &lt;strong>Riverpod&lt;/strong> viết code ngắn gọn hơn &lt;strong>BloC&lt;/strong>.&lt;/p>
+&lt;p>Tiếp theo là phần Backend, mình biết đa số solo developer sẽ tích hợp &lt;strong>Firebase&lt;/strong>, nhưng nó có một vấn đề là &amp;hellip; &lt;strong>ĐẮT&lt;/strong> (khi dự án của bạn bắt đầu scale). Vậy nên mình đã chọn &lt;strong>Supabase&lt;/strong>, cũng tương tự như &lt;strong>Firebase&lt;/strong> nhưng RẺ hơn. Mình đã tích hợp sẵn code setup và một số function authentication.&lt;/p>
+&lt;p>Nếu anh em muốn kiếm tiền từ app thì cũng sẽ không thể thiếu được &lt;strong>RevenueCat&lt;/strong>, giúp quản lý in-app purchase và subscription.&lt;/p>
+&lt;p>Ngoài ra còn Dark/Light Theme, Localization, routing, local storage, analytics, crashlytics&amp;hellip; tất cả đều đã sẵn sàng.&lt;/p>
+&lt;h1 id="-thư-viện-sử-dụng">📚 Thư viện sử dụng
+&lt;/h1>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Mục đích&lt;/th>
+&lt;th>Thư viện&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>State&lt;/td>
+&lt;td>&lt;code>flutter_riverpod&lt;/code>, &lt;code>riverpod_annotation&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Auth &amp;amp; Backend&lt;/td>
+&lt;td>&lt;code>supabase_flutter&lt;/code>, &lt;code>google_sign_in&lt;/code>, &lt;code>sign_in_with_apple&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Navigation&lt;/td>
+&lt;td>&lt;code>go_router&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>UI/UX&lt;/td>
+&lt;td>&lt;code>google_fonts&lt;/code>, &lt;code>flutter_svg&lt;/code>, &lt;code>shimmer&lt;/code>, &lt;code>lottie&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Storage&lt;/td>
+&lt;td>&lt;code>shared_preferences&lt;/code>, &lt;code>sqflite&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>HTTP&lt;/td>
+&lt;td>&lt;code>dio&lt;/code>, &lt;code>connectivity_plus&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Utils&lt;/td>
+&lt;td>&lt;code>uuid&lt;/code>, &lt;code>envied&lt;/code>, &lt;code>easy_localization&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Monetization&lt;/td>
+&lt;td>&lt;code>purchases_flutter&lt;/code>, &lt;code>in_app_purchase&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Analytics&lt;/td>
+&lt;td>&lt;code>firebase_analytics&lt;/code>, &lt;code>firebase_crashlytics&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h1 id="-kiến-trúc-project">🏗 Kiến trúc project
+&lt;/h1>&lt;p>Về kiến trúc project, mình chọn Feature-first (layer folder bên trong feature folder). Với mỗi feature như &lt;code>authentication&lt;/code>, &lt;code>onboarding&lt;/code>&amp;hellip; mình sẽ tạo 1 folder bên trong &lt;code>features&lt;/code>. Sau đó bên trong folder đó, mình lại tạo các layer folder như &lt;code>model&lt;/code>, &lt;code>repository&lt;/code>, &lt;code>ui&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">lib/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── constants/ &lt;span class="c1"># Hằng số, config chung&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── environment/ &lt;span class="c1"># Biến môi trường&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── extensions/ &lt;span class="c1"># Extension/helper methods&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── features/ &lt;span class="c1"># Module chức năng theo folder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── authentication/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── model/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── repository/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── ui/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── onboarding/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── home/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── profile/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── premium/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── routing/ &lt;span class="c1"># Cấu hình route với go_router&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── theme/ &lt;span class="c1"># Config giao diện&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── utils/ &lt;span class="c1"># Tiện ích chung&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bạn có thể thấy không có layer như &lt;code>domain&lt;/code> hay &lt;code>data&lt;/code>.&lt;/p>
+&lt;p>Thường khi dùng Clean Architecture, &lt;code>domain&lt;/code> của anh em sẽ có &lt;code>model&lt;/code>, &lt;code>abtract repository&lt;/code>, &lt;code>use case&lt;/code>, nhưng giờ đây với việc không cần đến &lt;code>abtract repository&lt;/code> và &lt;code>use case&lt;/code>, mình có thể tối giản nó chỉ còn &lt;code>model&lt;/code>.&lt;/p>
+&lt;p>Còn với &lt;code>data&lt;/code>, với những feature chỉ cần truy cập tới remote hoặc local data, mình sẽ gọi hàm trực tiếp trong &lt;code>repository&lt;/code>. Còn những feature cần cả 2 loại data, mình sẽ cân nhắc tạo &lt;code>data source&lt;/code> nếu cần thiết.&lt;/p>
+&lt;h1 id="-lời-kết">🎉 Lời kết
+&lt;/h1>&lt;p>Phong trào &lt;strong>vibe coding&lt;/strong> ngày càng lên cao, vậy nhưng mình vẫn muốn &lt;strong>vide coding một cách có kiểm soát&lt;/strong>. Với base project này, mình có thể hướng dẫn AI code theo cách mà mình muốn. Nếu nó có đi chệch đường ray thì mình cũng nhanh chóng nắn chỉnh lại được.&lt;/p>
+&lt;p>Như đã nói từ đầu, project này dành cho anh em &lt;strong>indie hacker&lt;/strong> và &lt;strong>solo developer&lt;/strong> muốn launch &lt;strong>MVP&lt;/strong> nhanh, nó giúp bạn tập trung vào business logic thay vì mất cả ngày setup và viết code. Vậy nên có thể nó sẽ chưa phù hợp với team của bạn nếu như team đông người và cần một base project chuẩn &lt;strong>Clean Architecture&lt;/strong>.&lt;/p>
+&lt;p>Nếu bạn thấy nó có ích, đừng ngần ngại tặng mình 1 star nhé!&lt;/p>
+&lt;blockquote>
+&lt;p>Link GitHub: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+>https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a>&lt;/p>&lt;/blockquote></description></item><item><title>Dùng code generation provider trong Flutter Riverpod cho đời đơn giản hơn</title><link>https://namanh11611.github.io/vi/p/riverpod/</link><pubDate>Fri, 11 Oct 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod.webp" alt="Featured image of post Dùng code generation provider trong Flutter Riverpod cho đời đơn giản hơn" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@dillonjshook?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Dillon Shook&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/person-sitting-on-sofa-resting-its-feet-on-top-of-coffee-table-while-using-laptop-3iPKIXVXv_U?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>Không biết có bạn nào luôn băn khoăn mỗi lần phải chọn 1 trong 7 loại &lt;strong>provider&lt;/strong> của &lt;strong>Riverpod&lt;/strong> cho từng use case trong dự án của mình chưa? Ví dụ như 2 loại &lt;strong>NotifierProvider&lt;/strong> và &lt;strong>StateNotifierProvider&lt;/strong> trong &lt;a class="link" href="https://riverpod.dev/docs/concepts/providers#different-types-of-providers" target="_blank" rel="noopener"
+>document&lt;/a> đều được lấy ví dụ là dùng trong trường hợp:&lt;/p>
+&lt;blockquote>
+&lt;p>Một state object phức tạp không thể thay đổi trừ khi thông qua một interface.&lt;/p>&lt;/blockquote>
+&lt;p>Hoặc chính &lt;strong>ChangeNotifierProvider&lt;/strong> lại được khuyên là không nên dùng cho các app có khả năng cần scale sau này.&lt;/p>
+&lt;p>Gì vậy trời??? Tác giả thật biết cách khiến cho anh em dev thấy hoang mang mà&amp;hellip;&lt;/p>
+&lt;p>Nhưng giờ đây, tác giả &lt;strong>Remi Rousselet&lt;/strong> đã giới thiệu cách dùng &lt;strong>Riverpod&lt;/strong> mới với &lt;strong>code generation&lt;/strong>, giúp cho cuộc đời của developer chúng ta dễ thở hơn đôi chút.&lt;/p>
+&lt;h1 id="syntax">Syntax
+&lt;/h1>&lt;p>Giải thích một cách đơn giản, &lt;strong>code generation trong Riverpod&lt;/strong> là cách chúng ta khai báo các provider với annotation &lt;code>@riverpod&lt;/code>, và phần lớn code còn lại sẽ được tạo ra tự động với tool &lt;code>build_runner&lt;/code> có sẵn của Dart.&lt;/p>
+&lt;p>Thay vì định nghĩa provider như trước đây:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">fetchUserProvider&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">FutureProvider&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">autoDispose&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">family&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">ref&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">userId&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">json&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="kd">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;api/user/&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">userId&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">User&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">fromJson&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bây giờ chúng ta chỉ cần viết:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">riverpod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Future&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">fetchUser&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">FetchUserRef&lt;/span> &lt;span class="n">ref&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="kd">required&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">userId&lt;/span>&lt;span class="p">})&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">json&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="kd">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;api/user/&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">userId&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">User&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">fromJson&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Thay vì phải ngồi suy nghĩ để chọn lựa 1 trong 7 provider như trước đây, bây giờ bạn có thể xem bảng sau và chọn ra provider phù hợp với use case của mình một cách nhanh chóng:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>Functional &lt;br> (Không thể cập nhật &lt;br> bằng public methods)&lt;/th>
+&lt;th>Class-Based &lt;br> (Có thể cập nhật &lt;br> bằng public methods)&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Sync&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_sync.png"
+width="894"
+height="220"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_sync_hu_4e188c495a447dd4.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_sync_hu_996171c940a90b7b.png 1024w"
+loading="lazy"
+alt="Functional Sync"
+class="gallery-image"
+data-flex-grow="406"
+data-flex-basis="975px"
+>&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_sync.png"
+width="702"
+height="440"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_sync_hu_7eba6f0a8c4cfe67.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_sync_hu_85143876603243c3.png 1024w"
+loading="lazy"
+alt="Class-Based Sync"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="382px"
+>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Async - Future&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_future.png"
+width="898"
+height="214"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_future_hu_988d8144006a21af.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_future_hu_1659aab0cb062ad.png 1024w"
+loading="lazy"
+alt="Functional Async - Future"
+class="gallery-image"
+data-flex-grow="419"
+data-flex-basis="1007px"
+>&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_future.png"
+width="698"
+height="436"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_future_hu_ea883ebcd9b2018d.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_future_hu_6d33783250e4172e.png 1024w"
+loading="lazy"
+alt="Class-Based Async - Future"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="384px"
+>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Async - Stream&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_stream.png"
+width="898"
+height="214"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_stream_hu_29fcfd4a8da1fceb.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_stream_hu_a4ee354af8b65305.png 1024w"
+loading="lazy"
+alt="Functional Async - Stream"
+class="gallery-image"
+data-flex-grow="419"
+data-flex-basis="1007px"
+>&lt;/td>
+&lt;td>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_stream.png"
+width="698"
+height="426"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_stream_hu_360705b05ad17b14.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_stream_hu_1ac48d6de880eaea.png 1024w"
+loading="lazy"
+alt="Class-Based Async - Stream"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="393px"
+>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="keepalive">keepAlive
+&lt;/h2>&lt;p>Theo cách viết mới này, mặc định tất cả provider sẽ là &lt;strong>auto dispose&lt;/strong>, nghĩa là state sẽ bị destroy khi provider không còn listener nào observe nó nữa. Nó hơi ngược với cách viết cũ (bạn phải thêm &lt;code>autoDispose&lt;/code>, còn mặc định sẽ không bị dispose).&lt;/p>
+&lt;p>Vậy nên, để disable tính năng auto dispose này đi, giữ cho provider của bạn luôn sống, thay vì khai báo &lt;code>@riverpod&lt;/code> bạn phải viết thành:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">Riverpod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">keepAlive:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="param">Param
+&lt;/h2>&lt;p>Như bạn có thể thấy ở ví dụ ban đầu, việc thêm &lt;strong>param&lt;/strong> cho provider bây giờ không khác gì thêm param cho một function thông thường cả. Chúng ta không cần dùng đến &lt;code>family&lt;/code> như cách code cũ.&lt;/p>
+&lt;p>Với Functional provider, chúng ta thêm trực tiếp vào function như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">riverpod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">String&lt;/span> &lt;span class="n">example&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ExampleRef&lt;/span> &lt;span class="n">ref&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">param1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">String&lt;/span> &lt;span class="n">param2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;foo&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">})&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;Hello &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">param1&lt;/span>&lt;span class="s1"> &amp;amp; param2&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Còn đối với Class-Based provider, chúng ta sẽ thêm vào method &lt;code>build&lt;/code> như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="n">riverpod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">Example&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">_$Example&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">String&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">param1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">String&lt;/span> &lt;span class="n">param2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;foo&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">})&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;Hello &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">param1&lt;/span>&lt;span class="s1"> &amp;amp; param2&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Add methods to mutate the state
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="ưu-điểm">Ưu điểm
+&lt;/h1>&lt;p>Hiện tại, việc sử dụng code generation hay cách code cũ vẫn là optional. Nếu bạn vẫn đang cân nhắc lý do để chuyển đổi thì đây là những lý do tác giả đưa ra cho bạn:&lt;/p>
+&lt;ul>
+&lt;li>Syntax tốt hơn, dễ đọc, dễ học và linh hoạt hơn.
+&lt;ul>
+&lt;li>Chúng ta không cần phải lo lắng về việc chọn provider nào nữa. Chỉ cần viết logic code và Riverpod sẽ chọn loại &lt;strong>phù hợp nhất&lt;/strong> cho bạn.&lt;/li>
+&lt;li>Syntax không còn giống như một &lt;strong>biến global&lt;/strong> nữa, mà chỉ như một &lt;strong>custom function&lt;/strong> hay &lt;strong>custom class&lt;/strong>.&lt;/li>
+&lt;li>Việc truyền param tới provider &lt;strong>không còn bị giới hạn&lt;/strong>. Chúng ta có thể truyền &lt;strong>named param&lt;/strong>, &lt;strong>optional param&lt;/strong> hoặc &lt;strong>default value&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Stateful hot-reload code&lt;/strong> được viết trong Riverpod.&lt;/li>
+&lt;li>Debug tốt hơn.&lt;/li>
+&lt;li>Một vài feature chỉ có thể dùng với code generation.&lt;/li>
+&lt;/ul>
+&lt;h1 id="nhược-điểm">Nhược điểm
+&lt;/h1>&lt;p>Tuy nhiên, trong quá trình áp dụng vào dự án thực tế, nó vẫn có một số nhược điểm mà bạn nên lưu tâm.&lt;/p>
+&lt;p>Hiện tại, do code generation mới ra mắt không lâu nên có &lt;strong>khá ít dự án áp dụng&lt;/strong>. Vì vậy, bạn cũng sẽ &lt;strong>khó tìm thấy source code&lt;/strong> để tham khảo. Gần như trong quá trình làm việc, nguồn tham khảo duy nhất của mình chỉ là &lt;strong>document của Riverpod&lt;/strong>.&lt;/p>
+&lt;p>Trong thời đại AI này, anh em cũng thường xuyên áp dụng các tool để &lt;strong>generate code&lt;/strong>. Đầu vào đã ít thì lấy đâu ra đầu ra, vậy nên khi bạn dùng tool, hầu hết nó sẽ generate code Riverpod theo kiểu cũ. Nhưng đừng lo vì trên Android Studio cũng đã có plugin &lt;a class="link" href="https://plugins.jetbrains.com/plugin/14641-flutter-riverpod-snippets" target="_blank" rel="noopener"
+>Flutter Riverpod Snippets&lt;/a>, giúp bạn gõ code nhanh hơn chút. Chỉ cần gõ riverpod là nó sẽ gợi ý cho bạn 4 loại provider trên.&lt;/p>
+&lt;p>Những nhược điểm này chỉ mang tính tạm thời, khi code generation trở nên phổ biến hơn, chắc chắn chúng sẽ được khắc phục. Vậy nên bạn không cần phải quá lo lắng.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://riverpod.dev/docs/concepts/about_code_generation" target="_blank" rel="noopener"
+>https://riverpod.dev/docs/concepts/about_code_generation&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Flutter Hooks - viết code ngắn gọn và hiệu quả hơn</title><link>https://namanh11611.github.io/vi/p/flutter-hooks/</link><pubDate>Tue, 30 Apr 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/flutter-hooks/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-hooks/hooks.webp" alt="Featured image of post Flutter Hooks - viết code ngắn gọn và hiệu quả hơn" />&lt;h1 id="flutter-hooks-là-cái-chi-chi">Flutter Hooks là cái chi chi?
+&lt;/h1>&lt;p>Khi tìm kiếm từ khoá &lt;strong>Hooks&lt;/strong> trên Google, chúng ta sẽ thấy rất nhiều kết quả liên quan đến &lt;strong>React&lt;/strong>. Quả thật, như trong phần giới thiệu, thư viện &lt;a class="link" href="https://pub.dev/packages/flutter_hooks" target="_blank" rel="noopener"
+>&lt;strong>flutter_hooks&lt;/strong>&lt;/a> được tác giả &lt;a class="link" href="https://github.com/rrousselGit" target="_blank" rel="noopener"
+>&lt;strong>Remi Rousselet&lt;/strong>&lt;/a> build dựa trên niềm cảm hứng từ React.&lt;/p>
+&lt;p>&lt;strong>Hooks&lt;/strong> là một loại object giúp quản lý life-cycle của &lt;code>Widget&lt;/code>. Mục tiêu duy nhất của nó là giúp tăng khả năng chia sẻ source code giữa các &lt;code>Widget&lt;/code> bằng cách loại bỏ các phần code trùng lặp.&lt;/p>
+&lt;p>Các bạn có thể sẽ thắc mắc: &lt;em>&amp;ldquo;Ủa, &lt;code>StatefulWidget&lt;/code> trong Flutter đã có method &lt;code>initState&lt;/code> và &lt;code>dispose&lt;/code> để lo việc quản lý life-cycle rồi cơ mà? Cần gì Hook nữa?&amp;rdquo;&lt;/em>. Chính xác, thế nhưng chúng ta rất khó để tái sử dụng code trong 2 method này. Và &lt;strong>Hooks&lt;/strong> sinh ra để giải quyết vấn đề đó.&lt;/p>
+&lt;h1 id="hướng-dẫn-sử-dụng">Hướng dẫn sử dụng
+&lt;/h1>&lt;p>Một ví dụ đơn giản về Hooks như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">MyHookWidget&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">HookWidget&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">const&lt;/span> &lt;span class="n">MyHookWidget&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="k">super&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Widget&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BuildContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Scaffold&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">body:&lt;/span> &lt;span class="n">Center&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Counter: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">counter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">floatingActionButton:&lt;/span> &lt;span class="n">FloatingActionButton&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">onPressed:&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">counter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="kd">const&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bạn có thể thấy &lt;code>Widget&lt;/code> của chúng ta thay vì extend &lt;code>StatefulWidget&lt;/code> hay &lt;code>StatelessWidget&lt;/code>, thì bây giờ nó phải extend một &lt;code>HookWidget&lt;/code>. Trong method &lt;code>build&lt;/code> có một từ khoá lạ lạ là &lt;code>useState&lt;/code>, đấy chính là một trong những &lt;strong>hook&lt;/strong> của Flutter Hooks, phần sau chúng ta sẽ cùng đi tìm hiểu một số hook cơ bản của nó.&lt;/p>
+&lt;p>Giờ đây, khi bạn click vào &lt;code>FloatingActionButton&lt;/code>, giá trị của text sẽ thay đổi với biến &lt;code>counter&lt;/code> tăng dần, nó tương tự như cách mà &lt;code>StatefulWidget&lt;/code> hoạt động phải không nào?&lt;/p>
+&lt;h2 id="useeffect-hook">useEffect hook
+&lt;/h2>&lt;p>Nó gần giống với &lt;code>useEffect&lt;/code> hook của React, được sử dụng để thực hiện các side effect &lt;strong>synchronously&lt;/strong> trong quá trình render. Effect có thể return một function, function này sẽ được gọi khi &lt;strong>effect được gọi lại&lt;/strong> hoặc &lt;strong>widget bị dispose&lt;/strong>.&lt;/p>
+&lt;p>Mặc định, effect được gọi lại mỗi lần build, trừ khi chúng ta truyền &lt;strong>param key&lt;/strong>. Khi đó, effect chỉ được gọi lại khi key thay đổi.&lt;/p>
+&lt;p>Side effect có thể bao gồm stream subscription, mở một &lt;strong>WebSocket connection&lt;/strong> hoặc thực hiện một &lt;strong>HTTP request&lt;/strong>. Chúng ta có thể cancel chúng khi widget bị dispose.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">useEffect&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">performSideEffect&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cleanUp&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usestate-hook">useState hook
+&lt;/h2>&lt;p>Đây là loại hook cơ bản nhất khi bạn muốn chuyển một &lt;code>StatelessWidget&lt;/code> sang &lt;code>StatefulWidget&lt;/code>. Khi được gọi trong method &lt;code>build&lt;/code>, nó sẽ giữ state giữa những lần widget rebuild.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong ví dụ này, chúng ta truyền cho nó một giá trị khởi tạo là &lt;code>0&lt;/code>. Biến &lt;code>counter&lt;/code> chính là một instance của &lt;code>ValueNotifier&lt;/code>. State được lưu trong thuộc tính &lt;code>value&lt;/code> của &lt;code>ValueNotifier&lt;/code>. Mỗi khi giá trị của &lt;code>value&lt;/code> bị thay đổi, &lt;code>useState&lt;/code> hook sẽ rebuild widget để hiển thị giá trị mới.&lt;/p>
+&lt;h2 id="usememoized-hook">useMemoized hook
+&lt;/h2>&lt;p>Đây là một method hữu ích khi bạn cần tạo một object phức tạp và muốn trả về cùng một object đó qua nhiều lần rebuild widget con. &lt;code>useMemoized&lt;/code> sẽ giúp chúng ta cache object đó, giá trị chỉ được tính toán trong lần gọi đầu tiên, còn những lần sau, nó sẽ trả về giá trị đã được lưu trước đó.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">complexObject&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useMemoized&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">createComplexObject&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="useref-hook">useRef hook
+&lt;/h2>&lt;p>Tạo một object chứa một thuộc tính có thể thay đổi. Tuy nhiên thì việc thay đổi thuộc tính của object sẽ không có effect. Nó phù hợp cho các use-case mà chúng ta cần share state giữa những lần &lt;code>build&lt;/code> method được gọi, nhưng tránh được việc rebuild không cần thiết.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">textController&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useTextEditingController&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">/// Sử dụng useState() trong trường hợp này
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">/// sẽ làm widget rebuild mỗi lần nhập một ký tự
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// final name = useState(&amp;#39;&amp;#39;);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kd">final&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useRef&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">useEffect&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">textController&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">addListener&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">textController&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usecallback-hook">useCallback hook
+&lt;/h2>&lt;p>Cache instance của toàn bộ một function, nếu như chính function đó được gọi lại.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">cachedFun&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useCallback&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Statements&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usecontext-hook">useContext hook
+&lt;/h2>&lt;p>Giữ &lt;code>BuildContext&lt;/code> của &lt;code>HookWidget&lt;/code>, giúp chúng ta không phải truyền param &lt;code>context&lt;/code> qua các method.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Widget&lt;/span> &lt;span class="n">createSizedBox&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">SizedBox&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">height:&lt;/span> &lt;span class="n">MediaQuery&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sizeOf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">useContext&lt;/span>&lt;span class="p">()).&lt;/span>&lt;span class="n">height&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="m">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usevaluechanged-hook">useValueChanged hook
+&lt;/h2>&lt;p>Theo dõi một giá trị và trigger một callback bất cứ khi nào giá trị của nó thay đổi. Quay trở lại với ví dụ ban đầu, chúng ta sửa một chút như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">count&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">newCount&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">useValueChanged&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">count&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">oldValue&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">oldResult&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;oldValue = &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">oldValue&lt;/span>&lt;span class="s1">, oldResult = &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">oldResult&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">newCount&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="m">5&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">newCount&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Khi click &lt;code>FloatingActionButton&lt;/code>, kết quả sẽ được in ra lần lượt như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">oldValue = 0, oldResult = null
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">oldValue = 1, oldResult = 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">oldValue = 2, oldResult = 10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bạn có thể thấy, mỗi khi giá trị của &lt;code>count&lt;/code> thay đổi, &lt;code>newCount&lt;/code> cũng sẽ được thay đổi theo.&lt;/p>
+&lt;h2 id="usestream-hook">useStream hook
+&lt;/h2>&lt;p>Giúp subscribe một &lt;code>Stream&lt;/code> và return state hiện tại nó.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">snapshot&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useStream&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">backend&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="useanimationcontroller-hook">useAnimationController hook
+&lt;/h2>&lt;p>Tạo một &lt;code>AnimationController&lt;/code> và nó sẽ bị dispose một cách tự động.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">controller&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useAnimationController&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">duration:&lt;/span> &lt;span class="n">Duration&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">seconds:&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="lợi-ích-của-hooks">Lợi ích của Hooks
+&lt;/h1>&lt;ol>
+&lt;li>&lt;strong>State Management&lt;/strong>: Hooks giúp đơn giản hóa việc quản lý local state, đảm bảo widget chỉ xử lý logic liên quan đến nó.&lt;/li>
+&lt;li>&lt;strong>Giảm duplicate code&lt;/strong>: Custom hooks cho phép bạn tái sử dụng logic của widget, giảm đáng kể việc duplicate code và cải thiện chất lượng code.&lt;/li>
+&lt;li>&lt;strong>Cải thiện Hot Reload&lt;/strong>: Với hooks, hot reload mặc định ít bị lỗi hơn vì trạng thái của hook được giữ nguyên.&lt;/li>
+&lt;li>&lt;strong>Tiện lợi&lt;/strong>: Một số built-in hooks như &lt;code>useAnimationController&lt;/code>, &lt;code>useFuture&lt;/code> và &lt;code>useStream&lt;/code> là những method có thể áp dụng cho nhiều use-case phổ biến.&lt;/li>
+&lt;li>&lt;strong>Đơn giản hóa life-cycle&lt;/strong>: Việc quản lý các life-cycle phức tạp trở nên đơn giản hơn rất nhiều với Flutter Hooks. Chúng cung cấp một giải pháp để dễ dàng quản lý state, side-effects và stream subscriptions.&lt;/li>
+&lt;li>&lt;strong>Custom hooks linh hoạt&lt;/strong>: Ngoài các hook đã có sẵn, Flutter Hooks cho phép bạn tạo các hooks tùy chỉnh, giúp việc viết code linh hoạt hơn.&lt;/li>
+&lt;/ol>
+&lt;p>Có thể bạn đã biết &lt;strong>Remi Rousselet&lt;/strong> còn là tác giả của 2 thư viện &lt;strong>State Management&lt;/strong> nổi tiếng là &lt;a class="link" href="https://pub.dev/packages/provider" target="_blank" rel="noopener"
+>&lt;strong>Provider&lt;/strong>&lt;/a> và &lt;a class="link" href="https://pub.dev/packages/flutter_riverpod" target="_blank" rel="noopener"
+>&lt;strong>Riverpod&lt;/strong>&lt;/a>. Trong đó thì anh ấy đã kết hợp Riverpod và Hook trong một thư viện là &lt;a class="link" href="https://pub.dev/packages/hooks_riverpod" target="_blank" rel="noopener"
+>&lt;strong>Hooks Riverpod&lt;/strong>&lt;/a>. Bạn có thể nhân hai sức mạnh với thư viện này. Riverpod là dành cho &amp;ldquo;global&amp;rdquo; application state, còn hooks dành cho local widget state.&lt;/p>
+&lt;h1 id="lời-kết">Lời kết
+&lt;/h1>&lt;p>Mình thấy &lt;strong>Flutter Hooks&lt;/strong> khá tiềm năng, nhưng vẫn thấy chưa nhiều dự án áp dụng. Không biết các bạn đã từng áp dụng nó chưa? Nếu thấy nó có ưu hoặc nhược điểm gì, hãy chia sẻ với mình nhé.&lt;/p></description></item><item><title>Custom Curved Bottom Navigation Bar trong Flutter</title><link>https://namanh11611.github.io/vi/p/curved-bottom-navigation-bar/</link><pubDate>Mon, 17 Oct 2022 22:36:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/curved-bottom-navigation-bar/</guid><description>&lt;img src="https://namanh11611.github.io/p/curved-bottom-navigation-bar/navigation.webp" alt="Featured image of post Custom Curved Bottom Navigation Bar trong Flutter" />&lt;h1 id="đi-tìm-một-bottom-navigation-bar-ưng-ý">Đi tìm một Bottom Navigation Bar ưng ý
+&lt;/h1>&lt;p>Gần đây, trong quá trình làm dự án ở công ty, mình được tìm hiểu thêm về &lt;strong>Flutter&lt;/strong>. Đó đúng là một framework giúp build mobile app cross platform rất nhanh. Theo một số bài đo đạc đánh giá thì &lt;strong>Flutter&lt;/strong> còn có hiệu năng gần bằng native (&lt;strong>Kotlin&lt;/strong> và &lt;strong>Swift&lt;/strong>), đương nhiên là vượt xa &lt;strong>React Native&lt;/strong>.&lt;/p>
+&lt;p>Ở dự án này, mình được toàn quyền quyết định UI/UX của app. Vậy nên, mình muốn cải thiện thêm Bottom Navigation Bar, muốn nó trônng màu mè hơn một chút, thay vì dùng Bottom Navigation Bar mặc định của Flutter. Thế là sau một hồi lang thang trên Google, mình tìm thấy package &lt;a class="link" href="https://pub.dev/packages/curved_navigation_bar" target="_blank" rel="noopener"
+>curved_navigation_bar&lt;/a>, tuy nhiên thì package này lại chỉ cho hiển thị icon ở Bottom Navigation Bar item như thế này.&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/curved-bottom-navigation-bar/origin.webp"
+width="825"
+height="238"
+srcset="https://namanh11611.github.io/p/curved-bottom-navigation-bar/origin_hu_d41b9ecdcf54cac9.webp 480w, https://namanh11611.github.io/p/curved-bottom-navigation-bar/origin_hu_21a66a329d210096.webp 1024w"
+loading="lazy"
+alt="Origin"
+class="gallery-image"
+data-flex-grow="346"
+data-flex-basis="831px"
+>&lt;/p>
+&lt;br>
+&lt;p>Phần code example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Widget&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">compare_arrows&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">call_split&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;br>
+&lt;p>Mình muốn thêm label cho từng item thì chỉ có thể thêm bằng cách thay đổi mỗi item thành một &lt;code>Column&lt;/code> widget:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Widget&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Add&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;List&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">compare_arrows&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Compare&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">call_split&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Split&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">children:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nl">size:&lt;/span> &lt;span class="m">30&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Person&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div> &lt;br>
+&lt;p>Và kết quả sẽ trở thành như thế này:&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/curved-bottom-navigation-bar/origin_label.webp"
+width="825"
+height="238"
+srcset="https://namanh11611.github.io/p/curved-bottom-navigation-bar/origin_label_hu_584a8b6e12841ac2.webp 480w, https://namanh11611.github.io/p/curved-bottom-navigation-bar/origin_label_hu_42a470a2493c297e.webp 1024w"
+loading="lazy"
+alt="Origin Label"
+class="gallery-image"
+data-flex-grow="346"
+data-flex-basis="831px"
+>&lt;/p>
+&lt;p>Trông nó không được đẹp lắm nhỉ 🤔&lt;/p>
+&lt;p>Mình thì muốn label của selected item hiển thị ở dưới vùng có background màu trắng, và khi mình chọn một Bottom Navigation Bar item khác, label vẫn sẽ nằm yên ở đó. Vậy thì không còn cách nào khác là phải custom lại package này rồi. Đó là lúc chúng ta đến với bước 2 của bài viết này.&lt;/p>
+&lt;h1 id="custom-curved-navigation-bar">Custom Curved Navigation Bar
+&lt;/h1>&lt;p>Mình quyết định tạo một package mới linh động hơn, có thể phù hợp với cả hai dạng là item có label và item không có label.&lt;/p>
+&lt;p>Tadaa&amp;hellip; Và đây là package của mình: &lt;a class="link" href="https://pub.dev/packages/curved_labeled_navigation_bar" target="_blank" rel="noopener"
+>curved_labeled_navigation_bar&lt;/a>&lt;/p>
+&lt;p>Sau đây, mình sẽ hướng dẫn bạn cách implement của cả hai dạng.&lt;/p>
+&lt;h2 id="navigation-bar-có-label">Navigation Bar có label
+&lt;/h2>&lt;p>Mình có tạo ra một Widget mới là &lt;code>CurvedNavigationBarItem&lt;/code> để wrap cả Icon và label.&lt;/p>
+&lt;p>Code example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">home_outlined&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Home&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">search&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Search&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">chat_bubble_outline&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Chat&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">newspaper&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Feed&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">label:&lt;/span> &lt;span class="s1">&amp;#39;Personal&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;br>
+&lt;p>UI demo:&lt;/p>
+&lt;br>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/curved-bottom-navigation-bar/label.webp"
+width="825"
+height="238"
+srcset="https://namanh11611.github.io/p/curved-bottom-navigation-bar/label_hu_74cef1d3c49b347a.webp 480w, https://namanh11611.github.io/p/curved-bottom-navigation-bar/label_hu_2239d592e4737044.webp 1024w"
+loading="lazy"
+alt="Label"
+class="gallery-image"
+data-flex-grow="346"
+data-flex-basis="831px"
+>&lt;/p>
+&lt;h2 id="navigation-bar-không-có-label">Navigation Bar không có label
+&lt;/h2>&lt;p>Code example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="nl">bottomNavigationBar:&lt;/span> &lt;span class="n">CurvedNavigationBar&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">items:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">home_outlined&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">search&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">chat_bubble_outline&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">newspaper&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CurvedNavigationBarItem&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">perm_identity&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;br>
+&lt;p>UI demo:&lt;/p>
+&lt;br>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/curved-bottom-navigation-bar/no_label.webp"
+width="825"
+height="238"
+srcset="https://namanh11611.github.io/p/curved-bottom-navigation-bar/no_label_hu_3b2510a8b4f6afd.webp 480w, https://namanh11611.github.io/p/curved-bottom-navigation-bar/no_label_hu_a165f562d4babcec.webp 1024w"
+loading="lazy"
+alt="No Label"
+class="gallery-image"
+data-flex-grow="346"
+data-flex-basis="831px"
+>&lt;/p>
+&lt;h1 id="lời-kết">Lời kết
+&lt;/h1>&lt;p>Hy vọng package nhỏ này của mình giúp ích được cho những bạn đang muốn có một Bottom Navigation Bar khác lạ. Bạn có thể ủng hộ tinh thần mình bằng cách tặng mình một like, share nhé. Nếu bạn có ý tưởng gì để mình có thể cải thiện hơn nữa thì cũng đừng ngần ngại chia sẻ với mình.&lt;/p>
+&lt;ul>
+&lt;li>Link package: &lt;a class="link" href="https://pub.dev/packages/curved_labeled_navigation_bar" target="_blank" rel="noopener"
+>https://pub.dev/packages/curved_labeled_navigation_bar&lt;/a>&lt;/li>
+&lt;li>GitHub: &lt;a class="link" href="https://github.com/namanh11611/curved_labeled_navigation_bar" target="_blank" rel="noopener"
+>https://github.com/namanh11611/curved_labeled_navigation_bar&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Mình chân thành cảm ơn!&lt;/p></description></item></channel></rss>

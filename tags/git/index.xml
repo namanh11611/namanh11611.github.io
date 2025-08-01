@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on Henry Techie</title><link>https://namanh11611.github.io/tags/git/</link><description>Recent content in Git on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Sep 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Gitflow, GitHub Flow, GitLab Flow, Trunk-Based Development: Which Git Branching Strategy is Right for You?</title><link>https://namanh11611.github.io/p/git-branching-strategy/</link><pubDate>Sun, 08 Sep 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/git-branching-strategy/</guid><description>&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/strategy.webp" alt="Featured image of post Gitflow, GitHub Flow, GitLab Flow, Trunk-Based Development: Which Git Branching Strategy is Right for You?" />&lt;p>&lt;em>Photo by &lt;a class="link" href="https://unsplash.com/@felix_mittermeier?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Felix Mittermeier&lt;/a> on &lt;a class="link" href="https://unsplash.com/photos/pieces-dechecs-sur-lechiquier-nAjil1z3eLk?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+>Unsplash&lt;/a>&lt;/em>&lt;/p>
+&lt;p>&lt;strong>Git Branching Strategy&lt;/strong> refers to the way we &lt;strong>create branches&lt;/strong>, &lt;strong>merge branches&lt;/strong>, and decide which branches are used for releases.&lt;/p>
+&lt;p>When starting a project, beyond setting up the environment and building a solid codebase, selecting the right &lt;strong>Git Branching Strategy&lt;/strong> is crucial. A wrong choice can lead to significant challenges. The right strategy helps the team &lt;strong>manage and maintain source code effectively&lt;/strong>, &lt;strong>reduce conflict resolution time&lt;/strong>, and ensure &lt;strong>production code remains stable&lt;/strong>.&lt;/p>
+&lt;p>Over time, various strategies have emerged. This article explores some popular &lt;strong>Git Branching Strategies&lt;/strong> like &lt;strong>Gitflow&lt;/strong>, &lt;strong>GitHub Flow&lt;/strong>, &lt;strong>GitLab Flow&lt;/strong>, and &lt;strong>Trunk-Based Development&lt;/strong>. Finally, we’ll discuss how to choose the right strategy for your project.&lt;/p>
+&lt;h1 id="gitflow">Gitflow
+&lt;/h1>&lt;p>&lt;a class="link" href="https://nvie.com/posts/a-successful-git-branching-model" target="_blank" rel="noopener"
+>&lt;strong>Gitflow&lt;/strong>&lt;/a>, introduced by &lt;a class="link" href="https://nvie.com/about" target="_blank" rel="noopener"
+>&lt;strong>Vincent Driessen&lt;/strong>&lt;/a>, is well-suited for projects with clear and complex release cycles. &lt;strong>Gitflow&lt;/strong> uses multiple branch types to manage the development and release phases.&lt;/p>
+&lt;p>&lt;img src="https://nvie.com/img/git-model@2x.png"
+loading="lazy"
+alt="Gitflow"
+>&lt;/p>
+&lt;p>In this flow, there are two main branches: &lt;strong>master&lt;/strong> and &lt;strong>develop&lt;/strong>. The &lt;strong>master&lt;/strong> branch contains stable code ready for release, while &lt;strong>develop&lt;/strong> contains the latest changes for the next release. It’s the main branch for feature integration.&lt;/p>
+&lt;p>Additionally, there are &lt;strong>feature&lt;/strong> branches that are &lt;code>checkout&lt;/code> from &lt;strong>develop&lt;/strong> and used to develop new features. Once completed, they are &lt;code>merge&lt;/code> back into &lt;strong>develop&lt;/strong>.&lt;/p>
+&lt;p>When ready for release, a branch is checked out from &lt;strong>develop&lt;/strong> to a &lt;strong>release&lt;/strong> branch with the corresponding version to prepare for the release. Bug fixes can be added as commits on this branch. Once finalized, the &lt;strong>release&lt;/strong> branch is &lt;code>merge&lt;/code> into both &lt;strong>master&lt;/strong> and &lt;strong>develop&lt;/strong> to keep the two main branches updated.&lt;/p>
+&lt;p>Finally, there are &lt;strong>hotfix&lt;/strong> branches. When production code encounters a critical bug that needs an immediate fix, a &lt;strong>hotfix&lt;/strong> branch is &lt;code>checkout&lt;/code> from &lt;strong>master&lt;/strong> for the fix. Similar to &lt;strong>release&lt;/strong> branches, &lt;strong>hotfix&lt;/strong> branches must also be &lt;code>merge&lt;/code> into both &lt;strong>master&lt;/strong> and &lt;strong>develop&lt;/strong>.&lt;/p>
+&lt;h2 id="advantages">Advantages
+&lt;/h2>&lt;ul>
+&lt;li>Provides a clear structure, ideal for large projects.&lt;/li>
+&lt;li>Efficiently manages development and release phases with versioned &lt;strong>release&lt;/strong> branches.&lt;/li>
+&lt;li>&lt;strong>Hotfix&lt;/strong> branches allow quick fixes without disrupting ongoing development.&lt;/li>
+&lt;/ul>
+&lt;h2 id="disadvantages">Disadvantages
+&lt;/h2>&lt;ul>
+&lt;li>Complex and requires multiple branches and merges. For example, each &lt;strong>release&lt;/strong> or &lt;strong>hotfix&lt;/strong> branch needs to be merged into both &lt;strong>master&lt;/strong> and &lt;strong>develop&lt;/strong>.&lt;/li>
+&lt;li>Unsuitable for projects requiring &lt;strong>CI/CD&lt;/strong>.&lt;/li>
+&lt;li>Challenging for small teams due to its cumbersome nature.&lt;/li>
+&lt;/ul>
+&lt;h1 id="github-flow">GitHub Flow
+&lt;/h1>&lt;p>&lt;a class="link" href="https://docs.github.com/en/get-started/using-github/github-flow" target="_blank" rel="noopener"
+>&lt;strong>GitHub Flow&lt;/strong>&lt;/a> is a lightweight, simple strategy ideal for &lt;strong>CI/CD&lt;/strong> and commonly used in open-source projects or small teams.&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/github_flow.webp"
+width="3532"
+height="3840"
+srcset="https://namanh11611.github.io/p/git-branching-strategy/github_flow_hu_ef3c7337d0f750c3.webp 480w, https://namanh11611.github.io/p/git-branching-strategy/github_flow_hu_d0f904d8c5bb1731.webp 1024w"
+loading="lazy"
+alt="GitHub Flow"
+class="gallery-image"
+data-flex-grow="91"
+data-flex-basis="220px"
+>&lt;/p>
+&lt;p>Unlike Gitflow, it has a single main branch, &lt;strong>main&lt;/strong>, which contains thoroughly tested and stable code ready for production.&lt;/p>
+&lt;p>Features are developed in &lt;strong>feature&lt;/strong> branches, tested, reviewed, and merged into &lt;strong>main&lt;/strong> via pull requests.&lt;/p>
+&lt;h2 id="advantages-1">Advantages
+&lt;/h2>&lt;ul>
+&lt;li>Simple and easy to understand, making it quick to implement.&lt;/li>
+&lt;li>Perfect for &lt;strong>CI/CD&lt;/strong> workflows, ensuring the &lt;strong>main&lt;/strong> branch is always deployable.&lt;/li>
+&lt;li>Fewer branches mean reduced conflicts and merge errors.&lt;/li>
+&lt;/ul>
+&lt;h2 id="disadvantages-1">Disadvantages
+&lt;/h2>&lt;ul>
+&lt;li>Lacks the structure of Gitflow.&lt;/li>
+&lt;li>Unsuitable for large projects or those requiring support for multiple versions.&lt;/li>
+&lt;li>Does not define clear processes for releases or bug fixes.&lt;/li>
+&lt;/ul>
+&lt;h1 id="gitlab-flow">GitLab Flow
+&lt;/h1>&lt;p>&lt;a class="link" href="https://about.gitlab.com/topics/version-control/what-is-gitlab-flow" target="_blank" rel="noopener"
+>&lt;strong>GitLab Flow&lt;/strong>&lt;/a> combines elements of Gitflow and GitHub Flow. It introduces &lt;strong>environment branches&lt;/strong> like &lt;strong>staging&lt;/strong> and &lt;strong>production&lt;/strong>, making it suitable for &lt;strong>CI/CD&lt;/strong> and tightly integrated with GitLab’s &lt;strong>CI/CD&lt;/strong> tools.&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow.webp"
+width="3840"
+height="3321"
+srcset="https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow_hu_53275ece9516fead.webp 480w, https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow_hu_97dbf721a8924de0.webp 1024w"
+loading="lazy"
+alt="GitLab Flow"
+class="gallery-image"
+data-flex-grow="115"
+data-flex-basis="277px"
+>&lt;/p>
+&lt;p>Similar to GitHub Flow, GitLab Flow works directly with the primary branch, &lt;strong>main&lt;/strong>, which contains stable source code ready for release. This flow also includes feature branches for developing new features.&lt;/p>
+&lt;p>When the code on the &lt;strong>main&lt;/strong> branch is ready for testing, we &lt;code>merge&lt;/code> it into the &lt;strong>staging&lt;/strong> branch. After testing and confirming it is ready for deployment, we &lt;code>merge&lt;/code> the code from the &lt;strong>staging&lt;/strong> branch into the &lt;strong>production&lt;/strong> branch. GitLab Flow often uses &lt;strong>release&lt;/strong> branches, such as &lt;strong>release/v1&lt;/strong> and &lt;strong>release/v2&lt;/strong>, to independently manage and deploy different versions of the application.&lt;/p>
+&lt;p>However, when there is a bug in production, you need to merge the code into the &lt;strong>main&lt;/strong> branch first, then &lt;code>merge&lt;/code> or &lt;code>cherry-pick&lt;/code> it into other branches following the above process.&lt;/p>
+&lt;h2 id="advantages-2">Advantages
+&lt;/h2>&lt;ul>
+&lt;li>Simpler than Gitflow, but more structured than GitHub Flow.&lt;/li>
+&lt;li>Well-suited for &lt;strong>CI/CD&lt;/strong> projects with multiple environments.&lt;/li>
+&lt;li>Supports independent management of different application versions using &lt;strong>release&lt;/strong> branches.&lt;/li>
+&lt;/ul>
+&lt;h2 id="disadvantages-2">Disadvantages
+&lt;/h2>&lt;ul>
+&lt;li>Best suited for GitLab and its &lt;strong>CI/CD&lt;/strong> tools.&lt;/li>
+&lt;li>Requires careful setup to leverage its full potential.&lt;/li>
+&lt;li>Not ideal for projects without &lt;strong>CI/CD&lt;/strong> requirements.&lt;/li>
+&lt;/ul>
+&lt;h1 id="trunk-based-development">Trunk-Based Development
+&lt;/h1>&lt;p>For a detailed discussion, refer to my article: &lt;a class="link" href="../trunk-based-development" >Trunk-Based Development - A Git Workflow to Reduce Merge Conflicts&lt;/a>. &lt;strong>Trunk-Based Development (TBD)&lt;/strong> is a strategy where all developers work on a single main branch, typically &lt;strong>main&lt;/strong>. Changes are continuously and quickly committed to this branch, minimizing the lifespan of feature branches.&lt;/p>
+&lt;h2 id="advantages-3">Advantages
+&lt;/h2>&lt;ul>
+&lt;li>Encourages &lt;strong>CI&lt;/strong> and minimizes merge conflicts.&lt;/li>
+&lt;li>Ideal for Agile and DevOps projects requiring &lt;strong>CD&lt;/strong>.&lt;/li>
+&lt;li>Easy to manage and track the codebase.&lt;/li>
+&lt;/ul>
+&lt;h2 id="disadvantages-3">Disadvantages
+&lt;/h2>&lt;ul>
+&lt;li>Higher risk of directly committing errors to the main branch.&lt;/li>
+&lt;li>Requires robust code reviews and automation tests to maintain stability.&lt;/li>
+&lt;li>Unsuitable for large, distributed teams.&lt;/li>
+&lt;/ul>
+&lt;h1 id="choosing-the-right-strategy">Choosing the Right Strategy
+&lt;/h1>&lt;p>There’s no one-size-fits-all solution. The choice of Git branching strategy depends on factors like project scale, team structure, and development requirements. Below are some suggestions:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Project Type&lt;/th>
+&lt;th>Team Size&lt;/th>
+&lt;th>Recommended Strategy&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Small to medium projects with continuous delivery&lt;/td>
+&lt;td>Small, Medium&lt;/td>
+&lt;td>GitHub Flow, TBD&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Scheduled and periodic releases&lt;/td>
+&lt;td>Medium&lt;/td>
+&lt;td>GitFlow, GitLab Flow&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>CI/CD projects with multiple environments&lt;/td>
+&lt;td>Medium, Large&lt;/td>
+&lt;td>GitLab Flow&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Long-term maintenance projects&lt;/td>
+&lt;td>Large&lt;/td>
+&lt;td>GitFlow&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Each strategy has its pros and cons. The key is selecting one that aligns with your team’s workflow and project requirements. Doing so optimizes productivity and minimizes risks in source code management.&lt;/p>
+&lt;h1 id="referrence">Referrence
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://nvie.com/posts/a-successful-git-branching-model" target="_blank" rel="noopener"
+>https://nvie.com/posts/a-successful-git-branching-model&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.github.com/en/get-started/using-github/github-flow" target="_blank" rel="noopener"
+>https://docs.github.com/en/get-started/using-github/github-flow&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://about.gitlab.com/topics/version-control/what-is-gitlab-flow" target="_blank" rel="noopener"
+>https://about.gitlab.com/topics/version-control/what-is-gitlab-flow&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gitkraken.com/learn/git/best-practices/git-branch-strategy" target="_blank" rel="noopener"
+>https://www.gitkraken.com/learn/git/best-practices/git-branch-strategy&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/branching-strategies-in-git" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/branching-strategies-in-git&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.abtasty.com/blog/git-branching-strategies" target="_blank" rel="noopener"
+>https://www.abtasty.com/blog/git-branching-strategies&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Trunk Based Development – a Git workflow to reduce the headache of resolving conflicts</title><link>https://namanh11611.github.io/p/trunk-based-development/</link><pubDate>Wed, 03 May 2023 02:07:00 +0700</pubDate><guid>https://namanh11611.github.io/p/trunk-based-development/</guid><description>&lt;img src="https://namanh11611.github.io/p/trunk-based-development/tbd.webp" alt="Featured image of post Trunk Based Development – a Git workflow to reduce the headache of resolving conflicts" />&lt;h1 id="case-study">Case study
+&lt;/h1>&lt;h2 id="the-first-story">The first story
+&lt;/h2>&lt;p>At my previous company (let&amp;rsquo;s call it company A), the project source code was huge—just cloning it was 40GB, and after compiling and building, it reached nearly 100GB. Every time someone coded a feature, they would usually checkout a new branch like feature_x. For small features, it was fine, but for big features that changed dozens or even hundreds of files, merging into the main branch was a nightmare because you had to resolve conflicts from other feature branches that had been merged earlier.&lt;/p>
+&lt;h2 id="the-second-story">The second story
+&lt;/h2>&lt;p>At another company (company B), due to the nature of the project, it was split into 5 small teams, each with about 3 developers. Each team was responsible for a few features in a sprint. At the start of the sprint, the dev lead would create a branch for each team, and after the sprint, all 5 branches would be merged. The same problem occurred: merging code resulted in a lot of conflicts, and teams had to spend time retesting their features to ensure no bugs appeared after merging.&lt;/p>
+&lt;h1 id="so-what-is-trunk-based-development">So what is Trunk Based Development?
+&lt;/h1>&lt;p>In short, &lt;strong>Trunk Based Development&lt;/strong> (from now on, &lt;strong>TBD&lt;/strong>) is a &lt;strong>source-control branching model&lt;/strong> where all developers work on &lt;strong>a single branch&lt;/strong> called the &lt;strong>trunk&lt;/strong> (like the trunk of a tree), avoiding the creation of huge feature branches. The &lt;strong>trunk&lt;/strong> branch must always be ready for release at any time. In projects, people usually name the trunk branch &lt;strong>master&lt;/strong> or &lt;strong>dev&lt;/strong>.&lt;/p>
+&lt;p>TBD is divided into two smaller models, suitable for different team sizes. Let&amp;rsquo;s explore them.&lt;/p>
+&lt;h2 id="tbd-for-small-teams">TBD for small teams
+&lt;/h2>&lt;p>&lt;img src="https://namanh11611.github.io/p/trunk-based-development/small.webp"
+width="728"
+height="329"
+srcset="https://namanh11611.github.io/p/trunk-based-development/small_hu_2d360eb948a95de0.webp 480w, https://namanh11611.github.io/p/trunk-based-development/small_hu_55d340bd05a8673d.webp 1024w"
+loading="lazy"
+alt="Small TBD"
+class="gallery-image"
+data-flex-grow="221"
+data-flex-basis="531px"
+>&lt;/p>
+&lt;p>In this model, the whole dev team pushes code directly to the trunk branch. However, this model carries a big risk for code quality, since code is pushed directly without review. To use this model, devs must have strong technical skills to ensure every line they push doesn&amp;rsquo;t introduce bugs for the team.&lt;/p>
+&lt;p>Personally, I think this model is only suitable for teams of 5 or fewer.&lt;/p>
+&lt;h2 id="tbd-for-large-teams">TBD for large teams
+&lt;/h2>&lt;p>&lt;img src="https://namanh11611.github.io/p/trunk-based-development/scaled.webp"
+width="726"
+height="366"
+srcset="https://namanh11611.github.io/p/trunk-based-development/scaled_hu_4474fb7708f30287.webp 480w, https://namanh11611.github.io/p/trunk-based-development/scaled_hu_1463af6fb6a09d38.webp 1024w"
+loading="lazy"
+alt="Scaled TBD"
+class="gallery-image"
+data-flex-grow="198"
+data-flex-basis="476px"
+>&lt;/p>
+&lt;p>With TBD for a large team, feature branches are still created, but the difference is they only exist for a short time—just a few commits before merging back to the trunk branch.&lt;/p>
+&lt;p>For example, when assigned to code the Onboarding feature, with the usual Git flow, you might:&lt;/p>
+&lt;ol>
+&lt;li>Create a &lt;strong>feature/onboarding&lt;/strong> branch&lt;/li>
+&lt;li>Code the Welcome screen and commit&lt;/li>
+&lt;li>Code the Register screen and commit&lt;/li>
+&lt;li>Code the Login screen and commit&lt;/li>
+&lt;li>After finishing, create a merge request and wait for review&lt;/li>
+&lt;li>After review, merge &lt;strong>feature/onboarding&lt;/strong> into &lt;strong>dev&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;p>With this process, a merge request can contain dozens of changed files, and reviewing that much code is a nightmare. Sometimes, when you create the merge request, there are conflicts with another feature that was merged into &lt;strong>dev&lt;/strong> earlier, and you have to spend time resolving conflicts.&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/trunk-based-development/lgtm.webp"
+width="825"
+height="396"
+srcset="https://namanh11611.github.io/p/trunk-based-development/lgtm_hu_70bc3d652da2ff2a.webp 480w, https://namanh11611.github.io/p/trunk-based-development/lgtm_hu_40d76df1d483dda1.webp 1024w"
+loading="lazy"
+alt="LGTM"
+class="gallery-image"
+data-flex-grow="208"
+data-flex-basis="500px"
+>&lt;/p>
+&lt;p>For reviewers, sometimes the only way out of the nightmare is to stop dreaming—meaning the senior dev quickly leaves a short comment &lt;strong>LGTM&lt;/strong> (Look good to me), and the junior dev easily merges code into &lt;strong>dev&lt;/strong>. Or, even if the senior dev tries to review carefully, with so many changes, some bugs still slip through. In short, this process still risks letting bugs through.&lt;/p>
+&lt;p>With TBD, the process is adjusted a bit:&lt;/p>
+&lt;ol>
+&lt;li>Create &lt;strong>feature/welcome_screen&lt;/strong> branch&lt;/li>
+&lt;li>Code the Welcome screen, commit, and create a merge request immediately&lt;/li>
+&lt;li>While waiting for review, code the Register screen&lt;/li>
+&lt;li>When the Welcome screen merge request is approved, checkout &lt;strong>feature/register_screen&lt;/strong> and create a new merge request&lt;/li>
+&lt;li>Do the same for the Login screen&lt;/li>
+&lt;/ol>
+&lt;p>Now, each merge request only contains a few changed files, making it much easier for the senior dev to review.&lt;/p>
+&lt;p>And even if the release branch has a bug and needs a hotfix, devs don&amp;rsquo;t merge directly into the release branch as in other models—everything must be merged into the trunk branch.&lt;/p>
+&lt;h2 id="feature-flag">Feature flag
+&lt;/h2>&lt;p>You might wonder: doesn&amp;rsquo;t this mean the &lt;strong>dev&lt;/strong> branch will be full of unfinished feature code? For example, the app will show the new Welcome screen UI, while Register and Login screens still have the old UI. So how can you ensure the trunk branch is always ready for release?&lt;/p>
+&lt;p>The key is the &lt;strong>Feature flag&lt;/strong>. For each unfinished feature, you add a flag so that when it&amp;rsquo;s on, all the new feature code is active, and when it&amp;rsquo;s off, the app works as before. For example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ONBOARDING_FLAG&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">FLAG_ON&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">displayNewWelcomeScreen&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">displayOldWelcomeScreen&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ONBOARDING_FLAG&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">FLAG_ON&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">displayNewRegisterScreen&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">displayOldRegisterScreen&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ONBOARDING_FLAG&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">FLAG_ON&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">displayNewLoginScreen&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">displayOldLoginScreen&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Sometimes, if you want to revert a feature, just turn off its flag. Quick and easy, right?&lt;/p>
+&lt;h1 id="advantages">Advantages
+&lt;/h1>&lt;h2 id="fewer-conflicts-less-code-review-time">Fewer conflicts, less code review time
+&lt;/h2>&lt;p>As mentioned above, TBD requires everyone to quickly merge their code into the trunk branch, which helps reduce conflicts and code review time.&lt;/p>
+&lt;p>In company B&amp;rsquo;s case study, after seeing the current model wasn&amp;rsquo;t effective, I suggested the dev lead try TBD. As expected, in each sprint, our team hardly had to spend time resolving conflicts anymore.&lt;/p>
+&lt;h2 id="cicd">CI/CD
+&lt;/h2>&lt;p>TBD is very useful for CI/CD. Now you only need to set up and run CI/CD on a single branch. Every commit is quickly checked for coding conventions and unit tests, making it easy for the team to spot and fix errors in time.&lt;/p>
+&lt;h2 id="ab-testing">A/B Testing
+&lt;/h2>&lt;p>With feature flags, it&amp;rsquo;s easy to turn features on and off, making it convenient for Product Managers to set up A/B Testing. This helps measure and accurately evaluate the effectiveness of new features.&lt;/p>
+&lt;p>In company A&amp;rsquo;s first case study, we actually applied feature flags to many important features for A/B testing.&lt;/p>
+&lt;h2 id="fast-product-delivery">Fast product delivery
+&lt;/h2>&lt;p>Since the code in the trunk branch is always ready for release, I think it&amp;rsquo;s quite suitable for startups. Whenever you want to release a new version, just checkout from the trunk branch, turn on the completed feature flags, turn off the unfinished ones, and build.&lt;/p>
+&lt;h1 id="disadvantages">Disadvantages
+&lt;/h1>&lt;h2 id="too-much-leftover-code">Too much leftover code
+&lt;/h2>&lt;p>On the flip side, using &lt;strong>feature flags&lt;/strong> and too many if-else statements can make your code more complex. Sometimes, unclear if-else logic can make it even harder for reviewers to understand.&lt;/p>
+&lt;p>And when a feature is released, you have to go back and remove the old code flow, like the &lt;code>displayOldWelcomeScreen&lt;/code>, &lt;code>displayOldRegisterScreen&lt;/code>, and &lt;code>displayOldLoginScreen&lt;/code> functions in the example above.&lt;/p>
+&lt;h2 id="not-suitable-for-teams-with-many-juniors">Not suitable for teams with many juniors
+&lt;/h2>&lt;p>Constantly creating merge requests requires devs to be careful, ensuring every commit passes all coding convention checks and unit tests locally, and especially that there are no critical bugs. If a bug on the trunk branch prevents the app from opening, it blocks everyone else.&lt;/p>
+&lt;p>If using feature flags, devs also need to test both the old and new flows to ensure both work correctly.&lt;/p>
+&lt;p>So I think a team mostly made up of seniors is more suitable for this model.&lt;/p>
+&lt;h1 id="conclusion">Conclusion
+&lt;/h1>&lt;p>TBD is a workflow I&amp;rsquo;ve applied at several companies and found it quite effective for my team&amp;rsquo;s situation. You can consider the pros and cons and try it with your team.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://trunkbaseddevelopment.com/" target="_blank" rel="noopener"
+>https://trunkbaseddevelopment.com/&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>A Proper Workflow with Git</title><link>https://namanh11611.github.io/p/git-process/</link><pubDate>Tue, 10 Nov 2020 17:19:00 +0700</pubDate><guid>https://namanh11611.github.io/p/git-process/</guid><description>&lt;img src="https://namanh11611.github.io/p/git-process/git.webp" alt="Featured image of post A Proper Workflow with Git" />&lt;h1 id="introduction">Introduction
+&lt;/h1>&lt;p>After some time working and moving through a few companies, I realized that each place has a different workflow with Git. This article introduces the Git workflow that I think is proper and is also being used at my current company. So, I won&amp;rsquo;t introduce all Git commands, just the ones I think are enough for your daily work.&lt;/p>
+&lt;h1 id="workflow">Workflow
+&lt;/h1>&lt;h2 id="first-day-at-work">First day at work
+&lt;/h2>&lt;p>Simple, right? On your first day, the only command you need is &lt;code>git clone&lt;/code>. When you want to get the team&amp;rsquo;s source code, just open the terminal and type:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git clone &amp;lt;url&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>A small tip: if you want the folder name after cloning to be different from the project name on remote, just add the folder name at the end:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git clone &amp;lt;url&amp;gt; folder_name
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="normal-days">Normal days
+&lt;/h2>&lt;h3 id="working-alone">Working alone
+&lt;/h3>&lt;p>The boss assigns a new feature, let&amp;rsquo;s get started. But wait, if you&amp;rsquo;re on another branch, don&amp;rsquo;t forget to checkout the team&amp;rsquo;s main branch (usually called master):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git checkout master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Then pull the latest code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git pull
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>To check if your local code is up to date, try using &lt;code>git log&lt;/code>. I usually use this for a concise view:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git log --oneline
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Then, checkout a new branch to start your feature. Adding the &lt;code>-b&lt;/code> param will create and switch to the new branch:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git checkout -b feature_branch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&amp;hellip;&lt;/p>
+&lt;p>Code&amp;hellip; code&amp;hellip; code&amp;hellip;&amp;hellip;&lt;/p>
+&lt;p>&amp;hellip;&lt;/p>
+&lt;p>Done! Now add the files you changed to the stage. Most IDEs support quick add and commit, but if you want to do it manually:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git add .
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This adds all changed files to the stage. Then commit:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;Fix all bugs&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Note:&lt;/strong> Branch and commit names should be clear, indicating what feature or bug fix they relate to. This depends on your team&amp;rsquo;s rules. Some teams use the task ID as a prefix, others use the purpose, like feature/fixbug/&amp;hellip;&lt;/p>
+&lt;p>Finally, push your code to the repository:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git push origin feature_branch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now go to the repository and create a merge request for your boss to review. While waiting, grab a coffee.&lt;/p>
+&lt;h3 id="feature-with-multiple-contributors">Feature with multiple contributors
+&lt;/h3>&lt;p>If your branch has multiple people working on it, and someone else pushed before you, before pushing, pull like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git pull --rebase
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Your commit will be placed on top of your colleague&amp;rsquo;s in the log.&lt;/p>
+&lt;p>If you want to fetch code but not merge yet, use:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git fetch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In my opinion, &lt;code>pull = fetch + merge&lt;/code>.&lt;/p>
+&lt;h3 id="merging-code">Merging code
+&lt;/h3>&lt;p>After review, your boss agrees to merge, but during review you added, changed, or deleted some files. You want to rebase those commits into one, or just edit or delete a commit. Suppose you have 3 commits to combine:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git rebase -i HEAD~3
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The terminal gives you options like edit, reword, squash&amp;hellip; Change &amp;lsquo;pick&amp;rsquo; to the option you want. Press Ctrl + O to save, then Ctrl + X to exit.&lt;/p>
+&lt;p>Another issue: someone else pushed to master. You can still merge, but it will create a merge commit. I usually rebase and merge fast forward.&lt;/p>
+&lt;p>First:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git fetch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Then rebase. You must be on &lt;code>feature_branch&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git rebase origin/master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Simply put, rebase gets the latest code from master, then &lt;em>&amp;ldquo;rewrites&amp;rdquo;&lt;/em> your feature branch to put your commits on top.&lt;/p>
+&lt;p>Finally, force push to your feature branch. Force push applies your local log to the repo branch, regardless of differences:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git push -f origin feature_branch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you&amp;rsquo;re the only one on the branch, force push is fine. But &lt;strong>be careful when force pushing to a branch with multiple contributors&lt;/strong>, as it can cause conflicts for others. Only do this when you&amp;rsquo;re sure your feature is done.&lt;/p>
+&lt;p>Then, merge code via the merge request on the repo. Task complete!&lt;/p>
+&lt;h2 id="crisis-days">Crisis days
+&lt;/h2>&lt;h3 id="reset">Reset
+&lt;/h3>&lt;p>Sometimes you make a mistake and need to revert code. Git reset has 3 options for you.&lt;/p>
+&lt;p>Reset commit but keep code in stage, ready to recommit:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git reset --soft commit_id
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Reset commit and remove code from stage. You need to use &lt;code>git add&lt;/code> before recommitting:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git reset --mixed commit_id
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Reset commit and delete all code you did:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git reset --hard commit_id
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="stash">Stash
+&lt;/h3>&lt;p>You can use this as a lifesaver to temporarily save code before rebasing or checking out another branch that has conflicts. Think of it as a stack-structured scratchpad.&lt;/p>
+&lt;p>To stash all current changes:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git stash
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>To apply the last stash:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git stash pop
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>I mainly use Android Studio now, which has Shelf with similar functionality, so I don&amp;rsquo;t use git stash much anymore.&lt;/p>
+&lt;p>You can read more &lt;a class="link" href="https://git-scm.com/docs/git-stash" target="_blank" rel="noopener"
+>here&lt;/a>.&lt;/p>
+&lt;h1 id="conclusion">Conclusion
+&lt;/h1>&lt;p>Honestly, the title is just clickbait—there&amp;rsquo;s no such thing as a &amp;ldquo;proper&amp;rdquo; workflow. Every company and project is different. If your project is small and speed is a priority, you might skip some steps and push straight to master. If your project is big and strict, you might not allow force pushes to remote. So, what&amp;rsquo;s your company&amp;rsquo;s workflow? Share it with me!&lt;/p>
+&lt;p>Thanks for reading!&lt;/p></description></item></channel></rss>

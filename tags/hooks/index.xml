@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hooks on Henry Techie</title><link>https://namanh11611.github.io/tags/hooks/</link><description>Recent content in Hooks on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 30 Apr 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/hooks/index.xml" rel="self" type="application/rss+xml"/><item><title>Flutter Hooks - Write More Concise and Efficient Code</title><link>https://namanh11611.github.io/p/flutter-hooks/</link><pubDate>Tue, 30 Apr 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/flutter-hooks/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-hooks/hooks.webp" alt="Featured image of post Flutter Hooks - Write More Concise and Efficient Code" />&lt;h1 id="what-is-flutter-hooks">What is Flutter Hooks?
+&lt;/h1>&lt;p>When searching for the keyword &lt;strong>Hooks&lt;/strong> on Google, you&amp;rsquo;ll find many results related to &lt;strong>React&lt;/strong>. Indeed, as mentioned in the introduction, the &lt;a class="link" href="https://pub.dev/packages/flutter_hooks" target="_blank" rel="noopener"
+>&lt;strong>flutter_hooks&lt;/strong>&lt;/a> library by &lt;a class="link" href="https://github.com/rrousselGit" target="_blank" rel="noopener"
+>&lt;strong>Remi Rousselet&lt;/strong>&lt;/a> was built inspired by React.&lt;/p>
+&lt;p>&lt;strong>Hooks&lt;/strong> are objects that help manage the life-cycle of a &lt;code>Widget&lt;/code>. Their sole purpose is to increase the ability to share source code between &lt;code>Widgets&lt;/code> by eliminating duplicated code.&lt;/p>
+&lt;p>You might wonder: &lt;em>&amp;ldquo;Wait, doesn&amp;rsquo;t &lt;code>StatefulWidget&lt;/code> in Flutter already have &lt;code>initState&lt;/code> and &lt;code>dispose&lt;/code> methods to handle life-cycle management? Why do we need Hooks?&amp;rdquo;&lt;/em> That&amp;rsquo;s correct, but it&amp;rsquo;s very difficult to reuse code in these two methods. &lt;strong>Hooks&lt;/strong> were created to solve that problem.&lt;/p>
+&lt;h1 id="usage-guide">Usage Guide
+&lt;/h1>&lt;p>A simple example of Hooks is as follows:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">MyHookWidget&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">HookWidget&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">const&lt;/span> &lt;span class="n">MyHookWidget&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="k">super&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">@&lt;/span>&lt;span class="n">override&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Widget&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BuildContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Scaffold&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">body:&lt;/span> &lt;span class="n">Center&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="n">Text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Counter: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="n">counter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">floatingActionButton:&lt;/span> &lt;span class="n">FloatingActionButton&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">onPressed:&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">counter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">child:&lt;/span> &lt;span class="kd">const&lt;/span> &lt;span class="n">Icon&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Icons&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can see that our &lt;code>Widget&lt;/code> now extends &lt;code>HookWidget&lt;/code> instead of &lt;code>StatefulWidget&lt;/code> or &lt;code>StatelessWidget&lt;/code>. In the &lt;code>build&lt;/code> method, there&amp;rsquo;s a new keyword &lt;code>useState&lt;/code>, which is one of the &lt;strong>hooks&lt;/strong> in Flutter Hooks. We&amp;rsquo;ll explore some basic hooks below.&lt;/p>
+&lt;p>Now, when you click the &lt;code>FloatingActionButton&lt;/code>, the text value will change as the &lt;code>counter&lt;/code> variable increases, similar to how &lt;code>StatefulWidget&lt;/code> works, right?&lt;/p>
+&lt;h2 id="useeffect-hook">useEffect hook
+&lt;/h2>&lt;p>This is similar to the &lt;code>useEffect&lt;/code> hook in React, used to perform side effects &lt;strong>synchronously&lt;/strong> during rendering. The effect can return a function, which will be called when the &lt;strong>effect is recalled&lt;/strong> or the &lt;strong>widget is disposed&lt;/strong>.&lt;/p>
+&lt;p>By default, the effect is called every build, unless you pass a &lt;strong>key parameter&lt;/strong>. In that case, the effect is only called when the key changes.&lt;/p>
+&lt;p>Side effects can include stream subscriptions, opening a &lt;strong>WebSocket connection&lt;/strong>, or making an &lt;strong>HTTP request&lt;/strong>. You can cancel them when the widget is disposed.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">useEffect&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">performSideEffect&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cleanUp&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usestate-hook">useState hook
+&lt;/h2>&lt;p>This is the most basic hook when you want to convert a &lt;code>StatelessWidget&lt;/code> to a &lt;code>StatefulWidget&lt;/code>. When called in the &lt;code>build&lt;/code> method, it maintains state between widget rebuilds.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In this example, we pass an initial value of &lt;code>0&lt;/code>. The &lt;code>counter&lt;/code> variable is an instance of &lt;code>ValueNotifier&lt;/code>. The state is stored in the &lt;code>value&lt;/code> property of &lt;code>ValueNotifier&lt;/code>. Whenever the &lt;code>value&lt;/code> changes, the &lt;code>useState&lt;/code> hook will rebuild the widget to display the new value.&lt;/p>
+&lt;h2 id="usememoized-hook">useMemoized hook
+&lt;/h2>&lt;p>This is a useful method when you need to create a complex object and want to return the same object across multiple child widget rebuilds. &lt;code>useMemoized&lt;/code> helps cache that object; the value is only computed on the first call, and subsequent calls return the previously stored value.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">complexObject&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useMemoized&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="n">createComplexObject&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="useref-hook">useRef hook
+&lt;/h2>&lt;p>Creates an object containing a mutable property. However, changing the property of the object does not trigger an effect. It&amp;rsquo;s suitable for use-cases where you need to share state between &lt;code>build&lt;/code> method calls, but want to avoid unnecessary rebuilds.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">textController&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useTextEditingController&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">/// Using useState() in this case
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">/// would cause the widget to rebuild on every character input
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// final name = useState(&amp;#39;&amp;#39;);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kd">final&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useRef&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">useEffect&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">textController&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">addListener&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">textController&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usecallback-hook">useCallback hook
+&lt;/h2>&lt;p>Caches the instance of an entire function, if that function is recalled.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">cachedFun&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useCallback&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Statements&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">},&lt;/span> &lt;span class="p">[]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usecontext-hook">useContext hook
+&lt;/h2>&lt;p>Keeps the &lt;code>BuildContext&lt;/code> of the &lt;code>HookWidget&lt;/code>, so you don&amp;rsquo;t have to pass the &lt;code>context&lt;/code> parameter through methods.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Widget&lt;/span> &lt;span class="n">createSizedBox&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">SizedBox&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">height:&lt;/span> &lt;span class="n">MediaQuery&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sizeOf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">useContext&lt;/span>&lt;span class="p">()).&lt;/span>&lt;span class="n">height&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="m">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="usevaluechanged-hook">useValueChanged hook
+&lt;/h2>&lt;p>Monitors a value and triggers a callback whenever its value changes. Returning to the initial example, let&amp;rsquo;s modify it a bit:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">count&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">newCount&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useState&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">useValueChanged&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">count&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">oldValue&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">oldResult&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;oldValue = &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">oldValue&lt;/span>&lt;span class="s1">, oldResult = &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">oldResult&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">newCount&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="m">5&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">newCount&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>When you click the &lt;code>FloatingActionButton&lt;/code>, the output will be printed as follows:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">oldValue = 0, oldResult = null
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">oldValue = 1, oldResult = 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">oldValue = 2, oldResult = 10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>As you can see, whenever the value of &lt;code>count&lt;/code> changes, &lt;code>newCount&lt;/code> also changes accordingly.&lt;/p>
+&lt;h2 id="usestream-hook">useStream hook
+&lt;/h2>&lt;p>Helps subscribe to a &lt;code>Stream&lt;/code> and returns its current state.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">snapshot&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useStream&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">backend&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="useanimationcontroller-hook">useAnimationController hook
+&lt;/h2>&lt;p>Creates an &lt;code>AnimationController&lt;/code> and disposes it automatically.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">controller&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">useAnimationController&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nl">duration:&lt;/span> &lt;span class="n">Duration&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">seconds:&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="benefits-of-hooks">Benefits of Hooks
+&lt;/h1>&lt;ol>
+&lt;li>&lt;strong>State Management&lt;/strong>: Hooks simplify local state management, ensuring widgets only handle logic relevant to themselves.&lt;/li>
+&lt;li>&lt;strong>Reduce duplicate code&lt;/strong>: Custom hooks allow you to reuse widget logic, significantly reducing duplicate code and improving code quality.&lt;/li>
+&lt;li>&lt;strong>Improve Hot Reload&lt;/strong>: With hooks, hot reload is less likely to fail because the hook&amp;rsquo;s state is preserved.&lt;/li>
+&lt;li>&lt;strong>Convenience&lt;/strong>: Some built-in hooks like &lt;code>useAnimationController&lt;/code>, &lt;code>useFuture&lt;/code>, and &lt;code>useStream&lt;/code> are methods that can be applied to many common use-cases.&lt;/li>
+&lt;li>&lt;strong>Simplify life-cycle&lt;/strong>: Managing complex life-cycles becomes much simpler with Flutter Hooks. They provide a solution for easily managing state, side-effects, and stream subscriptions.&lt;/li>
+&lt;li>&lt;strong>Flexible custom hooks&lt;/strong>: Besides the built-in hooks, Flutter Hooks allows you to create custom hooks, making your code more flexible.&lt;/li>
+&lt;/ol>
+&lt;p>You may already know that &lt;strong>Remi Rousselet&lt;/strong> is also the author of two famous &lt;strong>State Management&lt;/strong> libraries: &lt;a class="link" href="https://pub.dev/packages/provider" target="_blank" rel="noopener"
+>&lt;strong>Provider&lt;/strong>&lt;/a> and &lt;a class="link" href="https://pub.dev/packages/flutter_riverpod" target="_blank" rel="noopener"
+>&lt;strong>Riverpod&lt;/strong>&lt;/a>. He has combined Riverpod and Hooks in a library called &lt;a class="link" href="https://pub.dev/packages/hooks_riverpod" target="_blank" rel="noopener"
+>&lt;strong>Hooks Riverpod&lt;/strong>&lt;/a>. You can harness the power of both with this library. Riverpod is for &amp;ldquo;global&amp;rdquo; application state, while hooks are for local widget state.&lt;/p>
+&lt;h1 id="conclusion">Conclusion
+&lt;/h1>&lt;p>I find &lt;strong>Flutter Hooks&lt;/strong> quite promising, but not many projects have adopted it yet. Have you ever used it? If you see any pros or cons, please share with me!&lt;/p></description></item></channel></rss>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Store on Henry Techie</title><link>https://namanh11611.github.io/tags/data-store/</link><description>Recent content in Data Store on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 14 May 2023 15:41:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/data-store/index.xml" rel="self" type="application/rss+xml"/><item><title>DataStore - The Perfect Piece for the Kotlin Coroutines Puzzle</title><link>https://namanh11611.github.io/p/data-store/</link><pubDate>Sun, 14 May 2023 15:41:00 +0700</pubDate><guid>https://namanh11611.github.io/p/data-store/</guid><description>&lt;img src="https://namanh11611.github.io/p/data-store/datastore.webp" alt="Featured image of post DataStore - The Perfect Piece for the Kotlin Coroutines Puzzle" />&lt;h1 id="concept">Concept
+&lt;/h1>&lt;p>First, we need to understand the purpose of &lt;strong>DataStore&lt;/strong>.&lt;/p>
+&lt;p>Currently, in Android apps, there are 5 ways to store data, with &lt;strong>SharedPreferences&lt;/strong> being the simplest for storing data. It only consists of &lt;strong>key&lt;/strong> and &lt;strong>value&lt;/strong>, where the value can be an integer, string, etc.&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/data-store/storage.webp"
+width="578"
+height="353"
+srcset="https://namanh11611.github.io/p/data-store/storage_hu_a158827593e08127.webp 480w, https://namanh11611.github.io/p/data-store/storage_hu_54f54dbe1f4bbb34.webp 1024w"
+loading="lazy"
+alt="Storage"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="392px"
+>&lt;/p>
+&lt;p>When the app is opened for the first time, it reads all values from the SharedPreferences XML file and loads them into RAM. This file reading process happens on the &lt;strong>UI Thread&lt;/strong>. If there are too many values and the task takes more than 5 seconds, it will cause an &lt;strong>ANR&lt;/strong> (Application Not Responding) error.&lt;/p>
+&lt;p>And &lt;strong>DataStore&lt;/strong> was created to replace &lt;strong>SharedPreferences&lt;/strong>.&lt;/p>
+&lt;blockquote>
+&lt;p>DataStore is a solution for storing data as &lt;strong>key-value pairs&lt;/strong> or &lt;strong>typed objects with protocol buffers&lt;/strong>.&lt;/p>&lt;/blockquote>
+&lt;p>Of course, DataStore is still only for storing simple structured data. It uses Coroutines and Flow to store data asynchronously and consistently.&lt;/p>
+&lt;p>DataStore has 2 types: &lt;strong>Preferences DataStore&lt;/strong> and &lt;strong>Proto DataStore&lt;/strong>. Let&amp;rsquo;s look at the comparison table:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Preferences DataStore&lt;/th>
+&lt;th>Proto DataStore&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Store and access data by key&lt;/td>
+&lt;td>Store instances of a custom data type&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>No need to define data type in advance&lt;/td>
+&lt;td>Must define data type in advance with protocol buffers&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>No type safety&lt;/td>
+&lt;td>Has type safety&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h1 id="preferences-datastore">Preferences DataStore
+&lt;/h1>&lt;h2 id="create">Create
+&lt;/h2>&lt;p>To use Preferences DataStore, we need to create an instance of &lt;code>DataStore&amp;lt;Preferences&amp;gt;&lt;/code> using a &lt;a class="link" href="../design-pattern-delegation" >property delegate&lt;/a> with the &lt;code>preferencesDataStore&lt;/code> keyword.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// At the top level of your kotlin file
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">val&lt;/span> &lt;span class="py">Context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">dataStore&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">DataStore&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Preferences&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">by&lt;/span> &lt;span class="n">preferencesDataStore&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;settings&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="read">Read
+&lt;/h2>&lt;p>First, there are 7 functions corresponding to 7 data types:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>intPreferencesKey()&lt;/code>&lt;/li>
+&lt;li>&lt;code>longPreferencesKey()&lt;/code>&lt;/li>
+&lt;li>&lt;code>doublePreferencesKey()&lt;/code>&lt;/li>
+&lt;li>&lt;code>floatPreferencesKey()&lt;/code>&lt;/li>
+&lt;li>&lt;code>booleanPreferencesKey()&lt;/code>&lt;/li>
+&lt;li>&lt;code>stringPreferencesKey()&lt;/code>&lt;/li>
+&lt;li>&lt;code>stringSetPreferencesKey()&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>When reading data, use the function corresponding to the value you want to store. For example, to store a &lt;code>counter&lt;/code> variable as an integer to count how many times the user opens the app:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">OPEN&lt;/span>&lt;span class="n">_APP_COUNTER&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">intPreferencesKey&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;open_app_counter&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">openAppCounterFlow&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Flow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Int&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">dataStore&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="k">data&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">map&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">preferences&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// No type safety.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">preferences&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">OPEN_APP_COUNTER&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">?:&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The difference from SharedPreferences is that here, data is returned as a Flow. Now, upper layers like Repository can observe data consistently, regardless of whether it comes from DataStore, Room database, or Server, because everything is returned as a Flow.&lt;/p>
+&lt;h2 id="write">Write
+&lt;/h2>&lt;p>To write data, use the &lt;code>edit&lt;/code> function, which is quite similar to SharedPreferences.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">dataStore&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">edit&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">settings&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">val&lt;/span> &lt;span class="py">openAppCounterValue&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">settings&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">OPEN_APP_COUNTER&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">?:&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">settings&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">OPEN_APP_COUNTER&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">openAppCounterValue&lt;/span> &lt;span class="p">+&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="proto-datastore">Proto DataStore
+&lt;/h1>&lt;p>Before learning about Proto DataStore, let&amp;rsquo;s take a look at protocol buffers.&lt;/p>
+&lt;h2 id="protocol-buffers">Protocol buffers
+&lt;/h2>&lt;p>This is a data format that is independent of programming language or platform. It&amp;rsquo;s like JSON but much smaller and faster. Protocol buffers are also said to be the most widely used data format at Google.&lt;/p>
+&lt;ul>
+&lt;li>Used to store compact data&lt;/li>
+&lt;li>Fast parsing&lt;/li>
+&lt;li>Supports many programming languages like C++, C#, Dart, Go, Java, Kotlin, Python&lt;/li>
+&lt;li>Optimizes functionality through auto-generated classes&lt;/li>
+&lt;/ul>
+&lt;p>For example, a &lt;code>message&lt;/code> about user info with name, id, and email:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-protobuf" data-lang="protobuf">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">message&lt;/span> &lt;span class="nc">UserProfile&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span> &lt;span class="k">optional&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span> &lt;span class="k">optional&lt;/span> &lt;span class="kt">int32&lt;/span> &lt;span class="n">id&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span> &lt;span class="k">optional&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="n">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>To compare the performance of Protocol buffers and JSON, let&amp;rsquo;s make 500 &lt;code>GET&lt;/code> requests from one Spring Boot app to another, with and without data compression. Here are the results:&lt;/p>
+&lt;p>&lt;img src="https://namanh11611.github.io/p/data-store/protobuf.webp"
+width="825"
+height="433"
+srcset="https://namanh11611.github.io/p/data-store/protobuf_hu_da10a27c57f37b67.webp 480w, https://namanh11611.github.io/p/data-store/protobuf_hu_c9259dcaf263e4e.webp 1024w"
+loading="lazy"
+alt="Protobuf"
+class="gallery-image"
+data-flex-grow="190"
+data-flex-basis="457px"
+>&lt;/p>
+&lt;p>We can see Protocol buffer is &lt;strong>5 to 6 times faster&lt;/strong> than JSON.&lt;/p>
+&lt;h2 id="create-1">Create
+&lt;/h2>&lt;p>To use Proto DataStore, you must define the data type with a proto file &lt;code>settings.pb&lt;/code> in the folder &lt;code>app/src/main/proto/&lt;/code> like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-protobuf" data-lang="protobuf">&lt;span class="line">&lt;span class="cl">&lt;span class="n">syntax&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;proto3&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">option&lt;/span> &lt;span class="n">java_package&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;com.example.application&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">option&lt;/span> &lt;span class="n">java_multiple_files&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="kd">message&lt;/span> &lt;span class="nc">Settings&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span> &lt;span class="kt">int32&lt;/span> &lt;span class="n">open_app_counter&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Next, declare an object implementing the &lt;code>Serializer&amp;lt;T&amp;gt;&lt;/code> class, where &lt;code>T&lt;/code> is the data type defined in the proto file.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">object&lt;/span> &lt;span class="nc">SettingsSerializer&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">Serializer&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Settings&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">override&lt;/span> &lt;span class="k">val&lt;/span> &lt;span class="py">defaultValue&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Settings&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nc">Settings&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">getDefaultInstance&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">override&lt;/span> &lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">readFrom&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">input&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">InputStream&lt;/span>&lt;span class="p">):&lt;/span> &lt;span class="n">Settings&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nc">Settings&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">parseFrom&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">input&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">exception&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">InvalidProtocolBufferException&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">throw&lt;/span> &lt;span class="n">CorruptionException&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Cannot read proto.&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">exception&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">override&lt;/span> &lt;span class="k">suspend&lt;/span> &lt;span class="k">fun&lt;/span> &lt;span class="nf">writeTo&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">t&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Settings&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">output&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">OutputStream&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">t&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">writeTo&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">output&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Finally, use the &lt;a class="link" href="../design-pattern-delegation" >property delegate&lt;/a> with the &lt;code>dataStore&lt;/code> keyword to create an instance of &lt;code>DataStore&amp;lt;T&amp;gt;&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">Context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">settingsDataStore&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">DataStore&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Settings&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="n">dataStore&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fileName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;settings.pb&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">serializer&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">SettingsSerializer&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="read-1">Read
+&lt;/h2>&lt;p>Similar to Preferences DataStore, use &lt;code>DataStore.data&lt;/code> to return a Flow.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">openAppCounterFlow&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Flow&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Int&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">settingDataStore&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="k">data&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">map&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">settings&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// The openAppCounter is generated from the proto schema.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">settings&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">openAppCounter&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="write-1">Write
+&lt;/h2>&lt;p>To write data to Proto DataStore, use the &lt;code>updateData()&lt;/code> function.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">settingsDataStore&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">updateData&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">currentSettings&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">currentSettings&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">toBuilder&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">setExampleCounter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">currentSettings&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">exampleCounter&lt;/span> &lt;span class="p">+&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="comparison-with-sharedpreferences">Comparison with SharedPreferences
+&lt;/h1>&lt;p>&lt;img src="https://namanh11611.github.io/p/data-store/comparison.webp"
+width="825"
+height="710"
+srcset="https://namanh11611.github.io/p/data-store/comparison_hu_804d670ffba55dd0.webp 480w, https://namanh11611.github.io/p/data-store/comparison_hu_24870d7802d6d5f4.webp 1024w"
+loading="lazy"
+alt="Comparison"
+class="gallery-image"
+data-flex-grow="116"
+data-flex-basis="278px"
+>&lt;/p>
+&lt;h2 id="migrate-from-sharedpreferences-to-preferences-datastore">Migrate from SharedPreferences to Preferences DataStore
+&lt;/h2>&lt;p>To migrate, pass &lt;code>SharedPreferencesMigration&lt;/code> to the &lt;code>produceMigrations&lt;/code> parameter. DataStore will automatically migrate for you.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">Context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">dataStore&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">DataStore&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Preferences&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="n">preferencesDataStore&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">DATA_STORE_NAME&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">produceMigrations&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">context&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">listOf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SharedPreferencesMigration&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">context&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SHARED_PREFERENCES_NAME&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="migrate-from-sharedpreferences-to-proto-datastore">Migrate from SharedPreferences to Proto DataStore
+&lt;/h2>&lt;p>First, declare &lt;code>UserProfile&lt;/code> and &lt;code>UserProfileSerializer&lt;/code> as above. Then write a mapping function to migrate from key-value pairs in SharedPreferences to the data type in Proto DataStore.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="k">val&lt;/span> &lt;span class="py">Context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">dataStore&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">DataStore&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">UserProfile&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="k">by&lt;/span> &lt;span class="n">dataStore&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fileName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;settings.pb&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">serializer&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">UserProfileSerializer&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">produceMigrations&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">context&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">listOf&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SharedPreferencesMigration&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">context&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;settings_pref&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">prefs&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">SharedPreferencesView&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">user&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">UserProfile&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">user&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">toBuilder&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">setName&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">prefs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">getString&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">NAME_KEY&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">setId&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">prefs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">getInt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ID_KEY&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">setEmail&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">prefs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">getString&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">EMAIL_KEY&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="references">References
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://developer.android.com/topic/libraries/architecture/datastore" target="_blank" rel="noopener"
+>https://developer.android.com/topic/libraries/architecture/datastore&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://protobuf.dev/programming-guides/proto3" target="_blank" rel="noopener"
+>https://protobuf.dev/programming-guides/proto3&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://android-developers.googleblog.com/2020/09/prefer-storing-data-with-jetpack.html" target="_blank" rel="noopener"
+>https://android-developers.googleblog.com/2020/09/prefer-storing-data-with-jetpack.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://stackoverflow.com/questions/9986734/which-android-data-storage-technique-to-use" target="_blank" rel="noopener"
+>https://stackoverflow.com/questions/9986734/which-android-data-storage-technique-to-use&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://auth0.com/blog/beating-json-performance-with-protobuf" target="_blank" rel="noopener"
+>https://auth0.com/blog/beating-json-performance-with-protobuf&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://proandroiddev.com/is-jetpack-datastore-a-replacement-for-sharedpreferences-efe92d02fcb3" target="_blank" rel="noopener"
+>https://proandroiddev.com/is-jetpack-datastore-a-replacement-for-sharedpreferences-efe92d02fcb3&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://kinya.hashnode.dev/migrating-sharedpreferences-to-datastore-ckxzlvda101by8rs1c8bg4wdx" target="_blank" rel="noopener"
+>https://kinya.hashnode.dev/migrating-sharedpreferences-to-datastore-ckxzlvda101by8rs1c8bg4wdx&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://amitshekhar.me/blog/jetpack-datastore-preferences" target="_blank" rel="noopener"
+>https://amitshekhar.me/blog/jetpack-datastore-preferences&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Isolate on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/isolate/</link><description>Recent content in Isolate on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 25 May 2025 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/isolate/index.xml" rel="self" type="application/rss+xml"/><item><title>Isolate trong Flutter: Kẻ cứu cánh cho những tác vụ nặng</title><link>https://namanh11611.github.io/vi/p/isolate/</link><pubDate>Sun, 25 May 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/isolate/</guid><description>&lt;img src="https://namanh11611.github.io/p/isolate/isolate.webp" alt="Featured image of post Isolate trong Flutter: Kẻ cứu cánh cho những tác vụ nặng" />&lt;p>Như anh em đã biết, tất cả &lt;strong>Dart&lt;/strong> code chạy trong các &lt;strong>isolate&lt;/strong>, bắt đầu từ &lt;strong>main isolate&lt;/strong> mặc định. Khi phát triển các ứng dụng Flutter, việc xử lý các tác vụ nặng như xử lý ảnh, tính toán phức tạp&amp;hellip; trên &lt;strong>main isolate&lt;/strong> này sẽ gây ra hiện tượng &lt;strong>giật lag&lt;/strong>. Mặc dù Flutter đã cung cấp cho chúng ta &lt;strong>Future&lt;/strong> hay &lt;strong>Stream&lt;/strong>, nhưng về bản chất chúng vẫn được xử lý trên &lt;strong>main isolate&lt;/strong>. Và &lt;strong>Isolate API&lt;/strong> sinh ra chính là để giải quyết vấn đề này, nó sẽ giúp chúng ta đưa những tác vụ nặng đó xuống &lt;strong>background worker&lt;/strong>, giúp ứng dụng trở lại với sự mượt mà vốn có. Trong bài viết này, mình sẽ giải thích cách sử dụng &lt;strong>Isolate&lt;/strong> và lần lượt cung cấp các best practice trong quá trình sử dụng.&lt;/p>
+&lt;h1 id="isolate-là-gì">Isolate là gì?
+&lt;/h1>&lt;p>&lt;strong>Dart&lt;/strong> là ngôn ngữ &lt;strong>single-thread&lt;/strong>, khi bạn sử dụng &lt;strong>async&lt;/strong>, &lt;strong>await&lt;/strong>, thực chất là nó đang chạy &lt;strong>concurrency&lt;/strong> (đồng thời). Khi một tác vụ tốn thời gian chạy trên main thread, nó sẽ &lt;strong>block toàn bộ UI&lt;/strong>. Và &lt;strong>Isolate&lt;/strong> là nhân tố giúp chúng ta giải quyết bài toán &lt;strong>parallelism&lt;/strong> (song song).&lt;/p>
+&lt;p>&lt;strong>Isolate&lt;/strong> là một &lt;strong>luồng thực thi độc lập&lt;/strong> trong Dart. Mỗi isolate có bộ nhớ &lt;strong>Heap&lt;/strong> riêng, đảm bảo rằng không isolate nào có thể truy cập vào bộ nhớ của isolate khác, giúp cho ứng dụng chạy mượt mà mà không có trạng thái chia sẻ.&lt;/p>
+&lt;p>Bắt tay ngay vào code cho dễ hình dung, chúng ta sẽ đến với ví dụ đầu tiên là tạo ra một Isolate đơn giản:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="k">import&lt;/span> &lt;span class="s1">&amp;#39;dart:isolate&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">spawn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">isolateMethod&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Hello World from Main Isolate&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Main isolate&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">isolateMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">String&lt;/span> &lt;span class="n">message&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;New isolate: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong ví dụ trên, hàm &lt;code>main()&lt;/code> sẽ chạy trên &lt;strong>main isolate&lt;/strong>, thường được gọi là &lt;strong>UI isolate&lt;/strong>. Chúng ta tạo một &lt;strong>isolate mới&lt;/strong> bằng cách gọi phương thức &lt;code>Isolate.spawn()&lt;/code>, nó sẽ thực thi hàm &lt;code>isolateMethod()&lt;/code>. Các isolate phụ như này sẽ không truy cập được UI.&lt;/p>
+&lt;h1 id="giao-tiếp-giữa-các-isolate">Giao tiếp giữa các Isolate
+&lt;/h1>&lt;p>Khi cần trao đổi dữ liệu giữa các isolate, Dart đã cung cấp cho chúng ta 2 class là &lt;code>SendPort&lt;/code> và &lt;code>ReceivePort&lt;/code> để giúp các Isolate giao tiếp với nhau thông qua message. Các bạn hãy đọc qua đoạn code sau, mình sẽ giải thích chi tiết bên dưới.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">mainReceivePort&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ReceivePort&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">isolate&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">Isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">spawn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">twoWayIsolate&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mainReceivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Nhận SendPort từ isolate phụ
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">mainReceivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">listen&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">message&lt;/span> &lt;span class="k">is&lt;/span> &lt;span class="n">SendPort&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Main: SendPort&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">message&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Hello&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Main received: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// Output: Hello to Henry
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">kill&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="n">twoWayIsolate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SendPort&lt;/span> &lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">receivePort&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ReceivePort&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Gửi SendPort của isolate phụ về main
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">receivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">receivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">listen&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">message&lt;/span> &lt;span class="k">is&lt;/span> &lt;span class="kt">String&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Worker received: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// Output: Hello
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="n">newMessage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1"> to Henry&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">newMessage&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong ví dụ này, chúng ta sẽ thiết lập giao tiếp 2 chiều giữa main isolate và isolate phụ thông qua đoạn code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Gửi SendPort của isolate phụ về main
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">receivePort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ngay sau khi nhận được message là &lt;code>SendPort&lt;/code>, main isolate đã gửi lời chào đến isolate phụ:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">message&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Hello&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Isolate phụ cũng đã đáp lễ bằng cách gửi lời chào ngược lại đến main isolate:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">final&lt;/span> &lt;span class="n">newMessage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="s1"> to Henry&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">mainSendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">newMessage&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Các bạn có thể thấy, &lt;code>SendPort.send()&lt;/code> sẽ là thằng chịu trách nhiệm gửi message, còn việc lắng nghe message sẽ được thực hiện qua &lt;code>ReceivePort.listen()&lt;/code>.&lt;/p>
+&lt;h1 id="sử-dụng-compute-cho-tác-vụ-đơn-giản">Sử dụng &lt;code>compute&lt;/code> cho tác vụ đơn giản
+&lt;/h1>&lt;p>Flutter cung cấp hàm &lt;code>compute&lt;/code> để chạy hàm trong isolate mới với chỉ với 1 dòng code đơn giản như sau:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Future&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">fetchData&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">final&lt;/span> &lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">await&lt;/span> &lt;span class="n">compute&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">_heavyProcessing&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="m">1000000&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Kết quả: &lt;/span>&lt;span class="si">$&lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Hàm này sẽ chạy trong isolate riêng
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">_heavyProcessing&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">iterations&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">sum&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">iterations&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sum&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">sum&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ưu điểm của &lt;code>compute&lt;/code> là &lt;strong>tự động quản lý&lt;/strong> isolate, nó sẽ được &lt;strong>hủy&lt;/strong> ngay sau khi hoàn thành.&lt;/p>
+&lt;p>Tuy nhiên, có ưu thì cũng phải có nhược, giới hạn của &lt;code>compute&lt;/code> là chỉ truyền được &lt;strong>1 tham số&lt;/strong>, nếu muốn nhiều tham số hơn thì bạn phải đóng gói nó vào Map hoặc List. Ngoài ra, &lt;code>compute&lt;/code> cũng không thể giao tiếp 2 chiều như &lt;code>Isolate.spawn&lt;/code> trong ví dụ trên.&lt;/p>
+&lt;h1 id="best-practices">Best Practices
+&lt;/h1>&lt;h2 id="chỉ-dùng-isolate-cho-các-tác-vụ-tốn-nhiều-cpu">Chỉ dùng isolate cho các tác vụ tốn nhiều CPU
+&lt;/h2>&lt;p>Với các network request, chúng ta có thể dùng http client bình thường. Chỉ nên dùng nó trong các trường hợp tốn nhiều CPU như xử lý ảnh.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">compute&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">imageProcessing&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">imageData&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Không nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">compute&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">networkRequest&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="tránh-tạo-isolate-liên-tục">Tránh tạo isolate liên tục
+&lt;/h2>&lt;p>Việc tạo isolate mới liên tục gây tiêu tốn CPU và bộ nhớ, đồng thời việc khởi tạo isolate cũng khá chậm, mất khoảng 30ms mỗi lần. Vậy nên, việc sử dụng &lt;strong>Worker Pool&lt;/strong> sẽ giúp tái sử dụng các isolate đã tạo.&lt;/p>
+&lt;h2 id="sử-dụng-kiểu-dữ-liệu-đơn-giản-khi-truyền-qua-port">Sử dụng kiểu dữ liệu đơn giản khi truyền qua port
+&lt;/h2>&lt;p>Do các isolate không chia sẻ bộ nhớ nên dữ liệu truyền giữa các isolate phải được &lt;strong>serialized&lt;/strong>/&lt;strong>deserialized&lt;/strong>. Nếu sử dụng kiểu dữ liệu phức tạp sẽ làm tăng thời gian chuyển đổi và tốn bộ nhớ khi copy dữ liệu.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s1">&amp;#39;id&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;value&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="m">42&lt;/span>&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Không nên
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">sendPort&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MyComplexClass&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="dừng-isolate-khi-không-cần">Dừng isolate khi không cần
+&lt;/h2>&lt;p>Khi sử dụng &lt;code>Isolate.spawn&lt;/code>, nó sẽ không tự động giải phóng khi không dùng nữa. Việc để isolate chạy ngầm sẽ gây tốn CPU/bộ nhớ và có thể là cả memory leak. Vậy nên chúng ta có thể sử dụng hàm &lt;code>Isolate.kill&lt;/code> để dừng khi hoàn thành.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="n">isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">kill&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nl">priority:&lt;/span> &lt;span class="n">Isolate&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">immediate&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="kết-luận">Kết Luận
+&lt;/h1>&lt;p>Isolate là công cụ mạnh mẽ để xử lý các tác vụ nặng trong Flutter mà không ảnh hưởng đến UI. Tuy có độ phức tạp nhất định, nhưng khi sử dụng đúng cách bằng việc kết hợp với &lt;code>compute&lt;/code> và các thư viện hỗ trợ, bạn có thể tạo ra ứng dụng mượt mà ngay cả khi xử lý nghiệp vụ phức tạp.&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://dart.dev/language/concurrency" target="_blank" rel="noopener"
+>Concurrency in Dart&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://dart.dev/language/isolates" target="_blank" rel="noopener"
+>Isolates&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
