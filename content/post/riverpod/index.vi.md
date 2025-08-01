@@ -48,9 +48,9 @@ Thay vì phải ngồi suy nghĩ để chọn lựa 1 trong 7 provider như trư
 
 |  | Functional <br> (Không thể cập nhật <br> bằng public methods) | Class-Based <br> (Có thể cập nhật <br> bằng public methods) |
 | -------- | -------- | -------- |
-| Sync | ![Functional Sync](./riverpod_function_sync.png) | ![Class-Based Sync](./riverpod_class_sync.png) |
-| Async - Future | ![Functional Async - Future](./riverpod_function_future.png) | ![Class-Based Async - Future](./riverpod_class_future.png) |
-| Async - Stream | ![Functional Async - Stream](./riverpod_function_stream.png) | ![Class-Based Async - Stream](./riverpod_class_stream.png) |
+| Sync | ![Functional Sync](riverpod_function_sync.png) | ![Class-Based Sync](riverpod_class_sync.png) |
+| Async - Future | ![Functional Async - Future](riverpod_function_future.png) | ![Class-Based Async - Future](riverpod_class_future.png) |
+| Async - Stream | ![Functional Async - Stream](riverpod_function_stream.png) | ![Class-Based Async - Stream](riverpod_class_stream.png) |
 
 ## keepAlive
 
