@@ -1,0 +1,357 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Key appears everywhere in Flutter, from StatefulWidget to StatelessWidget. It seems so close yet so far, familiar yet mysterious. Today, the Flutter Vietnam detective team will take you deep into the corners of the Flutter gang to decode the role of Key."><title>Investigation Case: Decoding the Mystery of Key in Flutter</title><link rel=canonical href=https://namanh11611.github.io/p/key/><link rel=stylesheet href=/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css><meta property='og:title' content="Investigation Case: Decoding the Mystery of Key in Flutter"><meta property='og:description' content="Key appears everywhere in Flutter, from StatefulWidget to StatelessWidget. It seems so close yet so far, familiar yet mysterious. Today, the Flutter Vietnam detective team will take you deep into the corners of the Flutter gang to decode the role of Key."><meta property='og:url' content='https://namanh11611.github.io/p/key/'><meta property='og:site_name' content='Henry Techie'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Flutter'><meta property='article:tag' content='Key'><meta property='article:published_time' content='2025-05-12T00:00:00+07:00'><meta property='article:modified_time' content='2025-05-12T00:00:00+07:00'><meta property='og:image' content='https://namanh11611.github.io/p/key/key.webp'><meta name=twitter:title content="Investigation Case: Decoding the Mystery of Key in Flutter"><meta name=twitter:description content="Key appears everywhere in Flutter, from StatefulWidget to StatelessWidget. It seems so close yet so far, familiar yet mysterious. Today, the Flutter Vietnam detective team will take you deep into the corners of the Flutter gang to decode the role of Key."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://namanh11611.github.io/p/key/key.webp'><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_99416cdbb1f5ed1b.webp width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Henry Techie</a></h1><h2 class=site-description>Software Engineer</h2></div></header><ol class=menu-social><li><a href=https://linkedin.com/in/namanh11611 target=_blank title=LinkedIn rel=me><svg class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 00-4 0"/></svg></a></li><li><a href=https://github.com/namanh11611 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://viblo.asia/u/namanh11611 target=_blank title=Viblo rel=me><svg class="icon icon-tabler icon-tabler-letter-v" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4l6 16 6-16"/></svg></a></li><li><a href=https://twitter.com/namanh11611 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li><li><a href=https://facebook.com/namanh11611 target=_blank title=Facebook rel=me><svg class="icon icon-tabler icon-tabler-brand-facebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10v4h3v7h4v-7h3l1-4h-4V8a1 1 0 011-1h3V3h-3a5 5 0 00-5 5v2H7"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about-me/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Me</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://namanh11611.github.io/ selected>English</option><option value=https://namanh11611.github.io/vi/>Tiếng Việt</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#case-introduction>Case Introduction</a></li><li><a href=#searching-for-the-mastermind>Searching for the Mastermind</a></li><li><a href=#key>Key</a></li><li><a href=#uniquekey--the-untraceable-assassin>UniqueKey – The Untraceable Assassin</a></li><li><a href=#valuekey--the-reliable-butcher>ValueKey – The Reliable Butcher</a></li><li><a href=#objectkey--the-strategic-advisor>ObjectKey – The Strategic Advisor</a></li><li><a href=#globalkey--the-powerful-butler>GlobalKey – The Powerful Butler</a></li><li><a href=#best-practices-for-using-key>Best Practices for Using Key</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/key/><img src=/p/key/key_hu_c5f675db02d868c4.webp srcset="/p/key/key_hu_c5f675db02d868c4.webp 800w, /p/key/key_hu_1d5413c432139e7b.webp 1600w" width=800 height=447 loading=lazy alt="Featured image of post Investigation Case: Decoding the Mystery of Key in Flutter"></a></div><div class=article-details><header class=article-category><a href=/categories/technical/ style=background-color:#e60f41;color:#fff>Technical
+</a><a href=/categories/flutter/ style=background-color:#0d63fe;color:#fff>Flutter</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/key/>Investigation Case: Decoding the Mystery of Key in Flutter</a></h2><h3 class=article-subtitle>Key appears everywhere in Flutter, from StatefulWidget to StatelessWidget. It seems so close yet so far, familiar yet mysterious. Today, the Flutter Vietnam detective team will take you deep into the corners of the Flutter gang to decode the role of Key.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2025-05-12T00:00:00+07:00>May 12, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>8 minute read</time></div></footer><footer class=article-translations><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><div><a href=https://namanh11611.github.io/vi/p/key/ class=link>Tiếng Việt</a></div></footer></div></header><section class=article-content><blockquote><p>Tired of academic articles? Today, let&rsquo;s enjoy a detective-style article for a change of pace.</p></blockquote><h1 id=case-introduction>Case Introduction</h1><p><strong>Key</strong> appears everywhere in Flutter, from <strong>StatefulWidget</strong> to <strong>StatelessWidget</strong>. It seems so close yet so far, familiar yet mysterious. Although Flutter developers often work with <strong>Widget</strong>, <strong>Key</strong>—the silent player behind all <em>power transfers</em>—rarely gets attention.</p><p>Today, the Flutter Vietnam detective team will take you deep into the corners of the <strong>Flutter</strong> gang, decoding the role of <strong>Key</strong> in <strong>optimizing performance</strong> for Flutter apps, and exploring <strong>best practices</strong> for using them.</p><h1 id=searching-for-the-mastermind>Searching for the Mastermind</h1><p>The definition of Key in the <a class=link href=https://api.flutter.dev/flutter/foundation/Key-class.html target=_blank rel=noopener>documentation</a> states:</p><blockquote><p>A Key is an identifier for Widgets, Elements and SemanticsNodes.</p><p>A new widget will only be used to update an existing element if its key is the same as the key of the current widget associated with the element.</p><p><em>Translation:</em></p><p><em>Key is an identifier for Widget, Element, and SemanticsNodes.</em></p><p><em>A new widget will only be used to update an existing element if its key matches the key of the current widget associated with that element.</em></p></blockquote><p>As you know, in Flutter, everything is a <strong>Widget</strong>. This Widget gang includes familiar faces like <strong>Row</strong>, <strong>Column</strong>, <strong>Container</strong>&mldr; But these Widgets are just henchmen; according to our intelligence, the gang is run by a notorious boss: <strong>Element</strong>.</p><p>He manipulates all Widgets, from calling <code>initState</code>, <code>build</code>, <code>dispose</code> of Widgets to managing the Widget Tree. <strong>Element</strong> is also a crucial link between <strong>Widget</strong> and <strong>RenderObject</strong>—the one that draws the UI on the screen—to create masterpieces.</p><p>However, today we&rsquo;re not taking down the boss or the whole gang, just remember that <strong>Element</strong> orchestrates everything. The fish isn&rsquo;t big enough yet to cast the net. The goal of this case is to investigate <strong>Key</strong> and the four <strong>masters</strong>.</p><h1 id=key>Key</h1><p>When you rebuild a Flutter app, do you know what happens in the shadows? <strong>Element</strong> decides which <strong>Widgets</strong> to keep, replace, or remove. This is where <strong>Key</strong> starts to show its power.</p><p>In the Widget world, whenever changes occur, Widgets aren&rsquo;t just <strong>updated</strong> but are <strong>destroyed</strong> and <strong>reborn</strong>. Key is the <em>identity card</em> that helps Widgets retain their identity during rebirth. After the Widget tree is rebuilt, Element uses <strong>Widget type</strong> and <strong>Key</strong> to decide whether the Element should be rebuilt. If Widget types differ, the Element is destroyed and recreated. Rebuilding the boss is much more expensive than rebuilding the henchmen Widgets. This can cause unwanted performance issues and sometimes make your app lag.</p><p>If Widget types are the same, Element compares the Key. If the Key matches, Element only updates the widget. Otherwise, Element is deactivated, meaning it&rsquo;s temporarily removed from the Element tree and may be reattached later.</p><p>There are two main types of Key: <strong>LocalKey</strong> and <strong>GlobalKey</strong>. LocalKey is further divided into <strong>UniqueKey</strong>, <strong>ValueKey</strong>, and <strong>ObjectKey</strong>. Let&rsquo;s unmask each one.</p><h1 id=uniquekey--the-untraceable-assassin>UniqueKey – The Untraceable Assassin</h1><p>A mysterious figure, appearing and disappearing, never showing up twice with the same value. It creates <strong>unique values</strong> to help Flutter <strong>distinguish between two Widgets</strong> even if they have the same type. Use it when you <strong>don&rsquo;t want to reuse</strong> any Widget, ensuring the Widget is completely rebuilt.</p><p>First, let&rsquo;s create an Item widget that simply displays a Text, but we&rsquo;ll use <code>StatefulWidget</code> so you can clearly see the init and rebuild process.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dart data-lang=dart><span class=line><span class=cl><span class=kd>class</span> <span class=nc>Item</span> <span class=kd>extends</span> <span class=n>StatefulWidget</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>final</span> <span class=kt>String</span> <span class=n>text</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kd>const</span> <span class=n>Item</span><span class=p>({</span><span class=k>super</span><span class=p>.</span><span class=n>key</span><span class=p>,</span> <span class=kd>required</span> <span class=k>this</span><span class=p>.</span><span class=n>text</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=err>@</span><span class=n>override</span>
+</span></span><span class=line><span class=cl>  <span class=n>State</span><span class=o>&lt;</span><span class=n>Item</span><span class=o>&gt;</span> <span class=n>createState</span><span class=p>()</span> <span class=o>=&gt;</span> <span class=n>_ItemState</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>class</span> <span class=nc>_ItemState</span> <span class=kd>extends</span> <span class=n>State</span><span class=o>&lt;</span><span class=n>Item</span><span class=o>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=err>@</span><span class=n>override</span>
+</span></span><span class=line><span class=cl>  <span class=kt>void</span> <span class=n>initState</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>super</span><span class=p>.</span><span class=n>initState</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>debugPrint</span><span class=p>(</span><span class=s1>&#39;[_ItemState.initState] key = </span><span class=si>${</span><span class=n>widget</span><span class=p>.</span><span class=n>key</span><span class=si>}</span><span class=s1>, text = </span><span class=si>${</span><span class=n>widget</span><span class=p>.</span><span class=n>text</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=err>@</span><span class=n>override</span>
+</span></span><span class=line><span class=cl>  <span class=n>Widget</span> <span class=n>build</span><span class=p>(</span><span class=n>BuildContext</span> <span class=n>context</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>debugPrint</span><span class=p>(</span><span class=s1>&#39;[_ItemState.build] key = </span><span class=si>${</span><span class=n>widget</span><span class=p>.</span><span class=n>key</span><span class=si>}</span><span class=s1>, text = </span><span class=si>${</span><span class=n>widget</span><span class=p>.</span><span class=n>text</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>Text</span><span class=p>(</span><span class=n>widget</span><span class=p>.</span><span class=n>text</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Next, create a <code>ListView</code> containing those Item widgets, without passing any Key to the items.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dart data-lang=dart><span class=line><span class=cl><span class=kd>final</span> <span class=n>names</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;Henry&#39;</span><span class=p>,</span> <span class=s1>&#39;Techie&#39;</span><span class=p>,</span> <span class=s1>&#39;Nam&#39;</span><span class=p>,</span> <span class=s1>&#39;Anh&#39;</span><span class=p>,</span> <span class=s1>&#39;Nguyen&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>class</span> <span class=nc>HomePage</span> <span class=kd>extends</span> <span class=n>StatefulWidget</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>const</span> <span class=n>HomePage</span><span class=p>({</span><span class=k>super</span><span class=p>.</span><span class=n>key</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=err>@</span><span class=n>override</span>
+</span></span><span class=line><span class=cl>  <span class=n>State</span><span class=o>&lt;</span><span class=n>HomePage</span><span class=o>&gt;</span> <span class=n>createState</span><span class=p>()</span> <span class=o>=&gt;</span> <span class=n>_HomePageState</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>class</span> <span class=nc>_HomePageState</span> <span class=kd>extends</span> <span class=n>State</span><span class=o>&lt;</span><span class=n>HomePage</span><span class=o>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>_counter</span> <span class=o>=</span> <span class=m>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kt>void</span> <span class=n>_incrementCounter</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>setState</span><span class=p>(()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>_counter</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=err>@</span><span class=n>override</span>
+</span></span><span class=line><span class=cl>  <span class=n>Widget</span> <span class=n>build</span><span class=p>(</span><span class=n>BuildContext</span> <span class=n>context</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>Scaffold</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=nl>appBar:</span> <span class=n>AppBar</span><span class=p>(</span><span class=nl>title:</span> <span class=n>Text</span><span class=p>(</span><span class=s1>&#39;Demo Key&#39;</span><span class=p>)),</span>
+</span></span><span class=line><span class=cl>      <span class=nl>body:</span> <span class=n>ListView</span><span class=p>.</span><span class=n>builder</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nl>itemCount:</span> <span class=n>_counter</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nl>itemBuilder:</span> <span class=p>(</span><span class=n>context</span><span class=p>,</span> <span class=n>index</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=n>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>          <span class=nl>text:</span> <span class=n>names</span><span class=p>[</span><span class=n>index</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=p>),</span>
+</span></span><span class=line><span class=cl>      <span class=p>),</span>
+</span></span><span class=line><span class=cl>      <span class=nl>floatingActionButton:</span> <span class=n>FloatingActionButton</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nl>onPressed:</span> <span class=n>_incrementCounter</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nl>child:</span> <span class=n>Icon</span><span class=p>(</span><span class=n>Icons</span><span class=p>.</span><span class=n>add</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>      <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Check the log: when you click the <code>FloatingActionButton</code> to create each item, only the newest widget calls <code>initState</code>, others just <code>rebuild</code>. Here&rsquo;s the log when creating the 5th item:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[_ItemState.build] key = null, text = Henry
+</span></span><span class=line><span class=cl>[_ItemState.build] key = null, text = Techie
+</span></span><span class=line><span class=cl>[_ItemState.build] key = null, text = Nam
+</span></span><span class=line><span class=cl>[_ItemState.build] key = null, text = Anh
+</span></span><span class=line><span class=cl>[_ItemState.initState] key = null, text = Nguyen
+</span></span><span class=line><span class=cl>[_ItemState.build] key = null, text = Nguyen
+</span></span></code></pre></td></tr></table></div></div><p>Now, let&rsquo;s assign the UniqueKey assassin. Add UniqueKey to Item:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dart data-lang=dart><span class=line><span class=cl><span class=nl>body:</span> <span class=n>ListView</span><span class=p>.</span><span class=n>builder</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>  <span class=nl>itemCount:</span> <span class=n>_counter</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nl>itemBuilder:</span> <span class=p>(</span><span class=n>context</span><span class=p>,</span> <span class=n>index</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=n>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=nl>key:</span> <span class=n>UniqueKey</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>    <span class=nl>text:</span> <span class=n>names</span><span class=p>[</span><span class=n>index</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=p>),</span>
+</span></span><span class=line><span class=cl><span class=p>),</span>
+</span></span></code></pre></td></tr></table></div></div><p>Everything changes: when clicking <code>FloatingActionButton</code> to create each item, all widgets are recreated. Even the Key value changes each time. Here&rsquo;s the log for the 5th item; not only item 5 but all items 1 to 4 are also re-initialized:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[_ItemState.initState] key = [#c24b5], text = Henry
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [#c24b5], text = Henry
+</span></span><span class=line><span class=cl>[_ItemState.initState] key = [#02979], text = Techie
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [#02979], text = Techie
+</span></span><span class=line><span class=cl>[_ItemState.initState] key = [#0a0db], text = Nam
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [#0a0db], text = Nam
+</span></span><span class=line><span class=cl>[_ItemState.initState] key = [#23d4d], text = Anh
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [#23d4d], text = Anh
+</span></span><span class=line><span class=cl>[_ItemState.initState] key = [#614a4], text = Nguyen
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [#614a4], text = Nguyen
+</span></span></code></pre></td></tr></table></div></div><h1 id=valuekey--the-reliable-butcher>ValueKey – The Reliable Butcher</h1><p>A simple-minded but highly effective worker, <strong>ValueKey</strong> is perfect when you have a clear identifier value, such as a <code>String</code> or <code>int</code>. This butcher helps Element know which Widget to keep based solely on that identifier, allowing you to <strong>reuse</strong> Widgets when the Key value doesn&rsquo;t change.</p><p>Let&rsquo;s update the previous <code>ListView</code> example to <code>ReorderableListView</code>. Since <code>ReorderableListView</code> requires each item to have a Key, we&rsquo;ll start with Item using <code>ValueKey</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dart data-lang=dart><span class=line><span class=cl><span class=nl>body:</span> <span class=n>ReorderableListView</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>  <span class=nl>onReorder:</span> <span class=p>(</span><span class=n>oldIndex</span><span class=p>,</span> <span class=n>newIndex</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>setState</span><span class=p>(()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=n>newIndex</span> <span class=o>&gt;</span> <span class=n>oldIndex</span><span class=p>)</span> <span class=n>newIndex</span> <span class=o>-=</span> <span class=m>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=kd>final</span> <span class=n>item</span> <span class=o>=</span> <span class=n>names</span><span class=p>.</span><span class=n>removeAt</span><span class=p>(</span><span class=n>oldIndex</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=n>names</span><span class=p>.</span><span class=n>insert</span><span class=p>(</span><span class=n>newIndex</span><span class=p>,</span> <span class=n>item</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nl>children:</span> <span class=n>names</span>
+</span></span><span class=line><span class=cl>      <span class=p>.</span><span class=n>map</span><span class=p>((</span><span class=n>item</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=n>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>          <span class=nl>key:</span> <span class=n>ValueKey</span><span class=p>(</span><span class=n>item</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>          <span class=nl>text:</span> <span class=n>item</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>))</span>
+</span></span><span class=line><span class=cl>      <span class=p>.</span><span class=n>toList</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl><span class=p>),</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now, whenever you drag to reorder items, you&rsquo;ll see the items being rebuilt:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[_ItemState.build] key = [&lt;&#39;Henry&#39;&gt;], text = Henry
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [&lt;&#39;Techie&#39;&gt;], text = Techie
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [&lt;&#39;Nam&#39;&gt;], text = Nam
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [&lt;&#39;Anh&#39;&gt;], text = Anh
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [&lt;&#39;Nguyen&#39;&gt;], text = Nguyen
+</span></span></code></pre></td></tr></table></div></div><p>What if you change the value of an item after dragging by updating the <code>onReorder</code> function? For example, when dragging &lsquo;Henry&rsquo;, change its value to &lsquo;Henry Changed&rsquo;:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dart data-lang=dart><span class=line><span class=cl><span class=nl>onReorder:</span> <span class=p>(</span><span class=n>oldIndex</span><span class=p>,</span> <span class=n>newIndex</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>setState</span><span class=p>(()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>newIndex</span> <span class=o>&gt;</span> <span class=n>oldIndex</span><span class=p>)</span> <span class=n>newIndex</span> <span class=o>-=</span> <span class=m>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>final</span> <span class=n>item</span> <span class=o>=</span> <span class=s1>&#39;</span><span class=si>${</span><span class=n>names</span><span class=p>.</span><span class=n>removeAt</span><span class=p>(</span><span class=n>oldIndex</span><span class=p>)</span><span class=si>}</span><span class=s1> Changed&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>names</span><span class=p>.</span><span class=n>insert</span><span class=p>(</span><span class=n>newIndex</span><span class=p>,</span> <span class=n>item</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>},</span>
+</span></span></code></pre></td></tr></table></div></div><p>The value changes, so the ValueKey changes, and the item is recreated:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[_ItemState.initState] key = [&lt;&#39;Henry Changed&#39;&gt;], text = Henry Changed
+</span></span><span class=line><span class=cl>[_ItemState.build] key = [&lt;&#39;Henry Changed&#39;&gt;], text = Henry Changed
+</span></span></code></pre></td></tr></table></div></div><h1 id=objectkey--the-strategic-advisor>ObjectKey – The Strategic Advisor</h1><p>Unlike ValueKey, this one is a master strategist, holding a complex object. <strong>ObjectKey</strong> relies on <strong>object reference</strong>. Two Keys are considered <strong>equal</strong> only if they reference the same object.</p><p>Similar to the ValueKey example, let&rsquo;s update it to use ObjectKey instead.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dart data-lang=dart><span class=line><span class=cl><span class=kd>class</span> <span class=nc>_HomePageState</span> <span class=kd>extends</span> <span class=n>State</span><span class=o>&lt;</span><span class=n>HomePage</span><span class=o>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>final</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>people</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=n>Person</span><span class=p>(</span><span class=nl>name:</span> <span class=s2>&#34;Henry&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>Person</span><span class=p>(</span><span class=nl>name:</span> <span class=s2>&#34;Techie&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>Person</span><span class=p>(</span><span class=nl>name:</span> <span class=s2>&#34;Nam&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>Person</span><span class=p>(</span><span class=nl>name:</span> <span class=s2>&#34;Anh&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>Person</span><span class=p>(</span><span class=nl>name:</span> <span class=s2>&#34;Nguyen&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>  <span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=err>@</span><span class=n>override</span>
+</span></span><span class=line><span class=cl>  <span class=n>Widget</span> <span class=n>build</span><span class=p>(</span><span class=n>BuildContext</span> <span class=n>context</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>Scaffold</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=nl>appBar:</span> <span class=n>AppBar</span><span class=p>(</span><span class=nl>title:</span> <span class=n>Text</span><span class=p>(</span><span class=s1>&#39;Demo Key&#39;</span><span class=p>)),</span>
+</span></span><span class=line><span class=cl>      <span class=nl>body:</span> <span class=n>ReorderableListView</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nl>onReorder:</span> <span class=p>(</span><span class=n>oldIndex</span><span class=p>,</span> <span class=n>newIndex</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>setState</span><span class=p>(()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>newIndex</span> <span class=o>&gt;</span> <span class=n>oldIndex</span><span class=p>)</span> <span class=n>newIndex</span> <span class=o>-=</span> <span class=m>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=kd>final</span> <span class=n>item</span> <span class=o>=</span> <span class=n>people</span><span class=p>.</span><span class=n>removeAt</span><span class=p>(</span><span class=n>oldIndex</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>people</span><span class=p>.</span><span class=n>insert</span><span class=p>(</span><span class=n>newIndex</span><span class=p>,</span> <span class=n>item</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>          <span class=p>});</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=nl>children:</span> <span class=n>people</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=n>map</span><span class=p>((</span><span class=n>item</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=n>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>          <span class=nl>key:</span> <span class=n>ObjectKey</span><span class=p>(</span><span class=n>item</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>          <span class=nl>text:</span> <span class=n>item</span><span class=p>.</span><span class=n>name</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>))</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=n>toList</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>      <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>class</span> <span class=nc>Person</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>final</span> <span class=kt>String</span> <span class=n>name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>Person</span><span class=p>({</span><span class=kd>required</span> <span class=k>this</span><span class=p>.</span><span class=n>name</span><span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=globalkey--the-powerful-butler>GlobalKey – The Powerful Butler</h1><p>In the gang, GlobalKey is the strongest. It knows everything in the Widget Tree. Not only does it store identity, but it also manages the entire state and allows direct access to <code>State</code>. This brings flexibility but can be easily abused.</p><p>The most common example is using GlobalKey to control and validate the state of a <code>Form</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dart data-lang=dart><span class=line><span class=cl><span class=kd>class</span> <span class=nc>GlobalKeyExample</span> <span class=kd>extends</span> <span class=n>StatelessWidget</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>final</span> <span class=n>GlobalKey</span><span class=o>&lt;</span><span class=n>FormState</span><span class=o>&gt;</span> <span class=n>formKey</span> <span class=o>=</span> <span class=n>GlobalKey</span><span class=o>&lt;</span><span class=n>FormState</span><span class=o>&gt;</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=err>@</span><span class=n>override</span>
+</span></span><span class=line><span class=cl>  <span class=n>Widget</span> <span class=n>build</span><span class=p>(</span><span class=n>BuildContext</span> <span class=n>context</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>Form</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=nl>key:</span> <span class=n>formKey</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nl>child:</span> <span class=n>Column</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nl>children:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>          <span class=n>TextFormField</span><span class=p>(</span><span class=nl>validator:</span> <span class=p>(</span><span class=n>value</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=n>value</span><span class=o>!</span><span class=p>.</span><span class=n>isEmpty</span> <span class=o>?</span> <span class=s1>&#39;Required&#39;</span> <span class=o>:</span> <span class=kc>null</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>          <span class=n>ElevatedButton</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=nl>onPressed:</span> <span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>              <span class=k>if</span> <span class=p>(</span><span class=n>formKey</span><span class=p>.</span><span class=n>currentState</span><span class=o>!</span><span class=p>.</span><span class=n>validate</span><span class=p>())</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>print</span><span class=p>(</span><span class=s1>&#39;Form is valid!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>              <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>},</span>
+</span></span><span class=line><span class=cl>            <span class=nl>child:</span> <span class=n>Text</span><span class=p>(</span><span class=s1>&#39;Submit&#39;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>          <span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=p>],</span>
+</span></span><span class=line><span class=cl>      <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=best-practices-for-using-key>Best Practices for Using Key</h1><p><strong>Key</strong> is not just a tool, but a <em>treasure</em> for controlling your app. Understanding and using Key correctly not only optimizes performance but also ensures your app&rsquo;s logic remains stable and accurate. Overusing it can make your code unnecessarily complex, so use it only when needed. Remember, in the ever-changing world of Flutter, Key is the key to smooth apps you develop!</p></section><footer class=article-footer><section class=article-tags><a href=/tags/flutter/>Flutter</a>
+<a href=/tags/key/>Key</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/p/isolate/><div class=article-image><img src=/p/isolate/isolate.a3cb4fe7ed0ce7248c9485d6be89a44a_hu_beb258459c5cb025.webp width=250 height=150 loading=lazy alt="Featured image of post Isolate in Flutter: The Savior for Heavy Tasks" data-key=isolate data-hash="md5-o8tP5+0M5ySMlIXWvomkSg=="></div><div class=article-details><h2 class=article-title>Isolate in Flutter: The Savior for Heavy Tasks</h2></div></a></article><article class=has-image><a href=/p/flutter-mvvm-riverpod/><div class=article-image><img src=/p/flutter-mvvm-riverpod/fmr.5a27e8f835d527d3575a9e5c0a21683b_hu_e9c0e969acd73588.webp width=250 height=150 loading=lazy alt="Featured image of post Flutter MVVM Riverpod Starter: Build Apps Lightning Fast for Vibe Coders" data-key=flutter-mvvm-riverpod data-hash="md5-Wifo+DXVJ9NXWp5cCiFoOw=="></div><div class=article-details><h2 class=article-title>Flutter MVVM Riverpod Starter: Build Apps Lightning Fast for Vibe Coders</h2></div></a></article><article class=has-image><a href=/p/riverpod/><div class=article-image><img src=/p/riverpod/riverpod.75ef8706287c61946de8649a204caf53_hu_d21e99e438811786.webp width=250 height=150 loading=lazy alt="Featured image of post Using Code Generation Providers in Flutter Riverpod to Simplify Life" data-key=riverpod data-hash="md5-de+HBih8YZRt6GSaIEyvUw=="></div><div class=article-details><h2 class=article-title>Using Code Generation Providers in Flutter Riverpod to Simplify Life</h2></div></a></article><article class=has-image><a href=/p/flutter-hooks/><div class=article-image><img src=/p/flutter-hooks/hooks.479bb29cb3420ab9959e95b8dcc34ce0_hu_4b8cbdc074c34cc9.webp width=250 height=150 loading=lazy alt="Featured image of post Flutter Hooks - Write More Concise and Efficient Code" data-key=flutter-hooks data-hash="md5-R5uynLNCCrmVnpW43MNM4A=="></div><div class=article-details><h2 class=article-title>Flutter Hooks - Write More Concise and Efficient Code</h2></div></a></article><article class=has-image><a href=/p/curved-bottom-navigation-bar/><div class=article-image><img src=/p/curved-bottom-navigation-bar/navigation.74d5da399838c1246cd44ec61c9ee625_hu_9d138c7582eb0a34.webp width=250 height=150 loading=lazy alt="Featured image of post Custom Curved Bottom Navigation Bar in Flutter" data-key=curved-bottom-navigation-bar data-hash="md5-dNXaOZg4wSRs1E7GHJ7mJQ=="></div><div class=article-details><h2 class=article-title>Custom Curved Bottom Navigation Bar in Flutter</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//henry-techie.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2019 -
+2026 Henry Techie</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.33.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><script data-goatcounter=https://henry-techie.goatcounter.com/count async src=//gc.zgo.at/count.js></script></body></html>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mermaid on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/mermaid/</link><description>Recent content in Mermaid on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 25 Feb 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/mermaid/index.xml" rel="self" type="application/rss+xml"/><item><title>Mermaid - Vẽ diagram và chart dễ như ăn kẹo bằng Markdown</title><link>https://namanh11611.github.io/vi/p/mermaid/</link><pubDate>Sun, 25 Feb 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/mermaid/</guid><description>&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp" alt="Featured image of post Mermaid - Vẽ diagram và chart dễ như ăn kẹo bằng Markdown" /&gt;&lt;h1 id="những-ngày-xưa-cũ"&gt;Những ngày xưa cũ
+&lt;/h1&gt;&lt;p&gt;Anh em cũng biết rằng, diagram nói riêng và document nói chung có vai trò quan trọng trong các dự án, nó như một chiếc la bàn giúp anh em dev hiểu được ý tưởng của PM, tech lead hay BA, định hướng được flow cần làm, đồng thời là bằng chứng để anh em đối chiếu khi có tranh cãi về yêu cầu của dự án. Một bức ảnh đáng giá hơn ngàn lời nói, đôi khi một cái diagram rõ ràng sẽ giúp tiết kiệm được vài giờ đồng hồ giải thích, trao đổi qua lại.&lt;/p&gt;
+&lt;p&gt;Trước đây, khi vẽ diagram cho dự án, mình thường dùng &lt;strong&gt;&lt;a class="link" href="https://app.diagrams.net" target="_blank" rel="noopener"
+&gt;draw.io&lt;/a&gt;&lt;/strong&gt;. Cho bạn nào chưa biết thì nó là một tool online vẽ diagram bằng cách &lt;strong&gt;kéo thả&lt;/strong&gt;. Nhưng mỗi khi cần update lại diagram, mình phải kéo thả lại từng ô hay từng cái mũi tên khá mất thời gian. Cho đến một ngày mình được một người anh giới thiệu về &lt;strong&gt;Mermaid&lt;/strong&gt;, mọi chuyện đã bước sang một trang mới&amp;hellip;&lt;/p&gt;
+&lt;h1 id="được-khai-sáng-về-mermaid"&gt;Được khai sáng về Mermaid
+&lt;/h1&gt;&lt;p&gt;Theo định nghĩa trên trang chủ thì &lt;strong&gt;&lt;a class="link" href="https://mermaid.js.org" target="_blank" rel="noopener"
+&gt;Mermaid&lt;/a&gt;&lt;/strong&gt; là một công cụ được xây dựng dựa trên &lt;strong&gt;JavaScript&lt;/strong&gt;, giúp tạo &lt;strong&gt;diagram&lt;/strong&gt; và &lt;strong&gt;chart&lt;/strong&gt; một cách linh hoạt từ &lt;strong&gt;text&lt;/strong&gt; có cú pháp tương tự &lt;strong&gt;Markdown&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp"
+width="1170"
+height="497"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_hu_8d18830431e94328.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_hu_868de9c6e0f3cf0f.webp 1024w"
+loading="lazy"
+alt="Mermaid"
+class="gallery-image"
+data-flex-grow="235"
+data-flex-basis="564px"
+&gt;&lt;/p&gt;
+&lt;h2 id="ưu-điểm"&gt;Ưu điểm
+&lt;/h2&gt;&lt;p&gt;Đây là một công cụ mã nguồn mở và hoàn toàn miễn phí. Nó hỗ trợ nhiều loại diagram và chart phổ biến như &lt;strong&gt;Flowchart&lt;/strong&gt;, &lt;strong&gt;Sequence diagram&lt;/strong&gt;, &lt;strong&gt;Class diagram&lt;/strong&gt;, &lt;strong&gt;State diagram&lt;/strong&gt;, &lt;strong&gt;Git graph&lt;/strong&gt;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Cú pháp cũng rất đơn giản và dễ học. Nếu bạn đã quen thuộc với Markdown thì chỉ cần dành chút thời gian là sẽ thông thạo. Giờ đây, mỗi khi yêu cầu của dự án thay đổi, bạn chỉ cần sửa vài dòng text thôi thì diagram sẽ được update theo một cách nhanh chóng.&lt;/p&gt;
+&lt;p&gt;Với mục đích vẽ các diagram đơn giản, các bạn hoàn toàn có thể sử dụng &lt;strong&gt;&lt;a class="link" href="https://mermaid.live" target="_blank" rel="noopener"
+&gt;Mermaid Live Editor&lt;/a&gt;&lt;/strong&gt;, không cần cài đặt bất cứ thứ gì. Với các dự án của công ty, Mermaid cũng đã được tích hợp với &lt;strong&gt;Notion&lt;/strong&gt; hoặc các sản phẩm của &lt;strong&gt;Atlassian&lt;/strong&gt;. Còn nếu bạn muốn sử dụng ở local thì Mermaid có thể dùng ngay trên các IDE phổ biến như &lt;strong&gt;Visual Studio Code&lt;/strong&gt; hoặc họ nhà &lt;strong&gt;JetBrains&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="so-sánh-với-plantuml"&gt;So sánh với PlantUML
+&lt;/h2&gt;&lt;p&gt;Trên thị trường hiện tại cũng đã có một số công cụ khác render diagram từ text như Mermaid, trong đó nổi bật nhất là &lt;strong&gt;&lt;a class="link" href="https://plantuml.com" target="_blank" rel="noopener"
+&gt;PlantUML&lt;/a&gt;&lt;/strong&gt;. Sau đây mình sẽ đưa ra một bảng so sánh để các bạn có cái nhìn tổng quan.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tiêu chí&lt;/th&gt;
+&lt;th&gt;Mermaid&lt;/th&gt;
+&lt;th&gt;PlantUML&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub Star (25/2/2024)&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/mermaid-js/mermaid" target="_blank" rel="noopener"
+&gt;65.400&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/plantuml/plantuml" target="_blank" rel="noopener"
+&gt;9.300&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Loại diagram&lt;/td&gt;
+&lt;td&gt;Flow, Sequence, Class, State, Git graph&amp;hellip;&lt;/td&gt;
+&lt;td&gt;Sequence, Usecase, Class, Object, Activity, State&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hỗ trợ online&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hỗ trợ offline&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tính phí&lt;/td&gt;
+&lt;td&gt;Miễn phí&lt;/td&gt;
+&lt;td&gt;Miễn phí&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Khác&lt;/td&gt;
+&lt;td&gt;Dễ học, dễ sử dụng cho người mới&lt;/td&gt;
+&lt;td&gt;Có nhiều thư viện mở rộng&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="cài-đặt-trên-visual-studio-code"&gt;Cài đặt trên Visual Studio Code
+&lt;/h1&gt;&lt;p&gt;Hiện tại ở dự án của mình thì team đang tạo riêng một project cho các diagram, dùng &lt;strong&gt;Git&lt;/strong&gt; để quản lý version và dùng &lt;strong&gt;Visual Studio Code&lt;/strong&gt; để vẽ.&lt;/p&gt;
+&lt;p&gt;Bạn chỉ cần cài thêm 2 extension &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid" target="_blank" rel="noopener"
+&gt;Markdown Preview Mermaid Support&lt;/a&gt; và &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting" target="_blank" rel="noopener"
+&gt;Mermaid Markdown Syntax Highlighting&lt;/a&gt; trên Visual Studio Code là đủ dùng rồi.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_extension.webp"
+width="836"
+height="422"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_9297c6104a79cb8c.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_66628a2035b940.webp 1024w"
+loading="lazy"
+alt="Mermaid Extensions"
+class="gallery-image"
+data-flex-grow="198"
+data-flex-basis="475px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Mỗi khi cần vẽ 1 diagram, bạn tạo 1 file với đuôi &lt;code&gt;.md&lt;/code&gt; và viết cú pháp của Mermaid, bạn có thể click button &lt;strong&gt;Open Preview&lt;/strong&gt; ở góc trên bên phải để vừa code vừa xem diagram được update trực tiếp ở bên cạnh. Và kết quả như sau:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_preview.webp"
+width="2318"
+height="1030"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_6f0a279b03479e11.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_df5866560d28b645.webp 1024w"
+loading="lazy"
+alt="Mermaid Preview"
+class="gallery-image"
+data-flex-grow="225"
+data-flex-basis="540px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Bạn cứ xem trước ví dụ đi đã, mình sẽ đi vào giới thiệu chi tiết cú pháp của từng loại diagram trong phần tiếp theo.&lt;/p&gt;
+&lt;h1 id="cú-pháp-các-diagram-phổ-biến"&gt;Cú pháp các diagram phổ biến
+&lt;/h1&gt;&lt;h2 id="flowchart"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/flowchart.html" target="_blank" rel="noopener"
+&gt;Flowchart&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Flowchart bao gồm các &lt;strong&gt;node&lt;/strong&gt; và các &lt;strong&gt;cạnh&lt;/strong&gt; (có thể là &lt;strong&gt;đường vô hướng&lt;/strong&gt; hoặc &lt;strong&gt;mũi tên có hướng&lt;/strong&gt;). Code Mermaid sẽ xác định cách tạo các node và cạnh, các loại cạnh tuỳ chỉnh theo mục đích của người vẽ.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;flowchart TD
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;B;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;C;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; B--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; C--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;flowchart&lt;/code&gt;: keyword của loại chart này (bạn có thể dùng &lt;code&gt;graph&lt;/code&gt; cũng tương đương).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TD&lt;/code&gt;: hướng của chart (top to down). Ngoài ra còn có:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TB&lt;/code&gt;: top to bottom (giống top to down)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;BT&lt;/code&gt;: bottom to top&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RL&lt;/code&gt;: right to left&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LR&lt;/code&gt;: left to right&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;A&lt;/code&gt;, &lt;code&gt;B&lt;/code&gt;, &lt;code&gt;C&lt;/code&gt;, &lt;code&gt;D&lt;/code&gt;: tên của các node. Ngoài hình chữ nhật mặc định, bạn cũng có thể dùng nhiều loại hình khác như hình chữ nhật bo tròn, hình thang, hình tròn&amp;hellip;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: loại cạnh có hướng. Ngoài ra còn các loại vô hướng, đa hướng, có gắn text&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/flowchart.webp"
+width="252"
+height="496"
+srcset="https://namanh11611.github.io/p/mermaid/flowchart_hu_9a097f81442fa2b4.webp 480w, https://namanh11611.github.io/p/mermaid/flowchart_hu_4852dd2d01bbc216.webp 1024w"
+loading="lazy"
+alt="Flowchart"
+class="gallery-image"
+data-flex-grow="50"
+data-flex-basis="121px"
+&gt;&lt;/p&gt;
+&lt;h2 id="sequence-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/sequenceDiagram.html" target="_blank" rel="noopener"
+&gt;Sequence diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Sequence diagram là &lt;strong&gt;sơ đồ tương tác&lt;/strong&gt; cho thấy các &lt;strong&gt;quy trình hoạt động&lt;/strong&gt; với nhau &lt;strong&gt;như thế nào&lt;/strong&gt; và theo &lt;strong&gt;thứ tự nào&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sequenceDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Alice
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Bob
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant John
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Alice-&amp;gt;&amp;gt;John: Hello John, how are you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; loop Healthcheck
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;John: Fight against hypochondria
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; end
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Note right of John: Rational thoughts &amp;lt;br/&amp;gt;prevail!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John--&amp;gt;&amp;gt;Alice: Great!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;Bob: How about you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Bob--&amp;gt;&amp;gt;John: Jolly good!
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sequenceDiagram&lt;/code&gt;: keyword của diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;participant&lt;/code&gt;: định nghĩa các thành phần tham gia diagram theo thứ tự lần lượt. Như trong ví dụ này, chúng ta có 3 thành phần là &lt;code&gt;Alice&lt;/code&gt;, &lt;code&gt;Bob&lt;/code&gt; và &lt;code&gt;John&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Mỗi dòng lần lượt định nghĩa tin nhắn giữa các thành phần.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-&amp;gt;&amp;gt;&lt;/code&gt;, &lt;code&gt;--&amp;gt;&amp;gt;&lt;/code&gt;: các loại tin nhắn có hướng nét liền và nét đứt.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/sequence_diagram.webp"
+width="1236"
+height="1110"
+srcset="https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_f82c29c8e973dc90.webp 480w, https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_8ebc4b789a8b9c9.webp 1024w"
+loading="lazy"
+alt="Sequence diagram"
+class="gallery-image"
+data-flex-grow="111"
+data-flex-basis="267px"
+&gt;&lt;/p&gt;
+&lt;h2 id="class-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/classDiagram.html" target="_blank" rel="noopener"
+&gt;Class diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Class diagram trong &lt;strong&gt;UML&lt;/strong&gt; (Unified Modeling Language) là một loại &lt;strong&gt;sơ đồ cấu trúc tĩnh&lt;/strong&gt; mô tả &lt;strong&gt;cấu trúc của hệ thống&lt;/strong&gt; bằng cách hiển thị các &lt;strong&gt;lớp&lt;/strong&gt; của hệ thống, &lt;strong&gt;thuộc tính&lt;/strong&gt;, &lt;strong&gt;hoạt động&lt;/strong&gt; (hoặc phương thức) của chúng và &lt;strong&gt;mối quan hệ giữa các đối tượng&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;classDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 &amp;lt;|-- AveryLongClass : Cool
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class03 *-- Class04
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class05 o-- Class06
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 .. Class08
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --&amp;gt; C2 : Where am i?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --* C3
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --|&amp;gt; Class07
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : equals()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : Object[] elementData
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : size()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int chimp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int gorilla
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class08 &amp;lt;--&amp;gt; C2: Cool label
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;classDiagram&lt;/code&gt;: keyword của diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chimp&lt;/code&gt;, &lt;code&gt;gorilla&lt;/code&gt;, &lt;code&gt;elementData&lt;/code&gt;: thuộc tính của các lớp.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;size()&lt;/code&gt;, &lt;code&gt;equals()&lt;/code&gt;: phương thức của các lớp.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*--&lt;/code&gt;, &lt;code&gt;o--&lt;/code&gt;: mối quan hệ của các lớp.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/class_diagram.webp"
+width="1388"
+height="1330"
+srcset="https://namanh11611.github.io/p/mermaid/class_diagram_hu_9e87019f715302d5.webp 480w, https://namanh11611.github.io/p/mermaid/class_diagram_hu_2167f87791570962.webp 1024w"
+loading="lazy"
+alt="Class diagram"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="250px"
+&gt;&lt;/p&gt;
+&lt;h2 id="state-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/stateDiagram.html" target="_blank" rel="noopener"
+&gt;State diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;State diagram là một loại sơ đồ để mô tả &lt;strong&gt;hành vi của hệ thống&lt;/strong&gt;, nó thể hiện một số các trạng thái của hệ thống.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;stateDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; [*] --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; Moving
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Crash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Crash --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;stateDiagram&lt;/code&gt;: keyword của diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[*]&lt;/code&gt;: điểm bắt đầu hoặc kết thúc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Still&lt;/code&gt;, &lt;code&gt;Moving&lt;/code&gt;, &lt;code&gt;Crash&lt;/code&gt;: các trạng thái của hệ thống.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: các bước chuyển đổi trạng thái.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/state_diagram.webp"
+width="256"
+height="750"
+srcset="https://namanh11611.github.io/p/mermaid/state_diagram_hu_7e6083be227c5eeb.webp 480w, https://namanh11611.github.io/p/mermaid/state_diagram_hu_893cac28a20e6738.webp 1024w"
+loading="lazy"
+alt="State diagram"
+class="gallery-image"
+data-flex-grow="34"
+data-flex-basis="81px"
+&gt;&lt;/p&gt;
+&lt;h2 id="git-graph"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/gitgraph.html" target="_blank" rel="noopener"
+&gt;Git graph&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Git graph là minh hoạ của &lt;strong&gt;git commits&lt;/strong&gt; và &lt;strong&gt;git actions&lt;/strong&gt; (commands) trên các &lt;strong&gt;branch&lt;/strong&gt; khác nhau.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gitGraph
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; branch develop
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; checkout main
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gitGraph&lt;/code&gt;: keyword của graph.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;commit&lt;/code&gt;: tạo một commit mới trên branch hiện tại.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;branch&lt;/code&gt;: tạo và chuyển sang một branch mới, set nó thành current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;checkout&lt;/code&gt;: checkout về một branch đã tồn tại và set nó thành current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;merge&lt;/code&gt;: merge một branch vào current branch.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/git_graph.webp"
+width="982"
+height="362"
+srcset="https://namanh11611.github.io/p/mermaid/git_graph_hu_f52b2276177788dd.webp 480w, https://namanh11611.github.io/p/mermaid/git_graph_hu_b7b3edba1d60b498.webp 1024w"
+loading="lazy"
+alt="Git graph"
+class="gallery-image"
+data-flex-grow="271"
+data-flex-basis="651px"
+&gt;&lt;/p&gt;
+&lt;h1 id="kết-luận"&gt;Kết luận
+&lt;/h1&gt;&lt;p&gt;Mermaid thực sự rất &lt;strong&gt;mạnh mẽ&lt;/strong&gt; và &lt;strong&gt;linh hoạt&lt;/strong&gt;, nó cung cấp cho chúng ta nhiều &lt;strong&gt;option&lt;/strong&gt; để vẽ các loại diagram. Tuy nhiên trong bài viết ngắn này, mình chưa thể giới thiệu hết với anh em các option đó. Nếu mọi người cần chi tiết hơn, có thể tham khảo document của Mermaid mình đính kèm ở từng phần title. Hy vọng các bạn đã có cái nhìn tổng quan về Mermaid và có thể áp dụng nó vào trong các dự án của mình hoặc của team, giúp anh em tiết kiệm thời gian và công sức.&lt;/p&gt;</description></item></channel></rss>

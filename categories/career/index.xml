@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Career on Henry Techie</title><link>https://namanh11611.github.io/categories/career/</link><description>Recent content in Career on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 01 Jan 2025 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/categories/career/index.xml" rel="self" type="application/rss+xml"/><item><title>AI is Changing How Software Engineers Work</title><link>https://namanh11611.github.io/p/ai-change-work/</link><pubDate>Wed, 01 Jan 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/ai-change-work/</guid><description>&lt;img src="https://namanh11611.github.io/p/ai-change-work/ai_change_work.webp" alt="Featured image of post AI is Changing How Software Engineers Work" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@altumcode?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;AltumCode&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/silver-macbook-turned-on-XMFZqrGyV-Q?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="will-ai-replace-developers-soon"&gt;Will AI Replace Developers Soon?
+&lt;/h1&gt;&lt;p&gt;Many people have asked me whether AI is about to replace developers. My answer, as of now, is &lt;strong&gt;NO&lt;/strong&gt;. There still needs to be someone to &lt;strong&gt;verify&lt;/strong&gt; the code that AI produces.&lt;/p&gt;
+&lt;p&gt;However, the tech industry evolves rapidly. Technologies that are &lt;strong&gt;hot&lt;/strong&gt; today might become obsolete tomorrow. For example, six years ago when I graduated, coding for &lt;strong&gt;Android&lt;/strong&gt; was primarily done using &lt;strong&gt;Java&lt;/strong&gt;. But now, if you only know &lt;strong&gt;Java&lt;/strong&gt; without &lt;strong&gt;Kotlin&lt;/strong&gt;, it’s incredibly difficult to find a job.&lt;/p&gt;
+&lt;p&gt;So, will AI replace developers in the next &lt;strong&gt;5 years&lt;/strong&gt; or &lt;strong&gt;10 years&lt;/strong&gt;? I can’t say for certain.&lt;/p&gt;
+&lt;h1 id="ai-is-changing-the-way-we-work"&gt;AI is Changing the Way We Work
+&lt;/h1&gt;&lt;p&gt;That said, it’s clear that AI is transforming &lt;strong&gt;how we work&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In the past, a developer’s primary job was to convert &lt;strong&gt;requirements&lt;/strong&gt; and &lt;strong&gt;designs&lt;/strong&gt; into &lt;strong&gt;code&lt;/strong&gt;. Tech leads and seniors would spend additional time in meetings to clarify requirements, but junior developers spent most of their time coding. It could take &lt;strong&gt;months&lt;/strong&gt; or even &lt;strong&gt;years&lt;/strong&gt; to deliver a product.&lt;/p&gt;
+&lt;p&gt;Recently, I’ve been working on a &lt;strong&gt;new personal project&lt;/strong&gt;. Today marks &lt;strong&gt;day 10&lt;/strong&gt;, but with the help of &lt;strong&gt;Cursor&lt;/strong&gt;, the code I’ve written or directly modified accounts for just &lt;strong&gt;5%&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In the past, using &lt;strong&gt;ChatGPT&lt;/strong&gt;, you could only generate small components and then copy them into your project. Even then, you’d need to spend a lot of time fixing them to fit. But with &lt;strong&gt;Cursor&lt;/strong&gt;, it’s different. It understands the &lt;strong&gt;project context&lt;/strong&gt;. By providing it with a &lt;strong&gt;base project&lt;/strong&gt; and some &lt;strong&gt;pre-written files&lt;/strong&gt;, it can replicate &lt;strong&gt;99%&lt;/strong&gt; of the format, and the code is almost ready to use with little or no modifications.&lt;/p&gt;
+&lt;p&gt;Cursor acts as an &lt;strong&gt;AI Agent&lt;/strong&gt;: after generating code, it even creates new files, runs the project to check for errors, and fixes them automatically before asking me to &lt;strong&gt;review the changes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;My role now resembles that of a &lt;strong&gt;technical lead&lt;/strong&gt;: I &lt;strong&gt;define tasks for Cursor&lt;/strong&gt;, review its output, and ask it to fix anything suboptimal. Once I’m satisfied, I merge the code.&lt;/p&gt;
+&lt;p&gt;But to &lt;strong&gt;review AI-generated code&lt;/strong&gt;, you must understand &lt;strong&gt;what each line means&lt;/strong&gt; and identify what isn’t optimized so you can instruct it to make corrections. Blindly applying AI-generated solutions can be risky. If bugs arise later, you may not know how to fix them.&lt;/p&gt;
+&lt;h1 id="the-reality"&gt;The Reality
+&lt;/h1&gt;&lt;p&gt;Currently, a barrier to adoption in &lt;strong&gt;large companies&lt;/strong&gt; is their hesitation to use AI due to &lt;strong&gt;data security concerns&lt;/strong&gt;. Additionally, their &lt;strong&gt;codebases&lt;/strong&gt; are vast, and using general AI tools to train on them can be &lt;strong&gt;token-intensive&lt;/strong&gt;. AI has limitations in the &lt;strong&gt;number of tokens it can retain&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For me, AI isn’t much help in my company projects. However, for &lt;strong&gt;small companies&lt;/strong&gt; or &lt;strong&gt;indie hackers&lt;/strong&gt;, these barriers are less significant, creating opportunities to &lt;strong&gt;accelerate software development&lt;/strong&gt;. Imagine cutting down the time to build an &lt;strong&gt;MVP&lt;/strong&gt; from &lt;strong&gt;months&lt;/strong&gt; to just &lt;strong&gt;weeks&lt;/strong&gt;, or even &lt;strong&gt;days&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The numbers don’t lie—traffic to &lt;strong&gt;StackOverflow&lt;/strong&gt; is declining. Developers are now asking &lt;strong&gt;AI&lt;/strong&gt; for help more often than they use &lt;strong&gt;Google&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Returning to the question at the start: if a team once required &lt;strong&gt;3 seniors and 7 juniors&lt;/strong&gt;, but after adopting AI, productivity improves and the team now only needs &lt;strong&gt;3 seniors and 4 juniors&lt;/strong&gt;, hasn’t AI effectively &lt;strong&gt;replaced 3 juniors&lt;/strong&gt;? More accurately, those who effectively leverage AI are taking over the roles of those who don’t.&lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion
+&lt;/h1&gt;&lt;p&gt;As the new year begins, I’m reflecting on my work so that future me can look back on this. During the &lt;strong&gt;First Industrial Revolution&lt;/strong&gt;, machines replaced humans in &lt;strong&gt;tedious manual labor&lt;/strong&gt;, freeing us to focus our intellect on other tasks. Let’s see where AI will take us in the next &lt;strong&gt;5 years&lt;/strong&gt; or &lt;strong&gt;10 years&lt;/strong&gt;.&lt;/p&gt;</description></item><item><title>Journey of Solving 555 LeetCode Problems</title><link>https://namanh11611.github.io/p/leetcode/</link><pubDate>Sun, 28 Jul 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/leetcode/</guid><description>&lt;img src="https://namanh11611.github.io/p/leetcode/leetcode.webp" alt="Featured image of post Journey of Solving 555 LeetCode Problems" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@ashleybatz?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Ashley Batz&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/person-walking-on-beach-during-daytime-betmVWGYcLY?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="the-journey-begins"&gt;The Journey Begins
+&lt;/h1&gt;&lt;p&gt;LeetCode is likely familiar to many of you—a platform for solving &lt;strong&gt;algorithm&lt;/strong&gt; problems and preparing for &lt;strong&gt;coding interviews&lt;/strong&gt;, especially for foreign companies and a few in Vietnam.&lt;/p&gt;
+&lt;p&gt;I started my journey the same way, simply to prepare for interviews. I realized that practicing problems on LeetCode not only improved my coding skills but also gave me more confidence when facing algorithm and data structure-related interview questions.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/leetcode/leetcode_profile.webp"
+width="852"
+height="396"
+srcset="https://namanh11611.github.io/p/leetcode/leetcode_profile_hu_679cb4b2bad316ff.webp 480w, https://namanh11611.github.io/p/leetcode/leetcode_profile_hu_f01d4361b14e171.webp 1024w"
+loading="lazy"
+alt="LeetCode Profile"
+class="gallery-image"
+data-flex-grow="215"
+data-flex-basis="516px"
+&gt;&lt;/p&gt;
+&lt;p&gt;I began solving problems &lt;strong&gt;by topic&lt;/strong&gt;. This approach helped me systematically organize my knowledge and master specific types of problems. By focusing on one topic at a time, I could deepen my understanding and solve problems more efficiently. Since I didn’t specialize in Computer Science and didn’t participate in algorithm competitions during university, I could manage problems involving &lt;strong&gt;BFS&lt;/strong&gt;, &lt;strong&gt;DFS&lt;/strong&gt;, &lt;strong&gt;Hash Table&lt;/strong&gt;, &lt;strong&gt;Stack&lt;/strong&gt;, or &lt;strong&gt;Queue&lt;/strong&gt;, but initially struggled with topics like &lt;strong&gt;Dynamic Programming&lt;/strong&gt; and &lt;strong&gt;Union Find&lt;/strong&gt;. However, as the saying goes, &lt;em&gt;&amp;ldquo;Practice makes perfect&amp;rdquo;&lt;/em&gt;, after solving about ten problems, it became much easier.&lt;/p&gt;
+&lt;p&gt;In this initial phase, I solved around &lt;strong&gt;100 problems&lt;/strong&gt;, which I found sufficient to interview with companies that typically ask easy-to-medium-level questions.&lt;/p&gt;
+&lt;h1 id="sustaining-as-a-hobby"&gt;Sustaining as a Hobby
+&lt;/h1&gt;&lt;p&gt;After passing my interview and joining a good company, I stopped solving problems for about a year. Then, on a beautiful day, I felt inspired to pick it up again. During this second phase, I treated solving LeetCode problems as a daily hobby. I spent around &lt;strong&gt;30 minutes a day&lt;/strong&gt; solving one problem from the &lt;strong&gt;Daily Coding Challenge&lt;/strong&gt;. This not only helped maintain my algorithm skills but also served as a form of relaxation and self-challenge. Moreover, solving random problems daily better mimicked real-life interview scenarios.&lt;/p&gt;
+&lt;p&gt;I usually set a 30-minute timer, and if I couldn’t figure out a solution, I’d read the &lt;strong&gt;Editorial&lt;/strong&gt; (solutions provided by LeetCode), then try to memorize and code it myself. After every problem, whether solved independently or with help, I would check the &lt;strong&gt;Solutions&lt;/strong&gt; section to see how others approached it. The top-voted solutions often showcased creative and optimized methods, sometimes even better than the Editorial solutions.&lt;/p&gt;
+&lt;p&gt;As the saying goes, &lt;em&gt;&amp;ldquo;If you want to go fast, go alone. If you want to go far, go together.&amp;rdquo;&lt;/em&gt; To find companions and exchange experiences, I frequently joined discussions on the voz forum. This not only motivated me but also allowed me to learn various approaches from the community. To maintain motivation, I set a specific goal: reaching &lt;strong&gt;6000 points&lt;/strong&gt; to earn the LeetCode T-shirt. Setting clear goals gave me a reason to keep pushing forward every day.&lt;/p&gt;
+&lt;h1 id="achieving-the-goal-and-deciding-to-pause"&gt;Achieving the Goal and Deciding to Pause
+&lt;/h1&gt;&lt;p&gt;After about &lt;strong&gt;1.5 years&lt;/strong&gt; of consistent effort, on July 26, 2024, I finally achieved my goal of 6000 points and claimed the T-shirt.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/leetcode/leetcode_t_shirt.webp"
+width="1586"
+height="550"
+srcset="https://namanh11611.github.io/p/leetcode/leetcode_t_shirt_hu_e7ae994c62df84ed.webp 480w, https://namanh11611.github.io/p/leetcode/leetcode_t_shirt_hu_8baac6c807f1f228.webp 1024w"
+loading="lazy"
+alt="LeetCode T-Shirt"
+class="gallery-image"
+data-flex-grow="288"
+data-flex-basis="692px"
+&gt;&lt;/p&gt;
+&lt;p&gt;However, with work becoming busier, I decided to take a break and focus on current responsibilities. Interestingly, the number of problems I solved happened to be &lt;strong&gt;555&lt;/strong&gt;—a perfect milestone. Maybe it’s a signal from the universe.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When working with Thai colleagues, I learned that &lt;strong&gt;555&lt;/strong&gt; in Thai is pronounced like laughter, &lt;strong&gt;Hahaha&lt;/strong&gt;. Isn’t this universal signal quite amusing?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Taking a break doesn’t mean giving up. In the future, if I feel inspired or need to prepare for companies that demand higher algorithm expertise, I’ll return to solving problems. The journey of solving 555 LeetCode problems has significantly enhanced my programming skills and logical thinking.&lt;/p&gt;
+&lt;p&gt;Wishing you all an energetic week ahead!&lt;/p&gt;</description></item><item><title>Từ câu chuyện kải kách chữ Quốc ngữ đến những nguyên lý trong lập trình</title><link>https://namanh11611.github.io/p/vietnamese/</link><pubDate>Wed, 20 Mar 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/vietnamese/</guid><description>&lt;img src="https://namanh11611.github.io/p/vietnamese/vietnamese.webp" alt="Featured image of post Từ câu chuyện kải kách chữ Quốc ngữ đến những nguyên lý trong lập trình" /&gt;&lt;h1 id="chữ-quốc-ngữ-vốn-chứa-đựng-nhiều-lỗi"&gt;Chữ Quốc ngữ vốn chứa đựng nhiều lỗi
+&lt;/h1&gt;&lt;p&gt;Trước hết để mọi người không nhầm lẫn thì cần phân biệt rõ ràng 2 khái niệm &lt;strong&gt;tiếng Việt&lt;/strong&gt; và &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt;. &lt;a class="link" href="https://vi.wikipedia.org/wiki/Ti%E1%BA%BFng_Vi%E1%BB%87t" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Tiếng Việt&lt;/strong&gt;&lt;/a&gt; là ngôn ngữ của người Việt và đã xuất hiện từ &lt;strong&gt;khoảng đầu Công nguyên&lt;/strong&gt;, là cách mà cha ông ta nói chuyện, giao tiếp với nhau, gọi tên sự vật, hiện tượng như &lt;code&gt;trời&lt;/code&gt;, &lt;code&gt;đất&lt;/code&gt;, &lt;code&gt;bánh chưng&lt;/code&gt;, &lt;code&gt;bánh dày&lt;/code&gt;&amp;hellip; Còn &lt;a class="link" href="https://vi.wikipedia.org/wiki/Ch%E1%BB%AF_Qu%E1%BB%91c_ng%E1%BB%AF" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt;&lt;/a&gt; là một loại chữ viết dựa trên &lt;strong&gt;chữ cái Latinh&lt;/strong&gt;, được sáng tạo bởi các &lt;strong&gt;tu sĩ Bồ Đào Nha&lt;/strong&gt; dùng để ghi âm tiếng Việt vào &lt;strong&gt;đầu thế kỷ XVII&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Mình không có vấn đề gì với &lt;strong&gt;tiếng Việt&lt;/strong&gt;, nhưng &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt; thì mình thấy nó còn chứa đựng nhiều lỗi. Ví dụ như hồi đi học, có bao giờ bạn thắc mắc:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tại sao tên một số địa danh như &lt;code&gt;Đắk Lắk&lt;/code&gt;, &lt;code&gt;Đắk Nông&lt;/code&gt; lại có cách viết khác với các từ thông thường?&lt;/li&gt;
+&lt;li&gt;Tại sao chữ &lt;code&gt;c&lt;/code&gt;, &lt;code&gt;g&lt;/code&gt;, &lt;code&gt;ng&lt;/code&gt; lại không thể đứng trước &lt;code&gt;e&lt;/code&gt;, &lt;code&gt;ê&lt;/code&gt;, &lt;code&gt;i&lt;/code&gt;, mà chúng ta phải dùng &lt;code&gt;k&lt;/code&gt;, &lt;code&gt;gh&lt;/code&gt;, &lt;code&gt;ngh&lt;/code&gt;?&lt;/li&gt;
+&lt;li&gt;Tại sao Bác Hồ lại viết là &lt;code&gt;Đường Kách mệnh&lt;/code&gt; chứ không phải là &lt;code&gt;Đường Cách mạng&lt;/code&gt; như ngày nay chúng ta hay viết?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/vietnamese/duongkachmenh.webp"
+width="640"
+height="906"
+srcset="https://namanh11611.github.io/p/vietnamese/duongkachmenh_hu_249b605179537dc8.webp 480w, https://namanh11611.github.io/p/vietnamese/duongkachmenh_hu_2d75769f4eed77fc.webp 1024w"
+loading="lazy"
+alt="DuongKachMenh"
+class="gallery-image"
+data-flex-grow="70"
+data-flex-basis="169px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Chữ Quốc ngữ vay mượn chủ yếu từ tiếng &lt;strong&gt;Bồ Đào Nha&lt;/strong&gt; và tiếng &lt;strong&gt;Ý&lt;/strong&gt;, ví dụ như trong tiếng Bồ Đào Nha, nếu để chữ &lt;code&gt;c&lt;/code&gt; đứng trước &lt;code&gt;a&lt;/code&gt;,&lt;code&gt;o&lt;/code&gt;,&lt;code&gt;u&lt;/code&gt; sẽ biểu thị phụ âm &lt;code&gt;/k/&lt;/code&gt;, nhưng khi đứng trước &lt;code&gt;e&lt;/code&gt;,&lt;code&gt;i&lt;/code&gt; sẽ biểu thị phụ âm &lt;code&gt;/s/&lt;/code&gt;. Vì vậy để tránh cho những người biết tiếng biết Bồ Đào Nha khỏi đọc sai, các tu sĩ mới đặt ra quy tắc phải dùng &lt;code&gt;k&lt;/code&gt; thay cho &lt;code&gt;c&lt;/code&gt; khi đứng trước &lt;code&gt;e&lt;/code&gt;,&lt;code&gt;ê&lt;/code&gt;,&lt;code&gt;i&lt;/code&gt;,&lt;code&gt;y&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Còn với người Việt Nam, chúng ta không bị hiểu nhầm như trên, nên chúng ta có thể hoàn toàn dùng &lt;code&gt;c&lt;/code&gt; thay cho &lt;code&gt;k&lt;/code&gt; trong mọi từ mà không bị phát âm sai. Ví dụ như nếu mình viết là &lt;code&gt;con ciến&lt;/code&gt; thay cho &lt;code&gt;con kiến&lt;/code&gt;, &lt;code&gt;cái cem&lt;/code&gt; thay cho &lt;code&gt;cái kem&lt;/code&gt;, mặc dù là viết sai chính tả, nhưng người Việt vẫn có thể đọc đúng, chứ không đọc thành &lt;code&gt;con siến&lt;/code&gt; hay &lt;code&gt;cái sem&lt;/code&gt; như người Bồ Đào Nha.&lt;/p&gt;
+&lt;p&gt;Như trong tiêu đề của bài viết này, mình dùng từ &lt;code&gt;kải kách&lt;/code&gt; thay cho &lt;code&gt;cải cách&lt;/code&gt; nhưng các bạn vẫn hiểu ý mình đang truyền đạt đúng không?&lt;/p&gt;
+&lt;h1 id="những-công-trình-không-bao-giờ-được-triển-khai"&gt;Những công trình không bao giờ được triển khai
+&lt;/h1&gt;&lt;p&gt;Nhận thấy sự bất hợp lý này, đã có rất nhiều công trình đề xuất cải tiến chữ Quốc ngữ. Trong đó có thể kể đến dự thảo &lt;strong&gt;Phương án cải tiến chữ Quốc ngữ bước đầu&lt;/strong&gt; của &lt;strong&gt;Giáo sư Hoàng Phê&lt;/strong&gt; xây dựng từ những năm &lt;strong&gt;1960-1961&lt;/strong&gt;. Trong đó, ông đề xuất một số điểm như:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bỏ &lt;code&gt;h&lt;/code&gt; trong &lt;code&gt;gh&lt;/code&gt; và &lt;code&gt;ngh&lt;/code&gt;. Ví dụ: ghê -&amp;gt; gê, nghe -&amp;gt; nge, nghiêng -&amp;gt; ngiêng.&lt;/li&gt;
+&lt;li&gt;Dùng &lt;code&gt;f&lt;/code&gt; thay &lt;code&gt;ph&lt;/code&gt;, &lt;code&gt;d&lt;/code&gt; thay &lt;code&gt;đ&lt;/code&gt;, &lt;code&gt;z&lt;/code&gt; thay &lt;code&gt;d&lt;/code&gt; và &lt;code&gt;gi&lt;/code&gt;. Ví dụ: dân tộc -&amp;gt; zân tộc, đất nước -&amp;gt; dất nước, phương pháp -&amp;gt; fương fáp.&lt;/li&gt;
+&lt;li&gt;Nhất luật viết phụ âm &lt;code&gt;/k/&lt;/code&gt; bằng &lt;code&gt;k&lt;/code&gt; trong mọi trường hợp, thay cho &lt;code&gt;c&lt;/code&gt;, và nghiên cứu thay cả cho &lt;code&gt;q&lt;/code&gt;. Ví dụ như &lt;code&gt;Đường kách mệnh&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hoặc một trường hợp nổi tiếng khác là đề xuất &lt;strong&gt;Phương án cải tiến chữ Quốc ngữ&lt;/strong&gt; của &lt;strong&gt;Phó giáo sư Bùi Hiền&lt;/strong&gt;. Ông từng công bố đề xuất ở Báo Giáo dục và Thời đại số 72 ngày &lt;strong&gt;8/9/1995&lt;/strong&gt;. Cuối năm 2017, sau một cuộc hội thảo thì đề xuất của ông được đưa ra truyền thông và đã có bàn cãi sôi nổi do những khác lạ trong lối viết cải tiến mà ông đưa ra. Ở thời điểm đó, khi mà người người nhà nhà chê trách PGS Bùi Hiền, có lẽ mình là một trong số ít những người thấy được một số điểm hợp lý trong đề xuất của ông (chỉ một số thôi chứ không phải toàn bộ phương án).&lt;/p&gt;
+&lt;p&gt;Nhưng qua năm tháng, các bạn có thể thấy những công trình trên sẽ &lt;strong&gt;không bao giờ được triển khai&lt;/strong&gt;, bởi vì nó sẽ gây tốn kém rất lớn về &lt;strong&gt;thời gian&lt;/strong&gt;, &lt;strong&gt;tiền bạc&lt;/strong&gt; và &lt;strong&gt;nguồn lực&lt;/strong&gt; của cả xã hội. Hãy thử tưởng tượng cả nước phải đi đổi Căn cước công dân, Sổ hộ khẩu, giấy tờ hành chính, các bộ gõ tiếng Việt phải cập nhật lại quy tắc, các phần mềm phải cập nhật lại giao diện&amp;hellip; Mình nghĩ nó phải tốn cả chục năm để hoàn thành mất.&lt;/p&gt;
+&lt;h1 id="những-nguyên-lý-trong-lập-trình"&gt;Những nguyên lý trong lập trình
+&lt;/h1&gt;&lt;p&gt;Câu chuyện trên nghe qua thì có vẻ như chẳng liên quan đến ngành &lt;strong&gt;Công nghệ thông tin&lt;/strong&gt;, nhưng các bạn hãy thử xoay góc nhìn, coi &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt; như một &lt;strong&gt;ngôn ngữ lập trình&lt;/strong&gt; với bộ quy tắc riêng về cách đặt phụ âm, cách kết nối các âm, cách đánh dấu thanh&amp;hellip; Qua đó, chúng ta sẽ có một số góc nhìn mới về sự ra đời và phát triển của &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt; và liên hệ nó với các nguyên lý, bài học trong ngành lập trình.&lt;/p&gt;
+&lt;h2 id="code-luôn-có-đầy-rẫy-edge-case"&gt;Code luôn có đầy rẫy edge case
+&lt;/h2&gt;&lt;p&gt;Có thể thấy, tên một số địa danh như &lt;code&gt;Đắk Lắk&lt;/code&gt;, &lt;code&gt;Đắk Nông&lt;/code&gt; chính là một edge case của chữ Quốc ngữ. Trong lập trình cũng vậy, chúng ta luôn phải lưu ý xử lý edge case để &lt;strong&gt;tránh chương trình gặp lỗi&lt;/strong&gt; sau này.&lt;/p&gt;
+&lt;p&gt;Ví dụ như thực hiện phép chia thì luôn phải kiểm tra trường hợp &lt;strong&gt;số chia khác 0&lt;/strong&gt;, tìm phần tử đầu tiên của mảng thì luôn phải kiểm tra trường hợp &lt;strong&gt;mảng bị rỗng&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Ví dụ bạn có một input text field thì cần suy nghĩ các edge case như user không nhập gì, user nhập text quá dài hoặc user nhập sai format mà chúng ta mong muốn. Việc check edge case trong trường hợp này còn giúp chúng ta tránh được cuộc tấn công &lt;strong&gt;Cross Site Scripting (XSS)&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="tính-tương-thích-ngược-backward-compatible"&gt;Tính tương thích ngược (Backward Compatible)
+&lt;/h2&gt;&lt;p&gt;Thực ra chữ Quốc ngữ vẫn đang có những &lt;strong&gt;sự cải tiến&lt;/strong&gt; từ lúc ra đời đến ngày nay. Ví dụ như ngày xưa Bác Hồ viết &lt;code&gt;Đường Kách mệnh&lt;/code&gt; nhưng ngày nay chúng ta lại viết là &lt;code&gt;Đường Cách mạng&lt;/code&gt;. Hoặc trước đây, các từ ghép hoặc tên riêng thường có dấu gạch nối ở giữa, ví dụ như &lt;code&gt;độc-lập&lt;/code&gt;, &lt;code&gt;tự-do&lt;/code&gt;, &lt;code&gt;Việt-Nam&lt;/code&gt;, &lt;code&gt;Luân-Đôn&lt;/code&gt;&amp;hellip; Thế nhưng ngày nay, những dấu gạch nối đó đã bị bỏ đi. Những sự cải tiến nhỏ này vẫn đảm bảo mọi người có thể hiểu được cách viết mới dễ dàng, không cần tốn quá nhiều thời gian để làm quen.&lt;/p&gt;
+&lt;p&gt;Trong các ngôn ngữ lập trình, khi có nâng cấp một version mới, thường nó sẽ luôn được đảm bảo &lt;strong&gt;tính tương thích ngược&lt;/strong&gt; để những chương trình viết theo cách viết code cũ &lt;strong&gt;không bị xảy ra lỗi&lt;/strong&gt;. Ví dụ như các function cũ có thể bị đánh dấu là &lt;code&gt;Deprecated&lt;/code&gt;, hiển thị warning cho các lập trình viên biết rằng function này sẽ sớm bị thay thế, nhưng không bị xoá ngay để chúng ta có thời gian update nó.&lt;/p&gt;
+&lt;h2 id="code-đang-chạy-ổn-thì-đừng-đụng-vào"&gt;Code đang chạy ổn thì đừng đụng vào
+&lt;/h2&gt;&lt;p&gt;Việc đề xuất cải cách của PGS Bùi Hiền bị dư luận phản ứng dữ dội một phần vì nó &lt;strong&gt;khác quá xa&lt;/strong&gt; với những gì mà mọi người đang đọc, đang viết hàng ngày. Nếu được áp dụng vào thực tế, chắc chắn trong quá trình thực thi sẽ có những sự &lt;strong&gt;xung đột&lt;/strong&gt; giữa những văn bản, phần mềm được viết bằng &lt;strong&gt;kiểu chữ cũ&lt;/strong&gt; và &lt;strong&gt;kiểu chữ cải cách&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Nó giống như câu chuyện kinh điển trong ngày lập trình mà anh em thường nói vui với nhau &lt;em&gt;&amp;ldquo;Code đang chạy ổn thì đừng đụng vào&amp;rdquo;&lt;/em&gt;. Hồi mới ra trường, mình từng nhiệt tình xung phong refactor một feature có flow khá phức tạp. Thế rồi hậu quả là mình mất một mớ thời gian để đi fix bug cho những corner case của feature đó mà khi bắt đầu làm mình chưa lường trước hết được.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/vietnamese/refactor.webp"
+width="1073"
+height="1200"
+srcset="https://namanh11611.github.io/p/vietnamese/refactor_hu_923ac8df25547752.webp 480w, https://namanh11611.github.io/p/vietnamese/refactor_hu_e2ad4711482daabf.webp 1024w"
+loading="lazy"
+alt="Refactor"
+class="gallery-image"
+data-flex-grow="89"
+data-flex-basis="214px"
+&gt;&lt;/p&gt;
+&lt;h2 id="phát-hiện-lỗi-càng-muộn-chi-phí-sửa-đổi-càng-lớn"&gt;Phát hiện lỗi càng muộn, chi phí sửa đổi càng lớn
+&lt;/h2&gt;&lt;p&gt;Như mình chia sẻ ở trên, những công trình cải cách chữ Quốc ngữ trên có thể sẽ không bao giờ được đưa vào đời sống bởi vì sự tốn kém của nó. Nếu muốn sửa, có lẽ thời điểm tốt nhất là lúc&amp;hellip; các tu sỹ Bồ Đào Nha &lt;strong&gt;mới sáng tạo ra&lt;/strong&gt; nó.&lt;/p&gt;
+&lt;p&gt;Cùng là một bug, nếu bạn phát hiện ra nó ở phase &lt;strong&gt;develop&lt;/strong&gt;, bạn chỉ cần &lt;strong&gt;sửa vài dòng code&lt;/strong&gt; là xong. Nếu nó đã được &lt;strong&gt;release lên beta&lt;/strong&gt;, việc chỉnh sửa có thể sẽ ảnh hưởng đến &lt;strong&gt;một nhóm nhỏ user&lt;/strong&gt;. Còn nếu xui hơn là sản phẩm đã được &lt;strong&gt;release lên production&lt;/strong&gt; tới toàn bộ user, &lt;strong&gt;một thay đổi nhỏ&lt;/strong&gt; có thể &lt;strong&gt;gây ảnh hưởng cực lớn&lt;/strong&gt;, ví dụ như làm mất dữ liệu của user hoặc gây ra trải nghiệm tệ trong quá trình sử dụng phần mềm.&lt;/p&gt;
+&lt;p&gt;Bạn có nhớ đến trường hợp lỗi pin của điện thoại Galaxy Note 7 không? Sự cố này đã khiến Samsung phải thu hồi dòng điện thoại này, gây thiệt hại cho hãng 5,4 tỷ USD.&lt;/p&gt;
+&lt;h1 id="kết-luận"&gt;Kết luận
+&lt;/h1&gt;&lt;p&gt;Bài viết này chỉ đưa ra một góc nhìn thú vị về lập trình và cuộc sống, không nhằm mục đích công kích tổ chức hay cá nhân nào. Hy vọng bạn coi nó như một bài viết mang tính giải trí trong lúc trà dư tửu hậu.&lt;/p&gt;</description></item><item><title>Mermaid - Draw diagrams and charts as easily as candy with Markdown</title><link>https://namanh11611.github.io/p/mermaid/</link><pubDate>Sun, 25 Feb 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/mermaid/</guid><description>&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp" alt="Featured image of post Mermaid - Draw diagrams and charts as easily as candy with Markdown" /&gt;&lt;h1 id="the-old-days"&gt;The Old Days
+&lt;/h1&gt;&lt;p&gt;As you know, diagrams and documentation play an important role in projects. They act as a compass to help developers understand the ideas of PMs, tech leads, or BAs, guide the required flow, and serve as evidence for reference when there are disputes about project requirements. A picture is worth a thousand words; sometimes a clear diagram can save hours of explanation and back-and-forth discussion.&lt;/p&gt;
+&lt;p&gt;Previously, when drawing diagrams for projects, I often used &lt;strong&gt;&lt;a class="link" href="https://app.diagrams.net" target="_blank" rel="noopener"
+&gt;draw.io&lt;/a&gt;&lt;/strong&gt;. For those who don&amp;rsquo;t know, it&amp;rsquo;s an online tool for drawing diagrams by &lt;strong&gt;drag and drop&lt;/strong&gt;. But every time I needed to update a diagram, I had to drag and drop each box or arrow again, which was quite time-consuming. Until one day, a colleague introduced me to &lt;strong&gt;Mermaid&lt;/strong&gt;, and everything changed&amp;hellip;&lt;/p&gt;
+&lt;h1 id="enlightened-by-mermaid"&gt;Enlightened by Mermaid
+&lt;/h1&gt;&lt;p&gt;According to the definition on the official website, &lt;strong&gt;&lt;a class="link" href="https://mermaid.js.org" target="_blank" rel="noopener"
+&gt;Mermaid&lt;/a&gt;&lt;/strong&gt; is a tool built on &lt;strong&gt;JavaScript&lt;/strong&gt; that helps create &lt;strong&gt;diagrams&lt;/strong&gt; and &lt;strong&gt;charts&lt;/strong&gt; flexibly from &lt;strong&gt;text&lt;/strong&gt; with syntax similar to &lt;strong&gt;Markdown&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp"
+width="1170"
+height="497"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_hu_8d18830431e94328.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_hu_868de9c6e0f3cf0f.webp 1024w"
+loading="lazy"
+alt="Mermaid"
+class="gallery-image"
+data-flex-grow="235"
+data-flex-basis="564px"
+&gt;&lt;/p&gt;
+&lt;h2 id="advantages"&gt;Advantages
+&lt;/h2&gt;&lt;p&gt;This is an open-source and completely free tool. It supports many popular types of diagrams and charts such as &lt;strong&gt;Flowchart&lt;/strong&gt;, &lt;strong&gt;Sequence diagram&lt;/strong&gt;, &lt;strong&gt;Class diagram&lt;/strong&gt;, &lt;strong&gt;State diagram&lt;/strong&gt;, &lt;strong&gt;Git graph&lt;/strong&gt;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;The syntax is very simple and easy to learn. If you&amp;rsquo;re already familiar with Markdown, you just need to spend a little time to master it. Now, whenever project requirements change, you only need to edit a few lines of text and the diagram will be updated quickly.&lt;/p&gt;
+&lt;p&gt;For simple diagrams, you can use &lt;strong&gt;&lt;a class="link" href="https://mermaid.live" target="_blank" rel="noopener"
+&gt;Mermaid Live Editor&lt;/a&gt;&lt;/strong&gt; without installing anything. For company projects, Mermaid is already integrated with &lt;strong&gt;Notion&lt;/strong&gt; or &lt;strong&gt;Atlassian&lt;/strong&gt; products. If you want to use it locally, Mermaid works right in popular IDEs like &lt;strong&gt;Visual Studio Code&lt;/strong&gt; or JetBrains family.&lt;/p&gt;
+&lt;h2 id="comparison-with-plantuml"&gt;Comparison with PlantUML
+&lt;/h2&gt;&lt;p&gt;There are other tools on the market that render diagrams from text like Mermaid, the most notable being &lt;strong&gt;&lt;a class="link" href="https://plantuml.com" target="_blank" rel="noopener"
+&gt;PlantUML&lt;/a&gt;&lt;/strong&gt;. Below is a comparison table for an overview.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Criteria&lt;/th&gt;
+&lt;th&gt;Mermaid&lt;/th&gt;
+&lt;th&gt;PlantUML&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub Star (25/2/2024)&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/mermaid-js/mermaid" target="_blank" rel="noopener"
+&gt;65,400&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/plantuml/plantuml" target="_blank" rel="noopener"
+&gt;9,300&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Diagram types&lt;/td&gt;
+&lt;td&gt;Flow, Sequence, Class, State, Git graph&amp;hellip;&lt;/td&gt;
+&lt;td&gt;Sequence, Usecase, Class, Object, Activity, State&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Online support&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Offline support&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pricing&lt;/td&gt;
+&lt;td&gt;Free&lt;/td&gt;
+&lt;td&gt;Free&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Others&lt;/td&gt;
+&lt;td&gt;Easy to learn, user-friendly for beginners&lt;/td&gt;
+&lt;td&gt;Many extension libraries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="installation-on-visual-studio-code"&gt;Installation on Visual Studio Code
+&lt;/h1&gt;&lt;p&gt;Currently, in my project, the team is creating a separate project for diagrams, using &lt;strong&gt;Git&lt;/strong&gt; for version control and &lt;strong&gt;Visual Studio Code&lt;/strong&gt; for drawing.&lt;/p&gt;
+&lt;p&gt;You only need to install 2 extensions: &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid" target="_blank" rel="noopener"
+&gt;Markdown Preview Mermaid Support&lt;/a&gt; and &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting" target="_blank" rel="noopener"
+&gt;Mermaid Markdown Syntax Highlighting&lt;/a&gt; on Visual Studio Code to get started.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_extension.webp"
+width="836"
+height="422"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_9297c6104a79cb8c.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_66628a2035b940.webp 1024w"
+loading="lazy"
+alt="Mermaid Extensions"
+class="gallery-image"
+data-flex-grow="198"
+data-flex-basis="475px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Whenever you need to draw a diagram, create a file with the &lt;code&gt;.md&lt;/code&gt; extension and write the Mermaid syntax. You can click the &lt;strong&gt;Open Preview&lt;/strong&gt; button in the top right corner to code and see the diagram updated live beside it. The result is as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_preview.webp"
+width="2318"
+height="1030"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_6f0a279b03479e11.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_df5866560d28b645.webp 1024w"
+loading="lazy"
+alt="Mermaid Preview"
+class="gallery-image"
+data-flex-grow="225"
+data-flex-basis="540px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Just check out the example first, and I&amp;rsquo;ll go into detail about the syntax for each type of diagram in the next section.&lt;/p&gt;
+&lt;h1 id="syntax-for-common-diagrams"&gt;Syntax for Common Diagrams
+&lt;/h1&gt;&lt;h2 id="flowchart"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/flowchart.html" target="_blank" rel="noopener"
+&gt;Flowchart&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A flowchart consists of &lt;strong&gt;nodes&lt;/strong&gt; and &lt;strong&gt;edges&lt;/strong&gt; (which can be &lt;strong&gt;undirected edges&lt;/strong&gt; or &lt;strong&gt;directed arrows&lt;/strong&gt;). The Mermaid code will determine how to create the nodes and edges, with customizable edge types according to the drawer&amp;rsquo;s intention.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;flowchart TD
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;B;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;C;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; B--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; C--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;flowchart&lt;/code&gt;: the keyword for this type of chart (you can also use &lt;code&gt;graph&lt;/code&gt; interchangeably).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TD&lt;/code&gt;: the direction of the chart (top to down). Other options include:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TB&lt;/code&gt;: top to bottom (same as top to down)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;BT&lt;/code&gt;: bottom to top&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RL&lt;/code&gt;: right to left&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LR&lt;/code&gt;: left to right&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;A&lt;/code&gt;, &lt;code&gt;B&lt;/code&gt;, &lt;code&gt;C&lt;/code&gt;, &lt;code&gt;D&lt;/code&gt;: the names of the nodes. Besides the default rectangle, you can also use other shapes like rounded rectangles, trapezoids, circles, etc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: directed edge type. There are also undirected, bidirectional types, and types with attached text&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/flowchart.webp"
+width="252"
+height="496"
+srcset="https://namanh11611.github.io/p/mermaid/flowchart_hu_9a097f81442fa2b4.webp 480w, https://namanh11611.github.io/p/mermaid/flowchart_hu_4852dd2d01bbc216.webp 1024w"
+loading="lazy"
+alt="Flowchart"
+class="gallery-image"
+data-flex-grow="50"
+data-flex-basis="121px"
+&gt;&lt;/p&gt;
+&lt;h2 id="sequence-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/sequenceDiagram.html" target="_blank" rel="noopener"
+&gt;Sequence diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A sequence diagram is an &lt;strong&gt;interaction diagram&lt;/strong&gt; that shows how different &lt;strong&gt;processes&lt;/strong&gt; operate with each other &lt;strong&gt;and in what order&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sequenceDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Alice
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Bob
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant John
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Alice-&amp;gt;&amp;gt;John: Hello John, how are you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; loop Healthcheck
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;John: Fight against hypochondria
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; end
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Note right of John: Rational thoughts &amp;lt;br/&amp;gt;prevail!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John--&amp;gt;&amp;gt;Alice: Great!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;Bob: How about you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Bob--&amp;gt;&amp;gt;John: Jolly good!
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sequenceDiagram&lt;/code&gt;: the keyword for the diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;participant&lt;/code&gt;: defines the participants in the diagram in sequential order. In this example, we have 3 participants: &lt;code&gt;Alice&lt;/code&gt;, &lt;code&gt;Bob&lt;/code&gt;, and &lt;code&gt;John&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Each line defines the message between the participants.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-&amp;gt;&amp;gt;&lt;/code&gt;, &lt;code&gt;--&amp;gt;&amp;gt;&lt;/code&gt;: directed message types with solid and dashed lines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/sequence_diagram.webp"
+width="1236"
+height="1110"
+srcset="https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_f82c29c8e973dc90.webp 480w, https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_8ebc4b789a8b9c9.webp 1024w"
+loading="lazy"
+alt="Sequence diagram"
+class="gallery-image"
+data-flex-grow="111"
+data-flex-basis="267px"
+&gt;&lt;/p&gt;
+&lt;h2 id="class-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/classDiagram.html" target="_blank" rel="noopener"
+&gt;Class diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A class diagram in &lt;strong&gt;UML&lt;/strong&gt; (Unified Modeling Language) is a type of &lt;strong&gt;static structure diagram&lt;/strong&gt; that describes the &lt;strong&gt;structure of a system&lt;/strong&gt; by showing the &lt;strong&gt;classes&lt;/strong&gt; of the system, their &lt;strong&gt;attributes&lt;/strong&gt;, &lt;strong&gt;operations&lt;/strong&gt; (or methods), and the &lt;strong&gt;relationships between objects&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;classDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 &amp;lt;|-- AveryLongClass : Cool
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class03 *-- Class04
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class05 o-- Class06
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 .. Class08
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --&amp;gt; C2 : Where am i?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --* C3
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --|&amp;gt; Class07
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : equals()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : Object[] elementData
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : size()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int chimp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int gorilla
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class08 &amp;lt;--&amp;gt; C2: Cool label
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;classDiagram&lt;/code&gt;: the keyword for the diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chimp&lt;/code&gt;, &lt;code&gt;gorilla&lt;/code&gt;, &lt;code&gt;elementData&lt;/code&gt;: attributes of the classes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;size()&lt;/code&gt;, &lt;code&gt;equals()&lt;/code&gt;: methods of the classes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*--&lt;/code&gt;, &lt;code&gt;o--&lt;/code&gt;: relationships between classes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/class_diagram.webp"
+width="1388"
+height="1330"
+srcset="https://namanh11611.github.io/p/mermaid/class_diagram_hu_9e87019f715302d5.webp 480w, https://namanh11611.github.io/p/mermaid/class_diagram_hu_2167f87791570962.webp 1024w"
+loading="lazy"
+alt="Class diagram"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="250px"
+&gt;&lt;/p&gt;
+&lt;h2 id="state-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/stateDiagram.html" target="_blank" rel="noopener"
+&gt;State diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A state diagram is a type of diagram that describes the &lt;strong&gt;behavior of a system&lt;/strong&gt;, showing some of the system&amp;rsquo;s states.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;stateDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; [*] --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; Moving
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Crash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Crash --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;stateDiagram&lt;/code&gt;: the keyword for the diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[*]&lt;/code&gt;: start or end point.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Still&lt;/code&gt;, &lt;code&gt;Moving&lt;/code&gt;, &lt;code&gt;Crash&lt;/code&gt;: the states of the system.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: state transition steps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/state_diagram.webp"
+width="256"
+height="750"
+srcset="https://namanh11611.github.io/p/mermaid/state_diagram_hu_7e6083be227c5eeb.webp 480w, https://namanh11611.github.io/p/mermaid/state_diagram_hu_893cac28a20e6738.webp 1024w"
+loading="lazy"
+alt="State diagram"
+class="gallery-image"
+data-flex-grow="34"
+data-flex-basis="81px"
+&gt;&lt;/p&gt;
+&lt;h2 id="git-graph"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/gitgraph.html" target="_blank" rel="noopener"
+&gt;Git graph&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A git graph illustrates &lt;strong&gt;git commits&lt;/strong&gt; and &lt;strong&gt;git actions&lt;/strong&gt; (commands) on different &lt;strong&gt;branches&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gitGraph
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; branch develop
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; checkout main
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gitGraph&lt;/code&gt;: the keyword for the graph.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;commit&lt;/code&gt;: creates a new commit on the current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;branch&lt;/code&gt;: creates and switches to a new branch, setting it as the current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;checkout&lt;/code&gt;: checks out an existing branch and sets it as the current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;merge&lt;/code&gt;: merges a branch into the current branch.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/git_graph.webp"
+width="982"
+height="362"
+srcset="https://namanh11611.github.io/p/mermaid/git_graph_hu_f52b2276177788dd.webp 480w, https://namanh11611.github.io/p/mermaid/git_graph_hu_b7b3edba1d60b498.webp 1024w"
+loading="lazy"
+alt="Git graph"
+class="gallery-image"
+data-flex-grow="271"
+data-flex-basis="651px"
+&gt;&lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion
+&lt;/h1&gt;&lt;p&gt;Mermaid is truly &lt;strong&gt;powerful&lt;/strong&gt; and &lt;strong&gt;flexible&lt;/strong&gt;; it provides us with many &lt;strong&gt;options&lt;/strong&gt; to draw various types of diagrams. However, in this short article, I couldn&amp;rsquo;t introduce all those options to you. If you need more details, you can refer to the Mermaid documentation linked in each title section. I hope you now have an overview of Mermaid and can apply it in your projects or your team&amp;rsquo;s projects, helping save time and effort.&lt;/p&gt;</description></item><item><title>6-Month Journey Applying the Pomodoro Technique</title><link>https://namanh11611.github.io/p/pomodoro/</link><pubDate>Sat, 23 Dec 2023 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/pomodoro/</guid><description>&lt;img src="https://namanh11611.github.io/p/pomodoro/pomodoro.webp" alt="Featured image of post 6-Month Journey Applying the Pomodoro Technique" /&gt;&lt;h1 id="what-is-pomodoro"&gt;What is Pomodoro?
+&lt;/h1&gt;&lt;p&gt;Recently, my work has shifted a bit, and I find myself in an average of 4 meetings every day. Consequently, I often end up accomplishing very little throughout the day. So, I sought a &lt;strong&gt;time management method&lt;/strong&gt; called &lt;strong&gt;Pomodoro&lt;/strong&gt; to help me focus better on my tasks. It wasn&amp;rsquo;t until I applied it that I realized the actual coding time in a day is not as much as I thought.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/pomodoro/pomodoro.webp"
+width="6016"
+height="4000"
+srcset="https://namanh11611.github.io/p/pomodoro/pomodoro_hu_d999efcfadd1d468.webp 480w, https://namanh11611.github.io/p/pomodoro/pomodoro_hu_6f1b33ea06bcc62a.webp 1024w"
+loading="lazy"
+alt="Pomodoro"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pomodoro&lt;/strong&gt; is an Italian word, meaning tomato, because when Francesco Cirillo developed this method in the late 1980s, he used a tomato-shaped kitchen timer. In brief, this method consists of several steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Set the tasks to be done.&lt;/li&gt;
+&lt;li&gt;Set a timer for &lt;strong&gt;25 minutes&lt;/strong&gt; (this time is called a pomodoro).&lt;/li&gt;
+&lt;li&gt;Work on the task.&lt;/li&gt;
+&lt;li&gt;Finish the task and take a &lt;strong&gt;5-minute break&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;After &lt;strong&gt;4&lt;/strong&gt; pomodoros, take a &lt;strong&gt;15-minute break&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/pomodoro/result.webp"
+width="825"
+height="534"
+srcset="https://namanh11611.github.io/p/pomodoro/result_hu_eaa0306ef388ce1a.webp 480w, https://namanh11611.github.io/p/pomodoro/result_hu_a9b3862b18514232.webp 1024w"
+loading="lazy"
+alt="Result"
+class="gallery-image"
+data-flex-grow="154"
+data-flex-basis="370px"
+&gt;&lt;/p&gt;
+&lt;p&gt;To apply Pomodoro, there are many apps, extensions, or even web applications available for you to use. You can find the one that suits you best. Personally, I am using the &lt;strong&gt;Focus To-Do&lt;/strong&gt; app on the App Store, which is quite sufficient for my basic needs.&lt;/p&gt;
+&lt;p&gt;Now, after applying it for &lt;strong&gt;6 tháng&lt;/strong&gt;, I want to share with you the benefits it brings, as well as the points I think it may not be suitable.&lt;/p&gt;
+&lt;h1 id="improving-focus"&gt;Improving Focus
+&lt;/h1&gt;&lt;p&gt;Previously, there were days when I was extremely focused for 4-5 consecutive hours, which helped me accomplish a lot of tasks. However, after such days, I often felt quite tired.&lt;/p&gt;
+&lt;p&gt;But there were also days when I spent the whole hour reading news, scrolling through Facebook, and suddenly realized I hadn&amp;rsquo;t accomplished anything.&lt;/p&gt;
+&lt;p&gt;The human brain is truly effective when concentrated for a short period with reasonable breaks. Applying Pomodoro, knowing I only need to focus for 25 minutes, a not too long duration, allows me to fully concentrate on the task without worrying about getting tired at the end of the day. I also know that after these 25 minutes, I will have a break, so there&amp;rsquo;s no temptation to turn to Facebook during work.&lt;/p&gt;
+&lt;p&gt;During one pomodoro, you should only focus on one task. For example, if you are working on task A, only work on task A. If you finish it before the pomodoro ends, spend the remaining time checking it again, but don&amp;rsquo;t jump to task B.&lt;/p&gt;
+&lt;h1 id="improving-health"&gt;Improving Health
+&lt;/h1&gt;&lt;p&gt;When it&amp;rsquo;s time for a &lt;strong&gt;5-minute break&lt;/strong&gt;, instead of continuing to stare at the computer, I usually take the time to go to the restroom, get more water, change my playlist, or simply stand up and move around. This helps relax my body, avoiding health issues from sitting for too long.&lt;/p&gt;
+&lt;p&gt;However, I find the 5-minute duration a bit short; sometimes, I haven&amp;rsquo;t done anything, and it&amp;rsquo;s already over in 5 minutes. Therefore, in the future, I may consider adjusting it to 7 or 8 minutes and see how it goes.&lt;/p&gt;
+&lt;h1 id="ignoring-the-world"&gt;Ignoring the World
+&lt;/h1&gt;&lt;p&gt;According to the rule, during the 25-minute focused period, you should turn off all app notifications to avoid distraction. However, I haven&amp;rsquo;t reached the point of being able to ignore the whole world because I still need to receive chat notifications to respond to customers and colleagues promptly.&lt;/p&gt;
+&lt;p&gt;However, this often disrupts my Pomodoro because I have to spend additional time checking code or documents to be able to respond to people.&lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion
+&lt;/h1&gt;&lt;p&gt;This method may be suitable for me but may not necessarily be suitable for you. Adhering to Pomodoro has helped me increase work efficiency, but sometimes it makes me feel like I&amp;rsquo;m working like a machine. Try applying it and see the results it brings for you.&lt;/p&gt;</description></item><item><title>Technical Blogs of Engineers at Major Companies</title><link>https://namanh11611.github.io/p/technical-blog/</link><pubDate>Wed, 24 May 2023 00:42:00 +0700</pubDate><guid>https://namanh11611.github.io/p/technical-blog/</guid><description>&lt;img src="https://namanh11611.github.io/p/technical-blog/blog.webp" alt="Featured image of post Technical Blogs of Engineers at Major Companies" /&gt;&lt;p&gt;Besides learning through tutorials and videos, &lt;strong&gt;technical blogs&lt;/strong&gt; are a great resource. By reading blogs from software engineers at major companies, you can see how they &lt;strong&gt;solve the problems&lt;/strong&gt; they&amp;rsquo;ve encountered. In the age of AI, with tools like &lt;strong&gt;Copilot&lt;/strong&gt; or &lt;strong&gt;Tabnine&lt;/strong&gt; ready to generate code to support you, engineers are no longer distinguished by their ability to &lt;strong&gt;remember the syntax of a language or framework&lt;/strong&gt;, but by their &lt;strong&gt;problem-solving skills&lt;/strong&gt;. So, in this article, I will introduce you to the blogs of major companies, hoping you will gain some interesting perspectives.&lt;/p&gt;
+&lt;p&gt;You can click on the title of each section to go to the blog.&lt;/p&gt;
+&lt;h1 id="meta"&gt;&lt;a class="link" href="https://engineering.fb.com" target="_blank" rel="noopener"
+&gt;Meta&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Meta&lt;/strong&gt; (formerly known as &lt;strong&gt;Facebook&lt;/strong&gt;) has many products like Facebook, Instagram, Whatsapp&amp;hellip; On this blog, they share about everything from Android, iOS, Web to more challenging topics like VR/AR or AI.&lt;/p&gt;
+&lt;h1 id="google"&gt;&lt;a class="link" href="https://developers.google.com" target="_blank" rel="noopener"
+&gt;Google&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;On this homepage, you can choose one of four areas you are interested in: &lt;strong&gt;Mobile&lt;/strong&gt;, &lt;strong&gt;Web&lt;/strong&gt;, &lt;strong&gt;AI&lt;/strong&gt;, or &lt;strong&gt;Cloud&lt;/strong&gt;. Google will then introduce you to detailed articles in that field.&lt;/p&gt;
+&lt;p&gt;Google also creates many courses about their technologies. Each course includes videos, detailed explanatory articles, and example exercises for you to follow. When you finish, you can earn a small badge. Quite fun!&lt;/p&gt;
+&lt;h1 id="netflix"&gt;&lt;a class="link" href="https://netflixtechblog.com" target="_blank" rel="noopener"
+&gt;Netflix&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;In recent years, Netflix has become a household name as a platform for movies and TV shows. Instead of just &lt;em&gt;Netflix and chill&lt;/em&gt;, try reading their blog to see how they build a system that serves millions of users.&lt;/p&gt;
+&lt;h1 id="dropbox"&gt;&lt;a class="link" href="https://dropbox.tech" target="_blank" rel="noopener"
+&gt;Dropbox&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Similar to Google Drive, Dropbox is a cloud storage service that helps you store files online and sync them across devices.&lt;/p&gt;
+&lt;p&gt;Through their blog, you can learn how to optimize memory and bandwidth when sharing files.&lt;/p&gt;
+&lt;h1 id="twitter"&gt;&lt;a class="link" href="https://blog.twitter.com/engineering/en_us" target="_blank" rel="noopener"
+&gt;Twitter&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;&amp;ldquo;Design a system like Twitter&amp;rdquo;&lt;/strong&gt; is a classic question in &lt;strong&gt;System Design&lt;/strong&gt; interviews. So, Twitter&amp;rsquo;s blog is a useful reference when preparing for interviews. You can see if your ideas match how Twitter actually does things.&lt;/p&gt;
+&lt;p&gt;Recently, after being acquired by Elon Musk, Twitter even open-sourced their &lt;a class="link" href="https://github.com/twitter/the-algorithm" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Recommendation Algorithm&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id="uber"&gt;&lt;a class="link" href="https://www.uber.com/en-IN/blog/engineering" target="_blank" rel="noopener"
+&gt;Uber&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Although Uber has left the Vietnamese market after merging with Grab, it is still &lt;strong&gt;the largest taxi company in the world&lt;/strong&gt;. Therefore, their blog is very suitable for those working in companies with &lt;strong&gt;similar business areas&lt;/strong&gt; in Vietnam.&lt;/p&gt;
+&lt;h1 id="spotify"&gt;&lt;a class="link" href="https://engineering.atspotify.com" target="_blank" rel="noopener"
+&gt;Spotify&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;I remember when Spotify first launched in Vietnam, everyone was amazed by its recommendation capabilities.&lt;/p&gt;
+&lt;p&gt;Spotify&amp;rsquo;s &lt;strong&gt;recommender system&lt;/strong&gt; is a complex system, combining many &lt;strong&gt;algorithms&lt;/strong&gt; and &lt;strong&gt;Machine Learning models&lt;/strong&gt;. Through this blog, hopefully you will discover part of that system.&lt;/p&gt;
+&lt;h1 id="line"&gt;&lt;a class="link" href="https://engineering.linecorp.com/en/blog" target="_blank" rel="noopener"
+&gt;LINE&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;LINE is one of my former companies. Although it may not be as top-tier as the others above, the sharing culture is very strong. So, through this article, I want to introduce you to the technical blog of engineers at LINE.&lt;/p&gt;</description></item><item><title>Things I Wish I Knew When I Was a Junior</title><link>https://namanh11611.github.io/p/junior/</link><pubDate>Thu, 18 May 2023 18:44:00 +0700</pubDate><guid>https://namanh11611.github.io/p/junior/</guid><description>&lt;img src="https://namanh11611.github.io/p/junior/junior.webp" alt="Featured image of post Things I Wish I Knew When I Was a Junior" /&gt;&lt;h1 id="who-am-i"&gt;Who am I?
+&lt;/h1&gt;&lt;p&gt;Hello everyone!&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m Nam Anh, an Android developer with 5 years of experience. During those 5 years, I&amp;rsquo;ve wandered through quite a few tech companies in Hanoi.&lt;/p&gt;
+&lt;p&gt;This is probably the first time I&amp;rsquo;ve written an article from such a personal perspective. So you might wonder: &lt;em&gt;&amp;ldquo;Who is this guy to be giving life advice?&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Oops, I&amp;rsquo;m not here to lecture anyone, just to share things that I found true for myself. Maybe for you, they&amp;rsquo;re right or wrong. But who knows, maybe some Juniors will gain a new perspective to improve their &lt;strong&gt;career path&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id="the-lucky-things"&gt;The Lucky Things
+&lt;/h1&gt;&lt;p&gt;There are things that, when they happened, I didn&amp;rsquo;t realize were right until I looked back later and thought: &lt;em&gt;&amp;ldquo;Oh, turns out I did the right thing back then.&amp;rdquo;&lt;/em&gt; And I feel those were real strokes of luck for me.&lt;/p&gt;
+&lt;h2 id="reading-clean-code-right-after-graduation"&gt;Reading Clean Code right after graduation
+&lt;/h2&gt;&lt;p&gt;I have to admit, I used to love reading books and read quite a lot, all kinds of genres. But I read very few tech books, probably because my English was limited 😢😢&lt;/p&gt;
+&lt;p&gt;But the tech book I value the most is &lt;strong&gt;Clean Code&lt;/strong&gt;. As the name suggests, it teaches you how to write &lt;em&gt;&amp;ldquo;clean code&amp;rdquo;&lt;/em&gt;, a fundamental book highly recommended by many. I don&amp;rsquo;t know who convinced me to read it right after graduation, but I read it and took notes summarizing the book. I still keep those notes to this day. Learning from the book, plus a bit of OCD, I think I&amp;rsquo;ve applied quite a bit of it to the projects I&amp;rsquo;ve worked on.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/junior/clean_code.webp"
+width="825"
+height="619"
+srcset="https://namanh11611.github.io/p/junior/clean_code_hu_77eae4487ef9b85e.webp 480w, https://namanh11611.github.io/p/junior/clean_code_hu_f4460c02913deabe.webp 1024w"
+loading="lazy"
+alt="Clean Code"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="319px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Some people advise reading &lt;strong&gt;Clean Code&lt;/strong&gt; once when you &lt;strong&gt;just graduate&lt;/strong&gt;, and again after &lt;strong&gt;a few years of working&lt;/strong&gt;, so you can really absorb its content. So I highly, highly recommend everyone read it, whether you&amp;rsquo;re a junior or a seasoned senior.&lt;/p&gt;
+&lt;h2 id="working-at-product-companies-with-strict-processes"&gt;Working at product companies with strict processes
+&lt;/h2&gt;&lt;p&gt;There are already many articles comparing product and outsourcing companies, so I won&amp;rsquo;t repeat that. I&amp;rsquo;ve worked at both types. In this article, I just want to mention &lt;strong&gt;code review processes&lt;/strong&gt; and &lt;strong&gt;product mindset&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;From my experience, big product companies have &lt;strong&gt;more time for thorough code reviews&lt;/strong&gt;, not as rushed by deadlines as outsourcing companies. I&amp;rsquo;m only talking about big product companies, because I&amp;rsquo;ve also worked at small startups where the only goal was to get the code running, clean or dirty didn&amp;rsquo;t matter.&lt;/p&gt;
+&lt;p&gt;The knowledge I learned from &lt;strong&gt;Clean Code&lt;/strong&gt; was just theory until I joined big product companies and had seniors carefully review my code. That&amp;rsquo;s when I really matured in every line I wrote.&lt;/p&gt;
+&lt;p&gt;Another thing I learned is the &lt;strong&gt;product mindset&lt;/strong&gt;—always thinking about the product, wanting it to be better and have more users. When I had an idea for a feature, I was ready to propose it to the leader or Product Manager. The feeling when you finish a feature and see users leaving positive comments on the App Store or Play Store is amazing 😍😍&lt;/p&gt;
+&lt;h2 id="daring-to-step-out-of-my-comfort-zone"&gt;Daring to step out of my comfort zone
+&lt;/h2&gt;&lt;p&gt;In 5 years, I&amp;rsquo;ve switched jobs many times like many others. I don&amp;rsquo;t know about you, but I fear staying at one company too long, getting too comfortable, and then struggling to catch up with the market&amp;rsquo;s demands when I want to switch.&lt;/p&gt;
+&lt;p&gt;So moving through many companies helped me adapt to different projects, understand what the market needs, and of course, get a better income.&lt;/p&gt;
+&lt;h1 id="things-i-wish-i-knew-sooner"&gt;Things I Wish I Knew Sooner
+&lt;/h1&gt;&lt;h2 id="stay-at-a-company-long-enough"&gt;Stay at a company long enough
+&lt;/h2&gt;&lt;p&gt;Contrary to what I said above, here I want to advise young people to stay at a company long enough. In my opinion, at least 1-2 years. It gives you enough time to &lt;strong&gt;understand the project&lt;/strong&gt; and &lt;strong&gt;be properly recognized&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Usually, when you join a project, it takes a few months to understand it. For complex projects, it can take years. &lt;strong&gt;Understanding&lt;/strong&gt; here means not just the &lt;strong&gt;technologies used&lt;/strong&gt; in the source code, but also the &lt;strong&gt;business domain&lt;/strong&gt;, how your app makes money, or even its competitive advantage over others. Some seniors, even when switching companies, only work in banking or fintech, for example. So besides technical skills, they&amp;rsquo;re valued for their business domain knowledge.&lt;/p&gt;
+&lt;p&gt;Companies often give out &lt;strong&gt;Best Employee&lt;/strong&gt; awards at Year End Parties, but to be recognized, you have to stay long enough to make an impact. It&amp;rsquo;s rare for a company to give such an award to someone who just finished their probation, unless you&amp;rsquo;re a superstar. Achieving these things proves your ability and makes your profile shine.&lt;/p&gt;
+&lt;p&gt;There were times I only stayed at a company for a few months before leaving, and I felt that was a bit of a waste.&lt;/p&gt;
+&lt;h2 id="take-english-seriously-sooner"&gt;Take English seriously, sooner
+&lt;/h2&gt;&lt;p&gt;Everyone knows how important English is for a developer&amp;rsquo;s career. If you can communicate well in English, you have more options: working for foreign companies in Vietnam, working remotely from home, or even going abroad. And a dev with good English communication skills will definitely earn more than one who can only read and understand.&lt;/p&gt;
+&lt;p&gt;I graduated with a &lt;strong&gt;TOEIC 460&lt;/strong&gt;—just enough for basic reading. In recent years, I&amp;rsquo;ve started learning English seriously, and now I can communicate well with foreign colleagues. This has brought me many new opportunities.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/junior/elsa.webp"
+width="327"
+height="400"
+srcset="https://namanh11611.github.io/p/junior/elsa_hu_296e1783f5ad80ac.webp 480w, https://namanh11611.github.io/p/junior/elsa_hu_4efc8e9d37a2c922.webp 1024w"
+loading="lazy"
+alt="Elsa"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="196px"
+&gt;&lt;/p&gt;
+&lt;p&gt;I swear this post isn&amp;rsquo;t an ad for the &lt;strong&gt;Elsa&lt;/strong&gt; app, but it&amp;rsquo;s really good so I&amp;rsquo;m recommending it. Here&amp;rsquo;s my 88-day learning streak (I missed a day before and lost my streak 🥲).&lt;/p&gt;
+&lt;p&gt;My English still isn&amp;rsquo;t great, so I&amp;rsquo;m learning every day. I&amp;rsquo;ve tried several apps—Duolingo, Memrise, Cake&amp;hellip; and now I use Elsa along with others. But Elsa has helped me improve the most.&lt;/p&gt;
+&lt;h2 id="the-difference-comes-after-8pm"&gt;The difference comes after 8pm
+&lt;/h2&gt;&lt;p&gt;There are two devs, A and B, working at the same company from 8am to 6pm. So what makes the difference between them?&lt;/p&gt;
+&lt;p&gt;It comes after 8pm. Dev A spends that time &lt;strong&gt;learning new technologies&lt;/strong&gt;, working on &lt;strong&gt;pet projects&lt;/strong&gt;, or &lt;strong&gt;contributing to open source projects&lt;/strong&gt;. Dev B spends it playing games or drinking. Maybe in the first few years, the difference isn&amp;rsquo;t clear, but after 3 or 5 years, the gap in knowledge and skills will be huge.&lt;/p&gt;
+&lt;p&gt;Work at the company is sometimes easy, so you can only learn harder things or new technologies in your free time. For example, if your job is just UI work, you won&amp;rsquo;t need to understand systems or memory deeply. If you don&amp;rsquo;t spend time learning, how can you stand out from your colleagues?&lt;/p&gt;
+&lt;p&gt;In my early years, I also spent a lot of time drinking. I can&amp;rsquo;t deny the importance of building relationships through those gatherings. But if I could choose again, I&amp;rsquo;d spend more time at home learning.&lt;/p&gt;
+&lt;h1 id="final-words"&gt;Final Words
+&lt;/h1&gt;&lt;p&gt;On my journey, there were times I made &lt;strong&gt;the right decisions&lt;/strong&gt;, but also plenty of times I &lt;strong&gt;chose wrong&lt;/strong&gt;. But the important thing is I &lt;strong&gt;don&amp;rsquo;t regret&lt;/strong&gt; or dwell on the past—I keep &lt;strong&gt;learning and moving forward&lt;/strong&gt;. I think that&amp;rsquo;s enough.&lt;/p&gt;
+&lt;p&gt;Thank you for taking the time to read my article!&lt;/p&gt;</description></item><item><title>Tình hình lương thưởng của anh em IT</title><link>https://namanh11611.github.io/p/salary/</link><pubDate>Wed, 10 May 2023 01:40:00 +0700</pubDate><guid>https://namanh11611.github.io/p/salary/</guid><description>&lt;img src="https://namanh11611.github.io/p/salary/salary.webp" alt="Featured image of post Tình hình lương thưởng của anh em IT" /&gt;&lt;h1 id="hoàn-cảnh"&gt;Hoàn cảnh
+&lt;/h1&gt;&lt;p&gt;Hôm vừa rồi một người em bên Nhật chia sẻ với mình rằng muốn mở công ty ở Việt Nam, nhưng chưa hiểu về thị trường hiện tại ở Việt Nam lắm. Mình đành dốc hết những kiến thức nông cạn của mình ra chia sẻ với em về môi trường, công việc cũng như lương thưởng của anh em dev ở Hà Nội, thành phố Hồ Chí Minh và Đà Nẵng&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Dẫu biết rằng thị trường đang ảm đạm, làn sóng sa thải cũng đã lan đến Việt Nam từ cuối năm 2022 đến thời điểm hiện tại là tháng 5/2023, nhưng thật sự chưa có một báo cáo đáng tin cậy để đánh giá về tình hình năm 2023 này. Vậy nên mình sẽ dựa vào báo cáo gần nhất của 2 bên &lt;a class="link" href="https://topdev.vn/page/bao-cao-it-viet-nam" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;TopDev&lt;/strong&gt;&lt;/a&gt; và &lt;a class="link" href="https://itviec.com/blog/bao-cao-luong-it" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;ITViec&lt;/strong&gt;&lt;/a&gt; trong năm 2022 để đưa ra góc nhìn về mức lương thưởng của anh em.&lt;/p&gt;
+&lt;p&gt;Trong báo cáo của &lt;strong&gt;TopDev&lt;/strong&gt; có đưa ra cả đánh giá về tình hình tuyển dụng, nhưng mình nghĩ rằng gió đã đổi chiều nên những đánh giá đó không còn chính xác trong năm 2023 này. Còn về lương thưởng, khác với tình hình năm 2020 khi các công ty giảm lương nhân viên để vượt qua giai đoạn khó khăn, trong năm 2023 này, hầu hết các công ty chỉ đưa ra lựa chọn giữ người hoặc sa thải, vậy nên mức lương của những người ở lại sẽ ít bị ảnh hưởng.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ITViec&lt;/strong&gt; khảo sát &lt;strong&gt;1.257 chuyên gia IT&lt;/strong&gt; còn &lt;strong&gt;TopDev&lt;/strong&gt; thì dựa trên &lt;strong&gt;48.179 ứng viên IT&lt;/strong&gt;, &lt;strong&gt;100.000 dữ liệu việc làm&lt;/strong&gt; được phân tích và thông tin của &lt;strong&gt;2.500 nhà tuyển dụng&lt;/strong&gt;. Bởi vì khảo sát với một volumn nhỏ thì sẽ có sự sai lệch nhất định so với thị trường, vậy nên mình mới dùng báo cáo của cả 2 bên để mong rằng giảm tối đa sự sai lệch đó và giúp chúng ta có một góc nhìn khách quan nhất.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-công-nghệ"&gt;Mức lương theo công nghệ
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/topdev_tech.webp"
+width="825"
+height="238"
+srcset="https://namanh11611.github.io/p/salary/topdev_tech_hu_80105a4152246724.webp 480w, https://namanh11611.github.io/p/salary/topdev_tech_hu_69b02aed197e2264.webp 1024w"
+loading="lazy"
+alt="TopDev Tech"
+class="gallery-image"
+data-flex-grow="346"
+data-flex-basis="831px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Trong biểu đồ trên, &lt;strong&gt;TopDev&lt;/strong&gt; thể hiện mức lương của các dev từ 3 năm kinh nghiệm trở xuống. Vậy nên mình thấy nó hơi thấp và không phản ánh được mức lương của senior dev có từ 4-5 năm kinh nghiệm trở lên.&lt;/p&gt;
+&lt;p&gt;Top công nghệ được trả lương cao nhất gồm các công nghệ theo xu hướng như &lt;strong&gt;AI&lt;/strong&gt; (Kubernetes, TensorFlows, Python), &lt;strong&gt;Cloud Computing&lt;/strong&gt; (AWS, GCP, Azure). Unity cũng lọt top nhờ trend &lt;strong&gt;play-to-earn&lt;/strong&gt; nổi đình nổi đám trong năm 2022.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/itviec_tech.webp"
+width="825"
+height="936"
+srcset="https://namanh11611.github.io/p/salary/itviec_tech_hu_9f51a58700eded8c.webp 480w, https://namanh11611.github.io/p/salary/itviec_tech_hu_d377d21b55fbd180.webp 1024w"
+loading="lazy"
+alt="ITViec Tech"
+class="gallery-image"
+data-flex-grow="88"
+data-flex-basis="211px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Bảng số liệu của &lt;strong&gt;ITViec&lt;/strong&gt; thể hiện chi tiết hơn mức lương cho từng ngôn ngữ lập trình theo số năm kinh nghiệm. &lt;strong&gt;Python&lt;/strong&gt; vẫn là một trong những ngôn ngữ được trả lương cao, nhưng &lt;strong&gt;Go&lt;/strong&gt; - một ngôn ngữ đang trở thành trending - mới là vũ khí giúp anh em dev được trả lương cao nhất.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-vị-trí"&gt;Mức lương theo vị trí
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/topdev_position.webp"
+width="825"
+height="327"
+srcset="https://namanh11611.github.io/p/salary/topdev_position_hu_e2f873cd9f7b7dfa.webp 480w, https://namanh11611.github.io/p/salary/topdev_position_hu_604e0f81f776e3ef.webp 1024w"
+loading="lazy"
+alt="TopDev Position"
+class="gallery-image"
+data-flex-grow="252"
+data-flex-basis="605px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Biểu đồ này của &lt;strong&gt;TopDev&lt;/strong&gt; vẫn thể hiện mức lương của các dev từ 3 năm kinh nghiệm trở xuống.&lt;/p&gt;
+&lt;p&gt;Các vị trí &lt;strong&gt;CTO&lt;/strong&gt;, &lt;strong&gt;CIO&lt;/strong&gt; hoặc &lt;strong&gt;Tech Management&lt;/strong&gt; vốn vẫn được coi là mục tiêu nghề nghiệp cao nhất, họ phải nắm các kỹ năng cơ bản vững chắc, xử lý các công việc quản lý, tối ưu hóa công nghệ / sản phẩm và điều chỉnh kịp thời.&lt;/p&gt;
+&lt;p&gt;Các vị trí được trả lương cao tiếp theo yêu cầu các kỹ năng đặc biệt như &lt;strong&gt;Data&lt;/strong&gt;, &lt;strong&gt;Cloud&lt;/strong&gt;, &lt;strong&gt;DevOps&lt;/strong&gt; hoặc &lt;strong&gt;AI&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/itviec_position.webp"
+width="825"
+height="899"
+srcset="https://namanh11611.github.io/p/salary/itviec_position_hu_4812c096b28c7bd.webp 480w, https://namanh11611.github.io/p/salary/itviec_position_hu_3aafe6ac949223d2.webp 1024w"
+loading="lazy"
+alt="ITViec Position"
+class="gallery-image"
+data-flex-grow="91"
+data-flex-basis="220px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Trong bảng số liệu của &lt;strong&gt;ITViec&lt;/strong&gt;, các vị trí trên vẫn được trả mức lương rất tốt. Nhưng đối với các dev từ 5 năm kinh nghiệm trở lên trong lĩnh vực khác (&lt;strong&gt;Front-end&lt;/strong&gt;, &lt;strong&gt;Mobile&lt;/strong&gt;), họ cũng được trả mức lương không hề kém cạnh.&lt;/p&gt;
+&lt;p&gt;Điều này chứng minh rằng bạn không cần phải luôn chạy theo những công nghệ hot, chỉ cần bạn đủ giỏi, thì với vị trí nào, bạn cũng được trả mức lương tương xứng.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-trình-độ"&gt;Mức lương theo trình độ
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/topdev_level.webp"
+width="825"
+height="577"
+srcset="https://namanh11611.github.io/p/salary/topdev_level_hu_117dbc8b37330d1a.webp 480w, https://namanh11611.github.io/p/salary/topdev_level_hu_d94d4d7fd4255623.webp 1024w"
+loading="lazy"
+alt="TopDev Level"
+class="gallery-image"
+data-flex-grow="142"
+data-flex-basis="343px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;TopDev&lt;/strong&gt; chỉ đưa ra một biểu đồ chung về mức lương theo số năm kinh nghiệm. Trong 5 năm đầu tiên, lương của lập trình viên dao động từ &lt;strong&gt;$350&lt;/strong&gt; (Fresher) đến dưới &lt;strong&gt;$1.190&lt;/strong&gt; cho Mid-Senior. Đối với các lập trình viên từ 5 năm kinh nghiệm, mức lương chênh lệch chủ yếu dựa trên vị trí và trách nhiệm đối với hoạt động kinh doanh. Giám đốc hoặc cấp cao hơn sẽ có mức lương ít nhất là &lt;strong&gt;$2.300&lt;/strong&gt;. Mức lương của cấp quản lý kỹ thuật sẽ cao hơn so với cấp quản lý/giám đốc theo định hướng kinh doanh.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-thành-phố"&gt;Mức lương theo thành phố
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/itviec_location.webp"
+width="825"
+height="578"
+srcset="https://namanh11611.github.io/p/salary/itviec_location_hu_b2d925186db75dc7.webp 480w, https://namanh11611.github.io/p/salary/itviec_location_hu_b991bae3f9f31a7d.webp 1024w"
+loading="lazy"
+alt="ITViec Location"
+class="gallery-image"
+data-flex-grow="142"
+data-flex-basis="342px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Có lẽ nhiều anh em cũng đã biết trước kết quả về bảng số liệu này của &lt;strong&gt;ITViec&lt;/strong&gt;. Nhìn chung thì mức lương ở thành phố Hồ Chí Minh cao hơn Hà Nội, và Hà Nội thì lại cao hơn Đà Nẵng.&lt;/p&gt;
+&lt;p&gt;Theo mình có lẽ vì thành phố Hồ Chí Minh gồm nhiều công ty product và outsource làm với thị trường nói tiếng Anh hơn. Còn ở Hà Nội vẫn gồm nhiều các công ty làm cho thị trường Nhật. Tuy nhiên trong giai đoạn gần đây, đã có nhiều công ty từ thành phố Hồ Chí Minh Bắc tiến ra Hà Nội, điều đó cũng đã giúp thị trường ở Hà Nội nhộn nhịp hơn rất nhiều.&lt;/p&gt;
+&lt;h1 id="lời-kết"&gt;Lời kết
+&lt;/h1&gt;&lt;p&gt;Cũng phải nhìn nhận rằng, những anh em không may bị sa thải trong giai đoạn này sẽ phải tìm một công việc mới và có thể phải chấp nhận một mức lương thấp hơn mức cũ. Điều đó cũng góp phần làm cho mức lương của thị trường hiện tại thấp hơn mức trong khảo sát.&lt;/p&gt;
+&lt;p&gt;Nhưng mình hy vọng rằng dựa vào báo cáo này, anh em có thêm một góc nhìn khác về thị trường, để biết cách trau dồi bản thân, rèn luyện kỹ năng. Và sau cơn mưa trời lại sáng, khi thị trường sôi động trở lại, với những kỹ năng đã được nâng cấp, anh em sẽ nhận được một mức lương xứng đáng với năng lực.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://topdev.vn/page/bao-cao-it-viet-nam" target="_blank" rel="noopener"
+&gt;https://topdev.vn/page/bao-cao-it-viet-nam&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://itviec.com/blog/bao-cao-luong-it" target="_blank" rel="noopener"
+&gt;https://itviec.com/blog/bao-cao-luong-it&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dispatchers on Henry Techie</title><link>https://namanh11611.github.io/tags/dispatchers/</link><description>Recent content in Dispatchers on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 01 May 2023 00:22:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/dispatchers/index.xml" rel="self" type="application/rss+xml"/><item><title>Dispatchers in Kotlin Coroutines</title><link>https://namanh11611.github.io/p/kotlin-coroutines-dispatchers/</link><pubDate>Mon, 01 May 2023 00:22:00 +0700</pubDate><guid>https://namanh11611.github.io/p/kotlin-coroutines-dispatchers/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-coroutines-dispatchers/dispatchers.webp" alt="Featured image of post Dispatchers in Kotlin Coroutines" /&gt;&lt;h1 id="what-is-a-dispatcher"&gt;What is a Dispatcher?
+&lt;/h1&gt;&lt;p&gt;Simply put, a Dispatcher decides which thread a Coroutine will run on. It could be the main thread, a background thread, or it could push the Coroutine into a thread pool.&lt;/p&gt;
+&lt;p&gt;There are 4 types of Dispatchers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Dispatchers.Default&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Dispatchers.Main&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Dispatchers.IO&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Dispatchers.Unconfined&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Or you can create your own Dispatcher using &lt;code&gt;newSingleThreadContext()&lt;/code&gt; or &lt;code&gt;newFixedThreadPoolContext()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Coroutine builder functions like &lt;code&gt;launch&lt;/code&gt; and &lt;code&gt;async&lt;/code&gt; have a &lt;code&gt;CoroutinesContext&lt;/code&gt; parameter so you can pass in a &lt;code&gt;Dispatcher&lt;/code&gt;, since all the above Dispatchers extend from &lt;code&gt;CoroutinesContext&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;launch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;Dispatchers&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Default&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;I&amp;#39;m working in thread &lt;/span&gt;&lt;span class="si"&gt;${Thread.currentThread().name}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If you call &lt;code&gt;launch&lt;/code&gt; or &lt;code&gt;async&lt;/code&gt; without passing a &lt;code&gt;CoroutinesContext&lt;/code&gt;, it will inherit the context of the &lt;code&gt;CoroutineScope&lt;/code&gt; it was launched in.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;runBlocking&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Unit&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;launch&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;I&amp;#39;m working in thread &lt;/span&gt;&lt;span class="si"&gt;${Thread.currentThread().name}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;In this example, it inherits the context of &lt;code&gt;runBlocking&lt;/code&gt;, so it runs on the main thread.&lt;/p&gt;
+&lt;p&gt;Now, let&amp;rsquo;s look at each Dispatcher in detail.&lt;/p&gt;
+&lt;h1 id="dispatchersdefault"&gt;&lt;code&gt;Dispatchers.Default&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;Dispatchers.Default&lt;/code&gt; is used by default by builder functions like &lt;code&gt;launch&lt;/code&gt; and &lt;code&gt;async&lt;/code&gt; if you don&amp;rsquo;t assign another Dispatcher. Default uses a &lt;strong&gt;shared background threads pool&lt;/strong&gt;. So you can use &lt;code&gt;Dispatchers.Default&lt;/code&gt; for &lt;strong&gt;CPU-intensive work&lt;/strong&gt;. For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Heavy tasks like matrix calculations&lt;/li&gt;
+&lt;li&gt;Sorting, filtering, or searching a huge list in memory&lt;/li&gt;
+&lt;li&gt;Bitmap operations in memory&lt;/li&gt;
+&lt;li&gt;Parsing JSON in memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By default, the maximum number of threads used by &lt;code&gt;Dispatchers.Default&lt;/code&gt; is &lt;strong&gt;equal to the number of CPU cores&lt;/strong&gt;, but at least 2.&lt;/p&gt;
+&lt;h1 id="dispatchersmain"&gt;&lt;code&gt;Dispatchers.Main&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;You can guess from the name, right? Exactly, &lt;code&gt;Dispatchers.Main&lt;/code&gt; runs on the &lt;strong&gt;main thread&lt;/strong&gt;, suitable for &lt;strong&gt;UI-related tasks&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Usually, &lt;code&gt;Dispatchers.Main&lt;/code&gt; is a &lt;strong&gt;single thread&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id="dispatchersio"&gt;&lt;code&gt;Dispatchers.IO&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;Again, the name says it all. &lt;code&gt;Dispatchers.IO&lt;/code&gt; uses a &lt;strong&gt;shared pool of threads created as needed&lt;/strong&gt;. It helps offload blocking IO tasks. So it&amp;rsquo;s suitable for &lt;strong&gt;disk and network&lt;/strong&gt; operations. For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Calling APIs&lt;/li&gt;
+&lt;li&gt;Downloading files from a server&lt;/li&gt;
+&lt;li&gt;Moving files between folders on disk&lt;/li&gt;
+&lt;li&gt;Reading and writing files&lt;/li&gt;
+&lt;li&gt;Querying databases&lt;/li&gt;
+&lt;li&gt;Loading Shared Preferences&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The number of threads used by &lt;code&gt;Dispatchers.IO&lt;/code&gt; is limited to &lt;strong&gt;64 or the number of cores&lt;/strong&gt; (whichever is greater).&lt;/p&gt;
+&lt;h1 id="dispatchersunconfined"&gt;&lt;code&gt;Dispatchers.Unconfined&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;I call &lt;code&gt;Dispatchers.Unconfined&lt;/code&gt; the wild horse, because you never know which thread it will run on.&lt;/p&gt;
+&lt;p&gt;Initially, when launched, the Coroutine runs on the thread that called it. But after being suspended and resumed, it may run on a different thread, depending on the suspend functions called. &lt;code&gt;Dispatchers.Unconfined&lt;/code&gt; is suitable for work that doesn&amp;rsquo;t consume CPU and doesn&amp;rsquo;t update the UI. But the Kotlin documentation emphasizes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The Unconfined dispatcher should not normally be used in code.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="newsinglethreadcontext"&gt;&lt;code&gt;newSingleThreadContext&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;This function creates a new thread for you to play with. But creating a new thread is resource-intensive, and you have to call &lt;code&gt;close&lt;/code&gt; to release it when done. So in practice, I don&amp;rsquo;t recommend using this.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s also &lt;code&gt;newFixedThreadPoolContext&lt;/code&gt; to create a thread pool with a fixed size.&lt;/p&gt;
+&lt;h1 id="comparison-with-rxjava-rxandroid"&gt;Comparison with RxJava, RxAndroid
+&lt;/h1&gt;&lt;p&gt;You can see that Dispatchers are similar to Schedulers in RxJava.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Coroutines&lt;/th&gt;
+&lt;th&gt;RxJava/RxAndroid&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Dispatchers.Default&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Schedulers.computation()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Dispatchers.Main&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;AndroidSchedulers.mainThread()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Dispatchers.IO&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Schedulers.io()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="conclusion"&gt;Conclusion
+&lt;/h1&gt;&lt;p&gt;In summary, Dispatchers are an important concept in Coroutines, so you need to understand them well to choose the right Dispatcher for each function.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://amitshekhar.me/blog/dispatchers-in-kotlin-coroutines" target="_blank" rel="noopener"
+&gt;https://amitshekhar.me/blog/dispatchers-in-kotlin-coroutines&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

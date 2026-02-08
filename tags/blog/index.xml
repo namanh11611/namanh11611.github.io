@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Henry Techie</title><link>https://namanh11611.github.io/tags/blog/</link><description>Recent content in Blog on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 24 May 2023 00:42:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Technical Blogs of Engineers at Major Companies</title><link>https://namanh11611.github.io/p/technical-blog/</link><pubDate>Wed, 24 May 2023 00:42:00 +0700</pubDate><guid>https://namanh11611.github.io/p/technical-blog/</guid><description>&lt;img src="https://namanh11611.github.io/p/technical-blog/blog.webp" alt="Featured image of post Technical Blogs of Engineers at Major Companies" /&gt;&lt;p&gt;Besides learning through tutorials and videos, &lt;strong&gt;technical blogs&lt;/strong&gt; are a great resource. By reading blogs from software engineers at major companies, you can see how they &lt;strong&gt;solve the problems&lt;/strong&gt; they&amp;rsquo;ve encountered. In the age of AI, with tools like &lt;strong&gt;Copilot&lt;/strong&gt; or &lt;strong&gt;Tabnine&lt;/strong&gt; ready to generate code to support you, engineers are no longer distinguished by their ability to &lt;strong&gt;remember the syntax of a language or framework&lt;/strong&gt;, but by their &lt;strong&gt;problem-solving skills&lt;/strong&gt;. So, in this article, I will introduce you to the blogs of major companies, hoping you will gain some interesting perspectives.&lt;/p&gt;
+&lt;p&gt;You can click on the title of each section to go to the blog.&lt;/p&gt;
+&lt;h1 id="meta"&gt;&lt;a class="link" href="https://engineering.fb.com" target="_blank" rel="noopener"
+&gt;Meta&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Meta&lt;/strong&gt; (formerly known as &lt;strong&gt;Facebook&lt;/strong&gt;) has many products like Facebook, Instagram, Whatsapp&amp;hellip; On this blog, they share about everything from Android, iOS, Web to more challenging topics like VR/AR or AI.&lt;/p&gt;
+&lt;h1 id="google"&gt;&lt;a class="link" href="https://developers.google.com" target="_blank" rel="noopener"
+&gt;Google&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;On this homepage, you can choose one of four areas you are interested in: &lt;strong&gt;Mobile&lt;/strong&gt;, &lt;strong&gt;Web&lt;/strong&gt;, &lt;strong&gt;AI&lt;/strong&gt;, or &lt;strong&gt;Cloud&lt;/strong&gt;. Google will then introduce you to detailed articles in that field.&lt;/p&gt;
+&lt;p&gt;Google also creates many courses about their technologies. Each course includes videos, detailed explanatory articles, and example exercises for you to follow. When you finish, you can earn a small badge. Quite fun!&lt;/p&gt;
+&lt;h1 id="netflix"&gt;&lt;a class="link" href="https://netflixtechblog.com" target="_blank" rel="noopener"
+&gt;Netflix&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;In recent years, Netflix has become a household name as a platform for movies and TV shows. Instead of just &lt;em&gt;Netflix and chill&lt;/em&gt;, try reading their blog to see how they build a system that serves millions of users.&lt;/p&gt;
+&lt;h1 id="dropbox"&gt;&lt;a class="link" href="https://dropbox.tech" target="_blank" rel="noopener"
+&gt;Dropbox&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Similar to Google Drive, Dropbox is a cloud storage service that helps you store files online and sync them across devices.&lt;/p&gt;
+&lt;p&gt;Through their blog, you can learn how to optimize memory and bandwidth when sharing files.&lt;/p&gt;
+&lt;h1 id="twitter"&gt;&lt;a class="link" href="https://blog.twitter.com/engineering/en_us" target="_blank" rel="noopener"
+&gt;Twitter&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;&amp;ldquo;Design a system like Twitter&amp;rdquo;&lt;/strong&gt; is a classic question in &lt;strong&gt;System Design&lt;/strong&gt; interviews. So, Twitter&amp;rsquo;s blog is a useful reference when preparing for interviews. You can see if your ideas match how Twitter actually does things.&lt;/p&gt;
+&lt;p&gt;Recently, after being acquired by Elon Musk, Twitter even open-sourced their &lt;a class="link" href="https://github.com/twitter/the-algorithm" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Recommendation Algorithm&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id="uber"&gt;&lt;a class="link" href="https://www.uber.com/en-IN/blog/engineering" target="_blank" rel="noopener"
+&gt;Uber&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Although Uber has left the Vietnamese market after merging with Grab, it is still &lt;strong&gt;the largest taxi company in the world&lt;/strong&gt;. Therefore, their blog is very suitable for those working in companies with &lt;strong&gt;similar business areas&lt;/strong&gt; in Vietnam.&lt;/p&gt;
+&lt;h1 id="spotify"&gt;&lt;a class="link" href="https://engineering.atspotify.com" target="_blank" rel="noopener"
+&gt;Spotify&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;I remember when Spotify first launched in Vietnam, everyone was amazed by its recommendation capabilities.&lt;/p&gt;
+&lt;p&gt;Spotify&amp;rsquo;s &lt;strong&gt;recommender system&lt;/strong&gt; is a complex system, combining many &lt;strong&gt;algorithms&lt;/strong&gt; and &lt;strong&gt;Machine Learning models&lt;/strong&gt;. Through this blog, hopefully you will discover part of that system.&lt;/p&gt;
+&lt;h1 id="line"&gt;&lt;a class="link" href="https://engineering.linecorp.com/en/blog" target="_blank" rel="noopener"
+&gt;LINE&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;LINE is one of my former companies. Although it may not be as top-tier as the others above, the sharing culture is very strong. So, through this article, I want to introduce you to the technical blog of engineers at LINE.&lt;/p&gt;</description></item></channel></rss>

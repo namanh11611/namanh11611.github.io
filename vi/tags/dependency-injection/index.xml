@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dependency Injection on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/dependency-injection/</link><description>Recent content in Dependency Injection on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 02 Oct 2022 01:33:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml"/><item><title>Khi nào nên dùng Inject, Provides, Binds trong Hilt</title><link>https://namanh11611.github.io/vi/p/hilt/</link><pubDate>Sun, 02 Oct 2022 01:33:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/hilt/</guid><description>&lt;img src="https://namanh11611.github.io/p/hilt/hilt.webp" alt="Featured image of post Khi nào nên dùng Inject, Provides, Binds trong Hilt" /&gt;&lt;p&gt;Bài viết này mình sẽ đi thẳng vào giải thích cách dùng các annotation &lt;code&gt;@Inject&lt;/code&gt;, &lt;code&gt;@Provides&lt;/code&gt; và &lt;code&gt;@Binds&lt;/code&gt;. Vậy nên bỏ qua phần giải thích về Dependency Injection hay giới thiệu về &lt;code&gt;Hilt&lt;/code&gt;. Coi như mọi người đã biết cách dùng nó rồi nhé. Chiến thôi!!!&lt;/p&gt;
+&lt;h1 id="tổng-quan"&gt;Tổng quan
+&lt;/h1&gt;&lt;p&gt;Chúng ta có 3 annotation thường dùng để inject các object trong Hilt:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@Inject&lt;/code&gt;: annotation dùng ở constructor của class&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Provides&lt;/code&gt;: annotation dùng ở Module&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Binds&lt;/code&gt;: một annotation khác cũng dùng ở Module&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Câu hỏi đặt ra là vậy khi nào thì dùng những thằng này nhỉ?&lt;/p&gt;
+&lt;h1 id="inject"&gt;Inject
+&lt;/h1&gt;&lt;p&gt;Chúng ta dùng &lt;code&gt;@Inject&lt;/code&gt; annotation ở tất cả các constructor mà mình cần inject object, từ &lt;code&gt;ViewModel&lt;/code&gt;, &lt;code&gt;Repository&lt;/code&gt; đến &lt;code&gt;DataSource&lt;/code&gt;. Ví dụ:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ProfileRepository&lt;/span&gt; &lt;span class="nd"&gt;@Inject&lt;/span&gt; &lt;span class="k"&gt;constructor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="py"&gt;profileDataSource&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ProfileDataSource&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;doSomething&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Việc này giúp chúng ta dễ dàng inject tiếp &lt;code&gt;ProfileRepository&lt;/code&gt; vào các class khác, ví dụ như &lt;code&gt;ViewModel&lt;/code&gt; hoặc &lt;code&gt;UseCase&lt;/code&gt;. Tuy nhiên thì chúng ta lại chỉ có thể sử dụng annotation này để annotate constructor của những class mà mình tự define.&lt;/p&gt;
+&lt;h1 id="provides"&gt;Provides
+&lt;/h1&gt;&lt;p&gt;Vậy thì để khắc phục điểm yếu trên, inject object của những class mà mình không define (Ví dụ như &lt;code&gt;Retrofit&lt;/code&gt;, &lt;code&gt;OkHttpClient&lt;/code&gt; hoặc &lt;code&gt;Room&lt;/code&gt; database), chúng ta cùng đến với &lt;code&gt;@Provides&lt;/code&gt;. Trước tiên, chúng ta cần tạo một &lt;code&gt;@Module&lt;/code&gt; để chứa các dependency với annotation &lt;code&gt;@Provides&lt;/code&gt;. Ví dụ:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@Module&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;NetworkModule&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nd"&gt;@Provides&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;providesApiService&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="n"&gt;ApiService&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nc"&gt;Retrofit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Builder&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addConverterFactory&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;GsonConverterFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;baseUrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BASE_URL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ApiService&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Vì &lt;code&gt;Retrofit&lt;/code&gt; khởi tạo object không phải code của chúng ta define, thêm nữa lại còn khởi tạo theo kiểu Builder pattern, nên chúng ta không thể dùng &lt;code&gt;@Inject&lt;/code&gt; annotation mà bắt buộc phải dùng &lt;code&gt;@Provides&lt;/code&gt;. Bây giờ, chúng ta đã có thể inject object của interface &lt;code&gt;ApiService&lt;/code&gt; ở bất cứ đâu.&lt;/p&gt;
+&lt;h1 id="binds"&gt;Binds
+&lt;/h1&gt;&lt;p&gt;Đối với interface, chúng ta không thể dùng annotation &lt;code&gt;@Inject&lt;/code&gt;, vì nó không có constructor function. Tuy nhiên, nếu bạn có một interface mà chỉ có duy nhất một implementation (một class implement interface đó), thì bạn có thể dùng &lt;code&gt;@Binds&lt;/code&gt; để inject interface đó. Việc inject interface thay vì class là một good practice, giúp dễ dàng test hơn.&lt;/p&gt;
+&lt;p&gt;Quay trở lại với &lt;code&gt;ProfileRepository&lt;/code&gt; ở phần &lt;code&gt;@Inject&lt;/code&gt;, chúng ta sẽ biến nó thành một interface, và tạo một class implement interface đó. Ví dụ:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;ProfileRepository&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ProfileRepositoryImpl&lt;/span&gt; &lt;span class="nd"&gt;@Inject&lt;/span&gt; &lt;span class="k"&gt;constructor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="py"&gt;profileDataSource&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ProfileDataSource&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ProfileRepository&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@Module&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@InstallIn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SingletonComponent&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RepositoryModule&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nd"&gt;@Singleton&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nd"&gt;@Binds&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;bindProfileRepository&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;profileRepository&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ProfileRepositoryImpl&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="n"&gt;ProfileRepository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RegisterUseCase&lt;/span&gt; &lt;span class="nd"&gt;@Inject&lt;/span&gt; &lt;span class="k"&gt;constructor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="py"&gt;profileRepository&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ProfileRepository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Ưu điểm của việc dùng &lt;code&gt;@Binds&lt;/code&gt; thay cho &lt;code&gt;@Provides&lt;/code&gt; là nó giúp giảm lượng code được generate, như là Module Factory class. Ở đây bạn có thể thấy mình vẫn dùng &lt;code&gt;@Inject&lt;/code&gt;, bởi vì constructor function của &lt;code&gt;ProfileRepositoryImpl&lt;/code&gt; vẫn cần một số parameter.&lt;/p&gt;
+&lt;h1 id="tổng-kết"&gt;Tổng kết
+&lt;/h1&gt;&lt;p&gt;Vậy tóm gọn lại là&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dùng &lt;code&gt;@Inject&lt;/code&gt; cho code của bạn&lt;/li&gt;
+&lt;li&gt;Dùng &lt;code&gt;@Provides&lt;/code&gt; cho code của bên thứ 3&lt;/li&gt;
+&lt;li&gt;Dùng &lt;code&gt;@Binds&lt;/code&gt; cho inject interface, giúp giảm lượng code không cần thiết&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://developer.android.com/training/dependency-injection/hilt-android" target="_blank" rel="noopener"
+&gt;https://developer.android.com/training/dependency-injection/hilt-android&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://dagger.dev/hilt" target="_blank" rel="noopener"
+&gt;https://dagger.dev/hilt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.valueof.io/blog/inject-provides-binds-dependencies-dagger-hilt" target="_blank" rel="noopener"
+&gt;https://www.valueof.io/blog/inject-provides-binds-dependencies-dagger-hilt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

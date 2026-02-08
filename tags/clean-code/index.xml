@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clean Code on Henry Techie</title><link>https://namanh11611.github.io/tags/clean-code/</link><description>Recent content in Clean Code on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 01 May 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/clean-code/index.xml" rel="self" type="application/rss+xml"/><item><title>3 Ways I Apply to Write Cleaner and Tidier Code</title><link>https://namanh11611.github.io/p/clean-code/</link><pubDate>Wed, 01 May 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/clean-code/</guid><description>&lt;img src="https://namanh11611.github.io/p/clean-code/tidy.webp" alt="Featured image of post 3 Ways I Apply to Write Cleaner and Tidier Code" /&gt;&lt;p&gt;&lt;strong&gt;Clean Code&lt;/strong&gt; is probably a classic topic in programming. I once mentioned the book &lt;strong&gt;Clean Code&lt;/strong&gt; by &lt;strong&gt;Uncle Bob&lt;/strong&gt; in the article &lt;a class="link" href="../junior" &gt;&lt;strong&gt;Things I Wish I Knew When I Was a Junior&lt;/strong&gt;&lt;/a&gt;. However, this time I won&amp;rsquo;t rewrite the contents of that book—you should read it directly for the best experience. I just want to share a few tips that I often use to keep my code &lt;strong&gt;tidy and clean&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id="use-return-to-avoid-ifelse-hell"&gt;Use return to avoid if/else hell
+&lt;/h1&gt;&lt;p&gt;Have you ever encountered &lt;strong&gt;if/else hell&lt;/strong&gt; like this in your code?&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;doSomething&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;condition1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doFirstTask&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;condition2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doSecondTask&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;condition3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;isNotEmpty&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doThirdTask&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;In theory, the above code is fine. But I don&amp;rsquo;t like looking at code with so many nested layers. So I often use &lt;code&gt;return&lt;/code&gt; to avoid writing too many nested braces &lt;code&gt;{}&lt;/code&gt;. We can refactor the code above as follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;doSomething&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;condition1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doFirstTask&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;condition2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doSecondTask&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;condition3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;isEmpty&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doThirdTask&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The logic is equivalent, but the meaning is slightly different. In the first case, when your colleague reads the code, they&amp;rsquo;ll understand: &lt;em&gt;&amp;ldquo;If this condition is met, the code will continue to process like this.&amp;rdquo;&lt;/em&gt; In the second case, they&amp;rsquo;ll understand: &lt;em&gt;&amp;ldquo;If this condition is not met, the code will not continue.&amp;rdquo;&lt;/em&gt; Thinking in the second way can sometimes feel a bit reversed, so &lt;strong&gt;apply this tip as appropriate&lt;/strong&gt;, don&amp;rsquo;t use it mechanically in all cases.&lt;/p&gt;
+&lt;h1 id="use-map-or-set-instead-of-list"&gt;Use Map or Set instead of List
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Map&lt;/strong&gt; and &lt;strong&gt;Set&lt;/strong&gt; are two special data structures that you probably learned in university. However, in projects, people often always use &lt;strong&gt;List&lt;/strong&gt; because it&amp;rsquo;s &amp;ldquo;convenient.&amp;rdquo; For me, before choosing a data type for a list, I always ask whether using Map or Set would make the &lt;strong&gt;code shorter&lt;/strong&gt; and &lt;strong&gt;improve performance&lt;/strong&gt;. If yes, I definitely &lt;strong&gt;prioritize these two types&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For example, I have a variable &lt;code&gt;existingValueList&lt;/code&gt; which is a list of existing values. When a user enters a new value, I need to check if it already exists, and if so, return an error. If &lt;code&gt;existingValueList&lt;/code&gt; is a &lt;code&gt;List&lt;/code&gt;, I&amp;rsquo;d write the check like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;boolean&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;isExisting&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;existingValueList&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;contains&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;But if it&amp;rsquo;s a Set, we&amp;rsquo;d write:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;boolean&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;isExisting&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;existingValueSet&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;contains&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;em&gt;&amp;ldquo;So, what&amp;rsquo;s the difference?&amp;rdquo;&lt;/em&gt; The way you write it is the same, but the difference lies in the &lt;code&gt;contains()&lt;/code&gt; method: the runtime for &lt;code&gt;List&lt;/code&gt; is &lt;code&gt;O(n)&lt;/code&gt;, while for &lt;code&gt;Set&lt;/code&gt; it&amp;rsquo;s only &lt;code&gt;O(1)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;99% of you probably know this, but sometimes you use &lt;strong&gt;List&lt;/strong&gt; out of habit. So next time, before creating a &lt;strong&gt;List&lt;/strong&gt;, pause for a moment to consider whether you should use &lt;strong&gt;Map&lt;/strong&gt; or &lt;strong&gt;Set&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;There are also other data structures like &lt;strong&gt;Stack&lt;/strong&gt;, &lt;strong&gt;Queue&lt;/strong&gt;, &lt;strong&gt;Tree&lt;/strong&gt;&amp;hellip; But in real projects, I rarely encounter use-cases for these.&lt;/p&gt;
+&lt;h1 id="dont-comment-out-unused-codejust-delete-it"&gt;Don&amp;rsquo;t comment out unused code—just delete it
+&lt;/h1&gt;&lt;p&gt;I&amp;rsquo;ve noticed some people have the habit of &lt;strong&gt;commenting out old code&lt;/strong&gt; when modifying a feature instead of deleting it. Or there are &lt;strong&gt;old functions that are no longer used&lt;/strong&gt;, but they don&amp;rsquo;t bother to comment or delete them, just leaving them there forever. But trust me, &lt;strong&gt;a few months&lt;/strong&gt; or even &lt;strong&gt;a few years&lt;/strong&gt; later, you&amp;rsquo;ll probably never uncomment that code again. A few lines each time, but over the years it becomes a mountain of &lt;strong&gt;dead code&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;If you want to review old code, &lt;a class="link" href="../git-process" &gt;&lt;strong&gt;Git&lt;/strong&gt;&lt;/a&gt; can help you very well. So be bold and delete it—not just &lt;strong&gt;a few lines of code&lt;/strong&gt;, &lt;strong&gt;a function&lt;/strong&gt;, but also any &lt;strong&gt;resources&lt;/strong&gt; of the app that you no longer use. This will help reduce your source code size significantly.&lt;/p&gt;
+&lt;p&gt;If you have any cool tips that you use, please share them with me!&lt;/p&gt;</description></item></channel></rss>

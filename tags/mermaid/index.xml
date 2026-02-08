@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mermaid on Henry Techie</title><link>https://namanh11611.github.io/tags/mermaid/</link><description>Recent content in Mermaid on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 25 Feb 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/mermaid/index.xml" rel="self" type="application/rss+xml"/><item><title>Mermaid - Draw diagrams and charts as easily as candy with Markdown</title><link>https://namanh11611.github.io/p/mermaid/</link><pubDate>Sun, 25 Feb 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/mermaid/</guid><description>&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp" alt="Featured image of post Mermaid - Draw diagrams and charts as easily as candy with Markdown" /&gt;&lt;h1 id="the-old-days"&gt;The Old Days
+&lt;/h1&gt;&lt;p&gt;As you know, diagrams and documentation play an important role in projects. They act as a compass to help developers understand the ideas of PMs, tech leads, or BAs, guide the required flow, and serve as evidence for reference when there are disputes about project requirements. A picture is worth a thousand words; sometimes a clear diagram can save hours of explanation and back-and-forth discussion.&lt;/p&gt;
+&lt;p&gt;Previously, when drawing diagrams for projects, I often used &lt;strong&gt;&lt;a class="link" href="https://app.diagrams.net" target="_blank" rel="noopener"
+&gt;draw.io&lt;/a&gt;&lt;/strong&gt;. For those who don&amp;rsquo;t know, it&amp;rsquo;s an online tool for drawing diagrams by &lt;strong&gt;drag and drop&lt;/strong&gt;. But every time I needed to update a diagram, I had to drag and drop each box or arrow again, which was quite time-consuming. Until one day, a colleague introduced me to &lt;strong&gt;Mermaid&lt;/strong&gt;, and everything changed&amp;hellip;&lt;/p&gt;
+&lt;h1 id="enlightened-by-mermaid"&gt;Enlightened by Mermaid
+&lt;/h1&gt;&lt;p&gt;According to the definition on the official website, &lt;strong&gt;&lt;a class="link" href="https://mermaid.js.org" target="_blank" rel="noopener"
+&gt;Mermaid&lt;/a&gt;&lt;/strong&gt; is a tool built on &lt;strong&gt;JavaScript&lt;/strong&gt; that helps create &lt;strong&gt;diagrams&lt;/strong&gt; and &lt;strong&gt;charts&lt;/strong&gt; flexibly from &lt;strong&gt;text&lt;/strong&gt; with syntax similar to &lt;strong&gt;Markdown&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp"
+width="1170"
+height="497"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_hu_8d18830431e94328.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_hu_868de9c6e0f3cf0f.webp 1024w"
+loading="lazy"
+alt="Mermaid"
+class="gallery-image"
+data-flex-grow="235"
+data-flex-basis="564px"
+&gt;&lt;/p&gt;
+&lt;h2 id="advantages"&gt;Advantages
+&lt;/h2&gt;&lt;p&gt;This is an open-source and completely free tool. It supports many popular types of diagrams and charts such as &lt;strong&gt;Flowchart&lt;/strong&gt;, &lt;strong&gt;Sequence diagram&lt;/strong&gt;, &lt;strong&gt;Class diagram&lt;/strong&gt;, &lt;strong&gt;State diagram&lt;/strong&gt;, &lt;strong&gt;Git graph&lt;/strong&gt;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;The syntax is very simple and easy to learn. If you&amp;rsquo;re already familiar with Markdown, you just need to spend a little time to master it. Now, whenever project requirements change, you only need to edit a few lines of text and the diagram will be updated quickly.&lt;/p&gt;
+&lt;p&gt;For simple diagrams, you can use &lt;strong&gt;&lt;a class="link" href="https://mermaid.live" target="_blank" rel="noopener"
+&gt;Mermaid Live Editor&lt;/a&gt;&lt;/strong&gt; without installing anything. For company projects, Mermaid is already integrated with &lt;strong&gt;Notion&lt;/strong&gt; or &lt;strong&gt;Atlassian&lt;/strong&gt; products. If you want to use it locally, Mermaid works right in popular IDEs like &lt;strong&gt;Visual Studio Code&lt;/strong&gt; or JetBrains family.&lt;/p&gt;
+&lt;h2 id="comparison-with-plantuml"&gt;Comparison with PlantUML
+&lt;/h2&gt;&lt;p&gt;There are other tools on the market that render diagrams from text like Mermaid, the most notable being &lt;strong&gt;&lt;a class="link" href="https://plantuml.com" target="_blank" rel="noopener"
+&gt;PlantUML&lt;/a&gt;&lt;/strong&gt;. Below is a comparison table for an overview.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Criteria&lt;/th&gt;
+&lt;th&gt;Mermaid&lt;/th&gt;
+&lt;th&gt;PlantUML&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub Star (25/2/2024)&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/mermaid-js/mermaid" target="_blank" rel="noopener"
+&gt;65,400&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/plantuml/plantuml" target="_blank" rel="noopener"
+&gt;9,300&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Diagram types&lt;/td&gt;
+&lt;td&gt;Flow, Sequence, Class, State, Git graph&amp;hellip;&lt;/td&gt;
+&lt;td&gt;Sequence, Usecase, Class, Object, Activity, State&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Online support&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Offline support&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pricing&lt;/td&gt;
+&lt;td&gt;Free&lt;/td&gt;
+&lt;td&gt;Free&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Others&lt;/td&gt;
+&lt;td&gt;Easy to learn, user-friendly for beginners&lt;/td&gt;
+&lt;td&gt;Many extension libraries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="installation-on-visual-studio-code"&gt;Installation on Visual Studio Code
+&lt;/h1&gt;&lt;p&gt;Currently, in my project, the team is creating a separate project for diagrams, using &lt;strong&gt;Git&lt;/strong&gt; for version control and &lt;strong&gt;Visual Studio Code&lt;/strong&gt; for drawing.&lt;/p&gt;
+&lt;p&gt;You only need to install 2 extensions: &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid" target="_blank" rel="noopener"
+&gt;Markdown Preview Mermaid Support&lt;/a&gt; and &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting" target="_blank" rel="noopener"
+&gt;Mermaid Markdown Syntax Highlighting&lt;/a&gt; on Visual Studio Code to get started.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_extension.webp"
+width="836"
+height="422"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_9297c6104a79cb8c.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_66628a2035b940.webp 1024w"
+loading="lazy"
+alt="Mermaid Extensions"
+class="gallery-image"
+data-flex-grow="198"
+data-flex-basis="475px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Whenever you need to draw a diagram, create a file with the &lt;code&gt;.md&lt;/code&gt; extension and write the Mermaid syntax. You can click the &lt;strong&gt;Open Preview&lt;/strong&gt; button in the top right corner to code and see the diagram updated live beside it. The result is as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_preview.webp"
+width="2318"
+height="1030"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_6f0a279b03479e11.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_df5866560d28b645.webp 1024w"
+loading="lazy"
+alt="Mermaid Preview"
+class="gallery-image"
+data-flex-grow="225"
+data-flex-basis="540px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Just check out the example first, and I&amp;rsquo;ll go into detail about the syntax for each type of diagram in the next section.&lt;/p&gt;
+&lt;h1 id="syntax-for-common-diagrams"&gt;Syntax for Common Diagrams
+&lt;/h1&gt;&lt;h2 id="flowchart"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/flowchart.html" target="_blank" rel="noopener"
+&gt;Flowchart&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A flowchart consists of &lt;strong&gt;nodes&lt;/strong&gt; and &lt;strong&gt;edges&lt;/strong&gt; (which can be &lt;strong&gt;undirected edges&lt;/strong&gt; or &lt;strong&gt;directed arrows&lt;/strong&gt;). The Mermaid code will determine how to create the nodes and edges, with customizable edge types according to the drawer&amp;rsquo;s intention.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;flowchart TD
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;B;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;C;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; B--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; C--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;flowchart&lt;/code&gt;: the keyword for this type of chart (you can also use &lt;code&gt;graph&lt;/code&gt; interchangeably).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TD&lt;/code&gt;: the direction of the chart (top to down). Other options include:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TB&lt;/code&gt;: top to bottom (same as top to down)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;BT&lt;/code&gt;: bottom to top&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RL&lt;/code&gt;: right to left&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LR&lt;/code&gt;: left to right&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;A&lt;/code&gt;, &lt;code&gt;B&lt;/code&gt;, &lt;code&gt;C&lt;/code&gt;, &lt;code&gt;D&lt;/code&gt;: the names of the nodes. Besides the default rectangle, you can also use other shapes like rounded rectangles, trapezoids, circles, etc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: directed edge type. There are also undirected, bidirectional types, and types with attached text&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/flowchart.webp"
+width="252"
+height="496"
+srcset="https://namanh11611.github.io/p/mermaid/flowchart_hu_9a097f81442fa2b4.webp 480w, https://namanh11611.github.io/p/mermaid/flowchart_hu_4852dd2d01bbc216.webp 1024w"
+loading="lazy"
+alt="Flowchart"
+class="gallery-image"
+data-flex-grow="50"
+data-flex-basis="121px"
+&gt;&lt;/p&gt;
+&lt;h2 id="sequence-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/sequenceDiagram.html" target="_blank" rel="noopener"
+&gt;Sequence diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A sequence diagram is an &lt;strong&gt;interaction diagram&lt;/strong&gt; that shows how different &lt;strong&gt;processes&lt;/strong&gt; operate with each other &lt;strong&gt;and in what order&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sequenceDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Alice
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Bob
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant John
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Alice-&amp;gt;&amp;gt;John: Hello John, how are you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; loop Healthcheck
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;John: Fight against hypochondria
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; end
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Note right of John: Rational thoughts &amp;lt;br/&amp;gt;prevail!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John--&amp;gt;&amp;gt;Alice: Great!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;Bob: How about you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Bob--&amp;gt;&amp;gt;John: Jolly good!
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sequenceDiagram&lt;/code&gt;: the keyword for the diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;participant&lt;/code&gt;: defines the participants in the diagram in sequential order. In this example, we have 3 participants: &lt;code&gt;Alice&lt;/code&gt;, &lt;code&gt;Bob&lt;/code&gt;, and &lt;code&gt;John&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Each line defines the message between the participants.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-&amp;gt;&amp;gt;&lt;/code&gt;, &lt;code&gt;--&amp;gt;&amp;gt;&lt;/code&gt;: directed message types with solid and dashed lines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/sequence_diagram.webp"
+width="1236"
+height="1110"
+srcset="https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_f82c29c8e973dc90.webp 480w, https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_8ebc4b789a8b9c9.webp 1024w"
+loading="lazy"
+alt="Sequence diagram"
+class="gallery-image"
+data-flex-grow="111"
+data-flex-basis="267px"
+&gt;&lt;/p&gt;
+&lt;h2 id="class-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/classDiagram.html" target="_blank" rel="noopener"
+&gt;Class diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A class diagram in &lt;strong&gt;UML&lt;/strong&gt; (Unified Modeling Language) is a type of &lt;strong&gt;static structure diagram&lt;/strong&gt; that describes the &lt;strong&gt;structure of a system&lt;/strong&gt; by showing the &lt;strong&gt;classes&lt;/strong&gt; of the system, their &lt;strong&gt;attributes&lt;/strong&gt;, &lt;strong&gt;operations&lt;/strong&gt; (or methods), and the &lt;strong&gt;relationships between objects&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;classDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 &amp;lt;|-- AveryLongClass : Cool
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class03 *-- Class04
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class05 o-- Class06
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 .. Class08
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --&amp;gt; C2 : Where am i?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --* C3
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --|&amp;gt; Class07
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : equals()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : Object[] elementData
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : size()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int chimp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int gorilla
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class08 &amp;lt;--&amp;gt; C2: Cool label
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;classDiagram&lt;/code&gt;: the keyword for the diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chimp&lt;/code&gt;, &lt;code&gt;gorilla&lt;/code&gt;, &lt;code&gt;elementData&lt;/code&gt;: attributes of the classes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;size()&lt;/code&gt;, &lt;code&gt;equals()&lt;/code&gt;: methods of the classes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*--&lt;/code&gt;, &lt;code&gt;o--&lt;/code&gt;: relationships between classes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/class_diagram.webp"
+width="1388"
+height="1330"
+srcset="https://namanh11611.github.io/p/mermaid/class_diagram_hu_9e87019f715302d5.webp 480w, https://namanh11611.github.io/p/mermaid/class_diagram_hu_2167f87791570962.webp 1024w"
+loading="lazy"
+alt="Class diagram"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="250px"
+&gt;&lt;/p&gt;
+&lt;h2 id="state-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/stateDiagram.html" target="_blank" rel="noopener"
+&gt;State diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A state diagram is a type of diagram that describes the &lt;strong&gt;behavior of a system&lt;/strong&gt;, showing some of the system&amp;rsquo;s states.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;stateDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; [*] --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; Moving
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Crash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Crash --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;stateDiagram&lt;/code&gt;: the keyword for the diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[*]&lt;/code&gt;: start or end point.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Still&lt;/code&gt;, &lt;code&gt;Moving&lt;/code&gt;, &lt;code&gt;Crash&lt;/code&gt;: the states of the system.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: state transition steps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/state_diagram.webp"
+width="256"
+height="750"
+srcset="https://namanh11611.github.io/p/mermaid/state_diagram_hu_7e6083be227c5eeb.webp 480w, https://namanh11611.github.io/p/mermaid/state_diagram_hu_893cac28a20e6738.webp 1024w"
+loading="lazy"
+alt="State diagram"
+class="gallery-image"
+data-flex-grow="34"
+data-flex-basis="81px"
+&gt;&lt;/p&gt;
+&lt;h2 id="git-graph"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/gitgraph.html" target="_blank" rel="noopener"
+&gt;Git graph&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;A git graph illustrates &lt;strong&gt;git commits&lt;/strong&gt; and &lt;strong&gt;git actions&lt;/strong&gt; (commands) on different &lt;strong&gt;branches&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Sample syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gitGraph
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; branch develop
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; checkout main
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gitGraph&lt;/code&gt;: the keyword for the graph.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;commit&lt;/code&gt;: creates a new commit on the current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;branch&lt;/code&gt;: creates and switches to a new branch, setting it as the current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;checkout&lt;/code&gt;: checks out an existing branch and sets it as the current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;merge&lt;/code&gt;: merges a branch into the current branch.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/git_graph.webp"
+width="982"
+height="362"
+srcset="https://namanh11611.github.io/p/mermaid/git_graph_hu_f52b2276177788dd.webp 480w, https://namanh11611.github.io/p/mermaid/git_graph_hu_b7b3edba1d60b498.webp 1024w"
+loading="lazy"
+alt="Git graph"
+class="gallery-image"
+data-flex-grow="271"
+data-flex-basis="651px"
+&gt;&lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion
+&lt;/h1&gt;&lt;p&gt;Mermaid is truly &lt;strong&gt;powerful&lt;/strong&gt; and &lt;strong&gt;flexible&lt;/strong&gt;; it provides us with many &lt;strong&gt;options&lt;/strong&gt; to draw various types of diagrams. However, in this short article, I couldn&amp;rsquo;t introduce all those options to you. If you need more details, you can refer to the Mermaid documentation linked in each title section. I hope you now have an overview of Mermaid and can apply it in your projects or your team&amp;rsquo;s projects, helping save time and effort.&lt;/p&gt;</description></item></channel></rss>

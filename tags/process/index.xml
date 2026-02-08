@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Process on Henry Techie</title><link>https://namanh11611.github.io/tags/process/</link><description>Recent content in Process on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 21 Jun 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/process/index.xml" rel="self" type="application/rss+xml"/><item><title>Everything About Process in Android</title><link>https://namanh11611.github.io/p/process/</link><pubDate>Fri, 21 Jun 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/process/</guid><description>&lt;img src="https://namanh11611.github.io/p/process/process.webp" alt="Featured image of post Everything About Process in Android" /&gt;&lt;h1 id="introduction"&gt;Introduction
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Process&lt;/strong&gt; is a fundamental but essential concept in Android. When we launch an application, by default, all components like &lt;strong&gt;Activity&lt;/strong&gt;, &lt;strong&gt;Service&lt;/strong&gt;, &lt;strong&gt;BroadcastReceiver&lt;/strong&gt;, and &lt;strong&gt;ContentProvider&lt;/strong&gt; run within a single Linux Process unless we specify a separate process in the &lt;strong&gt;AndroidManifest&lt;/strong&gt; file, as shown below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;activity&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;android:process=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;new_process_name&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;...&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/activity&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;By default, the process name matches the &lt;strong&gt;app ID&lt;/strong&gt; declared in the &lt;code&gt;build.gradle&lt;/code&gt; file. Both the application and the four main components have an &lt;code&gt;android:process&lt;/code&gt; tag. Therefore, if you declare &lt;code&gt;android:process&lt;/code&gt; for the &lt;code&gt;&amp;lt;application&amp;gt;&lt;/code&gt; tag, that process name will apply to all components of that application.&lt;/p&gt;
+&lt;h1 id="priority-levels"&gt;Priority Levels
+&lt;/h1&gt;&lt;p&gt;We cannot manage Process lifetime directly. Android automatically calculates which &lt;strong&gt;components&lt;/strong&gt; of running applications are active, their &lt;strong&gt;importance&lt;/strong&gt; to the user, and the &lt;strong&gt;remaining memory&lt;/strong&gt; to decide the Process lifetime.&lt;/p&gt;
+&lt;p&gt;When Android runs out of resources, it shuts down a Process, and naturally, the components running on that Process are destroyed as well. What determines which Process gets shut down?&lt;/p&gt;
+&lt;p&gt;Android prioritizes Processes based on their importance to the user. It classifies Processes into four priority levels:&lt;/p&gt;
+&lt;h2 id="foreground-process"&gt;Foreground Process
+&lt;/h2&gt;&lt;p&gt;This is the highest priority Process. It contains components the user is &lt;strong&gt;actively interacting with&lt;/strong&gt;, such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Activity&lt;/strong&gt; at the top of the screen that the user is engaging with, where the &lt;code&gt;onResume()&lt;/code&gt; method has been called.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BroadcastReceiver&lt;/strong&gt; running, with its &lt;code&gt;onReceive()&lt;/code&gt; method currently executing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Service&lt;/strong&gt; executing code in one of its callbacks: &lt;code&gt;onCreate()&lt;/code&gt;, &lt;code&gt;onStart()&lt;/code&gt;, or &lt;code&gt;onDestroy()&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Only a few Processes like this exist in the system, and they are only killed when memory is so low that even these cannot continue running.&lt;/p&gt;
+&lt;h2 id="visible-process"&gt;Visible Process
+&lt;/h2&gt;&lt;p&gt;This Process performs tasks that the user is &lt;strong&gt;aware of&lt;/strong&gt;. If killed, it would impact the user experience. Examples include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Activity&lt;/strong&gt; displayed on the screen but not in the foreground, where the &lt;code&gt;onPause()&lt;/code&gt; method has been called. For example, an Activity partially covered by a dialog.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Foreground Service&lt;/strong&gt; running via the &lt;code&gt;startForeground()&lt;/code&gt; method, making it visible to the user.&lt;/li&gt;
+&lt;li&gt;A service running a feature visible to the user, such as a live wallpaper or keyboard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="service-process"&gt;Service Process
+&lt;/h2&gt;&lt;p&gt;This Process contains a Service running via the &lt;code&gt;startService()&lt;/code&gt; method. The user does not see it directly but is aware of the &lt;strong&gt;tasks it performs&lt;/strong&gt;, such as uploading or downloading data in the background.&lt;/p&gt;
+&lt;p&gt;A long-running Service (e.g., more than 30 minutes) may have its importance reduced to a cached state.&lt;/p&gt;
+&lt;h2 id="cached-process"&gt;Cached Process
+&lt;/h2&gt;&lt;p&gt;These Processes are &lt;strong&gt;no longer necessary&lt;/strong&gt;, and the system can &lt;strong&gt;safely kill&lt;/strong&gt; them without hesitation when more resources are required.&lt;/p&gt;
+&lt;p&gt;An efficient system will have many Cached Processes to facilitate smooth app transitions and frequently kill Cached apps when needed.&lt;/p&gt;
+&lt;p&gt;Android uses &lt;strong&gt;LRU Cache&lt;/strong&gt; (Least Recently Used Cache) to manage Cached Processes, prioritizing the removal of Processes least recently used.&lt;/p&gt;
+&lt;p&gt;In summary, understanding how components like &lt;strong&gt;Activity&lt;/strong&gt;, &lt;strong&gt;Service&lt;/strong&gt;, and &lt;strong&gt;BroadcastReceiver&lt;/strong&gt; impact priority levels is crucial. Select the appropriate component for your use case to avoid a Process being killed during important tasks.&lt;/p&gt;
+&lt;h1 id="inter-process-communication-ipc"&gt;Inter-Process Communication (IPC)
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Inter-Process Communication&lt;/strong&gt;, or IPC, is a mechanism that allows Processes to &lt;strong&gt;communicate&lt;/strong&gt; and &lt;strong&gt;synchronize their actions&lt;/strong&gt; in Android.&lt;/p&gt;
+&lt;p&gt;Each app runs in a separate Process, but many apps need to communicate with each other to &lt;strong&gt;share data&lt;/strong&gt; or perform &lt;strong&gt;collaborative tasks&lt;/strong&gt;, making IPC essential for safe and efficient inter-Process communication.&lt;/p&gt;
+&lt;h2 id="intent"&gt;Intent
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Intent&lt;/strong&gt; is the standard mechanism for asynchronous communication between &lt;strong&gt;Activities&lt;/strong&gt; and &lt;strong&gt;BroadcastReceivers&lt;/strong&gt;. Depending on the need, you can use &lt;code&gt;sendBroadcast&lt;/code&gt;, &lt;code&gt;sendOrderedBroadcast&lt;/code&gt;, or explicit intents.&lt;/p&gt;
+&lt;h2 id="android-interface-definition-language-aidl"&gt;Android Interface Definition Language (AIDL)
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;AIDL&lt;/strong&gt; is a tool for defining interfaces between Android applications. It enables apps to communicate safely and efficiently, regardless of the programming languages they are written in.&lt;/p&gt;
+&lt;h2 id="messenger"&gt;Messenger
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Messenger&lt;/strong&gt; is a class in the Android SDK that allows applications to &lt;strong&gt;send and receive messages&lt;/strong&gt;. It provides a simple interface for inter-application communication.&lt;/p&gt;
+&lt;p&gt;The main difference between AIDL and Messenger is that AIDL supports &lt;strong&gt;concurrent tasks&lt;/strong&gt;, while Messenger is limited to &lt;strong&gt;sequential tasks&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="broadcast-receiver"&gt;Broadcast Receiver
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;BroadcastReceiver&lt;/strong&gt; handles asynchronous requests from Intents. By default, any app can call the receiver. If you intend to use BroadcastReceiver for a specific application, you can secure it by using the &lt;code&gt;&amp;lt;receiver&amp;gt;&lt;/code&gt; tag in the AndroidManifest. This prevents unauthorized apps from sending Intents to the BroadcastReceiver.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://developer.android.com/guide/components/processes-and-threads" target="_blank" rel="noopener"
+&gt;https://developer.android.com/guide/components/processes-and-threads&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://developer.android.com/guide/components/activities/process-lifecycle" target="_blank" rel="noopener"
+&gt;https://developer.android.com/guide/components/activities/process-lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://developer.android.com/privacy-and-security/security-tips#interprocess-communication" target="_blank" rel="noopener"
+&gt;https://developer.android.com/privacy-and-security/security-tips#interprocess-communication&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

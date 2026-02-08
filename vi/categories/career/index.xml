@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Career on Henry Techie</title><link>https://namanh11611.github.io/vi/categories/career/</link><description>Recent content in Career on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Wed, 01 Jan 2025 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/categories/career/index.xml" rel="self" type="application/rss+xml"/><item><title>AI đang thay đổi cách Software Engineer làm việc</title><link>https://namanh11611.github.io/vi/p/ai-change-work/</link><pubDate>Wed, 01 Jan 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/ai-change-work/</guid><description>&lt;img src="https://namanh11611.github.io/p/ai-change-work/ai_change_work.webp" alt="Featured image of post AI đang thay đổi cách Software Engineer làm việc" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@altumcode?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;AltumCode&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/silver-macbook-turned-on-XMFZqrGyV-Q?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="ai-sắp-thay-thế-dev"&gt;AI sắp thay thế dev?
+&lt;/h1&gt;&lt;p&gt;Nhiều anh em lo lắng hỏi mình về việc AI sắp thay thế dev chưa? Câu trả lời của mình thì đến thời điểm hiện tại là &lt;strong&gt;CHƯA&lt;/strong&gt;. Vẫn cần có người &lt;strong&gt;verify&lt;/strong&gt; các dòng code mà AI viết ra.&lt;/p&gt;
+&lt;p&gt;Nhưng ngành công nghệ vốn là một ngành thay đổi nhanh chóng, công nghệ này hôm nay còn &lt;strong&gt;hot&lt;/strong&gt;, ngày mai đã trở nên lỗi thời. Ví dụ như 6 năm trước lúc mình ra trường, code &lt;strong&gt;Android&lt;/strong&gt; vẫn chủ yếu dùng &lt;strong&gt;Java&lt;/strong&gt;. Vậy nhưng bây giờ nếu chỉ biết &lt;strong&gt;Java&lt;/strong&gt; mà không biết &lt;strong&gt;Kotlin&lt;/strong&gt; thì thực sự rất khó kiếm được việc.&lt;/p&gt;
+&lt;p&gt;Vậy nên, trong tương lai &lt;strong&gt;5 năm&lt;/strong&gt;, &lt;strong&gt;10 năm&lt;/strong&gt; nữa AI có thay thế dev không thì mình không dám chắc.&lt;/p&gt;
+&lt;h1 id="ai-thay-thế-cách-chúng-ta-làm-việc"&gt;AI thay thế cách chúng ta làm việc
+&lt;/h1&gt;&lt;p&gt;Vậy nhưng, rõ ràng là AI đang thay đổi &lt;strong&gt;cách chúng ta làm việc&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Trước đây, công việc chính của anh em dev sẽ là chuyển hoá từ &lt;strong&gt;requirement&lt;/strong&gt;, &lt;strong&gt;design&lt;/strong&gt; thành &lt;strong&gt;code&lt;/strong&gt;. Tech lead, senior thì còn tốn thêm thời gian meeting, clear requirement, chứ anh em junior phần lớn thời gian là coding. Để ra được sản phẩm có thể mất &lt;strong&gt;hàng tháng&lt;/strong&gt;, thậm chí &lt;strong&gt;hàng năm&lt;/strong&gt; trời.&lt;/p&gt;
+&lt;p&gt;Dạo gần đây mình đang build &lt;strong&gt;project cá nhân&lt;/strong&gt; mới, hôm nay đã là &lt;strong&gt;ngày thứ 10&lt;/strong&gt;, vậy nhưng với sự hỗ trợ của &lt;strong&gt;Cursor&lt;/strong&gt;, lượng code mình viết và trực tiếp sửa chắc chỉ chiếm &lt;strong&gt;5%&lt;/strong&gt;. Trước đây anh em dùng &lt;strong&gt;ChatGPT&lt;/strong&gt; thì nó chỉ làm được 1 số component nhỏ nhỏ, rồi anh em copy vào project của mình. Copy vào xong cũng phải sửa chán chê nó mới khớp. Nhưng với &lt;strong&gt;Cursor&lt;/strong&gt; thì khác, nó hiểu &lt;strong&gt;context project&lt;/strong&gt; của mình. Vậy nên đưa cho nó &lt;strong&gt;base project&lt;/strong&gt; với &lt;strong&gt;một số file mà mình đã code sẵn&lt;/strong&gt;, nó sẽ copy được &lt;strong&gt;99%&lt;/strong&gt; cái format đó, gần như dùng được ngay, không phải sửa gì hoặc sửa rất ít. Cursor hoạt động như một &lt;strong&gt;AI Agent&lt;/strong&gt;, sau khi gen code, thậm chí tự tạo file mới, nó sẽ tự run project xem có lỗi gì không, nếu có lỗi thì tự fix tiếp, cho đến khi ok thì mới bảo mình &lt;strong&gt;review những file thay đổi&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Công việc của mình bây giờ gần giống như một &lt;strong&gt;technical lead&lt;/strong&gt;, hàng ngày &lt;strong&gt;define task cho Cursor code&lt;/strong&gt;, sau đó review, nếu thấy chỗ nào chưa ổn thì bảo nó sửa luôn. Đến lúc hài lòng rồi thì merge code thôi vậy.&lt;/p&gt;
+&lt;p&gt;Nhưng để &lt;strong&gt;review code&lt;/strong&gt; của AI, bạn phải là người nắm rõ &lt;strong&gt;từng dòng code&lt;/strong&gt; nó viết ra &lt;strong&gt;có ý nghĩa gì&lt;/strong&gt;, chỗ nào chưa tối ưu để còn biết đường bảo nó sửa lại. Sẽ rất nguy hiểm nếu các bạn &lt;strong&gt;áp dụng một cách bừa bãi&lt;/strong&gt;, và sau này nếu có bug phát sinh thì không biết sửa lại như thế nào.&lt;/p&gt;
+&lt;h1 id="thực-trạng"&gt;Thực trạng
+&lt;/h1&gt;&lt;p&gt;Hiện tại có một rào cản là các &lt;strong&gt;công ty lớn&lt;/strong&gt; vẫn khá e ngại áp dụng AI vì vấn đề &lt;strong&gt;bảo mật dữ liệu&lt;/strong&gt;. Thêm nữa là lượng &lt;strong&gt;codebase&lt;/strong&gt; của họ cũng rất lớn, dùng các AI phổ thông để học cũng khá &lt;strong&gt;tốn token&lt;/strong&gt;, mà AI thì có giới hạn về &lt;strong&gt;lượng token mà nó nhớ được&lt;/strong&gt;. Mình cũng vậy, công việc trên công ty cũng không dùng được mấy. Vậy nhưng với các &lt;strong&gt;công ty nhỏ&lt;/strong&gt; hoặc anh em &lt;strong&gt;Indie Hacker&lt;/strong&gt;, cái &lt;em&gt;&amp;ldquo;rào cản&amp;rdquo;&lt;/em&gt; này không quá đáng ngại, thì đây là cơ hội để anh em bứt phá, tăng &lt;strong&gt;tốc độ phát triển phần mềm&lt;/strong&gt;. Thử tưởng tượng, thời gian build &lt;strong&gt;MVP&lt;/strong&gt; được rút ngắn từ &lt;strong&gt;vài tháng&lt;/strong&gt; xuống còn &lt;strong&gt;vài tuần&lt;/strong&gt;, thậm chí &lt;strong&gt;vài ngày&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Các con số không biết nói dối, lượng truy cập &lt;strong&gt;StackOverflow&lt;/strong&gt; đang giảm dần. Anh em dev đang chuyển sang &lt;strong&gt;hỏi AI&lt;/strong&gt; nhiều hơn là đi &lt;strong&gt;hỏi Google&lt;/strong&gt; như trước.&lt;/p&gt;
+&lt;p&gt;Quay trở lại với câu hỏi đầu bài viết, nếu như trước đây các team cần &lt;strong&gt;3 senior và 7 junior&lt;/strong&gt;, nhưng bây giờ mọi người áp dụng AI và làm việc &lt;strong&gt;năng suất hơn&lt;/strong&gt; nên chỉ cần &lt;strong&gt;3 senior và 4 junior&lt;/strong&gt;. Vậy thì chẳng phải AI đã &lt;strong&gt;thay thế 3 junior&lt;/strong&gt; rồi sao? Nói đúng hơn là &lt;strong&gt;những người tận dụng AI tốt&lt;/strong&gt; đang làm thay việc &lt;strong&gt;những người chưa biết dùng AI&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id="kết"&gt;Kết
+&lt;/h1&gt;&lt;p&gt;Nhân ngày đầu năm viết post tản mạn về công việc của mình để các năm sau nó nhắc lại. Trong &lt;strong&gt;Cách mạng Công nghiệp lần thứ nhất&lt;/strong&gt;, máy móc đã thay thế con người trong những &lt;strong&gt;công việc tay chân nhàm chán&lt;/strong&gt;, &lt;strong&gt;giải phóng sức lao động&lt;/strong&gt; để chúng ta tập trung trí lực vào những công việc khác. Vậy thì cùng chờ xem &lt;strong&gt;5 năm&lt;/strong&gt;, &lt;strong&gt;10 năm&lt;/strong&gt; tới, AI sẽ đưa chúng ta &lt;strong&gt;đi xa đến như thế nào&lt;/strong&gt;.&lt;/p&gt;</description></item><item><title>Hành trình giải 555 bài LeetCode</title><link>https://namanh11611.github.io/vi/p/leetcode/</link><pubDate>Sun, 28 Jul 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/leetcode/</guid><description>&lt;img src="https://namanh11611.github.io/p/leetcode/leetcode.webp" alt="Featured image of post Hành trình giải 555 bài LeetCode" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@ashleybatz?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Ashley Batz&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/person-walking-on-beach-during-daytime-betmVWGYcLY?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="hành-trình-bắt-đầu"&gt;Hành trình bắt đầu
+&lt;/h1&gt;&lt;p&gt;Có lẽ nhiều bạn không còn xa lạ gì với nền tảng &lt;strong&gt;LeetCode&lt;/strong&gt;, một nơi để anh em giải những bài &lt;strong&gt;thuật toán&lt;/strong&gt;, chuẩn bị cho vòng &lt;strong&gt;coding interview&lt;/strong&gt; vào các công ty, thường là các công ty nước ngoài và một số ít công ty ở Việt Nam.&lt;/p&gt;
+&lt;p&gt;Mình cũng đã bắt đầu hành trình của mình như vậy, đơn giản chỉ để chuẩn bị cho buổi phỏng vấn. Mình nhận thấy rằng việc làm quen với các bài lập trình trên LeetCode không chỉ giúp mình cải thiện kỹ năng coding mà còn giúp mình tự tin hơn khi đối mặt với các câu hỏi phỏng vấn liên quan đến thuật toán và cấu trúc dữ liệu.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/leetcode/leetcode_profile.webp"
+width="852"
+height="396"
+srcset="https://namanh11611.github.io/p/leetcode/leetcode_profile_hu_679cb4b2bad316ff.webp 480w, https://namanh11611.github.io/p/leetcode/leetcode_profile_hu_f01d4361b14e171.webp 1024w"
+loading="lazy"
+alt="LeetCode Profile"
+class="gallery-image"
+data-flex-grow="215"
+data-flex-basis="516px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Mình bắt đầu giải các bài tập &lt;strong&gt;theo từng chủ đề&lt;/strong&gt;. Điều này giúp mình hệ thống hóa kiến thức và nắm vững từng dạng bài hơn. Bằng cách tập trung vào một chủ đề nhất định, mình có thể hiểu sâu hơn và giải quyết các bài toán một cách hiệu quả hơn. Mình vốn không phải dân chuyên Tin, hồi sinh viên cũng không tham gia các kỳ thi về thuật toán, nên dù các dạng bài về &lt;strong&gt;BFS&lt;/strong&gt;, &lt;strong&gt;DFS&lt;/strong&gt;, &lt;strong&gt;Hash Table&lt;/strong&gt;, &lt;strong&gt;Stack&lt;/strong&gt;, &lt;strong&gt;Queue&lt;/strong&gt;&amp;hellip; có thể giải ổn, nhưng gặp mấy bài kiểu &lt;strong&gt;Dynamic Programming&lt;/strong&gt;, &lt;strong&gt;Union Find&lt;/strong&gt; thì giai đoạn ban đầu cũng loay hoay ra phết. Nhưng rồi &lt;em&gt;&amp;ldquo;trăm hay không bằng tay quen&amp;rdquo;&lt;/em&gt;, cứ giải khoảng chục bài là bạn sẽ quen tay ngay. Sau giai đoạn đầu này, mình giải được khoảng hơn &lt;strong&gt;100 bài&lt;/strong&gt;, mình thấy tầm ấy cũng đủ để đi phỏng vấn một vài công ty mà họ hỏi ở mức độ easy-medium.&lt;/p&gt;
+&lt;h1 id="duy-trì-như-một-niềm-vui"&gt;Duy trì như một niềm vui
+&lt;/h1&gt;&lt;p&gt;Sau khi đã vượt qua được buổi phỏng vấn và vào được một công ty ưng ý, mình bẵng đi khoảng 1 năm không làm nữa. Nhưng sau đó, vào một ngày đẹp trời, mình lại có có hứng vào làm tiếp. Trong giai đoạn 2 này, mình duy trì giải các bài toán trên LeetCode như một niềm vui hàng ngày. Mình dành khoảng &lt;strong&gt;30 phút mỗi ngày&lt;/strong&gt; để giải một bài trong &lt;strong&gt;Daily Coding Challenge&lt;/strong&gt;. Điều này không chỉ giúp mình giữ vững kỹ năng giải thuật toán mà còn là cách thư giãn và thử thách bản thân. Thêm nữa, giải random kiểu này, bạn sẽ không biết trước chủ đề của bài hôm nay là gì, nó sát với thực tế khi bạn đi phỏng vấn hơn.&lt;/p&gt;
+&lt;p&gt;Mình cũng thường đặt mốc 30 phút, nếu chưa nghĩ ra cách giải thì vào đọc &lt;strong&gt;Editorial&lt;/strong&gt; (phần giải của chính LeetCode) xem họ giải như nào, rồi sau đó tự nhớ và code lại. Sau mỗi bài, dù là tự giải hay đọc Editorial, mình cũng vào phần &lt;strong&gt;Solutions&lt;/strong&gt; để xem cách giải của những tay to khác, những cái mà được cộng đồng vote nhiều nhất. Họ thường có những cách rất sáng tạo, đôi khi hay hơn cả cách giải của LeetCode.&lt;/p&gt;
+&lt;p&gt;Các cụ có câu &lt;em&gt;&amp;ldquo;Muốn đi nhanh thì đi một mình, muốn đi xa thì đi cùng nhau&amp;rdquo;&lt;/em&gt;, vậy nên để có người đồng hành và trao đổi kinh nghiệm, mình thường lên diễn đàn voz để thảo luận với anh em. Việc này không chỉ giúp mình có thêm động lực mà còn học hỏi được nhiều cách giải quyết khác nhau từ cộng đồng. Để duy trì động lực, mình cũng đặt mục tiêu cụ thể là đạt &lt;strong&gt;6000 points&lt;/strong&gt; để nhận được áo LeetCode. Việc đặt mục tiêu rõ ràng giúp mình có thêm động lực và lý do để tiếp tục mỗi ngày.&lt;/p&gt;
+&lt;h1 id="đạt-được-mục-tiêu-và-quyết-định-dừng-lại"&gt;Đạt được mục tiêu và Quyết định dừng lại
+&lt;/h1&gt;&lt;p&gt;Sau khi duy trì trong khoảng &lt;strong&gt;1 năm rưỡi&lt;/strong&gt; thì đến ngày 26/7/2024 vừa rồi, mình cũng đạt được mục tiêu 6000 points và đổi được áo.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/leetcode/leetcode_t_shirt.webp"
+width="1586"
+height="550"
+srcset="https://namanh11611.github.io/p/leetcode/leetcode_t_shirt_hu_e7ae994c62df84ed.webp 480w, https://namanh11611.github.io/p/leetcode/leetcode_t_shirt_hu_8baac6c807f1f228.webp 1024w"
+loading="lazy"
+alt="LeetCode T-Shirt"
+class="gallery-image"
+data-flex-grow="288"
+data-flex-basis="692px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Tuy nhiên, đợt này công việc cũng bận rộn hơn nên mình quyết định dừng lại một thời gian để nghỉ ngơi và tập trung vào công việc hiện tại. Điều đặc biệt là số bài giải được cũng vừa tròn &lt;strong&gt;555&lt;/strong&gt; bài. Chắc là tín hiệu từ vũ trụ rồi.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hồi trước làm việc với các bạn Thái Lan mới biết số &lt;strong&gt;555&lt;/strong&gt; trong tiếng Thái đồng âm với điệu cười &lt;strong&gt;Hahaha&lt;/strong&gt;. Tín hiệu vũ trụ này cũng hay ho phết nhỉ.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Việc tạm dừng không có nghĩa là từ bỏ, trong tương lai khi có hứng thú hoặc cần chuẩn bị cho những công ty yêu cầu thuật toán ở mức độ cao hơn, mình sẽ quay lại giải tiếp. Hành trình giải 555 bài LeetCode đã giúp mình rất nhiều trong việc cải thiện kỹ năng lập trình và tư duy logic.&lt;/p&gt;
+&lt;p&gt;Chúc các bạn một tuần mới đầy năng lượng!&lt;/p&gt;</description></item><item><title>Từ câu chuyện kải kách chữ Quốc ngữ đến những nguyên lý trong lập trình</title><link>https://namanh11611.github.io/vi/p/vietnamese/</link><pubDate>Wed, 20 Mar 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/vietnamese/</guid><description>&lt;img src="https://namanh11611.github.io/p/vietnamese/vietnamese.webp" alt="Featured image of post Từ câu chuyện kải kách chữ Quốc ngữ đến những nguyên lý trong lập trình" /&gt;&lt;h1 id="chữ-quốc-ngữ-vốn-chứa-đựng-nhiều-lỗi"&gt;Chữ Quốc ngữ vốn chứa đựng nhiều lỗi
+&lt;/h1&gt;&lt;p&gt;Trước hết để mọi người không nhầm lẫn thì cần phân biệt rõ ràng 2 khái niệm &lt;strong&gt;tiếng Việt&lt;/strong&gt; và &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt;. &lt;a class="link" href="https://vi.wikipedia.org/wiki/Ti%E1%BA%BFng_Vi%E1%BB%87t" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Tiếng Việt&lt;/strong&gt;&lt;/a&gt; là ngôn ngữ của người Việt và đã xuất hiện từ &lt;strong&gt;khoảng đầu Công nguyên&lt;/strong&gt;, là cách mà cha ông ta nói chuyện, giao tiếp với nhau, gọi tên sự vật, hiện tượng như &lt;code&gt;trời&lt;/code&gt;, &lt;code&gt;đất&lt;/code&gt;, &lt;code&gt;bánh chưng&lt;/code&gt;, &lt;code&gt;bánh dày&lt;/code&gt;&amp;hellip; Còn &lt;a class="link" href="https://vi.wikipedia.org/wiki/Ch%E1%BB%AF_Qu%E1%BB%91c_ng%E1%BB%AF" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt;&lt;/a&gt; là một loại chữ viết dựa trên &lt;strong&gt;chữ cái Latinh&lt;/strong&gt;, được sáng tạo bởi các &lt;strong&gt;tu sĩ Bồ Đào Nha&lt;/strong&gt; dùng để ghi âm tiếng Việt vào &lt;strong&gt;đầu thế kỷ XVII&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Mình không có vấn đề gì với &lt;strong&gt;tiếng Việt&lt;/strong&gt;, nhưng &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt; thì mình thấy nó còn chứa đựng nhiều lỗi. Ví dụ như hồi đi học, có bao giờ bạn thắc mắc:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tại sao tên một số địa danh như &lt;code&gt;Đắk Lắk&lt;/code&gt;, &lt;code&gt;Đắk Nông&lt;/code&gt; lại có cách viết khác với các từ thông thường?&lt;/li&gt;
+&lt;li&gt;Tại sao chữ &lt;code&gt;c&lt;/code&gt;, &lt;code&gt;g&lt;/code&gt;, &lt;code&gt;ng&lt;/code&gt; lại không thể đứng trước &lt;code&gt;e&lt;/code&gt;, &lt;code&gt;ê&lt;/code&gt;, &lt;code&gt;i&lt;/code&gt;, mà chúng ta phải dùng &lt;code&gt;k&lt;/code&gt;, &lt;code&gt;gh&lt;/code&gt;, &lt;code&gt;ngh&lt;/code&gt;?&lt;/li&gt;
+&lt;li&gt;Tại sao Bác Hồ lại viết là &lt;code&gt;Đường Kách mệnh&lt;/code&gt; chứ không phải là &lt;code&gt;Đường Cách mạng&lt;/code&gt; như ngày nay chúng ta hay viết?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/vietnamese/duongkachmenh.webp"
+width="640"
+height="906"
+srcset="https://namanh11611.github.io/p/vietnamese/duongkachmenh_hu_249b605179537dc8.webp 480w, https://namanh11611.github.io/p/vietnamese/duongkachmenh_hu_2d75769f4eed77fc.webp 1024w"
+loading="lazy"
+alt="DuongKachMenh"
+class="gallery-image"
+data-flex-grow="70"
+data-flex-basis="169px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Chữ Quốc ngữ vay mượn chủ yếu từ tiếng &lt;strong&gt;Bồ Đào Nha&lt;/strong&gt; và tiếng &lt;strong&gt;Ý&lt;/strong&gt;, ví dụ như trong tiếng Bồ Đào Nha, nếu để chữ &lt;code&gt;c&lt;/code&gt; đứng trước &lt;code&gt;a&lt;/code&gt;,&lt;code&gt;o&lt;/code&gt;,&lt;code&gt;u&lt;/code&gt; sẽ biểu thị phụ âm &lt;code&gt;/k/&lt;/code&gt;, nhưng khi đứng trước &lt;code&gt;e&lt;/code&gt;,&lt;code&gt;i&lt;/code&gt; sẽ biểu thị phụ âm &lt;code&gt;/s/&lt;/code&gt;. Vì vậy để tránh cho những người biết tiếng biết Bồ Đào Nha khỏi đọc sai, các tu sĩ mới đặt ra quy tắc phải dùng &lt;code&gt;k&lt;/code&gt; thay cho &lt;code&gt;c&lt;/code&gt; khi đứng trước &lt;code&gt;e&lt;/code&gt;,&lt;code&gt;ê&lt;/code&gt;,&lt;code&gt;i&lt;/code&gt;,&lt;code&gt;y&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Còn với người Việt Nam, chúng ta không bị hiểu nhầm như trên, nên chúng ta có thể hoàn toàn dùng &lt;code&gt;c&lt;/code&gt; thay cho &lt;code&gt;k&lt;/code&gt; trong mọi từ mà không bị phát âm sai. Ví dụ như nếu mình viết là &lt;code&gt;con ciến&lt;/code&gt; thay cho &lt;code&gt;con kiến&lt;/code&gt;, &lt;code&gt;cái cem&lt;/code&gt; thay cho &lt;code&gt;cái kem&lt;/code&gt;, mặc dù là viết sai chính tả, nhưng người Việt vẫn có thể đọc đúng, chứ không đọc thành &lt;code&gt;con siến&lt;/code&gt; hay &lt;code&gt;cái sem&lt;/code&gt; như người Bồ Đào Nha.&lt;/p&gt;
+&lt;p&gt;Như trong tiêu đề của bài viết này, mình dùng từ &lt;code&gt;kải kách&lt;/code&gt; thay cho &lt;code&gt;cải cách&lt;/code&gt; nhưng các bạn vẫn hiểu ý mình đang truyền đạt đúng không?&lt;/p&gt;
+&lt;h1 id="những-công-trình-không-bao-giờ-được-triển-khai"&gt;Những công trình không bao giờ được triển khai
+&lt;/h1&gt;&lt;p&gt;Nhận thấy sự bất hợp lý này, đã có rất nhiều công trình đề xuất cải tiến chữ Quốc ngữ. Trong đó có thể kể đến dự thảo &lt;strong&gt;Phương án cải tiến chữ Quốc ngữ bước đầu&lt;/strong&gt; của &lt;strong&gt;Giáo sư Hoàng Phê&lt;/strong&gt; xây dựng từ những năm &lt;strong&gt;1960-1961&lt;/strong&gt;. Trong đó, ông đề xuất một số điểm như:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bỏ &lt;code&gt;h&lt;/code&gt; trong &lt;code&gt;gh&lt;/code&gt; và &lt;code&gt;ngh&lt;/code&gt;. Ví dụ: ghê -&amp;gt; gê, nghe -&amp;gt; nge, nghiêng -&amp;gt; ngiêng.&lt;/li&gt;
+&lt;li&gt;Dùng &lt;code&gt;f&lt;/code&gt; thay &lt;code&gt;ph&lt;/code&gt;, &lt;code&gt;d&lt;/code&gt; thay &lt;code&gt;đ&lt;/code&gt;, &lt;code&gt;z&lt;/code&gt; thay &lt;code&gt;d&lt;/code&gt; và &lt;code&gt;gi&lt;/code&gt;. Ví dụ: dân tộc -&amp;gt; zân tộc, đất nước -&amp;gt; dất nước, phương pháp -&amp;gt; fương fáp.&lt;/li&gt;
+&lt;li&gt;Nhất luật viết phụ âm &lt;code&gt;/k/&lt;/code&gt; bằng &lt;code&gt;k&lt;/code&gt; trong mọi trường hợp, thay cho &lt;code&gt;c&lt;/code&gt;, và nghiên cứu thay cả cho &lt;code&gt;q&lt;/code&gt;. Ví dụ như &lt;code&gt;Đường kách mệnh&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hoặc một trường hợp nổi tiếng khác là đề xuất &lt;strong&gt;Phương án cải tiến chữ Quốc ngữ&lt;/strong&gt; của &lt;strong&gt;Phó giáo sư Bùi Hiền&lt;/strong&gt;. Ông từng công bố đề xuất ở Báo Giáo dục và Thời đại số 72 ngày &lt;strong&gt;8/9/1995&lt;/strong&gt;. Cuối năm 2017, sau một cuộc hội thảo thì đề xuất của ông được đưa ra truyền thông và đã có bàn cãi sôi nổi do những khác lạ trong lối viết cải tiến mà ông đưa ra. Ở thời điểm đó, khi mà người người nhà nhà chê trách PGS Bùi Hiền, có lẽ mình là một trong số ít những người thấy được một số điểm hợp lý trong đề xuất của ông (chỉ một số thôi chứ không phải toàn bộ phương án).&lt;/p&gt;
+&lt;p&gt;Nhưng qua năm tháng, các bạn có thể thấy những công trình trên sẽ &lt;strong&gt;không bao giờ được triển khai&lt;/strong&gt;, bởi vì nó sẽ gây tốn kém rất lớn về &lt;strong&gt;thời gian&lt;/strong&gt;, &lt;strong&gt;tiền bạc&lt;/strong&gt; và &lt;strong&gt;nguồn lực&lt;/strong&gt; của cả xã hội. Hãy thử tưởng tượng cả nước phải đi đổi Căn cước công dân, Sổ hộ khẩu, giấy tờ hành chính, các bộ gõ tiếng Việt phải cập nhật lại quy tắc, các phần mềm phải cập nhật lại giao diện&amp;hellip; Mình nghĩ nó phải tốn cả chục năm để hoàn thành mất.&lt;/p&gt;
+&lt;h1 id="những-nguyên-lý-trong-lập-trình"&gt;Những nguyên lý trong lập trình
+&lt;/h1&gt;&lt;p&gt;Câu chuyện trên nghe qua thì có vẻ như chẳng liên quan đến ngành &lt;strong&gt;Công nghệ thông tin&lt;/strong&gt;, nhưng các bạn hãy thử xoay góc nhìn, coi &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt; như một &lt;strong&gt;ngôn ngữ lập trình&lt;/strong&gt; với bộ quy tắc riêng về cách đặt phụ âm, cách kết nối các âm, cách đánh dấu thanh&amp;hellip; Qua đó, chúng ta sẽ có một số góc nhìn mới về sự ra đời và phát triển của &lt;strong&gt;chữ Quốc ngữ&lt;/strong&gt; và liên hệ nó với các nguyên lý, bài học trong ngành lập trình.&lt;/p&gt;
+&lt;h2 id="code-luôn-có-đầy-rẫy-edge-case"&gt;Code luôn có đầy rẫy edge case
+&lt;/h2&gt;&lt;p&gt;Có thể thấy, tên một số địa danh như &lt;code&gt;Đắk Lắk&lt;/code&gt;, &lt;code&gt;Đắk Nông&lt;/code&gt; chính là một edge case của chữ Quốc ngữ. Trong lập trình cũng vậy, chúng ta luôn phải lưu ý xử lý edge case để &lt;strong&gt;tránh chương trình gặp lỗi&lt;/strong&gt; sau này.&lt;/p&gt;
+&lt;p&gt;Ví dụ như thực hiện phép chia thì luôn phải kiểm tra trường hợp &lt;strong&gt;số chia khác 0&lt;/strong&gt;, tìm phần tử đầu tiên của mảng thì luôn phải kiểm tra trường hợp &lt;strong&gt;mảng bị rỗng&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Ví dụ bạn có một input text field thì cần suy nghĩ các edge case như user không nhập gì, user nhập text quá dài hoặc user nhập sai format mà chúng ta mong muốn. Việc check edge case trong trường hợp này còn giúp chúng ta tránh được cuộc tấn công &lt;strong&gt;Cross Site Scripting (XSS)&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="tính-tương-thích-ngược-backward-compatible"&gt;Tính tương thích ngược (Backward Compatible)
+&lt;/h2&gt;&lt;p&gt;Thực ra chữ Quốc ngữ vẫn đang có những &lt;strong&gt;sự cải tiến&lt;/strong&gt; từ lúc ra đời đến ngày nay. Ví dụ như ngày xưa Bác Hồ viết &lt;code&gt;Đường Kách mệnh&lt;/code&gt; nhưng ngày nay chúng ta lại viết là &lt;code&gt;Đường Cách mạng&lt;/code&gt;. Hoặc trước đây, các từ ghép hoặc tên riêng thường có dấu gạch nối ở giữa, ví dụ như &lt;code&gt;độc-lập&lt;/code&gt;, &lt;code&gt;tự-do&lt;/code&gt;, &lt;code&gt;Việt-Nam&lt;/code&gt;, &lt;code&gt;Luân-Đôn&lt;/code&gt;&amp;hellip; Thế nhưng ngày nay, những dấu gạch nối đó đã bị bỏ đi. Những sự cải tiến nhỏ này vẫn đảm bảo mọi người có thể hiểu được cách viết mới dễ dàng, không cần tốn quá nhiều thời gian để làm quen.&lt;/p&gt;
+&lt;p&gt;Trong các ngôn ngữ lập trình, khi có nâng cấp một version mới, thường nó sẽ luôn được đảm bảo &lt;strong&gt;tính tương thích ngược&lt;/strong&gt; để những chương trình viết theo cách viết code cũ &lt;strong&gt;không bị xảy ra lỗi&lt;/strong&gt;. Ví dụ như các function cũ có thể bị đánh dấu là &lt;code&gt;Deprecated&lt;/code&gt;, hiển thị warning cho các lập trình viên biết rằng function này sẽ sớm bị thay thế, nhưng không bị xoá ngay để chúng ta có thời gian update nó.&lt;/p&gt;
+&lt;h2 id="code-đang-chạy-ổn-thì-đừng-đụng-vào"&gt;Code đang chạy ổn thì đừng đụng vào
+&lt;/h2&gt;&lt;p&gt;Việc đề xuất cải cách của PGS Bùi Hiền bị dư luận phản ứng dữ dội một phần vì nó &lt;strong&gt;khác quá xa&lt;/strong&gt; với những gì mà mọi người đang đọc, đang viết hàng ngày. Nếu được áp dụng vào thực tế, chắc chắn trong quá trình thực thi sẽ có những sự &lt;strong&gt;xung đột&lt;/strong&gt; giữa những văn bản, phần mềm được viết bằng &lt;strong&gt;kiểu chữ cũ&lt;/strong&gt; và &lt;strong&gt;kiểu chữ cải cách&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Nó giống như câu chuyện kinh điển trong ngày lập trình mà anh em thường nói vui với nhau &lt;em&gt;&amp;ldquo;Code đang chạy ổn thì đừng đụng vào&amp;rdquo;&lt;/em&gt;. Hồi mới ra trường, mình từng nhiệt tình xung phong refactor một feature có flow khá phức tạp. Thế rồi hậu quả là mình mất một mớ thời gian để đi fix bug cho những corner case của feature đó mà khi bắt đầu làm mình chưa lường trước hết được.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/vietnamese/refactor.webp"
+width="1073"
+height="1200"
+srcset="https://namanh11611.github.io/p/vietnamese/refactor_hu_923ac8df25547752.webp 480w, https://namanh11611.github.io/p/vietnamese/refactor_hu_e2ad4711482daabf.webp 1024w"
+loading="lazy"
+alt="Refactor"
+class="gallery-image"
+data-flex-grow="89"
+data-flex-basis="214px"
+&gt;&lt;/p&gt;
+&lt;h2 id="phát-hiện-lỗi-càng-muộn-chi-phí-sửa-đổi-càng-lớn"&gt;Phát hiện lỗi càng muộn, chi phí sửa đổi càng lớn
+&lt;/h2&gt;&lt;p&gt;Như mình chia sẻ ở trên, những công trình cải cách chữ Quốc ngữ trên có thể sẽ không bao giờ được đưa vào đời sống bởi vì sự tốn kém của nó. Nếu muốn sửa, có lẽ thời điểm tốt nhất là lúc&amp;hellip; các tu sỹ Bồ Đào Nha &lt;strong&gt;mới sáng tạo ra&lt;/strong&gt; nó.&lt;/p&gt;
+&lt;p&gt;Cùng là một bug, nếu bạn phát hiện ra nó ở phase &lt;strong&gt;develop&lt;/strong&gt;, bạn chỉ cần &lt;strong&gt;sửa vài dòng code&lt;/strong&gt; là xong. Nếu nó đã được &lt;strong&gt;release lên beta&lt;/strong&gt;, việc chỉnh sửa có thể sẽ ảnh hưởng đến &lt;strong&gt;một nhóm nhỏ user&lt;/strong&gt;. Còn nếu xui hơn là sản phẩm đã được &lt;strong&gt;release lên production&lt;/strong&gt; tới toàn bộ user, &lt;strong&gt;một thay đổi nhỏ&lt;/strong&gt; có thể &lt;strong&gt;gây ảnh hưởng cực lớn&lt;/strong&gt;, ví dụ như làm mất dữ liệu của user hoặc gây ra trải nghiệm tệ trong quá trình sử dụng phần mềm.&lt;/p&gt;
+&lt;p&gt;Bạn có nhớ đến trường hợp lỗi pin của điện thoại Galaxy Note 7 không? Sự cố này đã khiến Samsung phải thu hồi dòng điện thoại này, gây thiệt hại cho hãng 5,4 tỷ USD.&lt;/p&gt;
+&lt;h1 id="kết-luận"&gt;Kết luận
+&lt;/h1&gt;&lt;p&gt;Bài viết này chỉ đưa ra một góc nhìn thú vị về lập trình và cuộc sống, không nhằm mục đích công kích tổ chức hay cá nhân nào. Hy vọng bạn coi nó như một bài viết mang tính giải trí trong lúc trà dư tửu hậu.&lt;/p&gt;</description></item><item><title>Mermaid - Vẽ diagram và chart dễ như ăn kẹo bằng Markdown</title><link>https://namanh11611.github.io/vi/p/mermaid/</link><pubDate>Sun, 25 Feb 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/mermaid/</guid><description>&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp" alt="Featured image of post Mermaid - Vẽ diagram và chart dễ như ăn kẹo bằng Markdown" /&gt;&lt;h1 id="những-ngày-xưa-cũ"&gt;Những ngày xưa cũ
+&lt;/h1&gt;&lt;p&gt;Anh em cũng biết rằng, diagram nói riêng và document nói chung có vai trò quan trọng trong các dự án, nó như một chiếc la bàn giúp anh em dev hiểu được ý tưởng của PM, tech lead hay BA, định hướng được flow cần làm, đồng thời là bằng chứng để anh em đối chiếu khi có tranh cãi về yêu cầu của dự án. Một bức ảnh đáng giá hơn ngàn lời nói, đôi khi một cái diagram rõ ràng sẽ giúp tiết kiệm được vài giờ đồng hồ giải thích, trao đổi qua lại.&lt;/p&gt;
+&lt;p&gt;Trước đây, khi vẽ diagram cho dự án, mình thường dùng &lt;strong&gt;&lt;a class="link" href="https://app.diagrams.net" target="_blank" rel="noopener"
+&gt;draw.io&lt;/a&gt;&lt;/strong&gt;. Cho bạn nào chưa biết thì nó là một tool online vẽ diagram bằng cách &lt;strong&gt;kéo thả&lt;/strong&gt;. Nhưng mỗi khi cần update lại diagram, mình phải kéo thả lại từng ô hay từng cái mũi tên khá mất thời gian. Cho đến một ngày mình được một người anh giới thiệu về &lt;strong&gt;Mermaid&lt;/strong&gt;, mọi chuyện đã bước sang một trang mới&amp;hellip;&lt;/p&gt;
+&lt;h1 id="được-khai-sáng-về-mermaid"&gt;Được khai sáng về Mermaid
+&lt;/h1&gt;&lt;p&gt;Theo định nghĩa trên trang chủ thì &lt;strong&gt;&lt;a class="link" href="https://mermaid.js.org" target="_blank" rel="noopener"
+&gt;Mermaid&lt;/a&gt;&lt;/strong&gt; là một công cụ được xây dựng dựa trên &lt;strong&gt;JavaScript&lt;/strong&gt;, giúp tạo &lt;strong&gt;diagram&lt;/strong&gt; và &lt;strong&gt;chart&lt;/strong&gt; một cách linh hoạt từ &lt;strong&gt;text&lt;/strong&gt; có cú pháp tương tự &lt;strong&gt;Markdown&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid.webp"
+width="1170"
+height="497"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_hu_8d18830431e94328.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_hu_868de9c6e0f3cf0f.webp 1024w"
+loading="lazy"
+alt="Mermaid"
+class="gallery-image"
+data-flex-grow="235"
+data-flex-basis="564px"
+&gt;&lt;/p&gt;
+&lt;h2 id="ưu-điểm"&gt;Ưu điểm
+&lt;/h2&gt;&lt;p&gt;Đây là một công cụ mã nguồn mở và hoàn toàn miễn phí. Nó hỗ trợ nhiều loại diagram và chart phổ biến như &lt;strong&gt;Flowchart&lt;/strong&gt;, &lt;strong&gt;Sequence diagram&lt;/strong&gt;, &lt;strong&gt;Class diagram&lt;/strong&gt;, &lt;strong&gt;State diagram&lt;/strong&gt;, &lt;strong&gt;Git graph&lt;/strong&gt;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Cú pháp cũng rất đơn giản và dễ học. Nếu bạn đã quen thuộc với Markdown thì chỉ cần dành chút thời gian là sẽ thông thạo. Giờ đây, mỗi khi yêu cầu của dự án thay đổi, bạn chỉ cần sửa vài dòng text thôi thì diagram sẽ được update theo một cách nhanh chóng.&lt;/p&gt;
+&lt;p&gt;Với mục đích vẽ các diagram đơn giản, các bạn hoàn toàn có thể sử dụng &lt;strong&gt;&lt;a class="link" href="https://mermaid.live" target="_blank" rel="noopener"
+&gt;Mermaid Live Editor&lt;/a&gt;&lt;/strong&gt;, không cần cài đặt bất cứ thứ gì. Với các dự án của công ty, Mermaid cũng đã được tích hợp với &lt;strong&gt;Notion&lt;/strong&gt; hoặc các sản phẩm của &lt;strong&gt;Atlassian&lt;/strong&gt;. Còn nếu bạn muốn sử dụng ở local thì Mermaid có thể dùng ngay trên các IDE phổ biến như &lt;strong&gt;Visual Studio Code&lt;/strong&gt; hoặc họ nhà &lt;strong&gt;JetBrains&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="so-sánh-với-plantuml"&gt;So sánh với PlantUML
+&lt;/h2&gt;&lt;p&gt;Trên thị trường hiện tại cũng đã có một số công cụ khác render diagram từ text như Mermaid, trong đó nổi bật nhất là &lt;strong&gt;&lt;a class="link" href="https://plantuml.com" target="_blank" rel="noopener"
+&gt;PlantUML&lt;/a&gt;&lt;/strong&gt;. Sau đây mình sẽ đưa ra một bảng so sánh để các bạn có cái nhìn tổng quan.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tiêu chí&lt;/th&gt;
+&lt;th&gt;Mermaid&lt;/th&gt;
+&lt;th&gt;PlantUML&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub Star (25/2/2024)&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/mermaid-js/mermaid" target="_blank" rel="noopener"
+&gt;65.400&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://github.com/plantuml/plantuml" target="_blank" rel="noopener"
+&gt;9.300&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Loại diagram&lt;/td&gt;
+&lt;td&gt;Flow, Sequence, Class, State, Git graph&amp;hellip;&lt;/td&gt;
+&lt;td&gt;Sequence, Usecase, Class, Object, Activity, State&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hỗ trợ online&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hỗ trợ offline&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;td&gt;Có&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tính phí&lt;/td&gt;
+&lt;td&gt;Miễn phí&lt;/td&gt;
+&lt;td&gt;Miễn phí&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Khác&lt;/td&gt;
+&lt;td&gt;Dễ học, dễ sử dụng cho người mới&lt;/td&gt;
+&lt;td&gt;Có nhiều thư viện mở rộng&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="cài-đặt-trên-visual-studio-code"&gt;Cài đặt trên Visual Studio Code
+&lt;/h1&gt;&lt;p&gt;Hiện tại ở dự án của mình thì team đang tạo riêng một project cho các diagram, dùng &lt;strong&gt;Git&lt;/strong&gt; để quản lý version và dùng &lt;strong&gt;Visual Studio Code&lt;/strong&gt; để vẽ.&lt;/p&gt;
+&lt;p&gt;Bạn chỉ cần cài thêm 2 extension &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid" target="_blank" rel="noopener"
+&gt;Markdown Preview Mermaid Support&lt;/a&gt; và &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting" target="_blank" rel="noopener"
+&gt;Mermaid Markdown Syntax Highlighting&lt;/a&gt; trên Visual Studio Code là đủ dùng rồi.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_extension.webp"
+width="836"
+height="422"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_9297c6104a79cb8c.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_extension_hu_66628a2035b940.webp 1024w"
+loading="lazy"
+alt="Mermaid Extensions"
+class="gallery-image"
+data-flex-grow="198"
+data-flex-basis="475px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Mỗi khi cần vẽ 1 diagram, bạn tạo 1 file với đuôi &lt;code&gt;.md&lt;/code&gt; và viết cú pháp của Mermaid, bạn có thể click button &lt;strong&gt;Open Preview&lt;/strong&gt; ở góc trên bên phải để vừa code vừa xem diagram được update trực tiếp ở bên cạnh. Và kết quả như sau:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/mermaid_preview.webp"
+width="2318"
+height="1030"
+srcset="https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_6f0a279b03479e11.webp 480w, https://namanh11611.github.io/p/mermaid/mermaid_preview_hu_df5866560d28b645.webp 1024w"
+loading="lazy"
+alt="Mermaid Preview"
+class="gallery-image"
+data-flex-grow="225"
+data-flex-basis="540px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Bạn cứ xem trước ví dụ đi đã, mình sẽ đi vào giới thiệu chi tiết cú pháp của từng loại diagram trong phần tiếp theo.&lt;/p&gt;
+&lt;h1 id="cú-pháp-các-diagram-phổ-biến"&gt;Cú pháp các diagram phổ biến
+&lt;/h1&gt;&lt;h2 id="flowchart"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/flowchart.html" target="_blank" rel="noopener"
+&gt;Flowchart&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Flowchart bao gồm các &lt;strong&gt;node&lt;/strong&gt; và các &lt;strong&gt;cạnh&lt;/strong&gt; (có thể là &lt;strong&gt;đường vô hướng&lt;/strong&gt; hoặc &lt;strong&gt;mũi tên có hướng&lt;/strong&gt;). Code Mermaid sẽ xác định cách tạo các node và cạnh, các loại cạnh tuỳ chỉnh theo mục đích của người vẽ.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;flowchart TD
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;B;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A--&amp;gt;C;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; B--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; C--&amp;gt;D;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;flowchart&lt;/code&gt;: keyword của loại chart này (bạn có thể dùng &lt;code&gt;graph&lt;/code&gt; cũng tương đương).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TD&lt;/code&gt;: hướng của chart (top to down). Ngoài ra còn có:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TB&lt;/code&gt;: top to bottom (giống top to down)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;BT&lt;/code&gt;: bottom to top&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RL&lt;/code&gt;: right to left&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LR&lt;/code&gt;: left to right&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;A&lt;/code&gt;, &lt;code&gt;B&lt;/code&gt;, &lt;code&gt;C&lt;/code&gt;, &lt;code&gt;D&lt;/code&gt;: tên của các node. Ngoài hình chữ nhật mặc định, bạn cũng có thể dùng nhiều loại hình khác như hình chữ nhật bo tròn, hình thang, hình tròn&amp;hellip;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: loại cạnh có hướng. Ngoài ra còn các loại vô hướng, đa hướng, có gắn text&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/flowchart.webp"
+width="252"
+height="496"
+srcset="https://namanh11611.github.io/p/mermaid/flowchart_hu_9a097f81442fa2b4.webp 480w, https://namanh11611.github.io/p/mermaid/flowchart_hu_4852dd2d01bbc216.webp 1024w"
+loading="lazy"
+alt="Flowchart"
+class="gallery-image"
+data-flex-grow="50"
+data-flex-basis="121px"
+&gt;&lt;/p&gt;
+&lt;h2 id="sequence-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/sequenceDiagram.html" target="_blank" rel="noopener"
+&gt;Sequence diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Sequence diagram là &lt;strong&gt;sơ đồ tương tác&lt;/strong&gt; cho thấy các &lt;strong&gt;quy trình hoạt động&lt;/strong&gt; với nhau &lt;strong&gt;như thế nào&lt;/strong&gt; và theo &lt;strong&gt;thứ tự nào&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sequenceDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Alice
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant Bob
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; participant John
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Alice-&amp;gt;&amp;gt;John: Hello John, how are you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; loop Healthcheck
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;John: Fight against hypochondria
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; end
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Note right of John: Rational thoughts &amp;lt;br/&amp;gt;prevail!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John--&amp;gt;&amp;gt;Alice: Great!
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; John-&amp;gt;&amp;gt;Bob: How about you?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Bob--&amp;gt;&amp;gt;John: Jolly good!
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sequenceDiagram&lt;/code&gt;: keyword của diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;participant&lt;/code&gt;: định nghĩa các thành phần tham gia diagram theo thứ tự lần lượt. Như trong ví dụ này, chúng ta có 3 thành phần là &lt;code&gt;Alice&lt;/code&gt;, &lt;code&gt;Bob&lt;/code&gt; và &lt;code&gt;John&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Mỗi dòng lần lượt định nghĩa tin nhắn giữa các thành phần.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-&amp;gt;&amp;gt;&lt;/code&gt;, &lt;code&gt;--&amp;gt;&amp;gt;&lt;/code&gt;: các loại tin nhắn có hướng nét liền và nét đứt.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/sequence_diagram.webp"
+width="1236"
+height="1110"
+srcset="https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_f82c29c8e973dc90.webp 480w, https://namanh11611.github.io/p/mermaid/sequence_diagram_hu_8ebc4b789a8b9c9.webp 1024w"
+loading="lazy"
+alt="Sequence diagram"
+class="gallery-image"
+data-flex-grow="111"
+data-flex-basis="267px"
+&gt;&lt;/p&gt;
+&lt;h2 id="class-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/classDiagram.html" target="_blank" rel="noopener"
+&gt;Class diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Class diagram trong &lt;strong&gt;UML&lt;/strong&gt; (Unified Modeling Language) là một loại &lt;strong&gt;sơ đồ cấu trúc tĩnh&lt;/strong&gt; mô tả &lt;strong&gt;cấu trúc của hệ thống&lt;/strong&gt; bằng cách hiển thị các &lt;strong&gt;lớp&lt;/strong&gt; của hệ thống, &lt;strong&gt;thuộc tính&lt;/strong&gt;, &lt;strong&gt;hoạt động&lt;/strong&gt; (hoặc phương thức) của chúng và &lt;strong&gt;mối quan hệ giữa các đối tượng&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;classDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 &amp;lt;|-- AveryLongClass : Cool
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class03 *-- Class04
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class05 o-- Class06
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 .. Class08
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --&amp;gt; C2 : Where am i?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --* C3
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class09 --|&amp;gt; Class07
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : equals()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class07 : Object[] elementData
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : size()
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int chimp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class01 : int gorilla
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Class08 &amp;lt;--&amp;gt; C2: Cool label
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;classDiagram&lt;/code&gt;: keyword của diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chimp&lt;/code&gt;, &lt;code&gt;gorilla&lt;/code&gt;, &lt;code&gt;elementData&lt;/code&gt;: thuộc tính của các lớp.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;size()&lt;/code&gt;, &lt;code&gt;equals()&lt;/code&gt;: phương thức của các lớp.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*--&lt;/code&gt;, &lt;code&gt;o--&lt;/code&gt;: mối quan hệ của các lớp.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/class_diagram.webp"
+width="1388"
+height="1330"
+srcset="https://namanh11611.github.io/p/mermaid/class_diagram_hu_9e87019f715302d5.webp 480w, https://namanh11611.github.io/p/mermaid/class_diagram_hu_2167f87791570962.webp 1024w"
+loading="lazy"
+alt="Class diagram"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="250px"
+&gt;&lt;/p&gt;
+&lt;h2 id="state-diagram"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/stateDiagram.html" target="_blank" rel="noopener"
+&gt;State diagram&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;State diagram là một loại sơ đồ để mô tả &lt;strong&gt;hành vi của hệ thống&lt;/strong&gt;, nó thể hiện một số các trạng thái của hệ thống.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;stateDiagram
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; [*] --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Still --&amp;gt; Moving
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Still
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Moving --&amp;gt; Crash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Crash --&amp;gt; [*]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;stateDiagram&lt;/code&gt;: keyword của diagram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[*]&lt;/code&gt;: điểm bắt đầu hoặc kết thúc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Still&lt;/code&gt;, &lt;code&gt;Moving&lt;/code&gt;, &lt;code&gt;Crash&lt;/code&gt;: các trạng thái của hệ thống.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--&amp;gt;&lt;/code&gt;: các bước chuyển đổi trạng thái.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/state_diagram.webp"
+width="256"
+height="750"
+srcset="https://namanh11611.github.io/p/mermaid/state_diagram_hu_7e6083be227c5eeb.webp 480w, https://namanh11611.github.io/p/mermaid/state_diagram_hu_893cac28a20e6738.webp 1024w"
+loading="lazy"
+alt="State diagram"
+class="gallery-image"
+data-flex-grow="34"
+data-flex-basis="81px"
+&gt;&lt;/p&gt;
+&lt;h2 id="git-graph"&gt;&lt;a class="link" href="https://mermaid.js.org/syntax/gitgraph.html" target="_blank" rel="noopener"
+&gt;Git graph&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Git graph là minh hoạ của &lt;strong&gt;git commits&lt;/strong&gt; và &lt;strong&gt;git actions&lt;/strong&gt; (commands) trên các &lt;strong&gt;branch&lt;/strong&gt; khác nhau.&lt;/p&gt;
+&lt;p&gt;Cú pháp mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gitGraph
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; branch develop
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; checkout main
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; commit
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gitGraph&lt;/code&gt;: keyword của graph.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;commit&lt;/code&gt;: tạo một commit mới trên branch hiện tại.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;branch&lt;/code&gt;: tạo và chuyển sang một branch mới, set nó thành current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;checkout&lt;/code&gt;: checkout về một branch đã tồn tại và set nó thành current branch.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;merge&lt;/code&gt;: merge một branch vào current branch.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kết quả:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/mermaid/git_graph.webp"
+width="982"
+height="362"
+srcset="https://namanh11611.github.io/p/mermaid/git_graph_hu_f52b2276177788dd.webp 480w, https://namanh11611.github.io/p/mermaid/git_graph_hu_b7b3edba1d60b498.webp 1024w"
+loading="lazy"
+alt="Git graph"
+class="gallery-image"
+data-flex-grow="271"
+data-flex-basis="651px"
+&gt;&lt;/p&gt;
+&lt;h1 id="kết-luận"&gt;Kết luận
+&lt;/h1&gt;&lt;p&gt;Mermaid thực sự rất &lt;strong&gt;mạnh mẽ&lt;/strong&gt; và &lt;strong&gt;linh hoạt&lt;/strong&gt;, nó cung cấp cho chúng ta nhiều &lt;strong&gt;option&lt;/strong&gt; để vẽ các loại diagram. Tuy nhiên trong bài viết ngắn này, mình chưa thể giới thiệu hết với anh em các option đó. Nếu mọi người cần chi tiết hơn, có thể tham khảo document của Mermaid mình đính kèm ở từng phần title. Hy vọng các bạn đã có cái nhìn tổng quan về Mermaid và có thể áp dụng nó vào trong các dự án của mình hoặc của team, giúp anh em tiết kiệm thời gian và công sức.&lt;/p&gt;</description></item><item><title>Hành trình 6 tháng áp dụng phương pháp Pomodoro</title><link>https://namanh11611.github.io/vi/p/pomodoro/</link><pubDate>Sat, 23 Dec 2023 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/pomodoro/</guid><description>&lt;img src="https://namanh11611.github.io/p/pomodoro/pomodoro.webp" alt="Featured image of post Hành trình 6 tháng áp dụng phương pháp Pomodoro" /&gt;&lt;h1 id="pomodoro-là-gì"&gt;Pomodoro là gì?
+&lt;/h1&gt;&lt;p&gt;Thời gian gần đây, công việc có một chút thay đổi nên mỗi ngày mình tham gia trung bình 4 cuộc họp. Và thế là quanh đi quẩn lại chưa làm được gì đã hết ngày. Vậy nên mình tìm đến một &lt;strong&gt;phương pháp quản lý thời gian&lt;/strong&gt; có tên &lt;strong&gt;Pomodoro&lt;/strong&gt; để giúp mình tập trung hơn trong công việc. Khi áp dụng rồi mình mới giật mình nhận ra là thời gian code thực tế một ngày nó không nhiều như mình nghĩ.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/pomodoro/pomodoro.webp"
+width="6016"
+height="4000"
+srcset="https://namanh11611.github.io/p/pomodoro/pomodoro_hu_d999efcfadd1d468.webp 480w, https://namanh11611.github.io/p/pomodoro/pomodoro_hu_6f1b33ea06bcc62a.webp 1024w"
+loading="lazy"
+alt="Pomodoro"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pomodoro&lt;/strong&gt; là một từ tiếng Ý, có nghĩa là cà chua, bởi vì khi phương pháp này được Francesco Cirillo phát triển vào cuối những năm 1980, ông đã dùng một chiếc đồng hồ bấm giờ có hình quả cà chua. Nói một cách ngắn gọn, phương pháp này gồm một số bước như sau:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Đề ra công việc phải làm.&lt;/li&gt;
+&lt;li&gt;Đặt đồng hồ hẹn giờ trong &lt;strong&gt;25 phút&lt;/strong&gt; (khoảng thời gian này được gọi là pomodoro).&lt;/li&gt;
+&lt;li&gt;Giải quyết công việc.&lt;/li&gt;
+&lt;li&gt;Khi đồng hồ reo cũng là lúc kết thúc công việc và nghỉ giải lao &lt;strong&gt;5 phút&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Lặp lại các bước từ 1 đến 4. Sau &lt;strong&gt;4&lt;/strong&gt; pomodoro thì nghỉ giải lao &lt;strong&gt;15 phút&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/pomodoro/result.webp"
+width="825"
+height="534"
+srcset="https://namanh11611.github.io/p/pomodoro/result_hu_eaa0306ef388ce1a.webp 480w, https://namanh11611.github.io/p/pomodoro/result_hu_a9b3862b18514232.webp 1024w"
+loading="lazy"
+alt="Result"
+class="gallery-image"
+data-flex-grow="154"
+data-flex-basis="370px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Để áp dụng Pomodoro, có rất nhiều app, extension hoặc cả web sẵn cho các bạn dùng. Các bạn có thể tìm công cụ phù hợp với mình nhất. Cá nhân mình thì đang sử dụng app &lt;strong&gt;Focus To-Do&lt;/strong&gt; trên App Store, nó cũng khá đủ cho nhu cầu cơ bản của mình.&lt;/p&gt;
+&lt;p&gt;Đến nay mình đã áp dụng nó được &lt;strong&gt;6 tháng&lt;/strong&gt;, nên muốn chia sẻ với các bạn những lợi ích mà nó mang lại, cũng như những điểm mà mình nghĩ nó chưa phù hợp.&lt;/p&gt;
+&lt;h1 id="cải-thiện-sự-tập-trung"&gt;Cải thiện sự tập trung
+&lt;/h1&gt;&lt;p&gt;Trước đây, có những hôm mình cực kỳ tập trung 4-5 giờ liền, điều đó giúp mình giải quyết được rất nhiều công việc trong hôm đó. Nhưng sau những ngày làm với cường độ cao như vậy thì mình thường sẽ cảm thấy khá mệt.&lt;/p&gt;
+&lt;p&gt;Nhưng cũng có những hôm mình dành cả tiếng đồng hồ đọc báo, lướt Facebook và đến cuối ngày thì chợt nhận ra cả ngày chẳng làm được việc gì.&lt;/p&gt;
+&lt;p&gt;Não bộ con người chỉ thực sự hiệu quả khi tập trung trong một khoảng thời gian ngắn và có những khoảng nghỉ hợp lý. Khi áp dụng pomodoro, chính vì biết được chỉ cần tập trung trong vòng 25 phút, một khoảng thời gian không quá dài, vậy nên mình có thể toàn tâm toàn ý tập trung vào công việc mà không lo cuối ngày bị mệt. Và mình cũng biết sau 25 phút này, mình sẽ được nghỉ ngơi, nên cũng không có chuyện đang làm việc lại quay ra lướt Facebook nữa.&lt;/p&gt;
+&lt;p&gt;Trong 1 pomodoro, bạn nên chỉ tập trung vào 1 task duy nhất. Ví dụ đang làm task A thì chỉ làm task A, nếu xong sớm trước khi pomodoro kết thúc thì dành thời gian kiểm tra lại, chứ đừng nên nhảy sang task B.&lt;/p&gt;
+&lt;h1 id="cải-thiện-sức-khoẻ"&gt;Cải thiện sức khoẻ
+&lt;/h1&gt;&lt;p&gt;Khi đến thời gian nghỉ &lt;strong&gt;5 phút&lt;/strong&gt;, thay vì tiếp tục dán mắt vào máy tính, mình thường dành thời gian đi WC, đi lấy thêm nước uống, chuyển playlist nhạc của mình hoặc chỉ đơn giản là đứng lên đi đi lại lại. Điều đó giúp cơ thể mình được thư giãn, tránh sinh bệnh tật do ngồi làm việc quá lâu.&lt;/p&gt;
+&lt;p&gt;Nhưng mình thấy khoảng thời gian 5 phút này hơi ngắn quá, đôi khi chưa kịp làm gì đã hết 5 phút. Vậy nên có thể trong thời gian tới mình sẽ cân nhắc điều chỉnh lên thành 7 hoặc 8 phút xem sao.&lt;/p&gt;
+&lt;h1 id="bơ-cả-thế-giới"&gt;Bơ cả thế giới
+&lt;/h1&gt;&lt;p&gt;Theo quy tắc thì khi đang trong khoảng thời gian 25 phút tập trung, bạn phải tắt hết thông báo của các app để tránh bị phân tâm. Nhưng mình thì chưa đạt đến cảnh giới có thể bơ cả thế giới như vậy, vì mình vẫn phải nhận thông báo các app chat để còn kịp thời phản hồi khách hàng và đồng nghiệp.&lt;/p&gt;
+&lt;p&gt;Tuy nhiên thì điều này thỉnh thoảng sẽ làm gián đoạn Pomodoro của mình, vì mình còn phải tốn thêm thời gian check code hay document để có thể trả lời mọi người.&lt;/p&gt;
+&lt;h1 id="kết-luận"&gt;Kết luận
+&lt;/h1&gt;&lt;p&gt;Phương pháp này có thể phù hợp với mình nhưng chưa chắc phù hợp với bạn. Tuân thủ Pomodoro giúp mình tăng hiệu suất làm việc, nhưng đôi khi khiến mình cảm thấy đang làm việc như một cái máy. Hãy thử áp dụng và xem kết quả nó mang lại cho bạn nhé.&lt;/p&gt;</description></item><item><title>Technical Blog của Engineers các công ty lớn</title><link>https://namanh11611.github.io/vi/p/technical-blog/</link><pubDate>Wed, 24 May 2023 00:42:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/technical-blog/</guid><description>&lt;img src="https://namanh11611.github.io/p/technical-blog/blog.webp" alt="Featured image of post Technical Blog của Engineers các công ty lớn" /&gt;&lt;p&gt;Ngoài việc học qua các tutorial, video thì &lt;strong&gt;technical blog&lt;/strong&gt; là một nguồn khá hay ho. Khi đọc blog của kỹ sư phần mềm ở các công ty lớn, bạn sẽ biết được cách họ &lt;strong&gt;xử lý những bài toán&lt;/strong&gt; mà họ đã đối mặt như thế nào. Với thời đại AI phát triển, &lt;strong&gt;Copilot&lt;/strong&gt; hay &lt;strong&gt;Tabnine&lt;/strong&gt; đã sẵn sàng generate code để support bạn tận răng, thì các kỹ sư không còn hơn kém nhau ở khả năng &lt;strong&gt;nhớ syntax của ngôn ngữ này hay framework nọ&lt;/strong&gt; nữa, mà là hơn nhau ở &lt;strong&gt;cách giải quyết vấn đề&lt;/strong&gt;. Vậy thì qua bài viết này, mình sẽ giới thiệu cho bạn blog của các công ty lớn, hy vọng bạn sẽ có thêm những góc nhìn thú vị.&lt;/p&gt;
+&lt;p&gt;Bạn có thể click vào title của từng mục để chuyển đến blog.&lt;/p&gt;
+&lt;h1 id="meta"&gt;&lt;a class="link" href="https://engineering.fb.com" target="_blank" rel="noopener"
+&gt;Meta&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Meta&lt;/strong&gt; (hay còn được biết đến với tên gọi cũ là &lt;strong&gt;Facebook&lt;/strong&gt;) có nhiều sản phẩm như Facebook, Instagram, Whatsapp&amp;hellip; Trong blog này, họ chia sẻ về đủ các lĩnh vực, từ Android, iOS, Web đến các chủ đề khó như VR/AR hay AI.&lt;/p&gt;
+&lt;h1 id="google"&gt;&lt;a class="link" href="https://developers.google.com" target="_blank" rel="noopener"
+&gt;Google&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Khi vào trang chủ này, bạn có thể chọn 1 trong 4 lĩnh vực mà bạn quan tâm: &lt;strong&gt;Mobile&lt;/strong&gt;, &lt;strong&gt;Web&lt;/strong&gt;, &lt;strong&gt;AI&lt;/strong&gt; hoặc &lt;strong&gt;Cloud&lt;/strong&gt;, từ đó Google sẽ giới thiệu cho bạn các bài viết chi tiết về lĩnh vực đó.&lt;/p&gt;
+&lt;p&gt;Google cũng tạo nhiều khoá học về các công nghệ của họ. Mỗi khoá học bao gồm video, các bài viết giải thích chi tiết và bài tập ví dụ để bạn có thể làm theo. Khi hoàn thành, bạn có thể nhận một badge nhỏ. Khá thú vị!&lt;/p&gt;
+&lt;h1 id="netflix"&gt;&lt;a class="link" href="https://netflixtechblog.com" target="_blank" rel="noopener"
+&gt;Netflix&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Chắc trong những năm gần đây, không còn ai xa lạ với Netflix, một nền tảng trình chiếu các bộ phim hay TV show nổi tiếng. Vậy thì thay vì dành thời gian &lt;em&gt;Netflix and chill&lt;/em&gt;, bạn thử đọc blog của họ để xem cách họ đã build hệ thống phục vụ hàng triệu người dùng xem sao.&lt;/p&gt;
+&lt;h1 id="dropbox"&gt;&lt;a class="link" href="https://dropbox.tech" target="_blank" rel="noopener"
+&gt;Dropbox&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Tương tự như Google Drive, Dropbox là một dịch vụ lưu trữ đám mây, giúp bạn lưu trữ file online và đồng bộ giữa các thiết bị.&lt;/p&gt;
+&lt;p&gt;Qua blog của họ, bạn sẽ học được cách tối ưu bộ nhớ, băng thông khi chia sẻ file.&lt;/p&gt;
+&lt;h1 id="twitter"&gt;&lt;a class="link" href="https://blog.twitter.com/engineering/en_us" target="_blank" rel="noopener"
+&gt;Twitter&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;&amp;ldquo;Design a system like Twitter&amp;rdquo;&lt;/strong&gt; có lẽ là một bài toán kinh điển khi bạn đi phỏng vấn đến vòng &lt;strong&gt;System Design&lt;/strong&gt;. Vậy thì blog của Twitter sẽ là một nguồn tham khảo hữu ích cho bạn khi chuẩn bị phỏng vấn. Bạn có thể xem cách bạn nghĩ và cách Twitter thực sự làm có giống nhau không.&lt;/p&gt;
+&lt;p&gt;Gần đây, sau khi được Elon Musk mua về, Twitter thậm chí còn open source luôn cả &lt;a class="link" href="https://github.com/twitter/the-algorithm" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Recommendation Algorithm&lt;/strong&gt;&lt;/a&gt; của họ.&lt;/p&gt;
+&lt;h1 id="uber"&gt;&lt;a class="link" href="https://www.uber.com/en-IN/blog/engineering" target="_blank" rel="noopener"
+&gt;Uber&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Mặc dù đã rút khỏi thị trường Việt Nam sau thương vụ bắt tay với Grab, nhưng có thể nói, Uber vẫn là &lt;strong&gt;công ty taxi lớn nhất thế giới&lt;/strong&gt;. Vậy nên, blog của họ sẽ rất phù hợp với những anh em đang làm trong các công ty có &lt;strong&gt;lĩnh vực hoạt động tương tự&lt;/strong&gt; ở Việt Nam.&lt;/p&gt;
+&lt;h1 id="spotify"&gt;&lt;a class="link" href="https://engineering.atspotify.com" target="_blank" rel="noopener"
+&gt;Spotify&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;Mình còn nhớ khi Spotify mới ra mắt ở Việt Nam, anh em đều rất ngạc nhiên với khả năng recommend của nó.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recommender system&lt;/strong&gt; của Spotify là một hệ thống phức tạp, bao gồm nhiều &lt;strong&gt;thuật toán&lt;/strong&gt; và &lt;strong&gt;Machine Learning model&lt;/strong&gt; kết hợp. Vậy thì qua blog này, hy vọng bạn sẽ khám khá ra một phần hệ thống đó.&lt;/p&gt;
+&lt;h1 id="line"&gt;&lt;a class="link" href="https://engineering.linecorp.com/en/blog" target="_blank" rel="noopener"
+&gt;LINE&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;LINE là một trong những công ty cũ của mình. Tuy không phải là công ty top tier như những công ty trên nhưng văn hoá sharing cũng phát triển rất mạnh. Vậy nên qua bài viết này, mình muốn giới thiệu đến các bạn technical blog của các kỹ sư ở LINE.&lt;/p&gt;</description></item><item><title>Những điều giá như mình biết từ khi còn là Junior</title><link>https://namanh11611.github.io/vi/p/junior/</link><pubDate>Thu, 18 May 2023 18:44:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/junior/</guid><description>&lt;img src="https://namanh11611.github.io/p/junior/junior.webp" alt="Featured image of post Những điều giá như mình biết từ khi còn là Junior" /&gt;&lt;h1 id="who-am-i"&gt;Who am I?
+&lt;/h1&gt;&lt;p&gt;Chào các bạn!&lt;/p&gt;
+&lt;p&gt;Mình là Nam Anh, Android developer với 5 năm kinh nghiệm. Trong 5 năm sự nghiệp ấy, mình đã kịp lang thang qua cũng kha khá công ty công nghệ ở Hà Nội này.&lt;/p&gt;
+&lt;p&gt;Đây có lẽ là lần đầu tiên mình viết một bài mang đậm góc nhìn cá nhân. Vậy nên có thể sẽ có bạn thắc mắc: &lt;em&gt;&amp;ldquo;Ông này là ai mà lên bài dạy đời vậy ta?&amp;rdquo;&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Ấy chết, mình không dạy đời ai đâu, mình chỉ chia sẻ lại những điều mà mình thấy đúng với mình. Có thể với các bạn, nó đúng hoặc sai. Nhưng biết đâu, các bạn Junior sẽ có thêm một góc nhìn để cải thiện &lt;strong&gt;career path&lt;/strong&gt; của mình.&lt;/p&gt;
+&lt;h1 id="những-điều-may-mắn"&gt;Những điều may mắn
+&lt;/h1&gt;&lt;p&gt;Có những chuyện, lúc nó xảy ra thì mình không nghĩ là nó đúng đắn, chỉ đến khi sau này ngồi nhìn lại, mình mới chợt nhận ra: &lt;em&gt;&amp;ldquo;Ồ, hoá ra hồi đó mình đã làm đúng&amp;rdquo;&lt;/em&gt;. Và mình cảm thấy đó thực sự là những may mắn mà mình có được.&lt;/p&gt;
+&lt;h2 id="đọc-cuốn-clean-code-ngay-khi-vừa-ra-trường"&gt;Đọc cuốn Clean Code ngay khi vừa ra trường
+&lt;/h2&gt;&lt;p&gt;Phải thú nhận là hồi trước mình khá thích đọc sách và đọc cũng khá nhiều, đủ thể loại. Nhưng sách về công nghệ thì mình lại đọc ít, chắc do khả năng tiếng Anh hạn chế 😢😢&lt;/p&gt;
+&lt;p&gt;Cơ mà cuốn sách công nghệ mình tâm đắc nhất là &lt;strong&gt;Clean Code&lt;/strong&gt;. Như tên gọi, cuốn sách hướng dẫn bạn cách để viết &lt;em&gt;&amp;ldquo;code sạch&amp;rdquo;&lt;/em&gt;, một cuốn sách cực kỳ căn bản và được rất nhiều người recommend. Không hiểu ai xui mà mình đọc cuốn này ngay khi vừa mới ra trường, vừa đọc vừa note lại tóm tắt nội dung cuốn sách. Đến bây giờ mình vẫn giữ cái note đó. Học hỏi từ cuốn sách, cộng thêm cái bệnh OCD, mình nghĩ là mình cũng đã áp dụng được ít nhiều vào trong các project mà mình tham gia.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/junior/clean_code.webp"
+width="825"
+height="619"
+srcset="https://namanh11611.github.io/p/junior/clean_code_hu_77eae4487ef9b85e.webp 480w, https://namanh11611.github.io/p/junior/clean_code_hu_f4460c02913deabe.webp 1024w"
+loading="lazy"
+alt="Clean Code"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="319px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Có người khuyên rằng &lt;strong&gt;Clean Code&lt;/strong&gt; nên đọc một lần lúc &lt;strong&gt;mới ra trường&lt;/strong&gt;, và một lần lúc &lt;strong&gt;đã đi làm được vài năm&lt;/strong&gt;, thì khi đó mới ngấm được hết nội dung cuốn sách. Vậy nên mình cực kỳ cực kỳ khuyến khích mọi người đọc, không phân biệt bạn mới chỉ là junior hay đã là senior dày dặn kinh nghiệm.&lt;/p&gt;
+&lt;h2 id="làm-ở-những-công-ty-product-có-quy-trình-nghiêm-ngặt"&gt;Làm ở những công ty product có quy trình nghiêm ngặt
+&lt;/h2&gt;&lt;p&gt;Về so sánh giữa công ty product và outsourcing đã có rất nhiều bài viết rồi nên mình không nhắc lại nữa. Mình đã từng làm ở cả 2 loại hình công ty. Ở trong bài viết này mình chỉ nhắc đến khía cạnh &lt;strong&gt;quy trình review code&lt;/strong&gt; và &lt;strong&gt;mindset product&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Theo cảm nhận cá nhân của mình thì các công ty product lớn có &lt;strong&gt;nhiều thời gian hơn để review code chặt chẽ&lt;/strong&gt;, không bị ép deadline như công ty outsourcing. Mình chỉ chia sẻ công ty product lớn, bởi vì mình cũng đã làm ở các công ty product nhỏ như kiểu start-up mới thành lập, thực sự thì lúc đó chỉ mong code chạy được đã, clean hay dirty tính sau.&lt;/p&gt;
+&lt;p&gt;Những kiến thức mình học từ cuốn sách &lt;strong&gt;Clean Code&lt;/strong&gt; thì cũng vẫn chỉ là lý thuyết suông, đến khi tham gia vào các công ty product lớn, được các anh senior review kỹ càng code cho, thì khi đó mình mới thực sự trưởng thành hơn trong từng dòng code viết ra.&lt;/p&gt;
+&lt;p&gt;Thêm một điều nữa mình học được là &lt;strong&gt;mindset của người làm product&lt;/strong&gt;, kiểu lúc nào cũng nghĩ đến product, mong cho product mình tốt hơn và có nhiều user hơn. Khi mình có idea gì về feature thì cũng sẵn sàng đề xuất, góp ý với anh leader hoặc Product Manager. Cái cảm giác mà mỗi lần bạn hoàn thành xong 1 feature mà thấy nhiều user để lại comment trên App Store hay Play Store khen ngợi feature ấy, nó phê lắm 😍😍&lt;/p&gt;
+&lt;h2 id="mạnh-dạn-thoát-ra-khỏi-vùng-an-toàn"&gt;Mạnh dạn thoát ra khỏi vùng an toàn
+&lt;/h2&gt;&lt;p&gt;Trong 5 năm, mình đã nhiều lần nhảy việc như bao anh em khác. Không biết các bạn thế nào chứ mình sợ cái cảm giác làm mãi ở một công ty, rồi cứ làm quen tay một công việc, đến khi muốn chuyển việc thì không bắt kịp với nhu cầu về kiến thức và kinh nghiệm của thị trường.&lt;/p&gt;
+&lt;p&gt;Vậy nên nhảy việc qua nhiều công ty giúp mình có khả năng thích ứng với nhiều loại dự án, giúp mình biết được thị trường cần gì, và đương nhiên là giúp mình có một mức thu nhập tốt hơn nữa.&lt;/p&gt;
+&lt;h1 id="những-điều-giá-như-mình-biết-sớm-hơn"&gt;Những điều giá như mình biết sớm hơn
+&lt;/h1&gt;&lt;h2 id="nên-gắn-bó-với-một-công-ty-đủ-lâu"&gt;Nên gắn bó với một công ty đủ lâu
+&lt;/h2&gt;&lt;p&gt;Trái ngược với chia sẻ ở trên, trong phần này mình lại muốn khuyên bạn trẻ nên gắn bó đủ lâu với một công ty. Theo ý của mình là tối thiểu 1-2 năm. Nó giúp các bạn đủ thời gian để &lt;strong&gt;hiểu về project&lt;/strong&gt; và &lt;strong&gt;được ghi nhận xứng đáng&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Thường khi bắt đầu tham gia vào một dự án, bạn mất vài tháng để hiểu về dự án. Thậm chí với các project phức tạp, thời gian có thể tính bằng năm. &lt;strong&gt;Hiểu&lt;/strong&gt; ở đây không chỉ là hiểu về các &lt;strong&gt;công nghệ đang sử dụng&lt;/strong&gt; trong source code, mà còn là hiểu về &lt;strong&gt;business domain&lt;/strong&gt;, cách cái app của mình kiếm tiền, hay thậm chí là lợi thế cạnh tranh của mình so với các app khác. Có những anh senior, dù nhảy công ty nhưng họ chỉ chuyên làm các công ty về banking hoặc fintech chẳng hạn. Vậy nên ngoài kỹ năng về technical, họ còn được đánh giá cao hơn các ứng viên khác về sự am hiểu business domain.&lt;/p&gt;
+&lt;p&gt;Các công ty hay trao giải &lt;strong&gt;Best employee&lt;/strong&gt; vào Year End Party, để được các sếp ghi nhận, rõ ràng là bạn cũng phải gắn bó với công ty đủ lâu, để có thể tạo ảnh hưởng đủ lớn. Sẽ rất hiếm khi có chuyện công ty trao giải cho một ông dev vừa hết 2 tháng thử việc được, trừ khi bạn là một siêu nhân. Việc đạt được những thành tích như này sẽ chứng minh năng lực của bạn và khiến profile của bạn lung linh hơn.&lt;/p&gt;
+&lt;p&gt;Có những lần mình chỉ làm công ty vài tháng rồi nghỉ, điều này khiến mình cảm thấy hơi lãng phí quãng thời gian đó.&lt;/p&gt;
+&lt;h2 id="học-english-nghiêm-túc-sớm-hơn"&gt;Học English nghiêm túc sớm hơn
+&lt;/h2&gt;&lt;p&gt;Chắc không cần nói thì anh em ai cũng biết mức độ quan trọng của English với công việc của dev. Khi bạn có khả năng giao tiếp thành thạo English, bạn có nhiều lựa chọn hơn, làm cho các công ty nước ngoài ở Việt Nam, ngồi ở nhà làm remote, hoặc thậm chí là ra nước ngoài làm việc. Và mức thu nhập của một bạn dev với khả năng giao tiếp English tốt chắc chắn là hơn nhiều một bạn dev chỉ có khả năng đọc hiểu.&lt;/p&gt;
+&lt;p&gt;Mình ra trường với tấm bằng &lt;strong&gt;TOEIC 460&lt;/strong&gt; giắt lưng, cũng chỉ đủ để đọc hiểu cơ bản. Vài năm gần đây, mình mới học English một cách nghiêm túc, hiện tại thì mình có thể giao tiếp ổn với đồng nghiệp nước ngoài. Việc này đã mang đến cho mình rất nhiều cơ hội mới.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/junior/elsa.webp"
+width="327"
+height="400"
+srcset="https://namanh11611.github.io/p/junior/elsa_hu_296e1783f5ad80ac.webp 480w, https://namanh11611.github.io/p/junior/elsa_hu_4efc8e9d37a2c922.webp 1024w"
+loading="lazy"
+alt="Elsa"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="196px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Mình thề là post này không phải để quảng cáo cho app &lt;strong&gt;Elsa&lt;/strong&gt;, nhưng mà nó tốt thật nên mình giới thiệu cho mọi người. Khoe một chút thành tích học liên tục 88 ngày của mình (đợt trước quên học một hôm cái bị đứt streak luôn 🥲).&lt;/p&gt;
+&lt;p&gt;Khả năng English của mình chưa tốt lắm, nên mình vẫn đang học hỏi từng ngày. Mình cũng đã học qua một số app, từ Doulingo, Memrise, Cake&amp;hellip; và hiện tại vẫn học song song Elsa với các app khác. Nhưng mình thấy Elsa là giúp mình cải thiện nhiều nhất.&lt;/p&gt;
+&lt;h2 id="sự-khác-biệt-đến-sau-8h-tối"&gt;Sự khác biệt đến sau 8h tối
+&lt;/h2&gt;&lt;p&gt;Có 2 bạn dev A và B cùng làm việc ở một công ty từ 8h sáng đến 6h chiều. Vậy thì điều gì sẽ tạo nên sự khác biệt giữa 2 bạn?&lt;/p&gt;
+&lt;p&gt;Nó đến sau 8h tối. Bạn A dành thời gian đó để &lt;strong&gt;học hỏi công nghệ mới&lt;/strong&gt;, làm &lt;strong&gt;pet project&lt;/strong&gt;, &lt;strong&gt;contribute open source project&lt;/strong&gt;. Còn bạn B dành thời gian để chơi game, nhậu nhẹt. Có thể vài năm đầu, sự khác biệt là chưa rõ, nhưng 3 năm, 5 năm sau, khoảng cách về kiến thức, trình độ của 2 bạn sẽ trở nên rất lớn.&lt;/p&gt;
+&lt;p&gt;Công việc ở công ty đôi khi khá dễ, vậy nên bạn chỉ có thể tìm hiểu những kiến thức khó hơn hoặc học hỏi những công nghệ mới vào thời gian rảnh của mình. Ví dụ, công việc ở công ty chỉ đơn thuần là cắt ghép UI, nó sẽ không yêu cầu bạn hiểu sâu về hệ thống, về memory. Nếu bạn không dành thời gian tự tìm hiểu thì làm sao bạn có thể tạo nên sự khác biệt so với những đồng nghiệp khác?&lt;/p&gt;
+&lt;p&gt;Trong những năm đầu ra trường, mình cũng dành thời gian đi nhậu nhẹt khá nhiều. Không thể phủ nhận tầm quan trọng của việc gây dựng các mối quan hệ thông qua các bữa nhậu. Nhưng nếu được chọn lại, có lẽ mình sẽ muốn dành nhiều thời gian hơn để ngồi ở nhà học hỏi.&lt;/p&gt;
+&lt;h1 id="lời-kết"&gt;Lời kết
+&lt;/h1&gt;&lt;p&gt;Thực ra trong quãng đường mình đã đi qua, có những lần mình đưa ra &lt;strong&gt;quyết định đúng&lt;/strong&gt;, nhưng cũng đầy những lần mình &lt;strong&gt;chọn lựa sai&lt;/strong&gt;. Nhưng quan trọng là mình &lt;strong&gt;không thấy hối hận&lt;/strong&gt; hay ngồi đó gặm nhấm nỗi tiếc nuối, mà vẫn tiếp tục &lt;strong&gt;rút kinh nghiệm&lt;/strong&gt;, &lt;strong&gt;học hỏi để tiến lên phía trước&lt;/strong&gt;. Mình nghĩ vậy là đủ rồi.&lt;/p&gt;
+&lt;p&gt;Cảm ơn các bạn đã dành thời gian đọc bài viết này của mình!&lt;/p&gt;</description></item><item><title>Tình hình lương thưởng của anh em IT</title><link>https://namanh11611.github.io/vi/p/salary/</link><pubDate>Wed, 10 May 2023 01:40:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/salary/</guid><description>&lt;img src="https://namanh11611.github.io/p/salary/salary.webp" alt="Featured image of post Tình hình lương thưởng của anh em IT" /&gt;&lt;h1 id="hoàn-cảnh"&gt;Hoàn cảnh
+&lt;/h1&gt;&lt;p&gt;Hôm vừa rồi một người em bên Nhật chia sẻ với mình rằng muốn mở công ty ở Việt Nam, nhưng chưa hiểu về thị trường hiện tại ở Việt Nam lắm. Mình đành dốc hết những kiến thức nông cạn của mình ra chia sẻ với em về môi trường, công việc cũng như lương thưởng của anh em dev ở Hà Nội, thành phố Hồ Chí Minh và Đà Nẵng&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Dẫu biết rằng thị trường đang ảm đạm, làn sóng sa thải cũng đã lan đến Việt Nam từ cuối năm 2022 đến thời điểm hiện tại là tháng 5/2023, nhưng thật sự chưa có một báo cáo đáng tin cậy để đánh giá về tình hình năm 2023 này. Vậy nên mình sẽ dựa vào báo cáo gần nhất của 2 bên &lt;a class="link" href="https://topdev.vn/page/bao-cao-it-viet-nam" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;TopDev&lt;/strong&gt;&lt;/a&gt; và &lt;a class="link" href="https://itviec.com/blog/bao-cao-luong-it" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;ITViec&lt;/strong&gt;&lt;/a&gt; trong năm 2022 để đưa ra góc nhìn về mức lương thưởng của anh em.&lt;/p&gt;
+&lt;p&gt;Trong báo cáo của &lt;strong&gt;TopDev&lt;/strong&gt; có đưa ra cả đánh giá về tình hình tuyển dụng, nhưng mình nghĩ rằng gió đã đổi chiều nên những đánh giá đó không còn chính xác trong năm 2023 này. Còn về lương thưởng, khác với tình hình năm 2020 khi các công ty giảm lương nhân viên để vượt qua giai đoạn khó khăn, trong năm 2023 này, hầu hết các công ty chỉ đưa ra lựa chọn giữ người hoặc sa thải, vậy nên mức lương của những người ở lại sẽ ít bị ảnh hưởng.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ITViec&lt;/strong&gt; khảo sát &lt;strong&gt;1.257 chuyên gia IT&lt;/strong&gt; còn &lt;strong&gt;TopDev&lt;/strong&gt; thì dựa trên &lt;strong&gt;48.179 ứng viên IT&lt;/strong&gt;, &lt;strong&gt;100.000 dữ liệu việc làm&lt;/strong&gt; được phân tích và thông tin của &lt;strong&gt;2.500 nhà tuyển dụng&lt;/strong&gt;. Bởi vì khảo sát với một volumn nhỏ thì sẽ có sự sai lệch nhất định so với thị trường, vậy nên mình mới dùng báo cáo của cả 2 bên để mong rằng giảm tối đa sự sai lệch đó và giúp chúng ta có một góc nhìn khách quan nhất.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-công-nghệ"&gt;Mức lương theo công nghệ
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/topdev_tech.webp"
+width="825"
+height="238"
+srcset="https://namanh11611.github.io/p/salary/topdev_tech_hu_80105a4152246724.webp 480w, https://namanh11611.github.io/p/salary/topdev_tech_hu_69b02aed197e2264.webp 1024w"
+loading="lazy"
+alt="TopDev Tech"
+class="gallery-image"
+data-flex-grow="346"
+data-flex-basis="831px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Trong biểu đồ trên, &lt;strong&gt;TopDev&lt;/strong&gt; thể hiện mức lương của các dev từ 3 năm kinh nghiệm trở xuống. Vậy nên mình thấy nó hơi thấp và không phản ánh được mức lương của senior dev có từ 4-5 năm kinh nghiệm trở lên.&lt;/p&gt;
+&lt;p&gt;Top công nghệ được trả lương cao nhất gồm các công nghệ theo xu hướng như &lt;strong&gt;AI&lt;/strong&gt; (Kubernetes, TensorFlows, Python), &lt;strong&gt;Cloud Computing&lt;/strong&gt; (AWS, GCP, Azure). Unity cũng lọt top nhờ trend &lt;strong&gt;play-to-earn&lt;/strong&gt; nổi đình nổi đám trong năm 2022.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/itviec_tech.webp"
+width="825"
+height="936"
+srcset="https://namanh11611.github.io/p/salary/itviec_tech_hu_9f51a58700eded8c.webp 480w, https://namanh11611.github.io/p/salary/itviec_tech_hu_d377d21b55fbd180.webp 1024w"
+loading="lazy"
+alt="ITViec Tech"
+class="gallery-image"
+data-flex-grow="88"
+data-flex-basis="211px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Bảng số liệu của &lt;strong&gt;ITViec&lt;/strong&gt; thể hiện chi tiết hơn mức lương cho từng ngôn ngữ lập trình theo số năm kinh nghiệm. &lt;strong&gt;Python&lt;/strong&gt; vẫn là một trong những ngôn ngữ được trả lương cao, nhưng &lt;strong&gt;Go&lt;/strong&gt; - một ngôn ngữ đang trở thành trending - mới là vũ khí giúp anh em dev được trả lương cao nhất.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-vị-trí"&gt;Mức lương theo vị trí
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/topdev_position.webp"
+width="825"
+height="327"
+srcset="https://namanh11611.github.io/p/salary/topdev_position_hu_e2f873cd9f7b7dfa.webp 480w, https://namanh11611.github.io/p/salary/topdev_position_hu_604e0f81f776e3ef.webp 1024w"
+loading="lazy"
+alt="TopDev Position"
+class="gallery-image"
+data-flex-grow="252"
+data-flex-basis="605px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Biểu đồ này của &lt;strong&gt;TopDev&lt;/strong&gt; vẫn thể hiện mức lương của các dev từ 3 năm kinh nghiệm trở xuống.&lt;/p&gt;
+&lt;p&gt;Các vị trí &lt;strong&gt;CTO&lt;/strong&gt;, &lt;strong&gt;CIO&lt;/strong&gt; hoặc &lt;strong&gt;Tech Management&lt;/strong&gt; vốn vẫn được coi là mục tiêu nghề nghiệp cao nhất, họ phải nắm các kỹ năng cơ bản vững chắc, xử lý các công việc quản lý, tối ưu hóa công nghệ / sản phẩm và điều chỉnh kịp thời.&lt;/p&gt;
+&lt;p&gt;Các vị trí được trả lương cao tiếp theo yêu cầu các kỹ năng đặc biệt như &lt;strong&gt;Data&lt;/strong&gt;, &lt;strong&gt;Cloud&lt;/strong&gt;, &lt;strong&gt;DevOps&lt;/strong&gt; hoặc &lt;strong&gt;AI&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/itviec_position.webp"
+width="825"
+height="899"
+srcset="https://namanh11611.github.io/p/salary/itviec_position_hu_4812c096b28c7bd.webp 480w, https://namanh11611.github.io/p/salary/itviec_position_hu_3aafe6ac949223d2.webp 1024w"
+loading="lazy"
+alt="ITViec Position"
+class="gallery-image"
+data-flex-grow="91"
+data-flex-basis="220px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Trong bảng số liệu của &lt;strong&gt;ITViec&lt;/strong&gt;, các vị trí trên vẫn được trả mức lương rất tốt. Nhưng đối với các dev từ 5 năm kinh nghiệm trở lên trong lĩnh vực khác (&lt;strong&gt;Front-end&lt;/strong&gt;, &lt;strong&gt;Mobile&lt;/strong&gt;), họ cũng được trả mức lương không hề kém cạnh.&lt;/p&gt;
+&lt;p&gt;Điều này chứng minh rằng bạn không cần phải luôn chạy theo những công nghệ hot, chỉ cần bạn đủ giỏi, thì với vị trí nào, bạn cũng được trả mức lương tương xứng.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-trình-độ"&gt;Mức lương theo trình độ
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/topdev_level.webp"
+width="825"
+height="577"
+srcset="https://namanh11611.github.io/p/salary/topdev_level_hu_117dbc8b37330d1a.webp 480w, https://namanh11611.github.io/p/salary/topdev_level_hu_d94d4d7fd4255623.webp 1024w"
+loading="lazy"
+alt="TopDev Level"
+class="gallery-image"
+data-flex-grow="142"
+data-flex-basis="343px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;TopDev&lt;/strong&gt; chỉ đưa ra một biểu đồ chung về mức lương theo số năm kinh nghiệm. Trong 5 năm đầu tiên, lương của lập trình viên dao động từ &lt;strong&gt;$350&lt;/strong&gt; (Fresher) đến dưới &lt;strong&gt;$1.190&lt;/strong&gt; cho Mid-Senior. Đối với các lập trình viên từ 5 năm kinh nghiệm, mức lương chênh lệch chủ yếu dựa trên vị trí và trách nhiệm đối với hoạt động kinh doanh. Giám đốc hoặc cấp cao hơn sẽ có mức lương ít nhất là &lt;strong&gt;$2.300&lt;/strong&gt;. Mức lương của cấp quản lý kỹ thuật sẽ cao hơn so với cấp quản lý/giám đốc theo định hướng kinh doanh.&lt;/p&gt;
+&lt;h1 id="mức-lương-theo-thành-phố"&gt;Mức lương theo thành phố
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/salary/itviec_location.webp"
+width="825"
+height="578"
+srcset="https://namanh11611.github.io/p/salary/itviec_location_hu_b2d925186db75dc7.webp 480w, https://namanh11611.github.io/p/salary/itviec_location_hu_b991bae3f9f31a7d.webp 1024w"
+loading="lazy"
+alt="ITViec Location"
+class="gallery-image"
+data-flex-grow="142"
+data-flex-basis="342px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Có lẽ nhiều anh em cũng đã biết trước kết quả về bảng số liệu này của &lt;strong&gt;ITViec&lt;/strong&gt;. Nhìn chung thì mức lương ở thành phố Hồ Chí Minh cao hơn Hà Nội, và Hà Nội thì lại cao hơn Đà Nẵng.&lt;/p&gt;
+&lt;p&gt;Theo mình có lẽ vì thành phố Hồ Chí Minh gồm nhiều công ty product và outsource làm với thị trường nói tiếng Anh hơn. Còn ở Hà Nội vẫn gồm nhiều các công ty làm cho thị trường Nhật. Tuy nhiên trong giai đoạn gần đây, đã có nhiều công ty từ thành phố Hồ Chí Minh Bắc tiến ra Hà Nội, điều đó cũng đã giúp thị trường ở Hà Nội nhộn nhịp hơn rất nhiều.&lt;/p&gt;
+&lt;h1 id="lời-kết"&gt;Lời kết
+&lt;/h1&gt;&lt;p&gt;Cũng phải nhìn nhận rằng, những anh em không may bị sa thải trong giai đoạn này sẽ phải tìm một công việc mới và có thể phải chấp nhận một mức lương thấp hơn mức cũ. Điều đó cũng góp phần làm cho mức lương của thị trường hiện tại thấp hơn mức trong khảo sát.&lt;/p&gt;
+&lt;p&gt;Nhưng mình hy vọng rằng dựa vào báo cáo này, anh em có thêm một góc nhìn khác về thị trường, để biết cách trau dồi bản thân, rèn luyện kỹ năng. Và sau cơn mưa trời lại sáng, khi thị trường sôi động trở lại, với những kỹ năng đã được nâng cấp, anh em sẽ nhận được một mức lương xứng đáng với năng lực.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://topdev.vn/page/bao-cao-it-viet-nam" target="_blank" rel="noopener"
+&gt;https://topdev.vn/page/bao-cao-it-viet-nam&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://itviec.com/blog/bao-cao-luong-it" target="_blank" rel="noopener"
+&gt;https://itviec.com/blog/bao-cao-luong-it&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

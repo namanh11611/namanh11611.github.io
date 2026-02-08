@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Trunk Based Development on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/trunk-based-development/</link><description>Recent content in Trunk Based Development on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 08 Sep 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/trunk-based-development/index.xml" rel="self" type="application/rss+xml"/><item><title>Gitflow, GitHub Flow, GitLab Flow, Trunk Based Development: Đâu mới là Git Branching Strategy chân ái?</title><link>https://namanh11611.github.io/vi/p/git-branching-strategy/</link><pubDate>Sun, 08 Sep 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/git-branching-strategy/</guid><description>&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/strategy.webp" alt="Featured image of post Gitflow, GitHub Flow, GitLab Flow, Trunk Based Development: Đâu mới là Git Branching Strategy chân ái?" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@felix_mittermeier?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Felix Mittermeier&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/pieces-dechecs-sur-lechiquier-nAjil1z3eLk?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Git Branching Strategy&lt;/strong&gt; dịch ra tiếng Việt là &lt;strong&gt;Chiến lược làm việc với branch của Git&lt;/strong&gt;, nhưng nó vừa dài vừa dễ hiểu nhầm nên mình giữ nguyên cụm từ gốc để giữ gìn sự trong sáng của tiếng Anh nhé. Nó ám chỉ cách chúng ta &lt;strong&gt;tạo branch&lt;/strong&gt;, &lt;strong&gt;merge branch&lt;/strong&gt; nào với branch nào và dùng &lt;strong&gt;branch nào để release&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Khi bắt đầu một dự án, ngoài những việc như setup môi trường, dựng code base thật tốt&amp;hellip; thì có lẽ việc chọn một &lt;strong&gt;Git Branching Strategy&lt;/strong&gt; đúng đắn cũng rất quan trọng, vì chọn sai một ly là đi một dặm. Chọn chiến lược đúng giúp cả team &lt;strong&gt;quản lý và duy trì source code một cách hiệu quả&lt;/strong&gt;, &lt;strong&gt;giảm thời gian resolve conflict&lt;/strong&gt; và giữ cho &lt;strong&gt;code trên production luôn hoạt động ổn định&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Qua thời gian, nhiều chiến lược đã được phát triển. Trong bài viết này, chúng ta sẽ tìm hiểu về một số &lt;strong&gt;Git Branching Strategy&lt;/strong&gt; phổ biến như &lt;strong&gt;Gitflow&lt;/strong&gt;, &lt;strong&gt;GitHub Flow&lt;/strong&gt;, &lt;strong&gt;GitLab Flow&lt;/strong&gt; và &lt;strong&gt;Trunk Based Development&lt;/strong&gt;. Cuối cùng, chúng ta sẽ xem xét cách chọn chiến lược phù hợp cho dự án của bạn.&lt;/p&gt;
+&lt;h1 id="gitflow"&gt;Gitflow
+&lt;/h1&gt;&lt;p&gt;&lt;a class="link" href="https://nvie.com/posts/a-successful-git-branching-model" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Gitflow&lt;/strong&gt;&lt;/a&gt; là một chiến lược phổ biến được giới thiệu bởi &lt;a class="link" href="https://nvie.com/about" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Vincent Driessen&lt;/strong&gt;&lt;/a&gt;. Chiến lược này phù hợp với các dự án có chu kỳ release rõ ràng và phức tạp. &lt;strong&gt;Gitflow&lt;/strong&gt; sử dụng nhiều loại branch khác nhau để quản lý các giai đoạn phát triển và release của dự án.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://nvie.com/img/git-model@2x.png"
+loading="lazy"
+alt="Gitflow"
+&gt;&lt;/p&gt;
+&lt;p&gt;Trong flow này, chúng ta có 2 branch chính là &lt;strong&gt;master&lt;/strong&gt; và &lt;strong&gt;develop&lt;/strong&gt;. Trong đó, &lt;strong&gt;master&lt;/strong&gt; sẽ lưu trữ phiên bản source code ổn định và sẵn sàng release bất cứ khi nào, còn &lt;strong&gt;develop&lt;/strong&gt; chứa source code đang được phát triển, gồm những thay đổi mới nhất cho bản release tiếp theo, đây là branch chính nơi các feature mới được tích hợp.&lt;/p&gt;
+&lt;p&gt;Ngoài ra chúng ta còn có các branch &lt;strong&gt;feature&lt;/strong&gt; được &lt;code&gt;checkout&lt;/code&gt; từ &lt;strong&gt;develop&lt;/strong&gt; và dùng để phát triển các feature mới, sau khi hoàn thành thì &lt;code&gt;merge&lt;/code&gt; ngược lại &lt;strong&gt;develop&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Khi đã sẵn sàng release, chúng ta sẽ checkout từ &lt;strong&gt;develop&lt;/strong&gt; sang branch &lt;strong&gt;release&lt;/strong&gt; với version tương ứng để chuẩn bị cho bản release. Chúng ta có thể thêm vài commit fix bug trên brach này. Khi hoàn thành, chúng ta lại &lt;code&gt;merge&lt;/code&gt; branch &lt;strong&gt;release&lt;/strong&gt; vào cả &lt;strong&gt;master&lt;/strong&gt; và &lt;strong&gt;develop&lt;/strong&gt; để giữ 2 branch chính được update.&lt;/p&gt;
+&lt;p&gt;Và cuối cùng là các branch &lt;strong&gt;hotfix&lt;/strong&gt;, khi code trên production gặp critical bug và cần fix ngay lập tức, chúng ta sẽ &lt;code&gt;checkout&lt;/code&gt; branch &lt;strong&gt;hotfix&lt;/strong&gt; từ &lt;strong&gt;master&lt;/strong&gt; để fix. Tương tự như branch &lt;strong&gt;release&lt;/strong&gt;, các branch &lt;strong&gt;hotfix&lt;/strong&gt; cũng cần &lt;code&gt;merge&lt;/code&gt; vào cả &lt;strong&gt;master&lt;/strong&gt; và &lt;strong&gt;develop&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="ưu-điểm"&gt;Ưu Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Gitflow có cấu trúc rất rõ ràng, phù hợp cho các dự án lớn.&lt;/li&gt;
+&lt;li&gt;Nó giúp chúng ta quản lý các giai đoạn phát triển và release một cách hiệu quả với các branch &lt;strong&gt;release&lt;/strong&gt; cho từng version.&lt;/li&gt;
+&lt;li&gt;Các branch &lt;strong&gt;hotfix&lt;/strong&gt; cho phép triển khai các bản fix bug nhanh chóng mà không làm gián đoạn quá trình phát triển.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="nhược-điểm"&gt;Nhược Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Như các bạn có thể thấy, flow này khá phức tạp, cần nhiều branch và merge nhiều lần. Ví dụ như mỗi branch &lt;strong&gt;release&lt;/strong&gt; hoặc &lt;strong&gt;hotfix&lt;/strong&gt; cần phải merge cả vào &lt;strong&gt;master&lt;/strong&gt; và &lt;strong&gt;develop&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Nó không phù hợp cho các dự án có yêu cầu &lt;strong&gt;CI/CD&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Với mô hình cồng kềnh như này, Gitflow có thể khó khăn khi áp dụng trong các team nhỏ.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="github-flow"&gt;GitHub Flow
+&lt;/h1&gt;&lt;p&gt;&lt;a class="link" href="https://docs.github.com/en/get-started/using-github/github-flow" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;GitHub Flow&lt;/strong&gt;&lt;/a&gt; là một chiến lược đơn giản và nhẹ nhàng, phù hợp cho các dự án có yêu cầu &lt;strong&gt;CI/CD&lt;/strong&gt;. Chiến lược này được sử dụng phổ biến trong các dự án open source và các team nhỏ.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/github_flow.webp"
+width="3532"
+height="3840"
+srcset="https://namanh11611.github.io/p/git-branching-strategy/github_flow_hu_348aebd6a648b050.webp 480w, https://namanh11611.github.io/p/git-branching-strategy/github_flow_hu_14f09a141aeb2a76.webp 1024w"
+loading="lazy"
+alt="GitHub Flow"
+class="gallery-image"
+data-flex-grow="91"
+data-flex-basis="220px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Thay vì 2 branch chính như Gitflow, nó chỉ có 1 branch chính duy nhất là &lt;strong&gt;main&lt;/strong&gt; để chứa source code ổn định và đã được test cẩn thận, sẵn sàng release production.&lt;/p&gt;
+&lt;p&gt;Các branch &lt;strong&gt;feature&lt;/strong&gt; được &lt;code&gt;checkout&lt;/code&gt; từ &lt;strong&gt;main&lt;/strong&gt; để phát triển các feature mới. Sau khi hoàn thành dev, test và được review, chúng được merge vào &lt;strong&gt;main&lt;/strong&gt; thông qua pull request.&lt;/p&gt;
+&lt;h2 id="ưu-điểm-1"&gt;Ưu Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Qua phần giới thiệu, bạn có thể thấy GitHub Flow khá đơn giản và dễ hiểu, dễ dàng triển khai.&lt;/li&gt;
+&lt;li&gt;Phù hợp với &lt;strong&gt;CI/CD&lt;/strong&gt;. Code ở &lt;strong&gt;main&lt;/strong&gt; brach luôn sẵn sàng deploy lên production.&lt;/li&gt;
+&lt;li&gt;Giảm thiểu conflict và lỗi khi merge do có ít branch hơn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="nhược-điểm-1"&gt;Nhược Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Thiếu cấu trúc và phân chia rõ ràng như Gitflow.&lt;/li&gt;
+&lt;li&gt;Không phù hợp cho các dự án lớn, support nhiều version hoặc dự án phức tạp với nhiều team tham gia.&lt;/li&gt;
+&lt;li&gt;Không có quy trình rõ ràng cho việc release và fix bug.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="gitlab-flow"&gt;GitLab Flow
+&lt;/h1&gt;&lt;p&gt;&lt;a class="link" href="https://about.gitlab.com/topics/version-control/what-is-gitlab-flow" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;GitLab Flow&lt;/strong&gt;&lt;/a&gt; kết hợp các yếu tố từ cả Gitflow và GitHub Flow. Nó đơn giản hơn Gitflow và tương tự như GitHub Flow, điểm khác biệt là có thêm các environment branch, ví dụ như &lt;strong&gt;staging&lt;/strong&gt;, &lt;strong&gt;production&lt;/strong&gt;&amp;hellip; Đặc biệt, nó được thiết kế để hỗ trợ cả &lt;strong&gt;CI/CD&lt;/strong&gt;, với sự tích hợp chặt chẽ cùng các công cụ &lt;strong&gt;CI/CD&lt;/strong&gt; của GitLab.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow.webp"
+width="3840"
+height="3321"
+srcset="https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow_hu_812c2952f8ae368d.webp 480w, https://namanh11611.github.io/p/git-branching-strategy/gitlab_flow_hu_b81493d4017cb025.webp 1024w"
+loading="lazy"
+alt="GitLab Flow"
+class="gallery-image"
+data-flex-grow="115"
+data-flex-basis="277px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Tương tự như GitHub Flow, GitLab Flow làm việc trực tiếp với branch chính là &lt;strong&gt;main&lt;/strong&gt;, nó chứa source code ổn định và có thể release. Flow này cũng có các branch &lt;strong&gt;feature&lt;/strong&gt; để phát triển feature.&lt;/p&gt;
+&lt;p&gt;Khi code ở &lt;strong&gt;main&lt;/strong&gt; branch đã sẵn sàng test, chúng ta sẽ &lt;code&gt;merge&lt;/code&gt; nó vào &lt;strong&gt;staging&lt;/strong&gt; branch. Sau khi test và thấy sẵn sàng deploy, chúng ta sẽ &lt;code&gt;merge&lt;/code&gt; code từ &lt;strong&gt;staging&lt;/strong&gt; vào &lt;strong&gt;production&lt;/strong&gt; branch. GitLab Flow cũng thường sử dụng các brach &lt;strong&gt;release&lt;/strong&gt;, ví dụ như branch &lt;strong&gt;release/v1&lt;/strong&gt; và &lt;strong&gt;release/v2&lt;/strong&gt; giúp quản lý và triển khai các phiên bản khác nhau của ứng dụng một cách độc lập.&lt;/p&gt;
+&lt;p&gt;Tuy nhiên, khi có bug trên production, bạn cần merge code vào brach &lt;strong&gt;main&lt;/strong&gt; trước, sau đó mới &lt;code&gt;merge&lt;/code&gt; hoặc &lt;code&gt;cherry-pick&lt;/code&gt; sang các branch khác theo quy trình như trên.&lt;/p&gt;
+&lt;h2 id="ưu-điểm-2"&gt;Ưu Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Khi so sánh với Gitflow, GitLab Flow trông sẽ đơn giản hơn. Còn khi so sánh với GitHub Flow, nó lại có cấu trúc rõ ràng hơn.&lt;/li&gt;
+&lt;li&gt;Phù hợp cho các dự án cần &lt;strong&gt;CI/CD&lt;/strong&gt; và có nhiều môi trường khác nhau, giúp dễ dàng deploy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="nhược-điểm-2"&gt;Nhược Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Vì được may đo cho &lt;strong&gt;GitLab&lt;/strong&gt; nên flow này yêu cầu sử dụng &lt;strong&gt;GitLab&lt;/strong&gt; và các công cụ &lt;strong&gt;CI/CD&lt;/strong&gt; của nó.&lt;/li&gt;
+&lt;li&gt;Chúng ta cũng cần thiết lập và cấu hình cẩn thận để tận dụng hết các tính năng.&lt;/li&gt;
+&lt;li&gt;Nó cũng không phù hợp với các dự án không có yêu cầu &lt;strong&gt;CI/CD&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="trunk-based-development"&gt;Trunk Based Development
+&lt;/h1&gt;&lt;p&gt;Riêng về chiến lược này, mình đã viết một bài chi tiết: &lt;a class="link" href="../trunk-based-development" &gt;Trunk Based Development - một Git workflow giúp giảm cơn đau đầu resolve conflict&lt;/a&gt;. Dành cho bạn nào chưa biết thì &lt;strong&gt;Trunk Based Development&lt;/strong&gt; (TBD) là một chiến lược trong đó tất cả dev làm việc trực tiếp trên một branch chính, thường là &lt;strong&gt;main&lt;/strong&gt;. Các thay đổi được commit liên tục và nhanh chóng vào branch này, giảm thiểu thời gian sống của các branch phụ.&lt;/p&gt;
+&lt;h2 id="ưu-điểm-3"&gt;Ưu Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Thúc đẩy &lt;strong&gt;CI&lt;/strong&gt;, giảm thiểu conflict khi merge.&lt;/li&gt;
+&lt;li&gt;Phù hợp với các dự án Agile và DevOps yêu cầu &lt;strong&gt;CD&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Dễ dàng quản lý và theo dõi source code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="nhược-điểm-3"&gt;Nhược Điểm
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Rủi ro cao hơn về việc commit lỗi trực tiếp vào branch chính.&lt;/li&gt;
+&lt;li&gt;Cần kiểm tra source code và automation test để duy trì sự ổn định.&lt;/li&gt;
+&lt;li&gt;Không phù hợp cho các dự án lớn với nhiều team phân tán.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="chọn-chiến-lược-phù-hợp"&gt;Chọn Chiến Lược Phù Hợp
+&lt;/h1&gt;&lt;p&gt;Sẽ không có chiến lược nào là chính xác nhất, phù hợp với mọi hoàn cảnh. Việc chọn chiến lược branching phù hợp phụ thuộc vào nhiều yếu tố như quy mô dự án, cấu trúc team và yêu cầu về quy trình phát triển phần mềm. Dưới đây là một số gợi ý:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Dự án&lt;/th&gt;
+&lt;th&gt;Team size&lt;/th&gt;
+&lt;th&gt;Chiến lược&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Dự án nhỏ đến trung bình, cần CD và release liên tục&lt;/td&gt;
+&lt;td&gt;Nhỏ, Vừa&lt;/td&gt;
+&lt;td&gt;GitHub Flow và TBD&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Release theo lịch trình và định kỳ&lt;/td&gt;
+&lt;td&gt;Vừa&lt;/td&gt;
+&lt;td&gt;GitFlow and GitLab Flow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CD với product yêu cầu chất lượng cao, nhiều môi trường release&lt;/td&gt;
+&lt;td&gt;Vừa, Lớn&lt;/td&gt;
+&lt;td&gt;GitLab Flow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Product với chu kỳ maintain lâu dài&lt;/td&gt;
+&lt;td&gt;Lớn&lt;/td&gt;
+&lt;td&gt;GitFlow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Mỗi chiến lược Git branching đều có ưu và nhược điểm riêng. Quan trọng là lựa chọn chiến lược phù hợp với quy trình làm việc của team và yêu cầu dự án. Điều này sẽ giúp tối ưu hóa hiệu suất làm việc và giảm thiểu rủi ro trong quản lý source code.&lt;/p&gt;
+&lt;h1 id="referrence"&gt;Referrence
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://nvie.com/posts/a-successful-git-branching-model" target="_blank" rel="noopener"
+&gt;https://nvie.com/posts/a-successful-git-branching-model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://docs.github.com/en/get-started/using-github/github-flow" target="_blank" rel="noopener"
+&gt;https://docs.github.com/en/get-started/using-github/github-flow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://about.gitlab.com/topics/version-control/what-is-gitlab-flow" target="_blank" rel="noopener"
+&gt;https://about.gitlab.com/topics/version-control/what-is-gitlab-flow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.gitkraken.com/learn/git/best-practices/git-branch-strategy" target="_blank" rel="noopener"
+&gt;https://www.gitkraken.com/learn/git/best-practices/git-branch-strategy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.geeksforgeeks.org/branching-strategies-in-git" target="_blank" rel="noopener"
+&gt;https://www.geeksforgeeks.org/branching-strategies-in-git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.abtasty.com/blog/git-branching-strategies" target="_blank" rel="noopener"
+&gt;https://www.abtasty.com/blog/git-branching-strategies&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Trunk Based Development - một Git workflow giúp giảm cơn đau đầu resolve conflict</title><link>https://namanh11611.github.io/vi/p/trunk-based-development/</link><pubDate>Wed, 03 May 2023 02:07:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/trunk-based-development/</guid><description>&lt;img src="https://namanh11611.github.io/p/trunk-based-development/tbd.webp" alt="Featured image of post Trunk Based Development - một Git workflow giúp giảm cơn đau đầu resolve conflict" /&gt;&lt;h1 id="case-study"&gt;Case study
+&lt;/h1&gt;&lt;h2 id="câu-chuyện-đầu-tiên"&gt;Câu chuyện đầu tiên
+&lt;/h2&gt;&lt;p&gt;Ở công ty cũ của mình (tạm gọi là công ty A), source code của dự án siêu to khổng lồ, mới clone về đã 40GB, compile và build các kiểu thì còn lên đến gần 100GB. Mỗi lần anh em code một feature nào đó, thường sẽ checkout ra một branch mới là feature_x. Feature nhỏ thì không sao, chứ feature lớn mà thay đổi vài chục hay đến cả trăm file, xong merge vào branch chính thì đúng là ác mộng, vì phải resolve conflict từ code của branch feature_a, feature_b nào đó merge trước đó.&lt;/p&gt;
+&lt;h2 id="câu-chuyện-thứ-hai"&gt;Câu chuyện thứ hai
+&lt;/h2&gt;&lt;p&gt;Ở công ty khác của mình (công ty B), do đặc thù của dự án mà project được chia thành 5 team nhỏ, mỗi team tầm 3 developer. Mỗi team nhỏ sẽ phụ trách một vài feature trong 1 sprint. Khi bắt đầu sprint, dev lead tạo branch cho từng team, và sẽ merge 5 branch đó sau khi kết thúc sprint. Vấn đề phát sinh tương tự là merge code xảy ra khá nhiều conflict, và các team lại mất thời gian test lại feature của mình để đảm bảo không xảy ra bug sau khi merge.&lt;/p&gt;
+&lt;h1 id="vậy-trunk-based-development-là-gì"&gt;Vậy Trunk Based Development là gì?
+&lt;/h1&gt;&lt;p&gt;Nói một cách ngắn gọn, &lt;strong&gt;Trunk Based Development&lt;/strong&gt; (từ sau mình sẽ viết tắt &lt;strong&gt;TBD&lt;/strong&gt;) là một &lt;strong&gt;source-control branching model&lt;/strong&gt; (mô hình làm việc với các nhánh) mà tất cả developers sẽ làm việc trên &lt;strong&gt;một branch duy nhất&lt;/strong&gt;, gọi là &lt;strong&gt;trunk&lt;/strong&gt; (nghĩa là cái thân cây), tránh việc tạo ra các feature branch siêu to khổng lồ. &lt;strong&gt;Trunk&lt;/strong&gt; branch cần đảm bảo rằng nó có thể sẵn sàng release bất cứ thời điểm nào. Trong các dự án, mọi người thường sẽ đặt tên cho trunk branch là &lt;strong&gt;master&lt;/strong&gt; hoặc &lt;strong&gt;dev&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;TBD lại chia thành 2 mô hình nhỏ hơn, phù hợp với từng team. Chúng ta sẽ cùng đi tìm hiểu ngay sau đây.&lt;/p&gt;
+&lt;h2 id="tbd-cho-team-nhỏ"&gt;TBD cho team nhỏ
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/trunk-based-development/small.webp"
+width="728"
+height="329"
+srcset="https://namanh11611.github.io/p/trunk-based-development/small_hu_d07dd481d2544561.webp 480w, https://namanh11611.github.io/p/trunk-based-development/small_hu_21c6b9f7018b9d10.webp 1024w"
+loading="lazy"
+alt="Small TBD"
+class="gallery-image"
+data-flex-grow="221"
+data-flex-basis="531px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Trong mô hình này, toàn bộ dev team sẽ push code trực tiếp lên trunk branch. Tuy nhiên, mô hình này mình thấy có rủi ro rất lớn về chất lượng code, vì code được push trực tiếp mà không qua review. Vậy nên, để áp dụng mô hình này, các dev tham gia project cũng phải có technical skill rất tốt, để đảm bảo rằng từng dòng code mình push lên không gây bug cho tất cả anh em.&lt;/p&gt;
+&lt;p&gt;Cá nhân mình đánh giá mô hình này có lẽ chỉ phù hợp với team size từ 5 người trở xuống.&lt;/p&gt;
+&lt;h2 id="tbd-cho-team-to"&gt;TBD cho team to
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/trunk-based-development/scaled.webp"
+width="726"
+height="366"
+srcset="https://namanh11611.github.io/p/trunk-based-development/scaled_hu_3ab14709645f5b6e.webp 480w, https://namanh11611.github.io/p/trunk-based-development/scaled_hu_7ac301b49723d29f.webp 1024w"
+loading="lazy"
+alt="Scaled TBD"
+class="gallery-image"
+data-flex-grow="198"
+data-flex-basis="476px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Với TBD cho một team lớn, các feature branch vẫn được tạo, nhưng điểm khác biệt là nó chỉ được tạo trong một thời gian ngắn, chỉ vài commit là merge lại trunk branch ngay.&lt;/p&gt;
+&lt;p&gt;Ví dụ khi được giao task code Onboarding feature, với Git flow mà thông thường mọi người đang áp dụng, các bạn sẽ làm những bước như sau:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Tạo &lt;strong&gt;feature/onboarding&lt;/strong&gt; branch&lt;/li&gt;
+&lt;li&gt;Code Welcome screen rồi commit&lt;/li&gt;
+&lt;li&gt;Code Register screen rồi commit tiếp&lt;/li&gt;
+&lt;li&gt;Code Login screen rồi commit nữa&lt;/li&gt;
+&lt;li&gt;Code xong hết rồi thì tạo merge request, chờ dev khác review code&lt;/li&gt;
+&lt;li&gt;Review xong thì merge &lt;strong&gt;feature/onboarding&lt;/strong&gt; branch vào &lt;strong&gt;dev&lt;/strong&gt; branch&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Với quy trình như trên, merge request có thể chứa vài chục file thay đổi, và review đống code ấy thực sự là ác mộng. Đôi khi, vào thời điểm chúng ta tạo merge request, còn xảy ra conflict với code của một feature nào đó đã merge vào &lt;strong&gt;dev&lt;/strong&gt; branch trước. Và chúng ta lại phải hì hục ngồi resolve conflict.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/trunk-based-development/lgtm.webp"
+width="825"
+height="396"
+srcset="https://namanh11611.github.io/p/trunk-based-development/lgtm_hu_ec49110bea29bb1a.webp 480w, https://namanh11611.github.io/p/trunk-based-development/lgtm_hu_270d7c05e594211b.webp 1024w"
+loading="lazy"
+alt="LGTM"
+class="gallery-image"
+data-flex-grow="208"
+data-flex-basis="500px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Đối với reviewer, đôi khi cách để thoát khỏi ác mộng là không mơ nữa, nghĩa là bác senior dev sẽ nhanh chóng để lại dòng comment ngắn gọn &lt;strong&gt;LGTM&lt;/strong&gt; (Look good to me), vậy là anh chàng junior dev dễ dàng merge code vào &lt;strong&gt;dev&lt;/strong&gt; branch. Hoặc mặc dù bác senior dev đã cố gắng review cẩn thận, nhưng với lượng code thay đổi lớn như vậy thì vẫn bị lọt một vài bug. Tựu chung lại thì quy trình này vẫn có rủi ro trong việc để lọt bug.&lt;/p&gt;
+&lt;p&gt;Đối với TBD, quy trình sẽ điều chỉnh lại một chút như sau:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Tạo &lt;strong&gt;feature/welcome_screen&lt;/strong&gt; branch&lt;/li&gt;
+&lt;li&gt;Code Welcome screen rồi commit, tạo merge request luôn&lt;/li&gt;
+&lt;li&gt;Trong lúc chờ review thì code Register screen tiếp&lt;/li&gt;
+&lt;li&gt;Khi Merge request của Welcome screen được approve, lại checkout ra &lt;strong&gt;feature/register_screen&lt;/strong&gt; branch để tạo merge request mới&lt;/li&gt;
+&lt;li&gt;Tương tự như vậy với Login screen&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Giờ đây, mỗi merge request của chúng ta chỉ chứa vài file thay đổi, bác senior dev có thể review code dễ dàng hơn.&lt;/p&gt;
+&lt;p&gt;Và kể cả khi branch release có bug, chúng ta cần hotfix thì dev cũng không merge trực tiếp vào release branch như các mô hình khác, mà tất cả đều phải merge vào trunk branch.&lt;/p&gt;
+&lt;h2 id="feature-flag"&gt;Feature flag
+&lt;/h2&gt;&lt;p&gt;Các bạn có thể thắc mắc rằng làm như vậy thì trên &lt;strong&gt;dev&lt;/strong&gt; branch sẽ chứa đầy code dở dang của các feature. Ví dụ app sẽ hiển thị Welcome screen với UI mới, trong khi Register và Login screen thì vẫn là UI cũ. Như vậy, làm sao có thể đảm bảo rằng trunk branch có thể release bất cứ lúc nào?&lt;/p&gt;
+&lt;p&gt;Chìa khoá để giải quyết vấn đề này chính là &lt;strong&gt;Feature flag&lt;/strong&gt;. Với mỗi feature dang dở như vậy, bạn cần đặt cho nó một cái flag, để khi bật flag, tất cả code của feature mới sẽ hoạt động, còn nếu tắt flag, app sẽ hoạt động như code hiện tại. Ví dụ:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ONBOARDING_FLAG&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;FLAG_ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;displayNewWelcomeScreen&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;displayOldWelcomeScreen&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ONBOARDING_FLAG&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;FLAG_ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;displayNewRegisterScreen&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;displayOldRegisterScreen&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ONBOARDING_FLAG&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;FLAG_ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;displayNewLoginScreen&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;displayOldLoginScreen&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Đôi khi, bạn muốn revert một feature thì cũng chỉ cần tắt flag của nó đi là xong. Quá nhanh chóng phải không nào?&lt;/p&gt;
+&lt;h1 id="ưu-điểm"&gt;Ưu điểm
+&lt;/h1&gt;&lt;h2 id="giảm-conflict-giảm-thời-gian-review-code"&gt;Giảm conflict, giảm thời gian review code
+&lt;/h2&gt;&lt;p&gt;Như mình đã trình bày ở trên, TBD yêu cầu mọi người phải nhanh chóng merge code của mình vào trunk branch, điều này giúp giảm conflict code, đồng thời giảm thời gian review code.&lt;/p&gt;
+&lt;p&gt;Với case study thứ 2 của công ty B, sau một thời gian thấy mô hình hiện tại không hiệu quả, mình đã đề xuất với dev lead áp dụng TBD. Và đúng như mong đợi, với mỗi sprint, hầu như team mình không còn phải dành quá nhiều thời gian resolve conflict nữa.&lt;/p&gt;
+&lt;h2 id="cicd"&gt;CI/CD
+&lt;/h2&gt;&lt;p&gt;TBD thực sự rất hữu ích cho CI/CD. Nghĩ mà xem, giờ đây bạn chỉ cần setup và run CI/CD trên một branch duy nhất. Tất cả những commit của mọi người sẽ nhanh chóng được check coding convention, unit test cẩn thận, giúp cả team dễ dàng phát hiện ra lỗi sai và fix nó kịp thời.&lt;/p&gt;
+&lt;h2 id="ab-testing"&gt;A/B Testing
+&lt;/h2&gt;&lt;p&gt;Với feature flag, bạn cũng dễ dàng bật tắt các feature, giúp Product Manager thuận tiện setup các A/B Testing. Từ đó có thể đo lường để đưa ra đánh giá chính xác về hiệu quả của một feature mới.&lt;/p&gt;
+&lt;p&gt;Ở case study thứ nhất của công ty A, thực sự thì chúng mình đã apply feature flag cho rất nhiều feature quan trọng để thực hiện A/B testing.&lt;/p&gt;
+&lt;h2 id="nhanh-chóng-deliver-sản-phẩm"&gt;Nhanh chóng deliver sản phẩm
+&lt;/h2&gt;&lt;p&gt;Vì code ở trunk branch luôn sẵn sàng release nên mình thấy nó khá phù hợp với các start-up. Bất cứ khi nào bạn muốn release một version mới, chỉ cần checkout từ trunk branch, bật các feature flag đã hoàn thành và tắt các feature flag còn dang dở, rồi build code.&lt;/p&gt;
+&lt;h1 id="nhược-điểm"&gt;Nhược điểm
+&lt;/h1&gt;&lt;h2 id="quá-nhiều-code-dư-thừa"&gt;Quá nhiều code dư thừa
+&lt;/h2&gt;&lt;p&gt;Nói đi cũng phải nói lại, việc áp dụng &lt;strong&gt;feature flag&lt;/strong&gt; và if else quá nhiều có thể khiến code của bạn trở nên phức tạp. Đôi khi có một số function, code if else không clear có thể khiến reviewer còn cảm thấy khó hiểu hơn.&lt;/p&gt;
+&lt;p&gt;Và khi một feature được release, bạn cũng lại phải quay lại để xoá code flow cũ đi, như các function &lt;code&gt;displayOldWelcomeScreen&lt;/code&gt;, &lt;code&gt;displayOldRegisterScreen&lt;/code&gt; và &lt;code&gt;displayOldLoginScreen&lt;/code&gt; trong ví dụ trên.&lt;/p&gt;
+&lt;h2 id="không-phù-hợp-với-team-có-nhiều-junior"&gt;Không phù hợp với team có nhiều junior
+&lt;/h2&gt;&lt;p&gt;Việc tạo merge request liên tục yêu cầu các dev phải cẩn trọng, đảm bảo rằng mỗi commit của mình đã pass tất cả coding convention check hay unit test ở local, và đặc biệt là không có critical bug. Vì nếu có bug trên trunk branch khiến cho không thể mở được app chẳng hạn, nó sẽ block công việc của tất cả các dev khác.&lt;/p&gt;
+&lt;p&gt;Nếu dùng feature flag, dev còn cần test cả 2 flow cũ và mới để đảm bảo cả 2 đều hoạt động đúng.&lt;/p&gt;
+&lt;p&gt;Vậy nên mình nghĩ rằng một team gồm chủ yếu là senior sẽ phù hợp hơn với mô hình này.&lt;/p&gt;
+&lt;h1 id="lời-kết"&gt;Lời kết
+&lt;/h1&gt;&lt;p&gt;TBD là một mô hình làm việc mà mình đã áp dụng ở một số công ty và thấy nó hoạt động khá hiệu quả với tình hình của team mình lúc đó. Các bạn có thể nghiên cứu ưu, nhược điểm của mô hình so với team mình và áp dụng thử nhé.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://trunkbaseddevelopment.com/" target="_blank" rel="noopener"
+&gt;https://trunkbaseddevelopment.com/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

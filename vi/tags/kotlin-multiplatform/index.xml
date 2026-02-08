@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kotlin Multiplatform on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/kotlin-multiplatform/</link><description>Recent content in Kotlin Multiplatform on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 07 May 2023 13:37:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/kotlin-multiplatform/index.xml" rel="self" type="application/rss+xml"/><item><title>Kotlin Multiplatform - Kẻ ngáng đường Flutter, React Native?</title><link>https://namanh11611.github.io/vi/p/kotlin-multiplatform/</link><pubDate>Sun, 07 May 2023 13:37:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/kotlin-multiplatform/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/kotlin.webp" alt="Featured image of post Kotlin Multiplatform - Kẻ ngáng đường Flutter, React Native?" /&gt;&lt;h1 id="lời-mở-đầu"&gt;Lời mở đầu
+&lt;/h1&gt;&lt;p&gt;Lúc mới nghe đến &lt;strong&gt;Kotlin Multiplatform&lt;/strong&gt; (từ nay xin được viết tắt là &lt;strong&gt;KM&lt;/strong&gt;), tại hạ trộm nghĩ &lt;em&gt;&amp;ldquo;Công nghệ quái gì mà chỉ share được mỗi logic code? Muốn code nhanh thì người ta làm luôn bằng Flutter cho rồi, performance có kém gì đâu&amp;rdquo;&lt;/em&gt;. Thế rồi dòng đời xô đẩy, tại hạ được tham dự vào một project đang áp dụng KM, quả nhiên đã được mở mang tầm mắt về những ưu cũng như nhược điểm của nó. Nay mượn chén rượu dưới đêm trăng, xin được lạm bàn mấy lời, hầu chuyện chư vị huynh đệ.&lt;/p&gt;
+&lt;h1 id="kotlin-multiplatform-là-cái-gì"&gt;Kotlin Multiplatform là cái gì?
+&lt;/h1&gt;&lt;p&gt;KM giúp việc phát triển các cross-platform projects trở nên nhẹ tựa lông hồng. Nó giúp giảm thời gian viết và maintain code nhưng vẫn giữ được những ưu điểm của native cho từng platform. Kotlin app có thể chạy trên Android, iOS, macOS, Windows, Linux, watchOS&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/km.webp"
+width="600"
+height="255"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/km_hu_d4a42871e55dfd0a.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/km_hu_e9ddc0fbd73f7962.webp 1024w"
+loading="lazy"
+alt="KM"
+class="gallery-image"
+data-flex-grow="235"
+data-flex-basis="564px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Mặc dù KM vẫn đang trong giai đoạn Beta nhưng nó cũng đã khá ổn định và được áp dụng ở nhiều công ty như 9gag, Netflix, Philips, Baidu, VMWare, Quizlet, Memrise&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Trở lại với câu hỏi đầu bài, vậy thì KM có những ưu điểm gì so với các cross-platform framework khác?&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/pros.webp"
+width="600"
+height="248"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/pros_hu_2e5e3dae2ed5c0a9.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/pros_hu_e3d7c7a1a37e9314.webp 1024w"
+loading="lazy"
+alt="Pros"
+class="gallery-image"
+data-flex-grow="241"
+data-flex-basis="580px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Thực sự thì KM phù hợp với những project có &lt;strong&gt;logic code phức tạp&lt;/strong&gt;. Chúng ta đều biết rằng viết càng nhiều code thì càng sinh ra nhiều bug, chỉ có một cách duy nhất để không gây ra bug đó là &lt;a class="link" href="https://github.com/kelseyhightower/nocode" target="_blank" rel="noopener"
+&gt;No Code&lt;/a&gt;. Vậy nên thay vì việc Android dev viết logic code cho Android, iOS dev viết logic code cho iOS, thì giờ đây chỉ cần viết logic code 1 lần cho KM cũng đã giúp giảm một nửa lượng bug phát sinh rồi.&lt;/p&gt;
+&lt;p&gt;Ví dụ với một project cần 10 Android dev và 10 iOS dev, nếu áp dụng KM thì bây giờ chỉ cần 5 Android dev, 5 iOS dev và 5 dev code KM (có thể là Android dev luôn). Như vậy là project đã giảm được 25% resource rồi. So với Flutter, đương nhiên là chúng ta vẫn tốn resource hơn, nhưng đánh đổi lại là native performance.&lt;/p&gt;
+&lt;h1 id="use-cases"&gt;Use Cases
+&lt;/h1&gt;&lt;h2 id="android-và-ios-app"&gt;Android và iOS app
+&lt;/h2&gt;&lt;p&gt;Chúng ta có thể share business logic code giữa các nền tảng để build một cross-platform mobile app. Đây cũng chính là use case chính của KM tại thời điểm này. Ví dụ các bạn có thể viết code từ &lt;strong&gt;ViewModel&lt;/strong&gt; đến &lt;strong&gt;Data layer&lt;/strong&gt; trong KM, còn bên phía Android và iOS app chỉ đơn thuần là build UI bằng &lt;strong&gt;Jetpack Compose&lt;/strong&gt; và &lt;strong&gt;SwiftUI&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="full-stack-web-app"&gt;Full-stack web app
+&lt;/h2&gt;&lt;p&gt;Có thể các bạn không biết nhưng bây giờ Kotlin đã có thể dùng để viết Front-end web app. Như vậy hoàn toàn có thể build một full-stack web app với server dùng Kotlin/JVM và web client dùng Kotlin/JS. Do đó, chúng ta cũng có thể dùng KM để tái sử dụng logic code cho cả server và client.&lt;/p&gt;
+&lt;h2 id="multiplatform-libraries"&gt;Multiplatform libraries
+&lt;/h2&gt;&lt;p&gt;Nếu Kotlin đã có thể build được cho cả Android, iOS, và web thì tại sao chúng ta không viết một library mà có thể dùng cho cả 3 platform? Với những project mà các bạn cần build cho cả app và web, hãy thử dùng KM để viết common code, publish nó như một library, và ở app hay web, bạn có thể import nó như một dependency.&lt;/p&gt;
+&lt;h2 id="common-code-cho-mobile-và-web-app"&gt;Common code cho mobile và web app
+&lt;/h2&gt;&lt;p&gt;Thậm chí, bạn không cần tạo library mà có thể viết trực tiếp code để share giữa Android, iOS, desktop và web app. Cách làm này giúp giảm khối lượng công việc cho anh em mobile và front-end web dev, vì chúng ta chỉ phải viết logic code một lần duy nhất. Đồng thời nó cũng giúp giảm bug, giảm thời gian viết test.&lt;/p&gt;
+&lt;h1 id="cách-hoạt-động"&gt;Cách hoạt động
+&lt;/h1&gt;&lt;p&gt;Vậy làm thế nào mà KM có thể shared code cho tất cả các platform?&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/share.webp"
+width="825"
+height="834"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/share_hu_22bb6959b05e311c.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/share_hu_af74b9f6b24a1ecb.webp 1024w"
+loading="lazy"
+alt="Share"
+class="gallery-image"
+data-flex-grow="98"
+data-flex-basis="237px"
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Common Kotlin là phần code bao gồm core libraries, có thể chạy trên tất cả platform.&lt;/li&gt;
+&lt;li&gt;Với KM libraries, chúng ta có thể tái sử dụng &lt;strong&gt;multiplatform logic trong common&lt;/strong&gt; và &lt;strong&gt;platform-specific code&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform-specific code&lt;/strong&gt; (Kotlin/JVM, Kotlin/JS, Kotlin/Native) bao gồm extensions cho Kotlin, platform-specific libraries và tools.&lt;/li&gt;
+&lt;li&gt;Với từng platform, chúng ta có thể tận dụng &lt;strong&gt;platform native code&lt;/strong&gt; (JVM, JS và Native).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ví dụ, để viết một function generate UUID cho cả Android và iOS, chúng ta có thể khai báo một function với keyword &lt;code&gt;expect&lt;/code&gt; trong common module như sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Common
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;expect&lt;/span&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Sau đó, với mỗi platform, chúng ta lại viết các function implement với keyword &lt;code&gt;actual&lt;/code&gt; như sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Android
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;actual&lt;/span&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;UUID&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;toString&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-swift" data-lang="swift"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// iOS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;import&lt;/span&gt; &lt;span class="nc"&gt;platform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Foundation&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;NSUUID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;actual&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt; &lt;span class="n"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="nb"&gt;String&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;NSUUID&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;UUIDString&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="bóc-trần-công-nghệ"&gt;Bóc trần công nghệ
+&lt;/h1&gt;&lt;p&gt;Project của mình apply KM cho Android và iOS app. Mình đặt ra câu hỏi là tại sao Kotlin có thể integrate được với iOS app viết bằng Swift?&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/ios.webp"
+width="511"
+height="514"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/ios_hu_36ad4982f9099c95.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/ios_hu_b941a506d22592db.webp 1024w"
+loading="lazy"
+alt="iOS"
+class="gallery-image"
+data-flex-grow="99"
+data-flex-basis="238px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Và câu trả lời của Jet Brains là họ dùng &lt;strong&gt;Kotlin/Native&lt;/strong&gt; để compile &lt;strong&gt;Kotlin code&lt;/strong&gt; sang &lt;strong&gt;native binaries&lt;/strong&gt;, do đó có thể chạy Kotlin code mà không cần virtual machine. Nó bao gồm backend dựa trên &lt;a class="link" href="https://llvm.org" target="_blank" rel="noopener"
+&gt;LLVM&lt;/a&gt; cho Kotlin compiler và native implementation của Kotlin standard library.&lt;/p&gt;
+&lt;p&gt;Kotlin/Native được thiết kế để compile cho các platform mà không chạy được virtual machine như là embedded devices hoặc iOS.&lt;/p&gt;
+&lt;p&gt;Còn bên phía Android, Kotlin code được compile sang &lt;strong&gt;JVM bytecode&lt;/strong&gt; bằng &lt;strong&gt;Kotlin/JVM&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id="lời-kết"&gt;Lời kết
+&lt;/h1&gt;&lt;p&gt;Trong tương lai, Jet Brains không chỉ dừng lại với Kotlin Multiplatform mà đang có kế hoạch phát triển &lt;a class="link" href="https://www.jetbrains.com/lp/compose-multiplatform/" target="_blank" rel="noopener"
+&gt;Compose Multiplatform&lt;/a&gt;, nghĩa là thay vì share logic code thì có thể share cả UI như các cross-platform framework khác (Flutter, React Native). Đấy là cả một chặng đường dài, chư vị huynh đệ hãy cùng ngồi xuống đây ăn miếng thịt to, uống bát rượu lớn rồi cùng chờ xem hồi sau sẽ rõ.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/docs/multiplatform.html" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/docs/multiplatform.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/docs/multiplatform-mobile-faq.html#what-is-kotlin-native-and-how-does-it-relate-to-kotlin-multiplatform" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/docs/multiplatform-mobile-faq.html#what-is-kotlin-native-and-how-does-it-relate-to-kotlin-multiplatform&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Riverpod on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/riverpod/</link><description>Recent content in Riverpod on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 11 May 2025 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/riverpod/index.xml" rel="self" type="application/rss+xml"/><item><title>Flutter MVVM Riverpod Starter: Tạo App Siêu Tốc cho Vibe Coder</title><link>https://namanh11611.github.io/vi/p/flutter-mvvm-riverpod/</link><pubDate>Sun, 11 May 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/flutter-mvvm-riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-mvvm-riverpod/fmr.webp" alt="Featured image of post Flutter MVVM Riverpod Starter: Tạo App Siêu Tốc cho Vibe Coder" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@4000km?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;7&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/a-silver-and-red-train-traveling-down-train-tracks-u6QssbF_9JM?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Dạo gần đây mình dành thời gian build một số app như &lt;a class="link" href="https://habittree.xyz" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Habit Tree&lt;/strong&gt;&lt;/a&gt; và &lt;a class="link" href="https://speakie.xyz" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Speakie&lt;/strong&gt;&lt;/a&gt; (bạn có thể xem đầy đủ tại &lt;a class="link" href="https://areser.net" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Areser&lt;/strong&gt;&lt;/a&gt;), hoặc thỉnh thoảng làm một số dự án outsource cho khách hàng. Mỗi lần bắt đầu một dự án mới là mình phải mất cả ngày để set up architecture, routing, auth, state management&amp;hellip; cho app. Vậy nên, xuất phát nhu cầu thực tế, mình đã nghĩ đến việc build một &lt;strong&gt;base project Flutter&lt;/strong&gt; gọn nhẹ để có thể bắt đầu nhanh nhất có thể. Và đó chính là lý do mà &lt;strong&gt;Flutter MVVM Riverpod Starter&lt;/strong&gt; ra đời.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bạn có thể xem ngay tại link: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+&gt;https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="-tại-sao-lại-chọn-starter-này"&gt;🚀 Tại sao lại chọn starter này?
+&lt;/h1&gt;&lt;p&gt;Mục tiêu của mình là tạo ra một template nhẹ, nhưng đủ sức mạnh cho &lt;strong&gt;indie hacker&lt;/strong&gt; và &lt;strong&gt;solo developer&lt;/strong&gt;. Chính vì vậy mà mình đã không chọn &lt;strong&gt;Clean Architecture&lt;/strong&gt;, nó quá cồng kềnh với đối tượng mà mình nhắm tới. Hãy thử nghĩ xem, với dự án mình làm một mình hoặc team nhỏ chỉ 2-3 người, &lt;strong&gt;99.99%&lt;/strong&gt; là team sẽ không cần đến &lt;strong&gt;Abtract Repository&lt;/strong&gt; để cho multiple implementation. &lt;strong&gt;Andrea&lt;/strong&gt; - một Flutter developer nổi tiếng - cũng đã nhắc đến vấn đề này trong bài viết &lt;a class="link" href="https://codewithandrea.com/articles/flutter-repository-pattern/#repositories-may-not-need-an-abstract-class" target="_blank" rel="noopener"
+&gt;Flutter App Architecture: The Repository Pattern&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Sau khi cân đo đong đếm, mình chọn kiến trúc &lt;strong&gt;MVVM&lt;/strong&gt; (Model - View - ViewModel), chỉ đơn giản là dùng ViewModel để tách biệt logic ra khỏi UI.&lt;/p&gt;
+&lt;p&gt;Mình cũng chọn &lt;strong&gt;Riverpod&lt;/strong&gt;, một state management giúp quản lý state linh hoạt. Mình biết tỷ lệ các bạn dùng &lt;strong&gt;BloC&lt;/strong&gt; sẽ đông hơn, mình không đánh giá cái nào tốt hơn cái nào, chỉ đơn giản là mình thấy &lt;strong&gt;Riverpod&lt;/strong&gt; viết code ngắn gọn hơn &lt;strong&gt;BloC&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Tiếp theo là phần Backend, mình biết đa số solo developer sẽ tích hợp &lt;strong&gt;Firebase&lt;/strong&gt;, nhưng nó có một vấn đề là &amp;hellip; &lt;strong&gt;ĐẮT&lt;/strong&gt; (khi dự án của bạn bắt đầu scale). Vậy nên mình đã chọn &lt;strong&gt;Supabase&lt;/strong&gt;, cũng tương tự như &lt;strong&gt;Firebase&lt;/strong&gt; nhưng RẺ hơn. Mình đã tích hợp sẵn code setup và một số function authentication.&lt;/p&gt;
+&lt;p&gt;Nếu anh em muốn kiếm tiền từ app thì cũng sẽ không thể thiếu được &lt;strong&gt;RevenueCat&lt;/strong&gt;, giúp quản lý in-app purchase và subscription.&lt;/p&gt;
+&lt;p&gt;Ngoài ra còn Dark/Light Theme, Localization, routing, local storage, analytics, crashlytics&amp;hellip; tất cả đều đã sẵn sàng.&lt;/p&gt;
+&lt;h1 id="-thư-viện-sử-dụng"&gt;📚 Thư viện sử dụng
+&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mục đích&lt;/th&gt;
+&lt;th&gt;Thư viện&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;State&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;flutter_riverpod&lt;/code&gt;, &lt;code&gt;riverpod_annotation&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Auth &amp;amp; Backend&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;supabase_flutter&lt;/code&gt;, &lt;code&gt;google_sign_in&lt;/code&gt;, &lt;code&gt;sign_in_with_apple&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Navigation&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;go_router&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UI/UX&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;google_fonts&lt;/code&gt;, &lt;code&gt;flutter_svg&lt;/code&gt;, &lt;code&gt;shimmer&lt;/code&gt;, &lt;code&gt;lottie&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;shared_preferences&lt;/code&gt;, &lt;code&gt;sqflite&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HTTP&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;dio&lt;/code&gt;, &lt;code&gt;connectivity_plus&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Utils&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;uuid&lt;/code&gt;, &lt;code&gt;envied&lt;/code&gt;, &lt;code&gt;easy_localization&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Monetization&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;purchases_flutter&lt;/code&gt;, &lt;code&gt;in_app_purchase&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Analytics&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;firebase_analytics&lt;/code&gt;, &lt;code&gt;firebase_crashlytics&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="-kiến-trúc-project"&gt;🏗 Kiến trúc project
+&lt;/h1&gt;&lt;p&gt;Về kiến trúc project, mình chọn Feature-first (layer folder bên trong feature folder). Với mỗi feature như &lt;code&gt;authentication&lt;/code&gt;, &lt;code&gt;onboarding&lt;/code&gt;&amp;hellip; mình sẽ tạo 1 folder bên trong &lt;code&gt;features&lt;/code&gt;. Sau đó bên trong folder đó, mình lại tạo các layer folder như &lt;code&gt;model&lt;/code&gt;, &lt;code&gt;repository&lt;/code&gt;, &lt;code&gt;ui&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lib/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── constants/ &lt;span class="c1"&gt;# Hằng số, config chung&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── environment/ &lt;span class="c1"&gt;# Biến môi trường&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── extensions/ &lt;span class="c1"&gt;# Extension/helper methods&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── features/ &lt;span class="c1"&gt;# Module chức năng theo folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── authentication/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── model/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── repository/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── ui/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── onboarding/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── home/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── profile/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── premium/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── routing/ &lt;span class="c1"&gt;# Cấu hình route với go_router&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── theme/ &lt;span class="c1"&gt;# Config giao diện&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;└── utils/ &lt;span class="c1"&gt;# Tiện ích chung&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Bạn có thể thấy không có layer như &lt;code&gt;domain&lt;/code&gt; hay &lt;code&gt;data&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Thường khi dùng Clean Architecture, &lt;code&gt;domain&lt;/code&gt; của anh em sẽ có &lt;code&gt;model&lt;/code&gt;, &lt;code&gt;abtract repository&lt;/code&gt;, &lt;code&gt;use case&lt;/code&gt;, nhưng giờ đây với việc không cần đến &lt;code&gt;abtract repository&lt;/code&gt; và &lt;code&gt;use case&lt;/code&gt;, mình có thể tối giản nó chỉ còn &lt;code&gt;model&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Còn với &lt;code&gt;data&lt;/code&gt;, với những feature chỉ cần truy cập tới remote hoặc local data, mình sẽ gọi hàm trực tiếp trong &lt;code&gt;repository&lt;/code&gt;. Còn những feature cần cả 2 loại data, mình sẽ cân nhắc tạo &lt;code&gt;data source&lt;/code&gt; nếu cần thiết.&lt;/p&gt;
+&lt;h1 id="-lời-kết"&gt;🎉 Lời kết
+&lt;/h1&gt;&lt;p&gt;Phong trào &lt;strong&gt;vibe coding&lt;/strong&gt; ngày càng lên cao, vậy nhưng mình vẫn muốn &lt;strong&gt;vide coding một cách có kiểm soát&lt;/strong&gt;. Với base project này, mình có thể hướng dẫn AI code theo cách mà mình muốn. Nếu nó có đi chệch đường ray thì mình cũng nhanh chóng nắn chỉnh lại được.&lt;/p&gt;
+&lt;p&gt;Như đã nói từ đầu, project này dành cho anh em &lt;strong&gt;indie hacker&lt;/strong&gt; và &lt;strong&gt;solo developer&lt;/strong&gt; muốn launch &lt;strong&gt;MVP&lt;/strong&gt; nhanh, nó giúp bạn tập trung vào business logic thay vì mất cả ngày setup và viết code. Vậy nên có thể nó sẽ chưa phù hợp với team của bạn nếu như team đông người và cần một base project chuẩn &lt;strong&gt;Clean Architecture&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Nếu bạn thấy nó có ích, đừng ngần ngại tặng mình 1 star nhé!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Link GitHub: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+&gt;https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item><item><title>Dùng code generation provider trong Flutter Riverpod cho đời đơn giản hơn</title><link>https://namanh11611.github.io/vi/p/riverpod/</link><pubDate>Fri, 11 Oct 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod.webp" alt="Featured image of post Dùng code generation provider trong Flutter Riverpod cho đời đơn giản hơn" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@dillonjshook?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Dillon Shook&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/person-sitting-on-sofa-resting-its-feet-on-top-of-coffee-table-while-using-laptop-3iPKIXVXv_U?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Không biết có bạn nào luôn băn khoăn mỗi lần phải chọn 1 trong 7 loại &lt;strong&gt;provider&lt;/strong&gt; của &lt;strong&gt;Riverpod&lt;/strong&gt; cho từng use case trong dự án của mình chưa? Ví dụ như 2 loại &lt;strong&gt;NotifierProvider&lt;/strong&gt; và &lt;strong&gt;StateNotifierProvider&lt;/strong&gt; trong &lt;a class="link" href="https://riverpod.dev/docs/concepts/providers#different-types-of-providers" target="_blank" rel="noopener"
+&gt;document&lt;/a&gt; đều được lấy ví dụ là dùng trong trường hợp:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Một state object phức tạp không thể thay đổi trừ khi thông qua một interface.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Hoặc chính &lt;strong&gt;ChangeNotifierProvider&lt;/strong&gt; lại được khuyên là không nên dùng cho các app có khả năng cần scale sau này.&lt;/p&gt;
+&lt;p&gt;Gì vậy trời??? Tác giả thật biết cách khiến cho anh em dev thấy hoang mang mà&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Nhưng giờ đây, tác giả &lt;strong&gt;Remi Rousselet&lt;/strong&gt; đã giới thiệu cách dùng &lt;strong&gt;Riverpod&lt;/strong&gt; mới với &lt;strong&gt;code generation&lt;/strong&gt;, giúp cho cuộc đời của developer chúng ta dễ thở hơn đôi chút.&lt;/p&gt;
+&lt;h1 id="syntax"&gt;Syntax
+&lt;/h1&gt;&lt;p&gt;Giải thích một cách đơn giản, &lt;strong&gt;code generation trong Riverpod&lt;/strong&gt; là cách chúng ta khai báo các provider với annotation &lt;code&gt;@riverpod&lt;/code&gt;, và phần lớn code còn lại sẽ được tạo ra tự động với tool &lt;code&gt;build_runner&lt;/code&gt; có sẵn của Dart.&lt;/p&gt;
+&lt;p&gt;Thay vì định nghĩa provider như trước đây:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;fetchUserProvider&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FutureProvider&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;autoDispose&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;family&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;async&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;await&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="kd"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;api/user/&lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fromJson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Bây giờ chúng ta chỉ cần viết:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;riverpod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Future&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;fetchUser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FetchUserRef&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="kd"&gt;required&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="kd"&gt;async&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;await&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="kd"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;api/user/&lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fromJson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Thay vì phải ngồi suy nghĩ để chọn lựa 1 trong 7 provider như trước đây, bây giờ bạn có thể xem bảng sau và chọn ra provider phù hợp với use case của mình một cách nhanh chóng:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Functional &lt;br&gt; (Không thể cập nhật &lt;br&gt; bằng public methods)&lt;/th&gt;
+&lt;th&gt;Class-Based &lt;br&gt; (Có thể cập nhật &lt;br&gt; bằng public methods)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Sync&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_sync.png"
+width="894"
+height="220"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_sync_hu_2b498c9c8a498f16.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_sync_hu_6254bc7df53a237f.png 1024w"
+loading="lazy"
+alt="Functional Sync"
+class="gallery-image"
+data-flex-grow="406"
+data-flex-basis="975px"
+&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_sync.png"
+width="702"
+height="440"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_sync_hu_12db707e20515c80.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_sync_hu_7c7ea5e6583e8f6f.png 1024w"
+loading="lazy"
+alt="Class-Based Sync"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="382px"
+&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Async - Future&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_future.png"
+width="898"
+height="214"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_future_hu_88a68fef11cea464.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_future_hu_90b8e47fe01d037a.png 1024w"
+loading="lazy"
+alt="Functional Async - Future"
+class="gallery-image"
+data-flex-grow="419"
+data-flex-basis="1007px"
+&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_future.png"
+width="698"
+height="436"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_future_hu_7a405342168dcdb7.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_future_hu_104c02e82d87b56.png 1024w"
+loading="lazy"
+alt="Class-Based Async - Future"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="384px"
+&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Async - Stream&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_stream.png"
+width="898"
+height="214"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_stream_hu_5739045400ccb4c.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_stream_hu_40043d8739955302.png 1024w"
+loading="lazy"
+alt="Functional Async - Stream"
+class="gallery-image"
+data-flex-grow="419"
+data-flex-basis="1007px"
+&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_stream.png"
+width="698"
+height="426"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_stream_hu_2812449ab65db9ec.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_stream_hu_88572d39c0ff4fd.png 1024w"
+loading="lazy"
+alt="Class-Based Async - Stream"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="393px"
+&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="keepalive"&gt;keepAlive
+&lt;/h2&gt;&lt;p&gt;Theo cách viết mới này, mặc định tất cả provider sẽ là &lt;strong&gt;auto dispose&lt;/strong&gt;, nghĩa là state sẽ bị destroy khi provider không còn listener nào observe nó nữa. Nó hơi ngược với cách viết cũ (bạn phải thêm &lt;code&gt;autoDispose&lt;/code&gt;, còn mặc định sẽ không bị dispose).&lt;/p&gt;
+&lt;p&gt;Vậy nên, để disable tính năng auto dispose này đi, giữ cho provider của bạn luôn sống, thay vì khai báo &lt;code&gt;@riverpod&lt;/code&gt; bạn phải viết thành:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;Riverpod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;keepAlive:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="param"&gt;Param
+&lt;/h2&gt;&lt;p&gt;Như bạn có thể thấy ở ví dụ ban đầu, việc thêm &lt;strong&gt;param&lt;/strong&gt; cho provider bây giờ không khác gì thêm param cho một function thông thường cả. Chúng ta không cần dùng đến &lt;code&gt;family&lt;/code&gt; như cách code cũ.&lt;/p&gt;
+&lt;p&gt;Với Functional provider, chúng ta thêm trực tiếp vào function như sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;riverpod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ExampleRef&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello &lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="s1"&gt; &amp;amp; param2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Còn đối với Class-Based provider, chúng ta sẽ thêm vào method &lt;code&gt;build&lt;/code&gt; như sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;riverpod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Example&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;_$Example&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello &lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="s1"&gt; &amp;amp; param2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Add methods to mutate the state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="ưu-điểm"&gt;Ưu điểm
+&lt;/h1&gt;&lt;p&gt;Hiện tại, việc sử dụng code generation hay cách code cũ vẫn là optional. Nếu bạn vẫn đang cân nhắc lý do để chuyển đổi thì đây là những lý do tác giả đưa ra cho bạn:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Syntax tốt hơn, dễ đọc, dễ học và linh hoạt hơn.
+&lt;ul&gt;
+&lt;li&gt;Chúng ta không cần phải lo lắng về việc chọn provider nào nữa. Chỉ cần viết logic code và Riverpod sẽ chọn loại &lt;strong&gt;phù hợp nhất&lt;/strong&gt; cho bạn.&lt;/li&gt;
+&lt;li&gt;Syntax không còn giống như một &lt;strong&gt;biến global&lt;/strong&gt; nữa, mà chỉ như một &lt;strong&gt;custom function&lt;/strong&gt; hay &lt;strong&gt;custom class&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Việc truyền param tới provider &lt;strong&gt;không còn bị giới hạn&lt;/strong&gt;. Chúng ta có thể truyền &lt;strong&gt;named param&lt;/strong&gt;, &lt;strong&gt;optional param&lt;/strong&gt; hoặc &lt;strong&gt;default value&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stateful hot-reload code&lt;/strong&gt; được viết trong Riverpod.&lt;/li&gt;
+&lt;li&gt;Debug tốt hơn.&lt;/li&gt;
+&lt;li&gt;Một vài feature chỉ có thể dùng với code generation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="nhược-điểm"&gt;Nhược điểm
+&lt;/h1&gt;&lt;p&gt;Tuy nhiên, trong quá trình áp dụng vào dự án thực tế, nó vẫn có một số nhược điểm mà bạn nên lưu tâm.&lt;/p&gt;
+&lt;p&gt;Hiện tại, do code generation mới ra mắt không lâu nên có &lt;strong&gt;khá ít dự án áp dụng&lt;/strong&gt;. Vì vậy, bạn cũng sẽ &lt;strong&gt;khó tìm thấy source code&lt;/strong&gt; để tham khảo. Gần như trong quá trình làm việc, nguồn tham khảo duy nhất của mình chỉ là &lt;strong&gt;document của Riverpod&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Trong thời đại AI này, anh em cũng thường xuyên áp dụng các tool để &lt;strong&gt;generate code&lt;/strong&gt;. Đầu vào đã ít thì lấy đâu ra đầu ra, vậy nên khi bạn dùng tool, hầu hết nó sẽ generate code Riverpod theo kiểu cũ. Nhưng đừng lo vì trên Android Studio cũng đã có plugin &lt;a class="link" href="https://plugins.jetbrains.com/plugin/14641-flutter-riverpod-snippets" target="_blank" rel="noopener"
+&gt;Flutter Riverpod Snippets&lt;/a&gt;, giúp bạn gõ code nhanh hơn chút. Chỉ cần gõ riverpod là nó sẽ gợi ý cho bạn 4 loại provider trên.&lt;/p&gt;
+&lt;p&gt;Những nhược điểm này chỉ mang tính tạm thời, khi code generation trở nên phổ biến hơn, chắc chắn chúng sẽ được khắc phục. Vậy nên bạn không cần phải quá lo lắng.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://riverpod.dev/docs/concepts/about_code_generation" target="_blank" rel="noopener"
+&gt;https://riverpod.dev/docs/concepts/about_code_generation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Flutter Hooks - viết code ngắn gọn và hiệu quả hơn</title><link>https://namanh11611.github.io/vi/p/flutter-hooks/</link><pubDate>Tue, 30 Apr 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/flutter-hooks/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-hooks/hooks.webp" alt="Featured image of post Flutter Hooks - viết code ngắn gọn và hiệu quả hơn" /&gt;&lt;h1 id="flutter-hooks-là-cái-chi-chi"&gt;Flutter Hooks là cái chi chi?
+&lt;/h1&gt;&lt;p&gt;Khi tìm kiếm từ khoá &lt;strong&gt;Hooks&lt;/strong&gt; trên Google, chúng ta sẽ thấy rất nhiều kết quả liên quan đến &lt;strong&gt;React&lt;/strong&gt;. Quả thật, như trong phần giới thiệu, thư viện &lt;a class="link" href="https://pub.dev/packages/flutter_hooks" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;flutter_hooks&lt;/strong&gt;&lt;/a&gt; được tác giả &lt;a class="link" href="https://github.com/rrousselGit" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Remi Rousselet&lt;/strong&gt;&lt;/a&gt; build dựa trên niềm cảm hứng từ React.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Hooks&lt;/strong&gt; là một loại object giúp quản lý life-cycle của &lt;code&gt;Widget&lt;/code&gt;. Mục tiêu duy nhất của nó là giúp tăng khả năng chia sẻ source code giữa các &lt;code&gt;Widget&lt;/code&gt; bằng cách loại bỏ các phần code trùng lặp.&lt;/p&gt;
+&lt;p&gt;Các bạn có thể sẽ thắc mắc: &lt;em&gt;&amp;ldquo;Ủa, &lt;code&gt;StatefulWidget&lt;/code&gt; trong Flutter đã có method &lt;code&gt;initState&lt;/code&gt; và &lt;code&gt;dispose&lt;/code&gt; để lo việc quản lý life-cycle rồi cơ mà? Cần gì Hook nữa?&amp;rdquo;&lt;/em&gt;. Chính xác, thế nhưng chúng ta rất khó để tái sử dụng code trong 2 method này. Và &lt;strong&gt;Hooks&lt;/strong&gt; sinh ra để giải quyết vấn đề đó.&lt;/p&gt;
+&lt;h1 id="hướng-dẫn-sử-dụng"&gt;Hướng dẫn sử dụng
+&lt;/h1&gt;&lt;p&gt;Một ví dụ đơn giản về Hooks như sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyHookWidget&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;HookWidget&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="n"&gt;MyHookWidget&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="k"&gt;super&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Widget&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BuildContext&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;counter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Scaffold&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;body:&lt;/span&gt; &lt;span class="n"&gt;Center&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;child:&lt;/span&gt; &lt;span class="n"&gt;Text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Counter: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;floatingActionButton:&lt;/span&gt; &lt;span class="n"&gt;FloatingActionButton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;onPressed:&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;child:&lt;/span&gt; &lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="n"&gt;Icon&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Icons&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Bạn có thể thấy &lt;code&gt;Widget&lt;/code&gt; của chúng ta thay vì extend &lt;code&gt;StatefulWidget&lt;/code&gt; hay &lt;code&gt;StatelessWidget&lt;/code&gt;, thì bây giờ nó phải extend một &lt;code&gt;HookWidget&lt;/code&gt;. Trong method &lt;code&gt;build&lt;/code&gt; có một từ khoá lạ lạ là &lt;code&gt;useState&lt;/code&gt;, đấy chính là một trong những &lt;strong&gt;hook&lt;/strong&gt; của Flutter Hooks, phần sau chúng ta sẽ cùng đi tìm hiểu một số hook cơ bản của nó.&lt;/p&gt;
+&lt;p&gt;Giờ đây, khi bạn click vào &lt;code&gt;FloatingActionButton&lt;/code&gt;, giá trị của text sẽ thay đổi với biến &lt;code&gt;counter&lt;/code&gt; tăng dần, nó tương tự như cách mà &lt;code&gt;StatefulWidget&lt;/code&gt; hoạt động phải không nào?&lt;/p&gt;
+&lt;h2 id="useeffect-hook"&gt;useEffect hook
+&lt;/h2&gt;&lt;p&gt;Nó gần giống với &lt;code&gt;useEffect&lt;/code&gt; hook của React, được sử dụng để thực hiện các side effect &lt;strong&gt;synchronously&lt;/strong&gt; trong quá trình render. Effect có thể return một function, function này sẽ được gọi khi &lt;strong&gt;effect được gọi lại&lt;/strong&gt; hoặc &lt;strong&gt;widget bị dispose&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Mặc định, effect được gọi lại mỗi lần build, trừ khi chúng ta truyền &lt;strong&gt;param key&lt;/strong&gt;. Khi đó, effect chỉ được gọi lại khi key thay đổi.&lt;/p&gt;
+&lt;p&gt;Side effect có thể bao gồm stream subscription, mở một &lt;strong&gt;WebSocket connection&lt;/strong&gt; hoặc thực hiện một &lt;strong&gt;HTTP request&lt;/strong&gt;. Chúng ta có thể cancel chúng khi widget bị dispose.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;useEffect&lt;/span&gt;&lt;span class="p"&gt;(()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;performSideEffect&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cleanUp&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="usestate-hook"&gt;useState hook
+&lt;/h2&gt;&lt;p&gt;Đây là loại hook cơ bản nhất khi bạn muốn chuyển một &lt;code&gt;StatelessWidget&lt;/code&gt; sang &lt;code&gt;StatefulWidget&lt;/code&gt;. Khi được gọi trong method &lt;code&gt;build&lt;/code&gt;, nó sẽ giữ state giữa những lần widget rebuild.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;counter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Trong ví dụ này, chúng ta truyền cho nó một giá trị khởi tạo là &lt;code&gt;0&lt;/code&gt;. Biến &lt;code&gt;counter&lt;/code&gt; chính là một instance của &lt;code&gt;ValueNotifier&lt;/code&gt;. State được lưu trong thuộc tính &lt;code&gt;value&lt;/code&gt; của &lt;code&gt;ValueNotifier&lt;/code&gt;. Mỗi khi giá trị của &lt;code&gt;value&lt;/code&gt; bị thay đổi, &lt;code&gt;useState&lt;/code&gt; hook sẽ rebuild widget để hiển thị giá trị mới.&lt;/p&gt;
+&lt;h2 id="usememoized-hook"&gt;useMemoized hook
+&lt;/h2&gt;&lt;p&gt;Đây là một method hữu ích khi bạn cần tạo một object phức tạp và muốn trả về cùng một object đó qua nhiều lần rebuild widget con. &lt;code&gt;useMemoized&lt;/code&gt; sẽ giúp chúng ta cache object đó, giá trị chỉ được tính toán trong lần gọi đầu tiên, còn những lần sau, nó sẽ trả về giá trị đã được lưu trước đó.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;complexObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useMemoized&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;createComplexObject&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="useref-hook"&gt;useRef hook
+&lt;/h2&gt;&lt;p&gt;Tạo một object chứa một thuộc tính có thể thay đổi. Tuy nhiên thì việc thay đổi thuộc tính của object sẽ không có effect. Nó phù hợp cho các use-case mà chúng ta cần share state giữa những lần &lt;code&gt;build&lt;/code&gt; method được gọi, nhưng tránh được việc rebuild không cần thiết.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;textController&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useTextEditingController&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;/// Sử dụng useState() trong trường hợp này
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;/// sẽ làm widget rebuild mỗi lần nhập một ký tự
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// final name = useState(&amp;#39;&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useRef&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;useEffect&lt;/span&gt;&lt;span class="p"&gt;(()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;textController&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addListener&lt;/span&gt;&lt;span class="p"&gt;(()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;textController&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;[]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="usecallback-hook"&gt;useCallback hook
+&lt;/h2&gt;&lt;p&gt;Cache instance của toàn bộ một function, nếu như chính function đó được gọi lại.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;cachedFun&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useCallback&lt;/span&gt;&lt;span class="p"&gt;(()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Statements&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;[]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="usecontext-hook"&gt;useContext hook
+&lt;/h2&gt;&lt;p&gt;Giữ &lt;code&gt;BuildContext&lt;/code&gt; của &lt;code&gt;HookWidget&lt;/code&gt;, giúp chúng ta không phải truyền param &lt;code&gt;context&lt;/code&gt; qua các method.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Widget&lt;/span&gt; &lt;span class="n"&gt;createSizedBox&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;SizedBox&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;height:&lt;/span&gt; &lt;span class="n"&gt;MediaQuery&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sizeOf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;useContext&lt;/span&gt;&lt;span class="p"&gt;()).&lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="usevaluechanged-hook"&gt;useValueChanged hook
+&lt;/h2&gt;&lt;p&gt;Theo dõi một giá trị và trigger một callback bất cứ khi nào giá trị của nó thay đổi. Quay trở lại với ví dụ ban đầu, chúng ta sửa một chút như sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;count&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;newCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;useValueChanged&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;oldValue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;oldResult&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;oldValue = &lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;oldValue&lt;/span&gt;&lt;span class="s1"&gt;, oldResult = &lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;oldResult&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;newCount&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;newCount&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Khi click &lt;code&gt;FloatingActionButton&lt;/code&gt;, kết quả sẽ được in ra lần lượt như sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;oldValue = 0, oldResult = null
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;oldValue = 1, oldResult = 5
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;oldValue = 2, oldResult = 10
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Bạn có thể thấy, mỗi khi giá trị của &lt;code&gt;count&lt;/code&gt; thay đổi, &lt;code&gt;newCount&lt;/code&gt; cũng sẽ được thay đổi theo.&lt;/p&gt;
+&lt;h2 id="usestream-hook"&gt;useStream hook
+&lt;/h2&gt;&lt;p&gt;Giúp subscribe một &lt;code&gt;Stream&lt;/code&gt; và return state hiện tại nó.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;snapshot&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useStream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;backend&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="useanimationcontroller-hook"&gt;useAnimationController hook
+&lt;/h2&gt;&lt;p&gt;Tạo một &lt;code&gt;AnimationController&lt;/code&gt; và nó sẽ bị dispose một cách tự động.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;controller&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;useAnimationController&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;duration:&lt;/span&gt; &lt;span class="n"&gt;Duration&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;seconds:&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="lợi-ích-của-hooks"&gt;Lợi ích của Hooks
+&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;State Management&lt;/strong&gt;: Hooks giúp đơn giản hóa việc quản lý local state, đảm bảo widget chỉ xử lý logic liên quan đến nó.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Giảm duplicate code&lt;/strong&gt;: Custom hooks cho phép bạn tái sử dụng logic của widget, giảm đáng kể việc duplicate code và cải thiện chất lượng code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cải thiện Hot Reload&lt;/strong&gt;: Với hooks, hot reload mặc định ít bị lỗi hơn vì trạng thái của hook được giữ nguyên.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tiện lợi&lt;/strong&gt;: Một số built-in hooks như &lt;code&gt;useAnimationController&lt;/code&gt;, &lt;code&gt;useFuture&lt;/code&gt; và &lt;code&gt;useStream&lt;/code&gt; là những method có thể áp dụng cho nhiều use-case phổ biến.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Đơn giản hóa life-cycle&lt;/strong&gt;: Việc quản lý các life-cycle phức tạp trở nên đơn giản hơn rất nhiều với Flutter Hooks. Chúng cung cấp một giải pháp để dễ dàng quản lý state, side-effects và stream subscriptions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom hooks linh hoạt&lt;/strong&gt;: Ngoài các hook đã có sẵn, Flutter Hooks cho phép bạn tạo các hooks tùy chỉnh, giúp việc viết code linh hoạt hơn.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Có thể bạn đã biết &lt;strong&gt;Remi Rousselet&lt;/strong&gt; còn là tác giả của 2 thư viện &lt;strong&gt;State Management&lt;/strong&gt; nổi tiếng là &lt;a class="link" href="https://pub.dev/packages/provider" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Provider&lt;/strong&gt;&lt;/a&gt; và &lt;a class="link" href="https://pub.dev/packages/flutter_riverpod" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Riverpod&lt;/strong&gt;&lt;/a&gt;. Trong đó thì anh ấy đã kết hợp Riverpod và Hook trong một thư viện là &lt;a class="link" href="https://pub.dev/packages/hooks_riverpod" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Hooks Riverpod&lt;/strong&gt;&lt;/a&gt;. Bạn có thể nhân hai sức mạnh với thư viện này. Riverpod là dành cho &amp;ldquo;global&amp;rdquo; application state, còn hooks dành cho local widget state.&lt;/p&gt;
+&lt;h1 id="lời-kết"&gt;Lời kết
+&lt;/h1&gt;&lt;p&gt;Mình thấy &lt;strong&gt;Flutter Hooks&lt;/strong&gt; khá tiềm năng, nhưng vẫn thấy chưa nhiều dự án áp dụng. Không biết các bạn đã từng áp dụng nó chưa? Nếu thấy nó có ưu hoặc nhược điểm gì, hãy chia sẻ với mình nhé.&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MVVM on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/mvvm/</link><description>Recent content in MVVM on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 11 May 2025 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/mvvm/index.xml" rel="self" type="application/rss+xml"/><item><title>Flutter MVVM Riverpod Starter: Tạo App Siêu Tốc cho Vibe Coder</title><link>https://namanh11611.github.io/vi/p/flutter-mvvm-riverpod/</link><pubDate>Sun, 11 May 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/flutter-mvvm-riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-mvvm-riverpod/fmr.webp" alt="Featured image of post Flutter MVVM Riverpod Starter: Tạo App Siêu Tốc cho Vibe Coder" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@4000km?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;7&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/a-silver-and-red-train-traveling-down-train-tracks-u6QssbF_9JM?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Dạo gần đây mình dành thời gian build một số app như &lt;a class="link" href="https://habittree.xyz" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Habit Tree&lt;/strong&gt;&lt;/a&gt; và &lt;a class="link" href="https://speakie.xyz" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Speakie&lt;/strong&gt;&lt;/a&gt; (bạn có thể xem đầy đủ tại &lt;a class="link" href="https://areser.net" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Areser&lt;/strong&gt;&lt;/a&gt;), hoặc thỉnh thoảng làm một số dự án outsource cho khách hàng. Mỗi lần bắt đầu một dự án mới là mình phải mất cả ngày để set up architecture, routing, auth, state management&amp;hellip; cho app. Vậy nên, xuất phát nhu cầu thực tế, mình đã nghĩ đến việc build một &lt;strong&gt;base project Flutter&lt;/strong&gt; gọn nhẹ để có thể bắt đầu nhanh nhất có thể. Và đó chính là lý do mà &lt;strong&gt;Flutter MVVM Riverpod Starter&lt;/strong&gt; ra đời.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bạn có thể xem ngay tại link: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+&gt;https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="-tại-sao-lại-chọn-starter-này"&gt;🚀 Tại sao lại chọn starter này?
+&lt;/h1&gt;&lt;p&gt;Mục tiêu của mình là tạo ra một template nhẹ, nhưng đủ sức mạnh cho &lt;strong&gt;indie hacker&lt;/strong&gt; và &lt;strong&gt;solo developer&lt;/strong&gt;. Chính vì vậy mà mình đã không chọn &lt;strong&gt;Clean Architecture&lt;/strong&gt;, nó quá cồng kềnh với đối tượng mà mình nhắm tới. Hãy thử nghĩ xem, với dự án mình làm một mình hoặc team nhỏ chỉ 2-3 người, &lt;strong&gt;99.99%&lt;/strong&gt; là team sẽ không cần đến &lt;strong&gt;Abtract Repository&lt;/strong&gt; để cho multiple implementation. &lt;strong&gt;Andrea&lt;/strong&gt; - một Flutter developer nổi tiếng - cũng đã nhắc đến vấn đề này trong bài viết &lt;a class="link" href="https://codewithandrea.com/articles/flutter-repository-pattern/#repositories-may-not-need-an-abstract-class" target="_blank" rel="noopener"
+&gt;Flutter App Architecture: The Repository Pattern&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Sau khi cân đo đong đếm, mình chọn kiến trúc &lt;strong&gt;MVVM&lt;/strong&gt; (Model - View - ViewModel), chỉ đơn giản là dùng ViewModel để tách biệt logic ra khỏi UI.&lt;/p&gt;
+&lt;p&gt;Mình cũng chọn &lt;strong&gt;Riverpod&lt;/strong&gt;, một state management giúp quản lý state linh hoạt. Mình biết tỷ lệ các bạn dùng &lt;strong&gt;BloC&lt;/strong&gt; sẽ đông hơn, mình không đánh giá cái nào tốt hơn cái nào, chỉ đơn giản là mình thấy &lt;strong&gt;Riverpod&lt;/strong&gt; viết code ngắn gọn hơn &lt;strong&gt;BloC&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Tiếp theo là phần Backend, mình biết đa số solo developer sẽ tích hợp &lt;strong&gt;Firebase&lt;/strong&gt;, nhưng nó có một vấn đề là &amp;hellip; &lt;strong&gt;ĐẮT&lt;/strong&gt; (khi dự án của bạn bắt đầu scale). Vậy nên mình đã chọn &lt;strong&gt;Supabase&lt;/strong&gt;, cũng tương tự như &lt;strong&gt;Firebase&lt;/strong&gt; nhưng RẺ hơn. Mình đã tích hợp sẵn code setup và một số function authentication.&lt;/p&gt;
+&lt;p&gt;Nếu anh em muốn kiếm tiền từ app thì cũng sẽ không thể thiếu được &lt;strong&gt;RevenueCat&lt;/strong&gt;, giúp quản lý in-app purchase và subscription.&lt;/p&gt;
+&lt;p&gt;Ngoài ra còn Dark/Light Theme, Localization, routing, local storage, analytics, crashlytics&amp;hellip; tất cả đều đã sẵn sàng.&lt;/p&gt;
+&lt;h1 id="-thư-viện-sử-dụng"&gt;📚 Thư viện sử dụng
+&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mục đích&lt;/th&gt;
+&lt;th&gt;Thư viện&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;State&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;flutter_riverpod&lt;/code&gt;, &lt;code&gt;riverpod_annotation&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Auth &amp;amp; Backend&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;supabase_flutter&lt;/code&gt;, &lt;code&gt;google_sign_in&lt;/code&gt;, &lt;code&gt;sign_in_with_apple&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Navigation&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;go_router&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UI/UX&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;google_fonts&lt;/code&gt;, &lt;code&gt;flutter_svg&lt;/code&gt;, &lt;code&gt;shimmer&lt;/code&gt;, &lt;code&gt;lottie&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;shared_preferences&lt;/code&gt;, &lt;code&gt;sqflite&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HTTP&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;dio&lt;/code&gt;, &lt;code&gt;connectivity_plus&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Utils&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;uuid&lt;/code&gt;, &lt;code&gt;envied&lt;/code&gt;, &lt;code&gt;easy_localization&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Monetization&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;purchases_flutter&lt;/code&gt;, &lt;code&gt;in_app_purchase&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Analytics&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;firebase_analytics&lt;/code&gt;, &lt;code&gt;firebase_crashlytics&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="-kiến-trúc-project"&gt;🏗 Kiến trúc project
+&lt;/h1&gt;&lt;p&gt;Về kiến trúc project, mình chọn Feature-first (layer folder bên trong feature folder). Với mỗi feature như &lt;code&gt;authentication&lt;/code&gt;, &lt;code&gt;onboarding&lt;/code&gt;&amp;hellip; mình sẽ tạo 1 folder bên trong &lt;code&gt;features&lt;/code&gt;. Sau đó bên trong folder đó, mình lại tạo các layer folder như &lt;code&gt;model&lt;/code&gt;, &lt;code&gt;repository&lt;/code&gt;, &lt;code&gt;ui&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lib/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── constants/ &lt;span class="c1"&gt;# Hằng số, config chung&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── environment/ &lt;span class="c1"&gt;# Biến môi trường&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── extensions/ &lt;span class="c1"&gt;# Extension/helper methods&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── features/ &lt;span class="c1"&gt;# Module chức năng theo folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── authentication/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── model/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── repository/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── ui/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── onboarding/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── home/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── profile/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── premium/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── routing/ &lt;span class="c1"&gt;# Cấu hình route với go_router&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── theme/ &lt;span class="c1"&gt;# Config giao diện&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;└── utils/ &lt;span class="c1"&gt;# Tiện ích chung&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Bạn có thể thấy không có layer như &lt;code&gt;domain&lt;/code&gt; hay &lt;code&gt;data&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Thường khi dùng Clean Architecture, &lt;code&gt;domain&lt;/code&gt; của anh em sẽ có &lt;code&gt;model&lt;/code&gt;, &lt;code&gt;abtract repository&lt;/code&gt;, &lt;code&gt;use case&lt;/code&gt;, nhưng giờ đây với việc không cần đến &lt;code&gt;abtract repository&lt;/code&gt; và &lt;code&gt;use case&lt;/code&gt;, mình có thể tối giản nó chỉ còn &lt;code&gt;model&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Còn với &lt;code&gt;data&lt;/code&gt;, với những feature chỉ cần truy cập tới remote hoặc local data, mình sẽ gọi hàm trực tiếp trong &lt;code&gt;repository&lt;/code&gt;. Còn những feature cần cả 2 loại data, mình sẽ cân nhắc tạo &lt;code&gt;data source&lt;/code&gt; nếu cần thiết.&lt;/p&gt;
+&lt;h1 id="-lời-kết"&gt;🎉 Lời kết
+&lt;/h1&gt;&lt;p&gt;Phong trào &lt;strong&gt;vibe coding&lt;/strong&gt; ngày càng lên cao, vậy nhưng mình vẫn muốn &lt;strong&gt;vide coding một cách có kiểm soát&lt;/strong&gt;. Với base project này, mình có thể hướng dẫn AI code theo cách mà mình muốn. Nếu nó có đi chệch đường ray thì mình cũng nhanh chóng nắn chỉnh lại được.&lt;/p&gt;
+&lt;p&gt;Như đã nói từ đầu, project này dành cho anh em &lt;strong&gt;indie hacker&lt;/strong&gt; và &lt;strong&gt;solo developer&lt;/strong&gt; muốn launch &lt;strong&gt;MVP&lt;/strong&gt; nhanh, nó giúp bạn tập trung vào business logic thay vì mất cả ngày setup và viết code. Vậy nên có thể nó sẽ chưa phù hợp với team của bạn nếu như team đông người và cần một base project chuẩn &lt;strong&gt;Clean Architecture&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Nếu bạn thấy nó có ích, đừng ngần ngại tặng mình 1 star nhé!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Link GitHub: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+&gt;https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Senior on Henry Techie</title><link>https://namanh11611.github.io/tags/senior/</link><description>Recent content in Senior on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 18 May 2023 18:44:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/senior/index.xml" rel="self" type="application/rss+xml"/><item><title>Things I Wish I Knew When I Was a Junior</title><link>https://namanh11611.github.io/p/junior/</link><pubDate>Thu, 18 May 2023 18:44:00 +0700</pubDate><guid>https://namanh11611.github.io/p/junior/</guid><description>&lt;img src="https://namanh11611.github.io/p/junior/junior.webp" alt="Featured image of post Things I Wish I Knew When I Was a Junior" /&gt;&lt;h1 id="who-am-i"&gt;Who am I?
+&lt;/h1&gt;&lt;p&gt;Hello everyone!&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m Nam Anh, an Android developer with 5 years of experience. During those 5 years, I&amp;rsquo;ve wandered through quite a few tech companies in Hanoi.&lt;/p&gt;
+&lt;p&gt;This is probably the first time I&amp;rsquo;ve written an article from such a personal perspective. So you might wonder: &lt;em&gt;&amp;ldquo;Who is this guy to be giving life advice?&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Oops, I&amp;rsquo;m not here to lecture anyone, just to share things that I found true for myself. Maybe for you, they&amp;rsquo;re right or wrong. But who knows, maybe some Juniors will gain a new perspective to improve their &lt;strong&gt;career path&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id="the-lucky-things"&gt;The Lucky Things
+&lt;/h1&gt;&lt;p&gt;There are things that, when they happened, I didn&amp;rsquo;t realize were right until I looked back later and thought: &lt;em&gt;&amp;ldquo;Oh, turns out I did the right thing back then.&amp;rdquo;&lt;/em&gt; And I feel those were real strokes of luck for me.&lt;/p&gt;
+&lt;h2 id="reading-clean-code-right-after-graduation"&gt;Reading Clean Code right after graduation
+&lt;/h2&gt;&lt;p&gt;I have to admit, I used to love reading books and read quite a lot, all kinds of genres. But I read very few tech books, probably because my English was limited 😢😢&lt;/p&gt;
+&lt;p&gt;But the tech book I value the most is &lt;strong&gt;Clean Code&lt;/strong&gt;. As the name suggests, it teaches you how to write &lt;em&gt;&amp;ldquo;clean code&amp;rdquo;&lt;/em&gt;, a fundamental book highly recommended by many. I don&amp;rsquo;t know who convinced me to read it right after graduation, but I read it and took notes summarizing the book. I still keep those notes to this day. Learning from the book, plus a bit of OCD, I think I&amp;rsquo;ve applied quite a bit of it to the projects I&amp;rsquo;ve worked on.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/junior/clean_code.webp"
+width="825"
+height="619"
+srcset="https://namanh11611.github.io/p/junior/clean_code_hu_77eae4487ef9b85e.webp 480w, https://namanh11611.github.io/p/junior/clean_code_hu_f4460c02913deabe.webp 1024w"
+loading="lazy"
+alt="Clean Code"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="319px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Some people advise reading &lt;strong&gt;Clean Code&lt;/strong&gt; once when you &lt;strong&gt;just graduate&lt;/strong&gt;, and again after &lt;strong&gt;a few years of working&lt;/strong&gt;, so you can really absorb its content. So I highly, highly recommend everyone read it, whether you&amp;rsquo;re a junior or a seasoned senior.&lt;/p&gt;
+&lt;h2 id="working-at-product-companies-with-strict-processes"&gt;Working at product companies with strict processes
+&lt;/h2&gt;&lt;p&gt;There are already many articles comparing product and outsourcing companies, so I won&amp;rsquo;t repeat that. I&amp;rsquo;ve worked at both types. In this article, I just want to mention &lt;strong&gt;code review processes&lt;/strong&gt; and &lt;strong&gt;product mindset&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;From my experience, big product companies have &lt;strong&gt;more time for thorough code reviews&lt;/strong&gt;, not as rushed by deadlines as outsourcing companies. I&amp;rsquo;m only talking about big product companies, because I&amp;rsquo;ve also worked at small startups where the only goal was to get the code running, clean or dirty didn&amp;rsquo;t matter.&lt;/p&gt;
+&lt;p&gt;The knowledge I learned from &lt;strong&gt;Clean Code&lt;/strong&gt; was just theory until I joined big product companies and had seniors carefully review my code. That&amp;rsquo;s when I really matured in every line I wrote.&lt;/p&gt;
+&lt;p&gt;Another thing I learned is the &lt;strong&gt;product mindset&lt;/strong&gt;—always thinking about the product, wanting it to be better and have more users. When I had an idea for a feature, I was ready to propose it to the leader or Product Manager. The feeling when you finish a feature and see users leaving positive comments on the App Store or Play Store is amazing 😍😍&lt;/p&gt;
+&lt;h2 id="daring-to-step-out-of-my-comfort-zone"&gt;Daring to step out of my comfort zone
+&lt;/h2&gt;&lt;p&gt;In 5 years, I&amp;rsquo;ve switched jobs many times like many others. I don&amp;rsquo;t know about you, but I fear staying at one company too long, getting too comfortable, and then struggling to catch up with the market&amp;rsquo;s demands when I want to switch.&lt;/p&gt;
+&lt;p&gt;So moving through many companies helped me adapt to different projects, understand what the market needs, and of course, get a better income.&lt;/p&gt;
+&lt;h1 id="things-i-wish-i-knew-sooner"&gt;Things I Wish I Knew Sooner
+&lt;/h1&gt;&lt;h2 id="stay-at-a-company-long-enough"&gt;Stay at a company long enough
+&lt;/h2&gt;&lt;p&gt;Contrary to what I said above, here I want to advise young people to stay at a company long enough. In my opinion, at least 1-2 years. It gives you enough time to &lt;strong&gt;understand the project&lt;/strong&gt; and &lt;strong&gt;be properly recognized&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Usually, when you join a project, it takes a few months to understand it. For complex projects, it can take years. &lt;strong&gt;Understanding&lt;/strong&gt; here means not just the &lt;strong&gt;technologies used&lt;/strong&gt; in the source code, but also the &lt;strong&gt;business domain&lt;/strong&gt;, how your app makes money, or even its competitive advantage over others. Some seniors, even when switching companies, only work in banking or fintech, for example. So besides technical skills, they&amp;rsquo;re valued for their business domain knowledge.&lt;/p&gt;
+&lt;p&gt;Companies often give out &lt;strong&gt;Best Employee&lt;/strong&gt; awards at Year End Parties, but to be recognized, you have to stay long enough to make an impact. It&amp;rsquo;s rare for a company to give such an award to someone who just finished their probation, unless you&amp;rsquo;re a superstar. Achieving these things proves your ability and makes your profile shine.&lt;/p&gt;
+&lt;p&gt;There were times I only stayed at a company for a few months before leaving, and I felt that was a bit of a waste.&lt;/p&gt;
+&lt;h2 id="take-english-seriously-sooner"&gt;Take English seriously, sooner
+&lt;/h2&gt;&lt;p&gt;Everyone knows how important English is for a developer&amp;rsquo;s career. If you can communicate well in English, you have more options: working for foreign companies in Vietnam, working remotely from home, or even going abroad. And a dev with good English communication skills will definitely earn more than one who can only read and understand.&lt;/p&gt;
+&lt;p&gt;I graduated with a &lt;strong&gt;TOEIC 460&lt;/strong&gt;—just enough for basic reading. In recent years, I&amp;rsquo;ve started learning English seriously, and now I can communicate well with foreign colleagues. This has brought me many new opportunities.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/junior/elsa.webp"
+width="327"
+height="400"
+srcset="https://namanh11611.github.io/p/junior/elsa_hu_296e1783f5ad80ac.webp 480w, https://namanh11611.github.io/p/junior/elsa_hu_4efc8e9d37a2c922.webp 1024w"
+loading="lazy"
+alt="Elsa"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="196px"
+&gt;&lt;/p&gt;
+&lt;p&gt;I swear this post isn&amp;rsquo;t an ad for the &lt;strong&gt;Elsa&lt;/strong&gt; app, but it&amp;rsquo;s really good so I&amp;rsquo;m recommending it. Here&amp;rsquo;s my 88-day learning streak (I missed a day before and lost my streak 🥲).&lt;/p&gt;
+&lt;p&gt;My English still isn&amp;rsquo;t great, so I&amp;rsquo;m learning every day. I&amp;rsquo;ve tried several apps—Duolingo, Memrise, Cake&amp;hellip; and now I use Elsa along with others. But Elsa has helped me improve the most.&lt;/p&gt;
+&lt;h2 id="the-difference-comes-after-8pm"&gt;The difference comes after 8pm
+&lt;/h2&gt;&lt;p&gt;There are two devs, A and B, working at the same company from 8am to 6pm. So what makes the difference between them?&lt;/p&gt;
+&lt;p&gt;It comes after 8pm. Dev A spends that time &lt;strong&gt;learning new technologies&lt;/strong&gt;, working on &lt;strong&gt;pet projects&lt;/strong&gt;, or &lt;strong&gt;contributing to open source projects&lt;/strong&gt;. Dev B spends it playing games or drinking. Maybe in the first few years, the difference isn&amp;rsquo;t clear, but after 3 or 5 years, the gap in knowledge and skills will be huge.&lt;/p&gt;
+&lt;p&gt;Work at the company is sometimes easy, so you can only learn harder things or new technologies in your free time. For example, if your job is just UI work, you won&amp;rsquo;t need to understand systems or memory deeply. If you don&amp;rsquo;t spend time learning, how can you stand out from your colleagues?&lt;/p&gt;
+&lt;p&gt;In my early years, I also spent a lot of time drinking. I can&amp;rsquo;t deny the importance of building relationships through those gatherings. But if I could choose again, I&amp;rsquo;d spend more time at home learning.&lt;/p&gt;
+&lt;h1 id="final-words"&gt;Final Words
+&lt;/h1&gt;&lt;p&gt;On my journey, there were times I made &lt;strong&gt;the right decisions&lt;/strong&gt;, but also plenty of times I &lt;strong&gt;chose wrong&lt;/strong&gt;. But the important thing is I &lt;strong&gt;don&amp;rsquo;t regret&lt;/strong&gt; or dwell on the past—I keep &lt;strong&gt;learning and moving forward&lt;/strong&gt;. I think that&amp;rsquo;s enough.&lt;/p&gt;
+&lt;p&gt;Thank you for taking the time to read my article!&lt;/p&gt;</description></item></channel></rss>

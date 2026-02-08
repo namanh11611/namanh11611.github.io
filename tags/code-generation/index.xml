@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Code Generation on Henry Techie</title><link>https://namanh11611.github.io/tags/code-generation/</link><description>Recent content in Code Generation on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 11 Oct 2024 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/code-generation/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Code Generation Providers in Flutter Riverpod to Simplify Life</title><link>https://namanh11611.github.io/p/riverpod/</link><pubDate>Fri, 11 Oct 2024 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod.webp" alt="Featured image of post Using Code Generation Providers in Flutter Riverpod to Simplify Life" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@dillonjshook?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Dillon Shook&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/person-sitting-on-sofa-resting-its-feet-on-top-of-coffee-table-while-using-laptop-3iPKIXVXv_U?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Have you ever struggled to choose one of the seven types of &lt;strong&gt;providers&lt;/strong&gt; in &lt;strong&gt;Riverpod&lt;/strong&gt; for specific use cases in your project? For instance, the &lt;a class="link" href="https://riverpod.dev/docs/concepts/providers#different-types-of-providers" target="_blank" rel="noopener"
+&gt;documentation&lt;/a&gt; explains that both &lt;strong&gt;NotifierProvider&lt;/strong&gt; and &lt;strong&gt;StateNotifierProvider&lt;/strong&gt; are used when:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A complex state object that is immutable except through an interface.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;On the other hand, &lt;strong&gt;ChangeNotifierProvider&lt;/strong&gt; are not recommended for scalable applications.&lt;/p&gt;
+&lt;p&gt;What is going on??? The author really knows how to make developers feel confused…&lt;/p&gt;
+&lt;p&gt;But now, &lt;strong&gt;Remi Rousselet&lt;/strong&gt; has introduced a new way to use &lt;strong&gt;Riverpod&lt;/strong&gt; with &lt;strong&gt;code generation&lt;/strong&gt;, making developers&amp;rsquo; lives a bit easier.&lt;/p&gt;
+&lt;h1 id="syntax"&gt;Syntax
+&lt;/h1&gt;&lt;p&gt;In simple terms, &lt;strong&gt;code generation in Riverpod&lt;/strong&gt; allows us to declare providers using the &lt;code&gt;@riverpod&lt;/code&gt; annotation, and most of the code is automatically generated using Dart&amp;rsquo;s built-in &lt;code&gt;build_runner&lt;/code&gt; tool.&lt;/p&gt;
+&lt;p&gt;Instead of defining providers as before:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;fetchUserProvider&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FutureProvider&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;autoDispose&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;family&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;async&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;await&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="kd"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;api/user/&lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fromJson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Now, you only need to write:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;riverpod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Future&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;fetchUser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FetchUserRef&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="kd"&gt;required&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="kd"&gt;async&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;await&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="kd"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;api/user/&lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;userId&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fromJson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Instead of deliberating over which of the seven providers to use, you can now use the following table to quickly choose the appropriate provider for your use case:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Functional &lt;br&gt; (Can’t perform side-effects &lt;br&gt; using public methods)&lt;/th&gt;
+&lt;th&gt;Class-Based &lt;br&gt; (Can perform side-effects &lt;br&gt; using public methods)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Sync&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_sync.png"
+width="894"
+height="220"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_sync_hu_2b498c9c8a498f16.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_sync_hu_6254bc7df53a237f.png 1024w"
+loading="lazy"
+alt="Functional Sync"
+class="gallery-image"
+data-flex-grow="406"
+data-flex-basis="975px"
+&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_sync.png"
+width="702"
+height="440"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_sync_hu_12db707e20515c80.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_sync_hu_7c7ea5e6583e8f6f.png 1024w"
+loading="lazy"
+alt="Class-Based Sync"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="382px"
+&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Async - Future&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_future.png"
+width="898"
+height="214"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_future_hu_88a68fef11cea464.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_future_hu_90b8e47fe01d037a.png 1024w"
+loading="lazy"
+alt="Functional Async - Future"
+class="gallery-image"
+data-flex-grow="419"
+data-flex-basis="1007px"
+&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_future.png"
+width="698"
+height="436"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_future_hu_7a405342168dcdb7.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_future_hu_104c02e82d87b56.png 1024w"
+loading="lazy"
+alt="Class-Based Async - Future"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="384px"
+&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Async - Stream&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_function_stream.png"
+width="898"
+height="214"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_function_stream_hu_5739045400ccb4c.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_function_stream_hu_40043d8739955302.png 1024w"
+loading="lazy"
+alt="Functional Async - Stream"
+class="gallery-image"
+data-flex-grow="419"
+data-flex-basis="1007px"
+&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src="https://namanh11611.github.io/p/riverpod/riverpod_class_stream.png"
+width="698"
+height="426"
+srcset="https://namanh11611.github.io/p/riverpod/riverpod_class_stream_hu_2812449ab65db9ec.png 480w, https://namanh11611.github.io/p/riverpod/riverpod_class_stream_hu_88572d39c0ff4fd.png 1024w"
+loading="lazy"
+alt="Class-Based Async - Stream"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="393px"
+&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="keepalive"&gt;keepAlive
+&lt;/h2&gt;&lt;p&gt;In this new approach, all providers are &lt;strong&gt;auto-dispose&lt;/strong&gt; by default, meaning their state is destroyed when no listeners observe them. This is the opposite of the old approach (where you had to explicitly add &lt;code&gt;autoDispose&lt;/code&gt;, and the default was no dispose).&lt;/p&gt;
+&lt;p&gt;To disable auto-dispose and keep your provider alive, use:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;Riverpod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;keepAlive:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="parameters"&gt;Parameters
+&lt;/h2&gt;&lt;p&gt;As seen in the earlier example, adding parameters to a provider is now as straightforward as adding parameters to a regular function. There’s no need to use &lt;code&gt;family&lt;/code&gt; like in the old approach.&lt;/p&gt;
+&lt;p&gt;For functional providers, parameters are added directly to the function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;riverpod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ExampleRef&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello &lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="s1"&gt; &amp;amp; param2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;For class-based providers, parameters are added to the &lt;code&gt;build&lt;/code&gt; method:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-dart" data-lang="dart"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;riverpod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Example&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;_$Example&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello &lt;/span&gt;&lt;span class="si"&gt;$&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="s1"&gt; &amp;amp; param2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Add methods to mutate the state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="advantages"&gt;Advantages
+&lt;/h1&gt;&lt;p&gt;Currently, using code generation or the old approach is optional. If you’re considering why you should switch, here are some reasons provided by the author:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Better syntax, more readable/flexible, and with a reduced learning curve.
+&lt;ul&gt;
+&lt;li&gt;No need to worry about the type of provider. Write your logic, and Riverpod will pick the most suitable provider for you.&lt;/li&gt;
+&lt;li&gt;The syntax no longer looks like we&amp;rsquo;re defining a &amp;ldquo;dirty global variable&amp;rdquo;. Instead we are defining a custom function/class.&lt;/li&gt;
+&lt;li&gt;Passing parameters to providers is now unrestricted. Instead of being limited to using .family and passing a single positional parameter, you can now pass any parameter. This includes named parameters, optional ones, and even default values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Stateful hot-reload of the code written in Riverpod.&lt;/li&gt;
+&lt;li&gt;Better debugging, through the generation of extra metadata that the debugger then picks up.&lt;/li&gt;
+&lt;li&gt;Some Riverpod features will be available only with code generation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="disadvantages"&gt;Disadvantages
+&lt;/h1&gt;&lt;p&gt;However, when applied to real-world projects, there are some drawbacks to consider.&lt;/p&gt;
+&lt;p&gt;Currently, as code generation is relatively new, few projects have adopted it, making it hard to find reference source code. For the most part, you’ll rely on Riverpod’s documentation during development.&lt;/p&gt;
+&lt;p&gt;In this AI-driven era, developers often use tools to generate code. With limited adoption, most tools generate Riverpod code in the old style. But don’t worry! Android Studio has the &lt;a class="link" href="https://plugins.jetbrains.com/plugin/14641-flutter-riverpod-snippets" target="_blank" rel="noopener"
+&gt;Flutter Riverpod Snippets&lt;/a&gt; plugin, which helps you write code faster. Just type riverpod, and it will suggest the four main provider types.&lt;/p&gt;
+&lt;p&gt;These drawbacks are temporary. As code generation becomes more popular, these issues will be resolved. So there’s no need to worry too much.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://riverpod.dev/docs/concepts/about_code_generation" target="_blank" rel="noopener"
+&gt;https://riverpod.dev/docs/concepts/about_code_generation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kotlin Multiplatform on Henry Techie</title><link>https://namanh11611.github.io/tags/kotlin-multiplatform/</link><description>Recent content in Kotlin Multiplatform on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 07 May 2023 13:37:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/kotlin-multiplatform/index.xml" rel="self" type="application/rss+xml"/><item><title>Kotlin Multiplatform – A Challenger to Flutter, React Native?</title><link>https://namanh11611.github.io/p/kotlin-multiplatform/</link><pubDate>Sun, 07 May 2023 13:37:00 +0700</pubDate><guid>https://namanh11611.github.io/p/kotlin-multiplatform/</guid><description>&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/kotlin.webp" alt="Featured image of post Kotlin Multiplatform – A Challenger to Flutter, React Native?" /&gt;&lt;h1 id="introduction"&gt;Introduction
+&lt;/h1&gt;&lt;p&gt;When I first heard about &lt;strong&gt;Kotlin Multiplatform&lt;/strong&gt; (hereafter &lt;strong&gt;KM&lt;/strong&gt;), I thought, &lt;em&gt;“What kind of technology only shares logic code? If you want to code fast, just use Flutter, the performance isn’t bad at all.”&lt;/em&gt; But then, life pushed me into a project using KM, and I was truly enlightened about its pros and cons. So, over a drink under the moon, let me share a few words with you.&lt;/p&gt;
+&lt;h1 id="what-is-kotlin-multiplatform"&gt;What is Kotlin Multiplatform?
+&lt;/h1&gt;&lt;p&gt;KM makes developing cross-platform projects as light as a feather. It helps reduce the time spent writing and maintaining code while keeping the advantages of native for each platform. Kotlin apps can run on Android, iOS, macOS, Windows, Linux, watchOS&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/km.webp"
+width="600"
+height="255"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/km_hu_d4a42871e55dfd0a.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/km_hu_e9ddc0fbd73f7962.webp 1024w"
+loading="lazy"
+alt="KM"
+class="gallery-image"
+data-flex-grow="235"
+data-flex-basis="564px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Although KM is still in Beta, it’s quite stable and has been adopted by companies like 9gag, Netflix, Philips, Baidu, VMWare, Quizlet, Memrise&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Back to the question: what advantages does KM have over other cross-platform frameworks?&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/pros.webp"
+width="600"
+height="248"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/pros_hu_2e5e3dae2ed5c0a9.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/pros_hu_e3d7c7a1a37e9314.webp 1024w"
+loading="lazy"
+alt="Pros"
+class="gallery-image"
+data-flex-grow="241"
+data-flex-basis="580px"
+&gt;&lt;/p&gt;
+&lt;p&gt;KM is really suitable for projects with &lt;strong&gt;complex logic code&lt;/strong&gt;. We all know that the more code you write, the more bugs you create. The only way to avoid bugs is &lt;a class="link" href="https://github.com/kelseyhightower/nocode" target="_blank" rel="noopener"
+&gt;No Code&lt;/a&gt;. So instead of Android devs writing logic for Android and iOS devs writing logic for iOS, now you only need to write logic once in KM, which already cuts bugs in half.&lt;/p&gt;
+&lt;p&gt;For example, if a project needs 10 Android devs and 10 iOS devs, with KM you only need 5 Android devs, 5 iOS devs, and 5 KM devs (who can also be Android devs). That means the project reduces resources by 25%. Compared to Flutter, of course, you still need more resources, but in return you get native performance.&lt;/p&gt;
+&lt;h1 id="use-cases"&gt;Use Cases
+&lt;/h1&gt;&lt;h2 id="android-and-ios-apps"&gt;Android and iOS apps
+&lt;/h2&gt;&lt;p&gt;You can share business logic code between platforms to build a cross-platform mobile app. This is currently the main use case for KM. For example, you can write code from &lt;strong&gt;ViewModel&lt;/strong&gt; to &lt;strong&gt;Data layer&lt;/strong&gt; in KM, while the Android and iOS apps just build UI with &lt;strong&gt;Jetpack Compose&lt;/strong&gt; and &lt;strong&gt;SwiftUI&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="full-stack-web-app"&gt;Full-stack web app
+&lt;/h2&gt;&lt;p&gt;You might not know, but Kotlin can now be used to write front-end web apps. So you can build a full-stack web app with the server using Kotlin/JVM and the web client using Kotlin/JS. Therefore, you can use KM to reuse logic code for both server and client.&lt;/p&gt;
+&lt;h2 id="multiplatform-libraries"&gt;Multiplatform libraries
+&lt;/h2&gt;&lt;p&gt;If Kotlin can build for Android, iOS, and web, why not write a library usable on all three? For projects that need both app and web, try using KM to write common code, publish it as a library, and import it as a dependency in your app or web project.&lt;/p&gt;
+&lt;h2 id="common-code-for-mobile-and-web-apps"&gt;Common code for mobile and web apps
+&lt;/h2&gt;&lt;p&gt;You don’t even need to create a library; you can write code directly to share between Android, iOS, desktop, and web apps. This reduces the workload for mobile and front-end web devs, since you only write logic code once. It also reduces bugs and testing time.&lt;/p&gt;
+&lt;h1 id="how-it-works"&gt;How it works
+&lt;/h1&gt;&lt;p&gt;So how does KM share code across all platforms?&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/share.webp"
+width="825"
+height="834"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/share_hu_22bb6959b05e311c.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/share_hu_af74b9f6b24a1ecb.webp 1024w"
+loading="lazy"
+alt="Share"
+class="gallery-image"
+data-flex-grow="98"
+data-flex-basis="237px"
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Common Kotlin is the code that includes core libraries and can run on all platforms.&lt;/li&gt;
+&lt;li&gt;With KM libraries, you can reuse &lt;strong&gt;multiplatform logic in common&lt;/strong&gt; and &lt;strong&gt;platform-specific code&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform-specific code&lt;/strong&gt; (Kotlin/JVM, Kotlin/JS, Kotlin/Native) includes extensions for Kotlin, platform-specific libraries, and tools.&lt;/li&gt;
+&lt;li&gt;For each platform, you can leverage &lt;strong&gt;platform native code&lt;/strong&gt; (JVM, JS, and Native).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, to write a function to generate a UUID for both Android and iOS, you can declare a function with the &lt;code&gt;expect&lt;/code&gt; keyword in the common module:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Common
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;expect&lt;/span&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Then, for each platform, you implement the function with the &lt;code&gt;actual&lt;/code&gt; keyword:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-kotlin" data-lang="kotlin"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Android
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;actual&lt;/span&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="nf"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;UUID&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;toString&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-swift" data-lang="swift"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// iOS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;import&lt;/span&gt; &lt;span class="nc"&gt;platform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Foundation&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;NSUUID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;actual&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt; &lt;span class="n"&gt;randomUUID&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="nb"&gt;String&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;NSUUID&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;UUIDString&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="under-the-hood"&gt;Under the Hood
+&lt;/h1&gt;&lt;p&gt;My project applies KM for Android and iOS apps. I wondered how Kotlin could integrate with iOS apps written in Swift.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/kotlin-multiplatform/ios.webp"
+width="511"
+height="514"
+srcset="https://namanh11611.github.io/p/kotlin-multiplatform/ios_hu_36ad4982f9099c95.webp 480w, https://namanh11611.github.io/p/kotlin-multiplatform/ios_hu_b941a506d22592db.webp 1024w"
+loading="lazy"
+alt="iOS"
+class="gallery-image"
+data-flex-grow="99"
+data-flex-basis="238px"
+&gt;&lt;/p&gt;
+&lt;p&gt;JetBrains’ answer is that they use &lt;strong&gt;Kotlin/Native&lt;/strong&gt; to compile &lt;strong&gt;Kotlin code&lt;/strong&gt; to &lt;strong&gt;native binaries&lt;/strong&gt;, so you can run Kotlin code without a virtual machine. It includes an &lt;a class="link" href="https://llvm.org" target="_blank" rel="noopener"
+&gt;LLVM&lt;/a&gt;-based backend for the Kotlin compiler and a native implementation of the Kotlin standard library.&lt;/p&gt;
+&lt;p&gt;Kotlin/Native is designed to compile for platforms that can’t run a virtual machine, like embedded devices or iOS.&lt;/p&gt;
+&lt;p&gt;On Android, Kotlin code is compiled to &lt;strong&gt;JVM bytecode&lt;/strong&gt; using &lt;strong&gt;Kotlin/JVM&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion
+&lt;/h1&gt;&lt;p&gt;In the future, JetBrains isn’t stopping at Kotlin Multiplatform—they’re planning to develop &lt;a class="link" href="https://www.jetbrains.com/lp/compose-multiplatform/" target="_blank" rel="noopener"
+&gt;Compose Multiplatform&lt;/a&gt;, which means you’ll be able to share UI as well as logic code, just like other cross-platform frameworks (Flutter, React Native). That’s a long journey ahead, so let’s sit down, have a big meal and a big drink, and see what the future holds.&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/docs/multiplatform.html" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/docs/multiplatform.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://kotlinlang.org/docs/multiplatform-mobile-faq.html#what-is-kotlin-native-and-how-does-it-relate-to-kotlin-multiplatform" target="_blank" rel="noopener"
+&gt;https://kotlinlang.org/docs/multiplatform-mobile-faq.html#what-is-kotlin-native-and-how-does-it-relate-to-kotlin-multiplatform&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

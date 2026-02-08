@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MVVM on Henry Techie</title><link>https://namanh11611.github.io/tags/mvvm/</link><description>Recent content in MVVM on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 11 May 2025 00:00:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/mvvm/index.xml" rel="self" type="application/rss+xml"/><item><title>Flutter MVVM Riverpod Starter: Build Apps Lightning Fast for Vibe Coders</title><link>https://namanh11611.github.io/p/flutter-mvvm-riverpod/</link><pubDate>Sun, 11 May 2025 00:00:00 +0700</pubDate><guid>https://namanh11611.github.io/p/flutter-mvvm-riverpod/</guid><description>&lt;img src="https://namanh11611.github.io/p/flutter-mvvm-riverpod/fmr.webp" alt="Featured image of post Flutter MVVM Riverpod Starter: Build Apps Lightning Fast for Vibe Coders" /&gt;&lt;p&gt;&lt;em&gt;Photo by &lt;a class="link" href="https://unsplash.com/@4000km?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;7&lt;/a&gt; on &lt;a class="link" href="https://unsplash.com/photos/a-silver-and-red-train-traveling-down-train-tracks-u6QssbF_9JM?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash" target="_blank" rel="noopener"
+&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Recently, I&amp;rsquo;ve spent time building apps like &lt;a class="link" href="https://habittree.xyz" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Habit Tree&lt;/strong&gt;&lt;/a&gt; and &lt;a class="link" href="https://speakie.xyz" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Speakie&lt;/strong&gt;&lt;/a&gt; (you can see more at &lt;a class="link" href="https://areser.net" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Areser&lt;/strong&gt;&lt;/a&gt;), or occasionally working on some outsource projects for clients. Every time I start a new project, I spend a whole day setting up architecture, routing, auth, state management&amp;hellip; for the app. So, from real needs, I thought about building a &lt;strong&gt;lightweight Flutter base project&lt;/strong&gt; to start as quickly as possible. And that&amp;rsquo;s why &lt;strong&gt;Flutter MVVM Riverpod Starter&lt;/strong&gt; was born.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Check it out here: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+&gt;https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="-why-choose-this-starter"&gt;🚀 Why choose this starter?
+&lt;/h1&gt;&lt;p&gt;My goal is to create a lightweight template, but powerful enough for &lt;strong&gt;indie hackers&lt;/strong&gt; and &lt;strong&gt;solo developers&lt;/strong&gt;. That&amp;rsquo;s why I didn&amp;rsquo;t choose &lt;strong&gt;Clean Architecture&lt;/strong&gt;—it&amp;rsquo;s too bulky for my target users. Think about it: for projects done solo or with a small team of 2-3 people, &lt;strong&gt;99.99%&lt;/strong&gt; of the time you won&amp;rsquo;t need an &lt;strong&gt;Abstract Repository&lt;/strong&gt; for multiple implementations. &lt;strong&gt;Andrea&lt;/strong&gt;—a well-known Flutter developer—also mentioned this in &lt;a class="link" href="https://codewithandrea.com/articles/flutter-repository-pattern/#repositories-may-not-need-an-abstract-class" target="_blank" rel="noopener"
+&gt;Flutter App Architecture: The Repository Pattern&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;After weighing the options, I chose the &lt;strong&gt;MVVM&lt;/strong&gt; (Model - View - ViewModel) architecture, simply using ViewModel to separate logic from UI.&lt;/p&gt;
+&lt;p&gt;I also chose &lt;strong&gt;Riverpod&lt;/strong&gt;, a state management solution for flexible state handling. I know most of you use &lt;strong&gt;BloC&lt;/strong&gt; more, but I&amp;rsquo;m not judging which is better—it&amp;rsquo;s just that &lt;strong&gt;Riverpod&lt;/strong&gt; lets me write shorter code than &lt;strong&gt;BloC&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Next is the Backend. I know most solo developers will integrate &lt;strong&gt;Firebase&lt;/strong&gt;, but it has one issue&amp;hellip; &lt;strong&gt;EXPENSIVE&lt;/strong&gt; (when your project starts to scale). So I chose &lt;strong&gt;Supabase&lt;/strong&gt;, similar to &lt;strong&gt;Firebase&lt;/strong&gt; but CHEAPER. I&amp;rsquo;ve already integrated setup code and some authentication functions.&lt;/p&gt;
+&lt;p&gt;If you want to monetize your app, you can&amp;rsquo;t miss &lt;strong&gt;RevenueCat&lt;/strong&gt;, which helps manage in-app purchases and subscriptions.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s also Dark/Light Theme, Localization, routing, local storage, analytics, crashlytics&amp;hellip; all ready to go.&lt;/p&gt;
+&lt;h1 id="-libraries-used"&gt;📚 Libraries Used
+&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;th&gt;Libraries&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;State&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;flutter_riverpod&lt;/code&gt;, &lt;code&gt;riverpod_annotation&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Auth &amp;amp; Backend&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;supabase_flutter&lt;/code&gt;, &lt;code&gt;google_sign_in&lt;/code&gt;, &lt;code&gt;sign_in_with_apple&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Navigation&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;go_router&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UI/UX&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;google_fonts&lt;/code&gt;, &lt;code&gt;flutter_svg&lt;/code&gt;, &lt;code&gt;shimmer&lt;/code&gt;, &lt;code&gt;lottie&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;shared_preferences&lt;/code&gt;, &lt;code&gt;sqflite&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HTTP&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;dio&lt;/code&gt;, &lt;code&gt;connectivity_plus&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Utils&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;uuid&lt;/code&gt;, &lt;code&gt;envied&lt;/code&gt;, &lt;code&gt;easy_localization&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Monetization&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;purchases_flutter&lt;/code&gt;, &lt;code&gt;in_app_purchase&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Analytics&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;firebase_analytics&lt;/code&gt;, &lt;code&gt;firebase_crashlytics&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="-project-architecture"&gt;🏗 Project Architecture
+&lt;/h1&gt;&lt;p&gt;For project architecture, I chose Feature-first (layer folders inside feature folders). For each feature like &lt;code&gt;authentication&lt;/code&gt;, &lt;code&gt;onboarding&lt;/code&gt;&amp;hellip; I create a folder inside &lt;code&gt;features&lt;/code&gt;. Then inside that folder, I create layer folders like &lt;code&gt;model&lt;/code&gt;, &lt;code&gt;repository&lt;/code&gt;, &lt;code&gt;ui&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lib/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── constants/ &lt;span class="c1"&gt;# Constants, global config&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── environment/ &lt;span class="c1"&gt;# Environment variables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── extensions/ &lt;span class="c1"&gt;# Extension/helper methods&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── features/ &lt;span class="c1"&gt;# Feature modules by folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── authentication/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── model/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── repository/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── ui/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── onboarding/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── home/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── profile/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── premium/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── routing/ &lt;span class="c1"&gt;# Route config with go_router&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── theme/ &lt;span class="c1"&gt;# UI config&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;└── utils/ &lt;span class="c1"&gt;# Common utilities&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;You&amp;rsquo;ll notice there are no layers like &lt;code&gt;domain&lt;/code&gt; or &lt;code&gt;data&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Usually with Clean Architecture, your &lt;code&gt;domain&lt;/code&gt; would have &lt;code&gt;model&lt;/code&gt;, &lt;code&gt;abstract repository&lt;/code&gt;, &lt;code&gt;use case&lt;/code&gt;, but now, without needing &lt;code&gt;abstract repository&lt;/code&gt; and &lt;code&gt;use case&lt;/code&gt;, I can simplify it to just &lt;code&gt;model&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As for &lt;code&gt;data&lt;/code&gt;, for features that only need to access remote or local data, I&amp;rsquo;ll call functions directly in the &lt;code&gt;repository&lt;/code&gt;. For features needing both types of data, I&amp;rsquo;ll consider creating a &lt;code&gt;data source&lt;/code&gt; if necessary.&lt;/p&gt;
+&lt;h1 id="-conclusion"&gt;🎉 Conclusion
+&lt;/h1&gt;&lt;p&gt;The &lt;strong&gt;vibe coding&lt;/strong&gt; movement is growing, but I still want to &lt;strong&gt;vibe code with control&lt;/strong&gt;. With this base project, I can guide AI to code the way I want. If it goes off track, I can quickly adjust.&lt;/p&gt;
+&lt;p&gt;As mentioned from the start, this project is for &lt;strong&gt;indie hackers&lt;/strong&gt; and &lt;strong&gt;solo developers&lt;/strong&gt; who want to launch an &lt;strong&gt;MVP&lt;/strong&gt; quickly, helping you focus on business logic instead of spending all day setting up and writing boilerplate. So it might not be suitable for your team if you have many members and need a base project with standard &lt;strong&gt;Clean Architecture&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;If you find it useful, don&amp;rsquo;t hesitate to give me a star!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GitHub Link: &lt;a class="link" href="https://github.com/namanh11611/flutter_mvvm_riverpod" target="_blank" rel="noopener"
+&gt;https://github.com/namanh11611/flutter_mvvm_riverpod&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>

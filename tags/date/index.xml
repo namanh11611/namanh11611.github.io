@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Date on Henry Techie</title><link>https://namanh11611.github.io/tags/date/</link><description>Recent content in Date on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 30 Mar 2019 01:33:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/tags/date/index.xml" rel="self" type="application/rss+xml"/><item><title>The Mouse Trap in Javascript's Date.setMonth()</title><link>https://namanh11611.github.io/p/date-set-month/</link><pubDate>Sat, 30 Mar 2019 01:33:00 +0700</pubDate><guid>https://namanh11611.github.io/p/date-set-month/</guid><description>&lt;img src="https://namanh11611.github.io/p/date-set-month/month.webp" alt="Featured image of post The Mouse Trap in Javascript's Date.setMonth()" /&gt;&lt;h1 id="the-unfortunate-situation"&gt;The Unfortunate Situation
+&lt;/h1&gt;&lt;p&gt;JavaScript developers are surely familiar with &lt;code&gt;Date&lt;/code&gt;, the object used to calculate days, months, and years. On a beautiful day, March 29, 2019, while happily and enthusiastically working overtime, I suddenly discovered a bug related to date display on the Front-end. Wait, when I pass &lt;strong&gt;1&lt;/strong&gt; as a parameter, it returns &lt;strong&gt;Mar&lt;/strong&gt; (March), passing &lt;strong&gt;0&lt;/strong&gt; returns &lt;strong&gt;Jan&lt;/strong&gt; (January), but what I wanted was &lt;strong&gt;Feb&lt;/strong&gt; (February). What&amp;rsquo;s going on???&lt;/p&gt;
+&lt;p&gt;I calmly opened F12 and debugged, only to find that the &lt;code&gt;Date.getMonth()&lt;/code&gt; function returns such a weird result.&lt;/p&gt;
+&lt;p&gt;It was already 9pm, and I didn&amp;rsquo;t trust my alertness anymore, so I switched to the Console tab to try it out. Maybe someone had customized the &lt;code&gt;getMonth()&lt;/code&gt; function in the project?&lt;/p&gt;
+&lt;p&gt;And the result was as follows (reproduced on the morning of March 30):&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/date-set-month/situation.webp"
+width="428"
+height="262"
+srcset="https://namanh11611.github.io/p/date-set-month/situation_hu_cd29837282ba9983.webp 480w, https://namanh11611.github.io/p/date-set-month/situation_hu_2deb3d00fccfba58.webp 1024w"
+loading="lazy"
+alt="Situation"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="392px"
+&gt;&lt;/p&gt;
+&lt;p&gt;You can try this in your own console to verify:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setMonth&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setMonth&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="this-mouse-trap-is-huge"&gt;This Mouse Trap is Huge
+&lt;/h1&gt;&lt;p&gt;It turns out that after calling &lt;code&gt;setMonth(1)&lt;/code&gt;, &lt;code&gt;date&lt;/code&gt; is not set to February (index = 1), but is just moved back 28 days (from March 30 to March 2).&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/date-set-month/investigation.webp"
+width="399"
+height="187"
+srcset="https://namanh11611.github.io/p/date-set-month/investigation_hu_6606e29ef47a8ac5.webp 480w, https://namanh11611.github.io/p/date-set-month/investigation_hu_e427964e280e4665.webp 1024w"
+loading="lazy"
+alt="Investigation"
+class="gallery-image"
+data-flex-grow="213"
+data-flex-basis="512px"
+&gt;&lt;/p&gt;
+&lt;p&gt;You can read more about the &lt;code&gt;setMonth()&lt;/code&gt; function &lt;a class="link" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth" target="_blank" rel="noopener"
+&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Reading the &lt;a class="link" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth#Description" target="_blank" rel="noopener"
+&gt;Description&lt;/a&gt; carefully, we see that &lt;code&gt;setMonth()&lt;/code&gt; uses the current day of the old month to set the day for the new month. If it exceeds the number of days in the new month, it rolls over to the next month. For example, if the current day is 30 or 31, &lt;code&gt;setMonth(1)&lt;/code&gt; will definitely move to March, because February has at most 29 days. Here, our current date is March 30, so when setting to February 2019 (which has 28 days), it adds 2 days and becomes March 2.&lt;/p&gt;
+&lt;p&gt;Indeed, this mouse trap has at least caught one fat mouse—me.&lt;/p&gt;
+&lt;h1 id="solution"&gt;Solution
+&lt;/h1&gt;&lt;p&gt;From this, we learn that to use &lt;code&gt;setMonth()&lt;/code&gt; and &lt;code&gt;getMonth()&lt;/code&gt; comfortably, it&amp;rsquo;s best to use the 1st day of the month.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;March 1, 2019 00:00:01&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Then you can freely use &lt;code&gt;setMonth()&lt;/code&gt; and &lt;code&gt;getMonth()&lt;/code&gt; as you wish.&lt;/p&gt;
+&lt;p&gt;Hope you always read the documentation carefully and write fewer bugs. Don&amp;rsquo;t get caught in the trap like I did.&lt;/p&gt;</description></item></channel></rss>

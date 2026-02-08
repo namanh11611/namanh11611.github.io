@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>JavaScript on Henry Techie</title><link>https://namanh11611.github.io/vi/tags/javascript/</link><description>Recent content in JavaScript on Henry Techie</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sat, 30 Mar 2019 01:33:00 +0700</lastBuildDate><atom:link href="https://namanh11611.github.io/vi/tags/javascript/index.xml" rel="self" type="application/rss+xml"/><item><title>Cái bẫy chuột trong hàm Date.setMonth() của Javascript</title><link>https://namanh11611.github.io/vi/p/date-set-month/</link><pubDate>Sat, 30 Mar 2019 01:33:00 +0700</pubDate><guid>https://namanh11611.github.io/vi/p/date-set-month/</guid><description>&lt;img src="https://namanh11611.github.io/p/date-set-month/month.webp" alt="Featured image of post Cái bẫy chuột trong hàm Date.setMonth() của Javascript" /&gt;&lt;h1 id="hoàn-cảnh-đáng-thương"&gt;Hoàn cảnh đáng thương
+&lt;/h1&gt;&lt;p&gt;Chắc hẳn các lập trình viên JavaScript thì không còn xa lạ gì &lt;code&gt;Date&lt;/code&gt;, đối tượng dùng để nhẩm ngày, đếm tháng, tính năm. Vào một ngày đẹp trời 29/3/2019, đang OT một cách vui vẻ và đầy hào hứng, tôi bỗng phát hiện ra một bug liên quan đến hiển thị ngày tháng trên Front-end. Ủa, hàm này truyền tham số là &lt;strong&gt;1&lt;/strong&gt; thì trả về &lt;strong&gt;Mar&lt;/strong&gt; (tháng 3), truyền tham số là &lt;strong&gt;0&lt;/strong&gt; thì trả về &lt;strong&gt;Jan&lt;/strong&gt; (tháng 1), trong khi kết quả mình muốn nhận là &lt;strong&gt;Feb&lt;/strong&gt; (tháng 2). Chơi gì kỳ vậy???&lt;/p&gt;
+&lt;p&gt;Nhẹ nhàng bật F12 lên và debug thì phát hiện ra nguyên nhân là do hàm &lt;code&gt;Date.getMonth()&lt;/code&gt; trả về kết quả kỳ cục như vậy.&lt;/p&gt;
+&lt;p&gt;Lúc ấy cũng đã 9h tối, không còn tin vào sự tỉnh táo của mình nên tôi chuyển qua tab Console để gõ thử xem liệu kết quả như thế nào? Liệu có phải do hàm &lt;code&gt;getMonth()&lt;/code&gt; trong project bị ông nào custom rồi không?&lt;/p&gt;
+&lt;p&gt;Và kết quả nhận được như sau (kết quả được tái hiện lại vào sáng 30/3):&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/date-set-month/situation.webp"
+width="428"
+height="262"
+srcset="https://namanh11611.github.io/p/date-set-month/situation_hu_cd29837282ba9983.webp 480w, https://namanh11611.github.io/p/date-set-month/situation_hu_2deb3d00fccfba58.webp 1024w"
+loading="lazy"
+alt="Situation"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="392px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Các bạn có thể gõ thử trên console của mình để kiểm chứng:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setMonth&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setMonth&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="bẫy-chuột-này-lớn-quá"&gt;Bẫy chuột này lớn quá
+&lt;/h1&gt;&lt;p&gt;Hoá ra là sau khi gọi hàm &lt;code&gt;setMonth(1)&lt;/code&gt;, &lt;code&gt;date&lt;/code&gt; không được set thành tháng 2 (index = 1) mà chỉ bị lùi đi 28 ngày (từ ngày 30/3 thành ngày 2/3)&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://namanh11611.github.io/p/date-set-month/investigation.webp"
+width="399"
+height="187"
+srcset="https://namanh11611.github.io/p/date-set-month/investigation_hu_6606e29ef47a8ac5.webp 480w, https://namanh11611.github.io/p/date-set-month/investigation_hu_e427964e280e4665.webp 1024w"
+loading="lazy"
+alt="Investigation"
+class="gallery-image"
+data-flex-grow="213"
+data-flex-basis="512px"
+&gt;&lt;/p&gt;
+&lt;p&gt;Các bạn có thể tham khảo thông tin về hàm &lt;code&gt;setMonth()&lt;/code&gt; tại &lt;a class="link" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth" target="_blank" rel="noopener"
+&gt;đây&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Đọc kỹ phần &lt;a class="link" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth#Description" target="_blank" rel="noopener"
+&gt;Description&lt;/a&gt;, chúng ta mới thấy rằng hàm &lt;code&gt;setMonth()&lt;/code&gt; sẽ dùng chính ngày hiện tại của tháng cũ để set ngày cho tháng mới, nếu vượt quá ngày của tháng mới thì sẽ cộng tiếp sang ngày của tháng tiếp theo. Ví dụ, ngày hiện tại là 30, 31 thì &lt;code&gt;setMonth(1)&lt;/code&gt; chắc chắn sẽ bị tính sang tháng 3, vì tháng 2 chỉ có tối đa 29 ngày. Ở đây, ngày hiện tại của chúng ta là 30/3, thế nên khi set về tháng 2/2019 (có 28 ngày) sẽ bị tính thêm 2 ngày là thành ngày 2/3.&lt;/p&gt;
+&lt;p&gt;Quả thật, cái bẫy chuột này ít nhất đã bẫy được một con chuột béo là mình rồi.&lt;/p&gt;
+&lt;h1 id="giải-pháp"&gt;Giải pháp
+&lt;/h1&gt;&lt;p&gt;Từ đó, chúng ta rút ra rằng, để &lt;code&gt;setMonth()&lt;/code&gt;, &lt;code&gt;getMonth()&lt;/code&gt; được thoải mái nhất, tốt nhất là nên dùng ngày mùng 1.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;March 1, 2019 00:00:01&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Lúc đó thì chúng ta có thể thoải mái &lt;code&gt;setMonth()&lt;/code&gt;, &lt;code&gt;getMonth()&lt;/code&gt; theo ý mình.&lt;/p&gt;
+&lt;p&gt;Chúc các bạn luôn đọc kỹ document và code ít bug. Đừng dính bẫy như mình.&lt;/p&gt;</description></item></channel></rss>
